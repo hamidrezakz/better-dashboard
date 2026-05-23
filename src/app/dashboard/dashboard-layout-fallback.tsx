@@ -1,4 +1,5 @@
 import { DashboardHeaderFallback } from "@/app/dashboard/components/dashboard-header-fallback";
+import { DashboardSidebarCloseOnNavigate } from "@/app/dashboard/components/sidebar/sidebar-close-on-navigate";
 import { DashboardSidebarFallback } from "@/app/dashboard/components/sidebar/dashboard-sidebar-fallback";
 import { LoadingFallback } from "@/components/loading-fallback";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
@@ -6,6 +7,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 export function DashboardLayoutFallback() {
   return (
     <SidebarProvider>
+      <DashboardSidebarCloseOnNavigate />
       <DashboardSidebarFallback />
       <SidebarInset className="flex min-h-svh flex-col">
         <DashboardHeaderFallback />

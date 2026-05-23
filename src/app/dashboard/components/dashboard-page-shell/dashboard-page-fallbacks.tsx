@@ -45,10 +45,7 @@ export function DashboardPageTitleFallback({
   className?: string;
 }) {
   return (
-    <div className={cn("space-y-2", className)}>
-      <Skeleton className="h-5 w-48 max-w-full rounded-sm" />
-      <Skeleton className="h-4 w-64 max-w-full rounded-sm" />
-    </div>
+    <Skeleton className={cn("h-5 w-48 max-w-full rounded-sm", className)} />
   );
 }
 

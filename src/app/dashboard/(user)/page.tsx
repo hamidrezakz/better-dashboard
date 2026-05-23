@@ -59,7 +59,6 @@ async function UserProfileHeader() {
     <div className="flex flex-wrap items-start justify-between gap-3">
       <div>
         <h1 className="text-base font-semibold">{data.user.name}</h1>
-        <p className="text-sm text-muted-foreground">{data.user.email}</p>
       </div>
       <Button
         size="sm"

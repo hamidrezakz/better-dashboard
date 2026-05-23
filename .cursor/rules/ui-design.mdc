@@ -6,7 +6,7 @@ alwaysApply: false
 
 # UI styling
 
-`lang`/`dir` on **root layout only** — defaults from `src/lib/app-locale.ts`. **Logical Tailwind** (`me`/`ms`, `start`/`end`, …). **shadcn** from `src/components/ui` — default variants; compose before custom markup. Reuse existing UI up the tree; hoist shared pieces to the highest relevant scope (segment `components/` → `src/components/`). Base UI: `render={<Link … />}`, not `asChild`. **`Button` / `TabsTrigger` + `Link`:** `nativeButton={false}` (app code; do not patch `src/components/ui` — update via shadcn).
+`lang`/`dir` on **root layout only** — defaults from `src/lib/app-locale.ts`. **Logical Tailwind** (`me`/`ms`, `start`/`end`, …). **shadcn** from `src/components/ui` — default variants; compose before custom markup. **Never hand-edit `src/components/ui/*`** for app behavior or fixes — wrap/extend in `src/app/**` or `src/components/` (outside `ui/`); regen primitives with shadcn CLI. Reuse existing UI up the tree; hoist shared pieces to the highest relevant scope (segment `components/` → `src/components/`). Base UI: `render={<Link … />}`, not `asChild`. **`Button` / `TabsTrigger` + `Link`:** `nativeButton={false}` at call sites in app code.
 
 English; dashboard chrome copy in `dashboard-nav-labels.ts` — no i18n unless user asks.
 

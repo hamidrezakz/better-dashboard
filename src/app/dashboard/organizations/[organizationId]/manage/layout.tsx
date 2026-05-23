@@ -1,8 +1,10 @@
 import { Suspense } from "react";
 import { LoadingFallback } from "@/components/loading-fallback";
+import { DashboardPageTitleFallback } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
 import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-shell";
 import { requireOrganizationManageAccess } from "@/app/dashboard/lib/dashboard-access";
 import { ManageTabsNav } from "@/app/dashboard/organizations/[organizationId]/manage/components/manage-tabs-nav";
+import { OrganizationManageHeader } from "@/app/dashboard/organizations/[organizationId]/manage/components/organization-manage-header";
 
 type OrganizationManageLayoutProps = {
   children: React.ReactNode;
@@ -20,6 +22,10 @@ export default async function OrganizationManageLayout({
 
   return (
     <DashboardPageShell>
+      <Suspense fallback={<DashboardPageTitleFallback />}>
+        <OrganizationManageHeader organizationId={organizationId} />
+      </Suspense>
+
       <ManageTabsNav organizationId={organizationId} />
 
       <Suspense fallback={<LoadingFallback className="min-h-[12vh]" />}>

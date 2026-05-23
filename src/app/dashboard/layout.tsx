@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { DashboardAppSidebar } from "@/app/dashboard/components/sidebar/app-sidebar";
+import { DashboardSidebarCloseOnNavigate } from "@/app/dashboard/components/sidebar/sidebar-close-on-navigate";
 import { DashboardHeader } from "@/app/dashboard/components/dashboard-header";
 import {
   DashboardLayoutFallback,
@@ -34,6 +35,7 @@ async function DashboardLayoutContent({ children }: DashboardLayoutProps) {
 
   return (
     <SidebarProvider>
+      <DashboardSidebarCloseOnNavigate />
       <DashboardAppSidebar config={sidebarConfig} />
       <SidebarInset className="flex min-h-svh flex-col">
         <DashboardHeader userId={session.user.id} />

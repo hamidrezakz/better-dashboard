@@ -8,13 +8,13 @@ Generic Next.js 16 + `cacheComponents` + Better Auth (org) + Prisma + shadcn/Bas
 
 **Segment SSOT (stay at `dashboard/lib/` root):** `dashboard-routes.ts`, `dashboard-nav-labels.ts`, `cache-tags.ts`, `dashboard-access.ts`.
 
-| Area                   | Path                                                | Role                                                       |
-| ---------------------- | --------------------------------------------------- | ---------------------------------------------------------- |
-| Sidebar                | `lib/sidebar/*`, `components/sidebar/*`             | Items, config, manage tabs, app sidebar, nav, org switcher |
-| Breadcrumbs            | `lib/breadcrumbs/*`, `components/breadcrumbs/*`     | Segment rules, resolver, client trail + breadcrumb API     |
-| Notifications (chrome) | `lib/notifications/*`, `components/notifications/*` | Header dropdown, shared view dialog, visibility/types      |
-| Layout shell           | `components/shell/*`                                | Page shell, header, layout/page fallbacks                  |
-| Badges                 | `badge-labels.ts` (`src/lib/`)                      | Enum/badge copy in tables — not route nav                  |
+| Area                   | Path                                                | Role                                                                                                                                                                    |
+| ---------------------- | --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Sidebar                | `lib/sidebar/*`, `components/sidebar/*`             | Items, config, manage tabs, app sidebar, nav, org switcher; `dashboard-sidebar-close-on-navigate.tsx` closes mobile sheet on route change (not `components/ui/sidebar`) |
+| Breadcrumbs            | `lib/breadcrumbs/*`, `components/breadcrumbs/*`     | Segment rules, resolver, client trail + breadcrumb API                                                                                                                  |
+| Notifications (chrome) | `lib/notifications/*`, `components/notifications/*` | Header dropdown, shared view dialog, visibility/types                                                                                                                   |
+| Layout shell           | `components/shell/*`                                | Page shell, header, layout/page fallbacks                                                                                                                               |
+| Badges                 | `badge-labels.ts` (`src/lib/`)                      | Enum/badge copy in tables — not route nav                                                                                                                               |
 
 Route-scoped notification UI stays under `(user)/notifications` and `organizations/.../manage/notifications`.
 
