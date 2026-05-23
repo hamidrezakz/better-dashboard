@@ -1,0 +1,11 @@
+---
+description: Logical Tailwind; shadcn defaults; root dir/lang only
+globs: src/**/*.tsx,src/**/*.css,src/app/**/layout.tsx
+alwaysApply: false
+---
+
+# UI styling
+
+`lang`/`dir` — root only. **Logical Tailwind** (`me` not `mr`, …). **shadcn** from `src/components/ui` — default styles; compose before custom UI.
+
+English now; nav copy in `dashboard-nav-labels.ts`. Orderly layout helps future language changes — no i18n stack unless user asks. [ui-design.md](docs/agents/ui-design.md)

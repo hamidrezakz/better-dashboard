@@ -12,12 +12,12 @@ alwaysApply: false
 
 **Session (`auth-session.ts`):** `getSessionCached` (nullable; API → 401) · `requireAuthSession()` for dashboard pages/layouts/actions · `requireAuthSession(returnPath)` only outside dashboard gate (e.g. join). No `redirectTo` under `dashboard/layout`. Request-scoped `cache()` only — never `use cache` / revalidate session. Detail: [implementation.md](docs/agents/implementation.md#auth--session-srclibauth-sessionts).
 
-**Copy:** Single language (sample: Persian + RTL). Nav: `dashboard-nav-labels.ts`. No i18n runtime — see `dashboard.mdc`.
+**Copy:** English; `dashboard-nav-labels.ts` (orderly for later language changes — no i18n unless asked). **UI:** shadcn defaults, logical Tailwind — `ui-design.mdc`.
 
 **Mutations:** `src/app/action/<feature>/` — validate → DB → cache (if needed) → return/redirect. See `caching` rule when editing actions.
 
 ```tsx
-<Button render={<Link href="/dashboard" />}>داشبورد</Button>
+<Button render={<Link href="/dashboard" />}>Dashboard</Button>
 ```
 
 Full detail: [docs/agents/implementation.md](docs/agents/implementation.md)

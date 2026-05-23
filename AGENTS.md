@@ -21,13 +21,13 @@ Do not assume you have read layer 3 unless you opened that file for the current 
 
 ## Project (layer 1 — always)
 
-|             |                                                                                                                                                     |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Stack**   | Next.js 16+ App Router + `cacheComponents`, Prisma 7+, Better Auth v1 (org plugin), shadcn/Base UI                                                  |
-| **Goal**    | **Reusable template** — auth + org/team dashboard to copy across projects (future extract as a library)                                             |
-| **Phase 1** | **`auth` schema only** for dashboard work — ignore `exam` and `better-s3` in this template                                                          |
-| **Copy**    | **Single language** (sample: Persian + RTL). No i18n runtime. Nav strings: `dashboard-nav-labels.ts`. See [dashboard.md](docs/agents/dashboard.md). |
-| **Next.js** | Not training-data Next — **no web search**; `node_modules/next/dist/docs/`                                                                          |
+|             |                                                                                                                                                                                                                                      |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Stack**   | Next.js 16+ App Router + `cacheComponents`, Prisma 7+, Better Auth v1 (org plugin), shadcn/Base UI                                                                                                                                   |
+| **Goal**    | **Generic reusable template** — standard auth + org/team dashboard to copy or scaffold (future: CLI injects optional features into the same folder layout)                                                                           |
+| **Data**    | **Better Auth (`auth`) schema only** in this template — no product-specific Prisma domains in core dashboard code                                                                                                                    |
+| **UI**      | English now; copy/routes in segment `lib/` so language can change later without layout churn. **Agents:** styling rules + shadcn defaults — [ui-design.md](docs/agents/ui-design.md). Nav: [dashboard.md](docs/agents/dashboard.md). |
+| **Next.js** | Not training-data Next — **no web search**; `node_modules/next/dist/docs/`                                                                                                                                                           |
 
 ## Layer 2 — which rule attaches (by glob)
 
@@ -38,12 +38,14 @@ Do not assume you have read layer 3 unless you opened that file for the current 
 | [implementation.mdc](.cursor/rules/implementation.mdc) | `src/app/**/*.tsx`, `src/app/action/**/*.ts`, `auth-session.ts`    | [implementation.md](docs/agents/implementation.md) |
 | [caching.mdc](.cursor/rules/caching.mdc)               | `src/app/action/**`, `**/cache-tags.ts`, `src/app/**/lib/get-*.ts` | [caching.md](docs/agents/caching.md)               |
 | [nextjs.mdc](.cursor/rules/nextjs.mdc)                 | `next.config.ts`, `src/app/**`                                     | [nextjs.md](docs/agents/nextjs.md)                 |
+| [ui-design.mdc](.cursor/rules/ui-design.mdc)           | `src/**/*.tsx`, layouts, CSS                                       | [ui-design.md](docs/agents/ui-design.md)           |
 
 ## Non-negotiables (layer 1 — even without opening more)
 
 - **Mutations:** `src/app/action/<feature>/`, one action per file; validate → DB → cache (if needed) → return/redirect.
-- **Layout:** sub-feature → segment `lib/` → `src/lib` \| `src/components`; no cross-sibling feature imports.
+- **Layout:** sub-feature → segment `lib/` → `src/lib` \| `src/components`; no cross-sibling feature imports — keeps slices removable and CLI-injectable.
 - **Paths & tags:** `*-routes.ts` and `cache-tags.ts` per segment — no hardcoded path/tag strings.
 - **Dashboard nav copy:** `src/app/dashboard/lib/dashboard-nav-labels.ts` for sidebar, breadcrumbs, manage tabs — not duplicated in UI files.
 - **Session:** `src/lib/auth-session.ts` (`getSessionCached` / `requireAuthSession`) — request-scoped only; never `use cache` or revalidate session. Dashboard: `requireAuthSession()` without `redirectTo` under `dashboard/layout`. Details: [implementation.md](docs/agents/implementation.md#auth--session-srclibauth-sessionts).
 - **Same-user UI after dashboard write:** **`updateTag`** in the same Server Action (not bare `revalidateTag`).
+- **UI:** logical Tailwind in new layout code; `dir`/`lang` only on root layout — [ui-design.md](docs/agents/ui-design.md).

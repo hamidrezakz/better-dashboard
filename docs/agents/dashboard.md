@@ -1,19 +1,19 @@
 # Dashboard segment (reusable template)
 
-> **Context:** Open when editing `src/app/dashboard/**`, dashboard APIs, or navigation/copy. This repo is a **generic** Next.js 16 + `cacheComponents` + Better Auth (org plugin) + Prisma + shadcn/Base UI **dashboard template** — copy or extract into other projects. It is not tied to a single product name.
+> **Context:** Open when editing `src/app/dashboard/**`, dashboard APIs, or navigation/copy. This repo is a **generic** Next.js 16 + `cacheComponents` + Better Auth (org plugin) + Prisma + shadcn/Base UI **dashboard template** — copy, fork, or scaffold via a future CLI. It is not tied to a single product.
 
 ## What you are maintaining
 
-| Piece                                                                 | Role                                                                          |
-| --------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `dashboard-routes.ts`                                                 | URL builders only — no user-visible text                                      |
-| `dashboard-nav-labels.ts`                                             | **One file** for sidebar, breadcrumb segment names, and org-manage tab titles |
-| `dashboard-items.ts`                                                  | Role-based sidebar items (uses routes + nav labels)                           |
-| `get-sidebar-config.ts`                                               | Cached sidebar data (memberships, org list)                                   |
-| `dashboard-breadcrumb-segments.ts`                                    | Breadcrumb rules (hidden segments, dynamic ID placeholders)                   |
-| `dashboard-breadcrumbs.tsx`                                           | Client UI: pathname → trail; fetches entity names via API                     |
-| `resolve-breadcrumb-labels.ts` + `/api/dashboard/breadcrumb-label(s)` | Secure display names for user/org IDs                                         |
-| `badge-translations.ts` (`src/lib/i18n/`)                             | Enum/badge copy in tables — **separate** from route navigation                |
+| Piece                                                                 | Role                                                                                  |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `dashboard-routes.ts`                                                 | URL builders only — no user-visible text                                              |
+| `dashboard-nav-labels.ts`                                             | **One file** for sidebar, breadcrumb segment names, and org-manage tab titles         |
+| `dashboard-items.ts`                                                  | Role-based sidebar items (uses routes + nav labels)                                   |
+| `get-sidebar-config.ts`                                               | Cached sidebar data (memberships, org list)                                           |
+| `dashboard-breadcrumb-segments.ts`                                    | Breadcrumb rules (hidden segments, dynamic ID placeholders)                           |
+| `dashboard-breadcrumbs.tsx`                                           | Client UI: pathname → trail; fetches entity names via API                             |
+| `resolve-breadcrumb-labels.ts` + `/api/dashboard/breadcrumb-label(s)` | Secure display names for user/org IDs                                                 |
+| `badge-translations.ts` (`src/lib/i18n/`)                             | Enum/badge copy in tables — **not** route navigation (legacy path; rename in cleanup) |
 
 Feature-specific copy (form titles, empty states, dialog bodies) stays next to that feature unless it is reused across the segment.
 
@@ -26,17 +26,18 @@ Feature-specific copy (form titles, empty states, dialog bodies) stays next to t
 
 Do not duplicate nav/tab/breadcrumb strings in components — add or change keys in `dashboard-nav-labels.ts`.
 
-## Copy & locale (no bilingual stack)
+## Copy (single language)
 
-- **Single language per deployment.** The sample template uses Persian strings and RTL (`lang="fa-IR"` `dir="rtl"` in the root layout). There is **no** `next-intl`, message catalogs, or locale switching.
-- **Switching to English (or another language):** replace strings in `dashboard-nav-labels.ts`, `badge-translations.ts`, and feature-local copy; adjust `lang` / `dir` on the root layout. No framework migration required.
-- **Trimming for a slimmer fork:** delete optional features (e.g. teams, notifications UI) and their routes/actions; remove unused keys from `dashboard-nav-labels` and entries from `dashboard-items` / `dashboard-routes`. Prefer deleting whole sub-features over leaving dead helpers.
+- **English** now; strings in `dashboard-nav-labels.ts` (and `badge-translations.ts` for enums). No i18n runtime in the template.
+- File layout is intentional so a later language swap or multilingual setup is straightforward — that is not agent work unless requested.
+- Another single language (e.g. Persian): edit copy files + root `lang`/`dir`. Styling: [ui-design.md](./ui-design.md).
+- **Trimming optional features:** delete whole subtrees (routes + actions + nav keys).
 
-## Forking / “library later”
+## Forking / package / CLI later
 
 - Keep **segment boundaries** (`dashboard/lib`, `action/dashboard/...`) so the dashboard can be copied as a tree or published as a package later.
 - Avoid product-specific naming in shared `lib/` files; product-only routes belong in the consuming app, not in the template core.
-- Optional Prisma schemas in this monorepo (`exam`, `better-s3`) are **out of scope** for the dashboard template — do not wire them into dashboard code when reusing.
+- Extension points for generators: `dashboard-routes.ts`, `dashboard-nav-labels.ts`, `dashboard-items.ts`, `cache-tags.ts`, and mirrored `action/dashboard/**` paths.
 
 ## Mobile header (future)
 

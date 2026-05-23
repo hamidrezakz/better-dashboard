@@ -6,14 +6,16 @@ alwaysApply: false
 
 # Architecture
 
-**Phase 1:** `auth` schema only — ignore `exam` and `better-s3`.
+**Template scope:** Better Auth (`auth`) schema only in core — no product-specific Prisma domains in shared dashboard `lib/`. Features are removable subtrees (CLI-ready).
 
 **Dependency:** sub-feature → segment `lib/` → `src/lib` | `src/components`. No cross-sibling imports (e.g. `members/` → not `teams/`).
 
 **Colocate:** pages, UI, feature `lib/`, actions at `src/app/action/<feature>/` (one mutation per file).
 
-**Single source of truth:** `*-routes.ts` and `cache-tags.ts` per segment; badges in shared config; UI from `src/components/ui`. Base UI links: `render={<Link … />}`, not `asChild`.
+**Single source of truth:** `*-routes.ts` and `cache-tags.ts` per segment; badges in shared config; UI from `src/components/ui` (shadcn defaults). Base UI links: `render={<Link … />}`, not `asChild`.
 
 Before new helpers: pick scope upward; compose shadcn primitives first; stay minimal.
+
+**UI:** [ui-design.md](docs/agents/ui-design.md).
 
 Full detail: [docs/agents/architecture.md](docs/agents/architecture.md)

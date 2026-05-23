@@ -16,7 +16,7 @@
 
 ### Caching
 
-- Use `use cache` and cacheing in needed server function especialy in complex queries functions.
+- Use `use cache` in server functions that run heavy or repeated reads.
 - Use `updateTag(...)` or `revalidateTag(...)` to invalidate the cache.
 - See [caching.md](./caching.md) for more details.
 
@@ -50,11 +50,10 @@ Session reads use React `cache()` — **one `getSession` per request**, never `u
 
 **Parallel Suspense slices** on one page may each call `requireAuthSession()` (and each call their own `get-*` with `'use cache'`). **Do not** add an extra page-level `cache()` wrapper just to dedupe session — `requireAuthSession` / `getSessionCached` already dedupe per request. Cached data functions dedupe via `'use cache'` + tags. Extra `cache()` on a page is optional only when you intentionally bundle non-cached steps once per segment (rare).
 
-### Copy & layout (single language)
+### Copy & styling
 
-- **No bilingual / i18n stack** in the template (no message catalogs or locale switching).
-- Sample deployment uses **Persian** strings and **RTL** (`lang="fa-IR"` `dir="rtl"` on root layout). Cross-cutting dashboard nav text lives in `dashboard-nav-labels.ts`; enum badges in `src/lib/i18n/badge-translations.ts`.
-- **English (or another language):** replace strings in those files and feature-local UI; update `lang` / `dir` once. See [dashboard.md](./dashboard.md).
+- English, single language; no i18n runtime. Nav: `dashboard-nav-labels.ts`. Badges: `badge-translations.ts` — see [dashboard.md](./dashboard.md).
+- Styling: [ui-design.md](./ui-design.md) (logical Tailwind; `lang`/`dir` on root layout only).
 
 ## Definition of done
 
@@ -63,8 +62,9 @@ Session reads use React `cache()` — **one `getSession` per request**, never `u
 - Tags centralized; mutations use **`updateTag`** when the acting user’s UI must update immediately.
 - Auth compatible with Better Auth + organization plugin.
 - UI uses shared primitives; nav copy centralized per [dashboard.md](./dashboard.md).
+- New UI: shadcn defaults + [ui-design.md](./ui-design.md).
 - Feature fits modular layout; no cross-sibling feature imports.
-- Stays within **phase 1** (`auth` only).
+- Stays within template scope (Better Auth dashboard slice only).
 
 ## Minimal patterns
 
@@ -89,5 +89,5 @@ export default function Page() {
 **Base UI + Link**
 
 ```tsx
-<Button render={<Link href="/dashboard" />}>داشبورد</Button>
+<Button render={<Link href="/dashboard" />}>Dashboard</Button>
 ```
