@@ -93,9 +93,7 @@ function NotificationList({
                 </p>
                 <span className="block truncate text-[0.625rem] text-muted-foreground/90">
                   {sourceInline ? <span>{sourceInline} </span> : null}
-                  <span>
-                    {formatDate(item.createdAt, dateTimeOptions)}
-                  </span>
+                  <span>{formatDate(item.createdAt, dateTimeOptions)}</span>
                 </span>
               </span>
             </button>
@@ -178,7 +176,7 @@ export function HeaderNotificationsDropdown({
             variant="outline"
             size="sm"
             className="h-auto shrink-0 w-full justify-between rounded-none px-2.5 py-2 text-[0.6875rem]"
-            render={<Link href={dashboardRoutes.userNotifications(userId)} />}
+            render={<Link href={dashboardRoutes.userNotifications()} />}
           >
             {hasMore ? "View all notifications" : "Notification center"}
             <ChevronRightIcon className="size-3.5 opacity-60" />

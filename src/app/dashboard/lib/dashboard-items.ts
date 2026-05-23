@@ -21,12 +21,9 @@ type DashboardNavigationContext = {
 export function getActiveOrganizationLandingPath(input: {
   organizationId: string | null;
   role: MembershipRole | null;
-  userId?: string;
 }) {
   if (!input.organizationId) {
-    return input.userId
-      ? dashboardRoutes.userProfile(input.userId)
-      : dashboardRoutes.organizations();
+    return dashboardRoutes.home();
   }
 
   return dashboardRoutes.organizationRoot(input.organizationId);
@@ -46,18 +43,18 @@ function resolveMembershipState(
   return "organization-member";
 }
 
-function getNotificationsItem(userId: string): SidebarNavigationItem {
+function getNotificationsItem(): SidebarNavigationItem {
   return {
     title: dashboardNavLabels.sidebar.notifications,
-    url: dashboardRoutes.userNotifications(userId),
+    url: dashboardRoutes.userNotifications(),
     icon: "bell",
   };
 }
 
-function getPersonalDashboardItem(userId: string): SidebarNavigationItem {
+function getPersonalDashboardItem(): SidebarNavigationItem {
   return {
     title: dashboardNavLabels.sidebar.dashboard,
-    url: dashboardRoutes.userProfile(userId),
+    url: dashboardRoutes.home(),
     icon: "layout-dashboard",
   };
 }
@@ -85,10 +82,7 @@ function getOrganizationManagementItem(
 function getNoActiveOrganizationItems(
   context: DashboardNavigationContext,
 ): SidebarNavigationItem[] {
-  return [
-    getPersonalDashboardItem(context.userId),
-    getNotificationsItem(context.userId),
-  ];
+  return [getPersonalDashboardItem(), getNotificationsItem()];
 }
 
 function getMemberItems(
@@ -100,7 +94,7 @@ function getMemberItems(
 
   return [
     getOrganizationDashboardItem(context.activeOrganizationId),
-    getNotificationsItem(context.userId),
+    getNotificationsItem(),
   ];
 }
 
@@ -113,7 +107,7 @@ function getManagerItems(
 
   return [
     getOrganizationManagementItem(context.activeOrganizationId),
-    getNotificationsItem(context.userId),
+    getNotificationsItem(),
   ];
 }
 

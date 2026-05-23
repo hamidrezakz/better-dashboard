@@ -1,12 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import type { UserNotificationListItem } from "@/app/dashboard/users/[userId]/notifications/lib/get-user-notifications-page";
+import type { UserNotificationListItem } from "@/app/dashboard/(user)/notifications/lib/get-user-notifications-page";
 import {
   userNotificationFilterLabels,
   userNotificationsTablePath,
   type UserNotificationTableFilter,
-} from "@/app/dashboard/users/[userId]/notifications/lib/user-notifications-table-params";
+} from "@/app/dashboard/(user)/notifications/lib/user-notifications-table-params";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { truncateText } from "@/lib/truncate-text";
 import { RequestStatusBadge } from "@/components/globals-badge/request-status-badge";
@@ -32,7 +32,6 @@ const TABLE_TITLE_MAX = 36;
 const TABLE_BODY_MAX = 48;
 
 type UserNotificationsTableProps = {
-  userId: string;
   isOwnInbox: boolean;
   notifications: UserNotificationListItem[];
   page: number;
@@ -43,7 +42,6 @@ type UserNotificationsTableProps = {
 };
 
 export function UserNotificationsTable({
-  userId,
   isOwnInbox,
   notifications,
   page,
@@ -59,7 +57,7 @@ export function UserNotificationsTable({
     filter?: UserNotificationTableFilter;
   }) => {
     router.push(
-      userNotificationsTablePath(userId, {
+      userNotificationsTablePath({
         page: input.page,
         filter: input.filter ?? filter,
       }),

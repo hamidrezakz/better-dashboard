@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { cacheLife, cacheTag } from "next/cache";
 import { notFound } from "next/navigation";
 import { BellIcon, Building2Icon, UsersIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,105 +11,44 @@ import {
   DashboardTableCardFallback,
 } from "@/app/dashboard/components/dashboard-page-fallbacks";
 import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell";
-import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
+import { getUserProfilePageData } from "@/app/dashboard/(user)/lib/get-user-profile-page";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
-import { prisma } from "@/lib/prisma";
+import { requireAuthSession } from "@/lib/auth-session";
 
-type UserProfilePageProps = {
-  params: Promise<{
-    userId: string;
-  }>;
-};
-
-async function getUserProfileData(userId: string) {
-  "use cache";
-
-  cacheLife("minutes");
-  cacheTag(dashboardCacheTags.userProfileById(userId));
-
-  const [user, memberships, teamCount, directUnreadCount] = await Promise.all([
-    prisma.user.findUnique({
-      where: {
-        id: userId,
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        createdAt: true,
-      },
-    }),
-    prisma.member.findMany({
-      where: {
-        userId,
-      },
-      include: {
-        organization: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    }),
-    prisma.teamMember.count({
-      where: {
-        userId,
-      },
-    }),
-    prisma.notification.count({
-      where: {
-        userId,
-        readAt: null,
-      },
-    }),
-  ]);
-
-  if (!user) {
-    return null;
-  }
-
-  return {
-    user,
-    memberships,
-    organizationCount: memberships.length,
-    teamCount,
-    directUnreadCount,
-  };
-}
-
-export default function UserProfilePage({ params }: UserProfilePageProps) {
+export default function UserDashboardHomePage() {
   return (
     <DashboardPageShell>
       <Suspense fallback={<DashboardPageTitleFallback />}>
-        <UserProfileHeader params={params} />
+        <UserProfileHeader />
       </Suspense>
 
       <div className="grid gap-4 md:grid-cols-3">
         <Suspense fallback={<DashboardStatCardFallback />}>
-          <UserProfileOrganizationStat params={params} />
+          <UserProfileOrganizationStat />
         </Suspense>
         <Suspense fallback={<DashboardStatCardFallback />}>
-          <UserProfileTeamStat params={params} />
+          <UserProfileTeamStat />
         </Suspense>
         <Suspense fallback={<DashboardStatCardFallback />}>
-          <UserProfileNotificationsStat params={params} />
+          <UserProfileNotificationsStat />
         </Suspense>
       </div>
 
       <Suspense fallback={<DashboardTableCardFallback />}>
-        <UserProfileMembershipsCard params={params} />
+        <UserProfileMembershipsCard />
       </Suspense>
     </DashboardPageShell>
   );
 }
 
-async function UserProfileHeader({ params }: UserProfilePageProps) {
-  const { userId } = await params;
-  const data = await getUserProfileData(userId);
+async function resolveCurrentUserId() {
+  const session = await requireAuthSession();
+  return session.user.id;
+}
+
+async function UserProfileHeader() {
+  const userId = await resolveCurrentUserId();
+  const data = await getUserProfilePageData(userId);
 
   if (!data) {
     notFound();
@@ -124,9 +62,9 @@ async function UserProfileHeader({ params }: UserProfilePageProps) {
   );
 }
 
-async function UserProfileOrganizationStat({ params }: UserProfilePageProps) {
-  const { userId } = await params;
-  const data = await getUserProfileData(userId);
+async function UserProfileOrganizationStat() {
+  const userId = await resolveCurrentUserId();
+  const data = await getUserProfilePageData(userId);
 
   if (!data) {
     notFound();
@@ -147,9 +85,9 @@ async function UserProfileOrganizationStat({ params }: UserProfilePageProps) {
   );
 }
 
-async function UserProfileTeamStat({ params }: UserProfilePageProps) {
-  const { userId } = await params;
-  const data = await getUserProfileData(userId);
+async function UserProfileTeamStat() {
+  const userId = await resolveCurrentUserId();
+  const data = await getUserProfilePageData(userId);
 
   if (!data) {
     notFound();
@@ -170,9 +108,9 @@ async function UserProfileTeamStat({ params }: UserProfilePageProps) {
   );
 }
 
-async function UserProfileNotificationsStat({ params }: UserProfilePageProps) {
-  const { userId } = await params;
-  const data = await getUserProfileData(userId);
+async function UserProfileNotificationsStat() {
+  const userId = await resolveCurrentUserId();
+  const data = await getUserProfilePageData(userId);
 
   if (!data) {
     notFound();
@@ -191,7 +129,7 @@ async function UserProfileNotificationsStat({ params }: UserProfilePageProps) {
         <Button
           size="sm"
           variant="ghost"
-          render={<Link href={dashboardRoutes.userNotifications(userId)} />}
+          render={<Link href={dashboardRoutes.userNotifications()} />}
         >
           View
         </Button>
@@ -200,9 +138,9 @@ async function UserProfileNotificationsStat({ params }: UserProfilePageProps) {
   );
 }
 
-async function UserProfileMembershipsCard({ params }: UserProfilePageProps) {
-  const { userId } = await params;
-  const data = await getUserProfileData(userId);
+async function UserProfileMembershipsCard() {
+  const userId = await resolveCurrentUserId();
+  const data = await getUserProfilePageData(userId);
 
   if (!data) {
     notFound();

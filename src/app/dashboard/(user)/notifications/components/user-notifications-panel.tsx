@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { NotificationViewDialog } from "@/app/dashboard/components/notification-view-dialog";
-import { UserNotificationsTable } from "@/app/dashboard/users/[userId]/notifications/components/user-notifications-table";
-import type { UserNotificationListItem } from "@/app/dashboard/users/[userId]/notifications/lib/get-user-notifications-page";
-import type { UserNotificationTableFilter } from "@/app/dashboard/users/[userId]/notifications/lib/user-notifications-table-params";
+import { UserNotificationsTable } from "@/app/dashboard/(user)/notifications/components/user-notifications-table";
+import type { UserNotificationListItem } from "@/app/dashboard/(user)/notifications/lib/get-user-notifications-page";
+import type { UserNotificationTableFilter } from "@/app/dashboard/(user)/notifications/lib/user-notifications-table-params";
 
 type UserNotificationsPanelProps = {
   userId: string;
@@ -33,7 +33,6 @@ export function UserNotificationsPanel({
   return (
     <>
       <UserNotificationsTable
-        userId={userId}
         isOwnInbox={isOwnInbox}
         notifications={notifications}
         page={page}

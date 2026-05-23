@@ -41,7 +41,6 @@ export async function setActiveOrganizationAction({
       redirectTo: getActiveOrganizationLandingPath({
         organizationId,
         role: activeOrganizationRole,
-        userId,
       }),
     };
   }
@@ -64,7 +63,6 @@ export async function setActiveOrganizationAction({
     redirectTo: getActiveOrganizationLandingPath({
       organizationId,
       role: activeOrganizationRole,
-      userId,
     }),
   };
 }

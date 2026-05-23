@@ -7,10 +7,7 @@ function encodeRouteSegment(value: string) {
 export const dashboardRoutes = {
   home: () => DASHBOARD_BASE_PATH,
   organizations: () => `${DASHBOARD_BASE_PATH}/organizations`,
-  userProfile: (userId: string) =>
-    `${DASHBOARD_BASE_PATH}/users/${encodeRouteSegment(userId)}`,
-  userNotifications: (userId: string) =>
-    `${DASHBOARD_BASE_PATH}/users/${encodeRouteSegment(userId)}/notifications`,
+  userNotifications: () => `${DASHBOARD_BASE_PATH}/notifications`,
   organizationRoot: (organizationId: string) =>
     `${DASHBOARD_BASE_PATH}/organizations/${encodeRouteSegment(organizationId)}`,
   organizationManageRoot: (organizationId: string) =>

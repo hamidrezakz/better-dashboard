@@ -100,7 +100,7 @@ export async function canManageOrganization(input: {
 
 /**
 
- * Ensures the route user exists. Call from `users/[userId]/layout.tsx` only.
+ * Ensures the route user exists. Call from a future `users/[userId]/layout.tsx` only.
 
  */
 
@@ -116,7 +116,7 @@ export const assertDashboardUserExists = cache(async (userId: string) => {
   }
 });
 
-/** Layout only: `users/[userId]/layout.tsx` */
+/** Layout only: future admin `users/[userId]/layout.tsx` */
 
 export const requireUserProfileAccess = cache(async (targetUserId: string) => {
   const session = await requireAuthSession();

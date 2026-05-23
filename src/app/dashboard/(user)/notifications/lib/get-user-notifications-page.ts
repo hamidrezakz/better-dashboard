@@ -10,7 +10,7 @@ import {
   parseUserNotificationTableFilter,
   USER_NOTIFICATIONS_PAGE_SIZE,
   type UserNotificationTableFilter,
-} from "@/app/dashboard/users/[userId]/notifications/lib/user-notifications-table-params";
+} from "@/app/dashboard/(user)/notifications/lib/user-notifications-table-params";
 import { prisma } from "@/lib/prisma";
 import {
   clampDashboardTablePage,

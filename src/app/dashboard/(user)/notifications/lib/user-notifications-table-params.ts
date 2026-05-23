@@ -34,7 +34,6 @@ export const userNotificationFilterLabels: Record<
 };
 
 export function userNotificationsTablePath(
-  userId: string,
   input: DashboardTableSearchParamsInput & {
     filter?: UserNotificationTableFilter;
   } = {},
@@ -42,7 +41,7 @@ export function userNotificationsTablePath(
   const filter =
     input.filter && input.filter !== "unread" ? input.filter : undefined;
 
-  return dashboardTablePath(dashboardRoutes.userNotifications(userId), {
+  return dashboardTablePath(dashboardRoutes.userNotifications(), {
     page: input.page,
     filter,
   });
