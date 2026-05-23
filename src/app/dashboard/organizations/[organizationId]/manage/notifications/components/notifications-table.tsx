@@ -100,7 +100,7 @@ export function NotificationsTable({
                 <TableBody>
                   {notifications.map((notification) => (
                     <TableRow key={notification.id}>
-                      <TableCell className="max-w-[14rem] sm:max-w-xs">
+                      <TableCell className="max-w-56 sm:max-w-xs">
                         <p className="truncate font-medium leading-none">
                           {notification.title}
                         </p>
