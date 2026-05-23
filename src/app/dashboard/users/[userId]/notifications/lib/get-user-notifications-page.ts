@@ -5,7 +5,7 @@ import {
   getUserNotificationScope,
 } from "@/app/dashboard/lib/notification-visibility";
 import type { NotificationViewItem } from "@/app/dashboard/lib/notification-view-types";
-import { buildNotificationSourceLabel } from "@/app/dashboard/lib/notification-source-label";
+import { buildNotificationSourceInline } from "@/app/dashboard/lib/notification-source-label";
 import {
   parseUserNotificationTableFilter,
   USER_NOTIFICATIONS_PAGE_SIZE,
@@ -123,7 +123,7 @@ export async function getUserNotificationsPage(
         teamName,
         organizationName,
         createdByName,
-        sourceLabel: buildNotificationSourceLabel({
+        sourceLabel: buildNotificationSourceInline({
           organizationName,
           teamName,
           createdByName,

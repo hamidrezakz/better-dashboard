@@ -10,7 +10,6 @@ import {
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { truncateText } from "@/lib/truncate-text";
 import { RequestStatusBadge } from "@/components/globals-badge/request-status-badge";
-import { VisibilityBadge } from "@/components/globals-badge/visibility-badge";
 import {
   Card,
   CardAction,
@@ -109,8 +108,9 @@ export function UserNotificationsTable({
                   <TableRow>
                     <TableHead>Title</TableHead>
                     <TableHead className="hidden sm:table-cell">Type</TableHead>
-                    <TableHead>Audience</TableHead>
-                    <TableHead className="hidden md:table-cell">Source</TableHead>
+                    <TableHead className="hidden md:table-cell">
+                      Source
+                    </TableHead>
                     <TableHead className="hidden lg:table-cell">
                       {filter === "read" ? "Read" : "Sent"}
                     </TableHead>
@@ -136,15 +136,9 @@ export function UserNotificationsTable({
                       <TableCell className="hidden sm:table-cell">
                         <RequestStatusBadge status={notification.type} />
                       </TableCell>
-                      <TableCell>
-                        <VisibilityBadge visibility={notification.audience} />
-                      </TableCell>
-                      <TableCell className="hidden max-w-[12rem] text-xs md:table-cell">
+                      <TableCell className="hidden max-w-[14rem] truncate text-xs text-muted-foreground md:table-cell">
                         {notification.sourceLabel ? (
-                          <span
-                            className="line-clamp-2 leading-relaxed"
-                            title={notification.sourceLabel}
-                          >
+                          <span title={notification.sourceLabel}>
                             {notification.sourceLabel}
                           </span>
                         ) : (

@@ -88,9 +88,9 @@ export function NotificationViewDialog({
         </DialogHeader>
 
         {displayed ? (
-          <div className="min-h-0 flex-1 overflow-y-auto px-4 my-2 pb-4">
+          <div className="min-h-0 flex-1 overflow-y-auto px-4 my-3 pb-4">
             <div className="flex gap-3">
-              <div className="min-w-0 flex-1 space-y-5">
+              <div className="min-w-0 flex-1 space-y-6">
                 <div className="flex space-y-2 flex-col">
                   <p className="text-base font-semibold leading-snug">
                     {displayed.title}
