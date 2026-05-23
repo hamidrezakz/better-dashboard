@@ -12,7 +12,7 @@
 
 - **English** only in the template; no i18n runtime unless the user asks.
 - **Dashboard chrome** (sidebar, breadcrumbs, manage tabs): `src/app/dashboard/lib/dashboard-nav-labels.ts` — not inline in nav components.
-- **Enum/badge table copy:** `src/lib/i18n/badge-translations.ts` (legacy path name).
+- **Enum/badge table copy:** `src/lib/badge-labels.ts`.
 - File layout is intentional so a later single-language swap or multilingual setup is straightforward — not agent work unless requested.
 
 ## Later (humans)

@@ -17,7 +17,7 @@ async function assertOwnerExists() {
 
   if (!owner) {
     throw new Error(
-      `کاربر ${OWNER_USER_ID} در دیتابیس نیست. اول با همان حساب ثبت‌نام کن.`,
+      `User ${OWNER_USER_ID} was not found in the database. Sign up with that account first.`,
     );
   }
 

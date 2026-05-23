@@ -28,7 +28,7 @@ function JoinPageFallback() {
     <CardLoadingFallback
       showHeader={false}
       contentClassName="min-h-48"
-      label="در حال بارگذاری..."
+      label="Loading..."
     />
   );
 }
@@ -50,7 +50,7 @@ async function JoinInvitationPageContent({
     return (
       <Card className="border-border/60 shadow-sm">
         <CardContent className="py-10 text-center text-sm text-muted-foreground">
-          دعوت‌نامه پیدا نشد.
+          Invitation not found.
         </CardContent>
       </Card>
     );

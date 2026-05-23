@@ -11,10 +11,7 @@ import {
   type OrganizationInvitationItem,
 } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-form-utils";
 import { organizationInvitationsTablePath } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitations-table-params";
-import {
-  formatPersianDate,
-  persianDateTimeOptions,
-} from "@/lib/format-persian-date";
+import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { formatInvitationUsageLabel } from "@/lib/invitation-display-status";
 import { InvitationDisplayStatusBadge } from "@/components/globals-badge/invitation-display-status-badge";
 import { InvitationJoinScopeBadge } from "@/components/globals-badge/invitation-join-scope-badge";
@@ -71,14 +68,14 @@ export function InvitationsTable({
       if (!result.success) {
         onFeedback({
           kind: "error",
-          message: result.error ?? "حذف دعوت‌نامه ناموفق بود.",
+          message: result.error ?? "Could not delete the invitation.",
         });
         return;
       }
 
       onFeedback({
         kind: "success",
-        message: "دعوت‌نامه حذف شد.",
+        message: "Invitation deleted.",
       });
       router.refresh();
     });
@@ -87,10 +84,10 @@ export function InvitationsTable({
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0">
-        <CardTitle>دعوت‌نامه‌ها</CardTitle>
+        <CardTitle>Invitations</CardTitle>
         <Button size="sm" onClick={onCreate}>
           <PlusIcon data-icon="inline-start" />
-          ایجاد دعوت‌نامه
+          Create invitation
         </Button>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -118,19 +115,19 @@ export function InvitationsTable({
                 }),
               )
             }
-            countLabel="دعوت‌نامه"
+            countLabel="invitation"
           >
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>دعوت</TableHead>
-                    <TableHead>مقصد</TableHead>
-                    <TableHead>وضعیت</TableHead>
+                    <TableHead>Invitation</TableHead>
+                    <TableHead>Destination</TableHead>
+                    <TableHead>Status</TableHead>
                     <TableHead className="hidden lg:table-cell">
-                      اعتبار
+                      Expires
                     </TableHead>
-                    <TableHead className="text-end">عملیات</TableHead>
+                    <TableHead className="text-end">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -152,7 +149,7 @@ export function InvitationsTable({
                               invitation.maxUses,
                             )}
                             {" · "}
-                            {`ایجادکننده: ${invitation.inviterName}`}
+                            {`Created by: ${invitation.inviterName}`}
                           </p>
                         </TableCell>
                         <TableCell>
@@ -171,10 +168,7 @@ export function InvitationsTable({
                           />
                         </TableCell>
                         <TableCell className="hidden text-xs text-muted-foreground lg:table-cell">
-                          {formatPersianDate(
-                            invitation.expiresAt,
-                            persianDateTimeOptions,
-                          )}
+                          {formatDate(invitation.expiresAt, dateTimeOptions)}
                         </TableCell>
                         <TableCell className="text-end">
                           <InvitationRowActionsMenu
@@ -194,7 +188,7 @@ export function InvitationsTable({
           </DashboardTableShell>
         ) : (
           <p className="py-8 text-center text-xs text-muted-foreground">
-            هنوز دعوت‌نامه‌ای ایجاد نشده است.
+            No invitations yet.
           </p>
         )}
       </CardContent>

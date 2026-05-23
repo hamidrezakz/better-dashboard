@@ -137,7 +137,7 @@ async function UserProfileOrganizationStat({ params }: UserProfilePageProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
           <Building2Icon className="size-4" />
-          سازمان‌ها
+          Organizations
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -160,7 +160,7 @@ async function UserProfileTeamStat({ params }: UserProfilePageProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
           <UsersIcon className="size-4" />
-          تیم‌ها
+          Teams
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -183,7 +183,7 @@ async function UserProfileNotificationsStat({ params }: UserProfilePageProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
           <BellIcon className="size-4" />
-          اعلان‌های خوانده نشده
+          Unread notifications
         </CardTitle>
       </CardHeader>
       <CardContent className="flex items-end justify-between gap-2">
@@ -193,7 +193,7 @@ async function UserProfileNotificationsStat({ params }: UserProfilePageProps) {
           variant="ghost"
           render={<Link href={dashboardRoutes.userNotifications(userId)} />}
         >
-          مشاهده
+          View
         </Button>
       </CardContent>
     </Card>
@@ -215,7 +215,7 @@ async function UserProfileMembershipsCard({ params }: UserProfilePageProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>سازمان‌ها</CardTitle>
+        <CardTitle>Organizations</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="divide-y">
@@ -241,7 +241,7 @@ async function UserProfileMembershipsCard({ params }: UserProfilePageProps) {
                   />
                 }
               >
-                مشاهده
+                View
               </Button>
             </div>
           ))}

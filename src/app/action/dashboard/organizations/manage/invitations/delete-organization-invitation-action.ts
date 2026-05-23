@@ -31,7 +31,7 @@ export async function deleteOrganizationInvitationAction(
   if (!canManage) {
     return {
       success: false,
-      error: "شما دسترسی لازم برای مدیریت دعوت‌نامه‌های این سازمان را ندارید.",
+      error: "You don't have permission to manage invitations for this organization.",
     };
   }
 
@@ -46,7 +46,7 @@ export async function deleteOrganizationInvitationAction(
   if (!invitation) {
     return {
       success: false,
-      error: "دعوت‌نامه موردنظر پیدا نشد.",
+      error: "Invitation not found.",
     };
   }
 

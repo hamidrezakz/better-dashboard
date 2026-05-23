@@ -1,12 +1,13 @@
 import type { InvitationJoinScope } from "@/app/join/lib/invitation-scope";
+import { badgeLabels } from "@/lib/badge-labels";
 
 export const invitationJoinScopeToggleLabels: Record<
   Exclude<InvitationJoinScope, "unknown">,
   string
 > = {
-  organization: "سازمان",
-  team: "تیم",
-  organization_and_team: "سازمان + تیم",
+  organization: badgeLabels.invitationJoinScope.organization,
+  team: badgeLabels.invitationJoinScope.team,
+  organization_and_team: badgeLabels.invitationJoinScope.organization_and_team,
 };
 
 export const JOIN_SCOPE_OPTIONS = [

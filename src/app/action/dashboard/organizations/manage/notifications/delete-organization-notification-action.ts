@@ -30,7 +30,7 @@ export async function deleteOrganizationNotificationAction(
   if (!canManage) {
     return {
       success: false,
-      error: "شما دسترسی لازم برای حذف اعلان‌های این سازمان را ندارید.",
+      error: "You don't have permission to delete notifications for this organization.",
     };
   }
 
@@ -45,7 +45,7 @@ export async function deleteOrganizationNotificationAction(
   if (!notification) {
     return {
       success: false,
-      error: "اعلان موردنظر پیدا نشد.",
+      error: "Notification not found.",
     };
   }
 

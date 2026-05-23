@@ -1,7 +1,7 @@
 import type { Prisma } from "@/generated/prisma/client";
 import { ORGANIZATIONS, TEAMS_PER_ORG, teamId } from "../config";
 
-const TEAM_NAMES = ["تیم محصول", "تیم فنی", "تیم پشتیبانی"];
+const TEAM_NAMES = ["Product", "Engineering", "Support"];
 
 export function buildSeedTeams(): Prisma.TeamCreateManyInput[] {
   const rows: Prisma.TeamCreateManyInput[] = [];
@@ -11,7 +11,7 @@ export function buildSeedTeams(): Prisma.TeamCreateManyInput[] {
     for (let t = 0; t < TEAMS_PER_ORG; t++) {
       rows.push({
         id: teamId(orgIndex, t),
-        name: TEAM_NAMES[t] ?? `تیم ${t + 1}`,
+        name: TEAM_NAMES[t] ?? `Team ${t + 1}`,
         organizationId: org.id,
         createdAt: new Date(
           base.getTime() + (orgIndex * TEAMS_PER_ORG + t) * 86_400_000,

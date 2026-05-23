@@ -10,7 +10,7 @@ import type { HeaderNotificationItem } from "@/app/dashboard/lib/get-header-noti
 import type { NotificationViewItem } from "@/app/dashboard/lib/notification-view-types";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { buildNotificationSourceInline } from "@/app/dashboard/lib/notification-source-label";
-import { formatPersianDateWithParenthesizedTime } from "@/lib/format-persian-date";
+import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { truncateText } from "@/lib/truncate-text";
 import { NotificationTypeBadge } from "@/components/globals-badge/notification-type-badge";
 import { Badge } from "@/components/ui/badge";
@@ -60,7 +60,7 @@ function NotificationList({
           <BellIcon className="size-4 text-muted-foreground" />
         </span>
         <p className="text-xs text-muted-foreground">
-          اعلان خوانده‌نشده‌ای ندارید.
+          You have no unread notifications.
         </p>
       </div>
     );
@@ -94,7 +94,7 @@ function NotificationList({
                 <span className="block truncate text-[0.625rem] text-muted-foreground/90">
                   {sourceInline ? <span>{sourceInline} </span> : null}
                   <span>
-                    {formatPersianDateWithParenthesizedTime(item.createdAt)}
+                    {formatDate(item.createdAt, dateTimeOptions)}
                   </span>
                 </span>
               </span>
@@ -139,7 +139,7 @@ export function HeaderNotificationsDropdown({
               variant="ghost"
               size="icon-sm"
               className="relative"
-              aria-label="اعلان‌ها"
+              aria-label="Notifications"
             />
           }
         >
@@ -157,14 +157,14 @@ export function HeaderNotificationsDropdown({
         >
           <div className="flex shrink-0 items-center justify-between border-b px-2.5 py-2">
             <p className="text-xs font-medium text-foreground">
-              اعلان‌های جدید
+              New notifications
             </p>
             <Button
               variant="ghost"
               size="icon-sm"
               disabled={isPending || !unreadTotalCount}
               onClick={handleMarkAllRead}
-              aria-label="خواندن همه"
+              aria-label="Mark all as read"
             >
               <CheckCheckIcon />
             </Button>
@@ -180,7 +180,7 @@ export function HeaderNotificationsDropdown({
             className="h-auto shrink-0 w-full justify-between rounded-none border-t! bg-muted/30 px-2.5 py-2 text-[0.6875rem] hover:bg-muted/60"
             render={<Link href={dashboardRoutes.userNotifications(userId)} />}
           >
-            {hasMore ? "مشاهده همه اعلان‌ها" : "مرکز اعلان‌ها"}
+            {hasMore ? "View all notifications" : "Notification center"}
             <ChevronLeftIcon className="size-3.5 opacity-60" />
           </Button>
         </DropdownMenuContent>

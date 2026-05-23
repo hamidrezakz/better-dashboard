@@ -16,7 +16,7 @@ import {
   resolveInvitationDisplayStatus,
   type InvitationDisplayInput,
 } from "@/lib/invitation-display-status";
-import type { InvitationDisplayStatusKey } from "@/lib/i18n/badge-translations";
+import type { InvitationDisplayStatusKey } from "@/lib/badge-labels";
 import type {
   MembershipRole,
   NotificationAudience,
@@ -26,7 +26,7 @@ import {
   type GlobalBadgeConfig,
   type GlobalBadgeVariant,
 } from "@/components/globals-badge/global-badge";
-import { badgeTranslations } from "@/lib/i18n/badge-translations";
+import { badgeLabels } from "@/lib/badge-labels";
 import type { ReactElement } from "react";
 
 function item(
@@ -42,17 +42,17 @@ const invitationDisplayStatusConfig: Record<
   GlobalBadgeConfig
 > = {
   active_link: item(
-    badgeTranslations.invitationDisplayStatus.active_link,
+    badgeLabels.invitationDisplayStatus.active_link,
     "default",
     <Link2Icon data-icon="inline-start" />,
   ),
   expired: item(
-    badgeTranslations.invitationDisplayStatus.expired,
+    badgeLabels.invitationDisplayStatus.expired,
     "outline",
     <TimerOffIcon data-icon="inline-start" />,
   ),
   exhausted: item(
-    badgeTranslations.invitationDisplayStatus.exhausted,
+    badgeLabels.invitationDisplayStatus.exhausted,
     "outline",
     <UsersIcon data-icon="inline-start" />,
   ),
@@ -63,22 +63,22 @@ const invitationJoinScopeConfig: Record<
   GlobalBadgeConfig
 > = {
   organization: item(
-    badgeTranslations.invitationJoinScope.organization,
+    badgeLabels.invitationJoinScope.organization,
     "secondary",
     <Building2Icon data-icon="inline-start" />,
   ),
   team: item(
-    badgeTranslations.invitationJoinScope.team,
+    badgeLabels.invitationJoinScope.team,
     "outline",
     <UsersIcon data-icon="inline-start" />,
   ),
   organization_and_team: item(
-    badgeTranslations.invitationJoinScope.organization_and_team,
+    badgeLabels.invitationJoinScope.organization_and_team,
     "secondary",
     <Building2Icon data-icon="inline-start" />,
   ),
   unknown: item(
-    badgeTranslations.invitationJoinScope.unknown,
+    badgeLabels.invitationJoinScope.unknown,
     "outline",
     <Link2Icon data-icon="inline-start" />,
   ),
@@ -86,17 +86,17 @@ const invitationJoinScopeConfig: Record<
 
 const membershipRoleConfig: Record<MembershipRole, GlobalBadgeConfig> = {
   OWNER: item(
-    badgeTranslations.membershipRole.OWNER,
+    badgeLabels.membershipRole.OWNER,
     "default",
     <CrownIcon data-icon="inline-start" />,
   ),
   ADMIN: item(
-    badgeTranslations.membershipRole.ADMIN,
+    badgeLabels.membershipRole.ADMIN,
     "secondary",
     <ShieldIcon data-icon="inline-start" />,
   ),
   MEMBER: item(
-    badgeTranslations.membershipRole.MEMBER,
+    badgeLabels.membershipRole.MEMBER,
     "outline",
     <UserIcon data-icon="inline-start" />,
   ),
@@ -104,37 +104,37 @@ const membershipRoleConfig: Record<MembershipRole, GlobalBadgeConfig> = {
 
 const notificationTypeConfig: Record<NotificationType, GlobalBadgeConfig> = {
   SYSTEM: item(
-    badgeTranslations.notificationType.SYSTEM,
+    badgeLabels.notificationType.SYSTEM,
     "default",
     <BellIcon data-icon="inline-start" />,
   ),
   INVITATION: item(
-    badgeTranslations.notificationType.INVITATION,
+    badgeLabels.notificationType.INVITATION,
     "secondary",
     <CircleUserRoundIcon data-icon="inline-start" />,
   ),
   ORGANIZATION: item(
-    badgeTranslations.notificationType.ORGANIZATION,
+    badgeLabels.notificationType.ORGANIZATION,
     "secondary",
     <Building2Icon data-icon="inline-start" />,
   ),
   TEAM: item(
-    badgeTranslations.notificationType.TEAM,
+    badgeLabels.notificationType.TEAM,
     "secondary",
     <UsersIcon data-icon="inline-start" />,
   ),
   SECURITY: item(
-    badgeTranslations.notificationType.SECURITY,
+    badgeLabels.notificationType.SECURITY,
     "destructive",
     <ShieldAlertIcon data-icon="inline-start" />,
   ),
   BILLING: item(
-    badgeTranslations.notificationType.BILLING,
+    badgeLabels.notificationType.BILLING,
     "outline",
     <CreditCardIcon data-icon="inline-start" />,
   ),
   CUSTOM: item(
-    badgeTranslations.notificationType.CUSTOM,
+    badgeLabels.notificationType.CUSTOM,
     "outline",
     <BellIcon data-icon="inline-start" />,
   ),
@@ -145,27 +145,27 @@ const notificationAudienceConfig: Record<
   GlobalBadgeConfig
 > = {
   USER_DIRECT: item(
-    badgeTranslations.notificationAudience.USER_DIRECT,
+    badgeLabels.notificationAudience.USER_DIRECT,
     "default",
     <CircleUserRoundIcon data-icon="inline-start" />,
   ),
   ORG_ALL: item(
-    badgeTranslations.notificationAudience.ORG_ALL,
+    badgeLabels.notificationAudience.ORG_ALL,
     "secondary",
     <Building2Icon data-icon="inline-start" />,
   ),
   ORG_ADMINS: item(
-    badgeTranslations.notificationAudience.ORG_ADMINS,
+    badgeLabels.notificationAudience.ORG_ADMINS,
     "secondary",
     <ShieldIcon data-icon="inline-start" />,
   ),
   ORG_MEMBERS: item(
-    badgeTranslations.notificationAudience.ORG_MEMBERS,
+    badgeLabels.notificationAudience.ORG_MEMBERS,
     "secondary",
     <UsersIcon data-icon="inline-start" />,
   ),
   TEAM: item(
-    badgeTranslations.notificationAudience.TEAM,
+    badgeLabels.notificationAudience.TEAM,
     "outline",
     <UsersIcon data-icon="inline-start" />,
   ),
@@ -184,7 +184,7 @@ function resolveConfig<T extends string>(
   }
 
   return {
-    label: normalizedValue || badgeTranslations.fallback,
+    label: normalizedValue || badgeLabels.fallback,
     variant: "outline",
     icon: fallbackIcon,
   };

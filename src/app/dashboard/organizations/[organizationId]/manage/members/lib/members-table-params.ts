@@ -24,9 +24,9 @@ export function parseMemberTableFilter(
 }
 
 export const memberFilterLabels: Record<MemberTableFilter, string> = {
-  all: "همه",
-  managers: "مدیران",
-  members: "کاربران",
+  all: "All",
+  managers: "Managers",
+  members: "Members",
 };
 
 export function organizationMembersTablePath(

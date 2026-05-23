@@ -14,12 +14,12 @@ export const ALPHA_FAKE_MEMBER_COUNT = Math.floor(FAKE_USER_COUNT * 0.7);
 export const ORGANIZATIONS = [
   {
     id: "seed_org_alpha",
-    name: "آزمایشگاه آلفا",
+    name: "Alpha Lab",
     slug: "seed-org-alpha",
   },
   {
     id: "seed_org_beta",
-    name: "آزمایشگاه بتا",
+    name: "Beta Lab",
     slug: "seed-org-beta",
   },
 ] as const;

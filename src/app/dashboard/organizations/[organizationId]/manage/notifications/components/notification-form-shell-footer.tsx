@@ -18,10 +18,10 @@ export function NotificationFormShellFooter({
   return (
     <>
       <Button disabled={isPending || !canSubmit} onClick={onSubmit}>
-        {isPending ? "در حال ارسال..." : "ارسال اعلان"}
+        {isPending ? "Sending..." : "Send notification"}
       </Button>
       <Button variant="destructive" onClick={onClose} disabled={isPending}>
-        انصراف
+        Cancel
       </Button>
     </>
   );

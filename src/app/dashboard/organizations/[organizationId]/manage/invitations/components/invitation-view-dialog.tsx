@@ -5,10 +5,7 @@ import {
   getInvitationContactLabel,
   type OrganizationInvitationItem,
 } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-form-utils";
-import {
-  formatPersianDate,
-  persianDateTimeOptions,
-} from "@/lib/format-persian-date";
+import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { formatInvitationUsageLabel } from "@/lib/invitation-display-status";
 import { joinRoutes } from "@/app/join/lib/join-routes";
 import { CopyableUrlField } from "@/components/copyable-url-field";
@@ -54,17 +51,17 @@ export function InvitationViewDialog({
     >
       <DialogContent className="flex max-h-[85vh] flex-col gap-0 overflow-hidden p-0 sm:max-w-md">
         <DialogHeader className="shrink-0 space-y-1 px-4 pt-4 pb-2">
-          <DialogTitle>جزئیات دعوت‌نامه</DialogTitle>
+          <DialogTitle>Invitation details</DialogTitle>
         </DialogHeader>
 
         {invitation ? (
           <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-4">
             <div className="space-y-4">
               <DetailMetadataList className="text-xs">
-                <DetailMetadataRow label="نوع">
+                <DetailMetadataRow label="Type">
                   <span>{getInvitationContactLabel()}</span>
                 </DetailMetadataRow>
-                <DetailMetadataRow label="مقصد">
+                <DetailMetadataRow label="Destination">
                   <div className="flex flex-col items-end gap-1">
                     <InvitationJoinScopeBadge scope={joinScope} />
                     {invitation.teamName ? (
@@ -74,26 +71,20 @@ export function InvitationViewDialog({
                     ) : null}
                   </div>
                 </DetailMetadataRow>
-                <DetailMetadataRow label="وضعیت">
+                <DetailMetadataRow label="Status">
                   <InvitationDisplayStatusBadge invitation={invitation} />
                 </DetailMetadataRow>
-                <DetailMetadataRow label="انقضا">
+                <DetailMetadataRow label="Expires">
                   <span className="text-muted-foreground tabular-nums">
-                    {formatPersianDate(
-                      invitation.expiresAt,
-                      persianDateTimeOptions,
-                    )}
+                    {formatDate(invitation.expiresAt, dateTimeOptions)}
                   </span>
                 </DetailMetadataRow>
-                <DetailMetadataRow label="ایجاد">
+                <DetailMetadataRow label="Created">
                   <span className="text-muted-foreground tabular-nums">
-                    {formatPersianDate(
-                      invitation.createdAt,
-                      persianDateTimeOptions,
-                    )}
+                    {formatDate(invitation.createdAt, dateTimeOptions)}
                   </span>
                 </DetailMetadataRow>
-                <DetailMetadataRow label="استفاده">
+                <DetailMetadataRow label="Usage">
                   <span>
                     {formatInvitationUsageLabel(
                       invitation.usedCount,
@@ -101,13 +92,13 @@ export function InvitationViewDialog({
                     )}
                   </span>
                 </DetailMetadataRow>
-                <DetailMetadataRow label="ایجادکننده">
+                <DetailMetadataRow label="Created by">
                   <span>{invitation.inviterName}</span>
                 </DetailMetadataRow>
               </DetailMetadataList>
 
               <CopyableUrlField
-                label="لینک عضویت"
+                label="Join link"
                 url={joinRoutes.invitationAbsolute(invitation.id)}
               />
             </div>
@@ -116,7 +107,7 @@ export function InvitationViewDialog({
 
         <DialogFooter className="shrink-0 px-4 pb-4">
           <Button variant="outline" className="w-full" onClick={onClose}>
-            بستن
+            Close
           </Button>
         </DialogFooter>
       </DialogContent>

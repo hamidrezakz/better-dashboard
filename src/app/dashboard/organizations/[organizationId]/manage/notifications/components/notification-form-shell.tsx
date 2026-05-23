@@ -59,14 +59,14 @@ export function NotificationFormShell({
       if (!result.success) {
         onFeedback({
           kind: "error",
-          message: result.error ?? "ارسال اعلان ناموفق بود.",
+          message: result.error ?? "Could not send the notification.",
         });
         return;
       }
 
       onFeedback({
         kind: "success",
-        message: "اعلان با موفقیت ثبت شد.",
+        message: "Notification sent.",
       });
       onClose();
       router.refresh();
@@ -81,8 +81,8 @@ export function NotificationFormShell({
           onClose();
         }
       }}
-      title="اعلان جدید"
-      description="اعلان جدید برای اعضای سازمان ارسال کنید."
+      title="New notification"
+      description="Send a notification to organization members."
       isPending={isPending}
       canSubmit={canSubmit}
       onClose={onClose}

@@ -1,7 +1,7 @@
-const faNumberFormat = new Intl.NumberFormat("fa-IR");
+const numberFormat = new Intl.NumberFormat("en-US");
 
 export function formatDashboardTableNumber(value: number) {
-  return faNumberFormat.format(value);
+  return numberFormat.format(value);
 }
 
 export function getDashboardTableItemRange(

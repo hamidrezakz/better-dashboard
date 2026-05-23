@@ -13,7 +13,7 @@ export type DashboardTableShellProps = {
   pageSize: number;
   totalCount: number;
   onPageChange: (page: number) => void;
-  /** Noun after the total, e.g. `مورد`, `دعوت‌نامه`, `اعلان` */
+  /** Noun after the total, e.g. `item`, `invitation`, `notification` */
   countLabel?: string;
   children: ReactNode;
   className?: string;
@@ -24,7 +24,7 @@ export function DashboardTableShell({
   pageSize,
   totalCount,
   onPageChange,
-  countLabel = "مورد",
+  countLabel = "item",
   children,
   className,
 }: DashboardTableShellProps) {

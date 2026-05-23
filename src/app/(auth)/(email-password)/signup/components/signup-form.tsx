@@ -39,12 +39,12 @@ export function SignUpForm({ redirectTo }: SignUpFormProps) {
       ) : null}
       <FieldGroup>
         <Field data-invalid={Boolean(state.fieldErrors?.name)}>
-          <FieldLabel htmlFor="name">نام کامل</FieldLabel>
+          <FieldLabel htmlFor="name">Full name</FieldLabel>
           <InputGroup>
             <InputGroupInput
               id="name"
               name="name"
-              placeholder="مثال: علی رضایی"
+              placeholder="e.g. Jane Doe"
               autoComplete="name"
               defaultValue={state.values?.name ?? ""}
               aria-invalid={Boolean(state.fieldErrors?.name)}
@@ -60,7 +60,7 @@ export function SignUpForm({ redirectTo }: SignUpFormProps) {
           <FieldError errors={[{ message: state.fieldErrors?.name }]} />
         </Field>
         <Field data-invalid={Boolean(state.fieldErrors?.email)}>
-          <FieldLabel htmlFor="email">ایمیل</FieldLabel>
+          <FieldLabel htmlFor="email">Email</FieldLabel>
           <InputGroup>
             <InputGroupInput
               id="email"
@@ -82,7 +82,7 @@ export function SignUpForm({ redirectTo }: SignUpFormProps) {
           <FieldError errors={[{ message: state.fieldErrors?.email }]} />
         </Field>
         <Field data-invalid={Boolean(state.fieldErrors?.password)}>
-          <FieldLabel htmlFor="password">رمز عبور</FieldLabel>
+          <FieldLabel htmlFor="password">Password</FieldLabel>
           <PasswordInput
             id="password"
             name="password"
@@ -95,8 +95,8 @@ export function SignUpForm({ redirectTo }: SignUpFormProps) {
         </Field>
       </FieldGroup>
       <FormSubmitButton
-        idleText="ایجاد حساب کاربری"
-        loadingText="در حال ایجاد حساب..."
+        idleText="Create account"
+        loadingText="Creating account..."
       />
     </form>
   );

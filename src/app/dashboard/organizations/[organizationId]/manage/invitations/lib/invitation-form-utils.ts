@@ -3,7 +3,7 @@ import { resolveInvitationJoinScope } from "@/app/join/lib/invitation-scope";
 
 export const TEAM_NONE_VALUE = "__none__";
 
-export const INVITATION_CONTACT_LABEL = "لینک اشتراکی";
+export const INVITATION_CONTACT_LABEL = "Share link";
 
 export type OrganizationInvitationItem = {
   id: string;

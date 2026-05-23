@@ -122,7 +122,7 @@ async function OrganizationPageHeader({ params }: OrganizationPageProps) {
             />
           }
         >
-          مدیریت
+          Manage
         </Button>
       )}
     </div>
@@ -143,7 +143,7 @@ async function OrganizationMemberCountCard({ params }: OrganizationPageProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
           <UsersIcon className="size-4" />
-          اعضا
+          Members
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -167,7 +167,7 @@ async function OrganizationTeamCountCard({ params }: OrganizationPageProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
           <Building2Icon className="size-4" />
-          تیم‌ها
+          Teams
         </CardTitle>
       </CardHeader>
       <CardContent>

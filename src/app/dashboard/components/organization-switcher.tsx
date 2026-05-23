@@ -52,9 +52,9 @@ export function OrganizationSwitcher({
               <Building2Icon className="size-4" />
             </div>
             <div className="grid flex-1 text-start text-sm leading-tight">
-              <span className="truncate font-medium">بدون سازمان</span>
+              <span className="truncate font-medium">No organization</span>
               <span className="truncate text-xs text-muted-foreground">
-                عضو سازمانی نیستید
+                Not a member of any organization
               </span>
             </div>
           </SidebarMenuButton>
@@ -100,7 +100,7 @@ export function OrganizationSwitcher({
                 {activeOrganization.name}
               </span>
               <span className="truncate text-xs text-muted-foreground">
-                سازمان فعال
+                Active organization
               </span>
             </div>
             <ChevronsUpDownIcon className="ms-auto" />
@@ -113,7 +113,7 @@ export function OrganizationSwitcher({
           >
             <DropdownMenuGroup>
               <DropdownMenuLabel className="text-xs text-muted-foreground">
-                سازمان‌ها
+                Organizations
               </DropdownMenuLabel>
               {organizations.map((organization) => (
                 <DropdownMenuItem

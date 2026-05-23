@@ -6,7 +6,7 @@ import { markNotificationReadAction } from "@/app/action/dashboard/users/notific
 import type { NotificationViewItem } from "@/app/dashboard/lib/notification-view-types";
 import { buildNotificationSourceInline } from "@/app/dashboard/lib/notification-source-label";
 import { getNotificationTypeBadgeConfig } from "@/components/globals-badge/badge-config";
-import { formatPersianDateWithParenthesizedTime } from "@/lib/format-persian-date";
+import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { Button } from "@/components/ui/button";
 import { BellIcon, CheckCheckIcon, ClockIcon, LayersIcon } from "lucide-react";
 import {
@@ -83,7 +83,7 @@ export function NotificationViewDialog({
         <DialogHeader className="shrink-0 space-y-1 px-4 pt-4 pb-2">
           <DialogTitle className="flex items-center gap-1.5">
             <BellIcon className="size-3.5 shrink-0 text-muted-foreground" />
-            جزئیات اعلان
+            Notification details
           </DialogTitle>
         </DialogHeader>
 
@@ -113,19 +113,15 @@ export function NotificationViewDialog({
                   <p className="flex items-center gap-1.5">
                     <ClockIcon className="size-3 shrink-0 opacity-70" />
                     <span>
-                      {formatPersianDateWithParenthesizedTime(
-                        displayed.createdAt,
-                      )}
+                      {formatDate(displayed.createdAt, dateTimeOptions)}
                     </span>
                   </p>
                   {displayed.readAt ? (
                     <p className="flex items-center gap-1.5">
                       <CheckCheckIcon className="size-3 shrink-0 opacity-70" />
                       <span>
-                        خوانده‌شده{" "}
-                        {formatPersianDateWithParenthesizedTime(
-                          displayed.readAt,
-                        )}
+                        Read{" "}
+                        {formatDate(displayed.readAt, dateTimeOptions)}
                       </span>
                     </p>
                   ) : null}
@@ -137,7 +133,7 @@ export function NotificationViewDialog({
 
         <DialogFooter className="shrink-0 px-4 pb-4">
           <Button variant="outline" className="w-full" onClick={onClose}>
-            بستن
+            Close
           </Button>
         </DialogFooter>
       </DialogContent>

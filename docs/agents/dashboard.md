@@ -15,7 +15,7 @@ Generic Next.js 16 + `cacheComponents` + Better Auth (org) + Prisma + shadcn/Bas
 | `dashboard-breadcrumb-segments.ts`              | Hidden segments, ID placeholders                         |
 | `dashboard-breadcrumbs.tsx`                     | Client trail; entity names via API                       |
 | `resolve-breadcrumb-labels.ts` + breadcrumb API | Display names for allowed viewers                        |
-| `badge-translations.ts` (`src/lib/i18n/`)       | Enum/badge copy in tables — not route nav                |
+| `badge-labels.ts` (`src/lib/`)                  | Enum/badge copy in tables — not route nav                |
 
 Feature-specific copy (forms, empty states, dialogs) stays beside that feature unless reused across the segment.
 

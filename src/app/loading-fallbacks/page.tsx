@@ -9,26 +9,27 @@ export default function LoadingFallbacksPreviewPage() {
   return (
     <DashboardPageShell className="gap-10 pb-16">
       <div>
-        <h1 className="text-base font-semibold">فالبک‌های لودینگ</h1>
+        <h1 className="text-base font-semibold">Loading fallbacks</h1>
         <p className="text-sm text-muted-foreground">
-          لایهٔ بیرونی همان چیدمان داشبورد است (سایدبار اسکلت + هدر). مسیر:{" "}
+          The outer layer uses the same dashboard layout (sidebar skeleton +
+          header). Route:{" "}
           <code className="text-xs">/loading-fallbacks</code>
         </p>
       </div>
 
-      <PreviewSection title="LoadingFallback — بلوک کوچک (بخشی از صفحه)">
+      <PreviewSection title="LoadingFallback — small block (partial page)">
         <div className="h-40 rounded-lg border border-dashed border-border">
           <LoadingFallback />
         </div>
       </PreviewSection>
 
-      <PreviewSection title="LoadingFallback — با متن">
+      <PreviewSection title="LoadingFallback — with label">
         <div className="h-44 rounded-lg border border-dashed border-border">
-          <LoadingFallback label="در حال بارگذاری..." />
+          <LoadingFallback label="Loading..." />
         </div>
       </PreviewSection>
 
-      <PreviewSection title="LoadingFallback — پر کردن ارتفاع (مثل محتوای داشبورد)">
+      <PreviewSection title="LoadingFallback — fill height (dashboard content)">
         <div className="flex h-64 flex-col rounded-lg border border-dashed border-border">
           <LoadingFallback className="flex-1" />
         </div>
@@ -40,13 +41,13 @@ export default function LoadingFallbacksPreviewPage() {
         </PreviewCardFrame>
       </PreviewSection>
 
-      <PreviewSection title="CardLoadingFallback — با متن (مثل صفحه join)">
+      <PreviewSection title="CardLoadingFallback — with label (join page)">
         <PreviewCardFrame>
-          <CardLoadingFallback label="در حال بارگذاری..." />
+          <CardLoadingFallback label="Loading..." />
         </PreviewCardFrame>
       </PreviewSection>
 
-      <PreviewSection title="DashboardLayoutFallback — وقتی کل layout در Suspense است">
+      <PreviewSection title="DashboardLayoutFallback — full layout Suspense">
         <div className="overflow-hidden rounded-lg border border-dashed border-border">
           <DashboardLayoutFallback />
         </div>

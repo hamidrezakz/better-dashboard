@@ -44,7 +44,7 @@ export function UserSearchCombobox({
   onValueChange,
   searchUsers = defaultSearchUsers,
   disabled,
-  placeholder = "جستجو با نام یا ایمیل…",
+  placeholder = "Search by name or email…",
   className,
 }: UserSearchComboboxProps) {
   const [isSearching, setIsSearching] = useState(() => !value);
@@ -90,10 +90,10 @@ export function UserSearchCombobox({
 
   const emptyMessage =
     inputValue.trim().length < MIN_QUERY_LENGTH
-      ? "حداقل ۲ حرف برای جستجو وارد کنید."
+      ? "Enter at least 2 characters to search."
       : isPending
-        ? "در حال جستجو…"
-        : "کاربری یافت نشد.";
+        ? "Searching…"
+        : "No users found.";
 
   if (value && !isSearching) {
     return (
@@ -185,7 +185,7 @@ function SelectedUserField({
         variant="ghost"
         size="icon-xs"
         disabled={disabled}
-        aria-label="تغییر گیرنده"
+        aria-label="Change recipient"
         className="shrink-0"
         onClick={onClear}
       >

@@ -35,14 +35,14 @@ function getInvitationErrorMessage(invitation: {
   const expiresAtIso = invitation.expiresAt.toISOString();
 
   if (invitationIsExpired(expiresAtIso)) {
-    return "مهلت این دعوت‌نامه به پایان رسیده است.";
+    return "This invitation has expired.";
   }
 
   if (invitationIsExhausted(invitation.usedCount, invitation.maxUses)) {
-    return "ظرفیت استفاده از این دعوت‌نامه تکمیل شده است.";
+    return "This invitation has reached its usage limit.";
   }
 
-  return "این دعوت‌نامه دیگر قابل استفاده نیست.";
+  return "This invitation is no longer available.";
 }
 
 export async function acceptInvitationAction(
@@ -73,7 +73,7 @@ export async function acceptInvitationAction(
     if (!invitation) {
       return {
         success: false,
-        error: "دعوت‌نامه پیدا نشد.",
+        error: "Invitation not found.",
       };
     }
 
@@ -85,7 +85,7 @@ export async function acceptInvitationAction(
     if (scope === "unknown") {
       return {
         success: false,
-        error: "این دعوت‌نامه معتبر نیست.",
+        error: "This invitation is not valid.",
       };
     }
 
@@ -215,7 +215,7 @@ export async function acceptInvitationAction(
   } catch {
     return {
       success: false,
-      error: "پذیرش دعوت‌نامه ناموفق بود. دوباره تلاش کنید.",
+      error: "Could not accept the invitation. Please try again.",
     };
   }
 }

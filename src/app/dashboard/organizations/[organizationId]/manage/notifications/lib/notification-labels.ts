@@ -2,7 +2,7 @@ import type {
   NotificationAudience,
   NotificationType,
 } from "@/generated/prisma/enums";
-import { badgeTranslations } from "@/lib/i18n/badge-translations";
+import { badgeLabels } from "@/lib/badge-labels";
 
 export const NOTIFICATION_TYPE_OPTIONS = [
   "SYSTEM",
@@ -22,6 +22,5 @@ export const NOTIFICATION_AUDIENCE_OPTIONS = [
   "TEAM",
 ] as const satisfies readonly NotificationAudience[];
 
-export const notificationTypeLabels = badgeTranslations.notificationType;
-export const notificationAudienceLabels =
-  badgeTranslations.notificationAudience;
+export const notificationTypeLabels = badgeLabels.notificationType;
+export const notificationAudienceLabels = badgeLabels.notificationAudience;

@@ -25,8 +25,8 @@ export function resolveInvitationJoinScope(input: {
 }
 
 export const invitationJoinScopeLabels: Record<InvitationJoinScope, string> = {
-  organization: "عضویت در سازمان",
-  team: "عضویت در تیم",
-  organization_and_team: "عضویت در سازمان و تیم",
-  unknown: "دعوت",
+  organization: "Join organization",
+  team: "Join team",
+  organization_and_team: "Join organization and team",
+  unknown: "Invitation",
 };

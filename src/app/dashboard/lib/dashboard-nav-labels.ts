@@ -1,33 +1,31 @@
 /**
  * Cross-cutting dashboard navigation copy (sidebar, breadcrumbs, manage tabs).
- * Single language only — edit strings here when switching locale (e.g. to English).
- * Not an i18n layer: no runtime locale switching.
  */
 export const dashboardNavLabels = {
-  navMainGroup: "ناوبری",
+  navMainGroup: "Navigation",
   sidebar: {
-    dashboard: "داشبورد",
-    notifications: "اعلان‌ها",
-    organizationManagement: "مدیریت سازمان",
+    dashboard: "Dashboard",
+    notifications: "Notifications",
+    organizationManagement: "Organization management",
   },
   manageTabs: {
-    members: "اعضا",
-    teams: "تیم‌ها",
-    invitations: "دعوت‌نامه‌ها",
-    notifications: "اعلان‌ها",
+    members: "Members",
+    teams: "Teams",
+    invitations: "Invitations",
+    notifications: "Notifications",
   },
   breadcrumbDynamicPrefix: {
-    user: "کاربر",
-    organization: "سازمان",
+    user: "User",
+    organization: "Organization",
   },
   breadcrumbSegments: {
-    dashboard: "داشبورد",
-    users: "کاربران",
-    organizations: "سازمان‌ها",
-    manage: "مدیریت",
-    members: "اعضا",
-    teams: "تیم‌ها",
-    invitations: "دعوت‌نامه‌ها",
-    notifications: "اعلان‌ها",
+    dashboard: "Dashboard",
+    users: "Users",
+    organizations: "Organizations",
+    manage: "Manage",
+    members: "Members",
+    teams: "Teams",
+    invitations: "Invitations",
+    notifications: "Notifications",
   },
 } as const;

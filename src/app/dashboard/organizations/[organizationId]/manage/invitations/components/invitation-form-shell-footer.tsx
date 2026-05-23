@@ -22,14 +22,14 @@ export function InvitationFormShellFooter({
       <Button disabled={isPending || !canSubmit} onClick={onSubmit}>
         {isPending
           ? isEdit
-            ? "در حال ذخیره..."
-            : "در حال ایجاد..."
+            ? "Saving..."
+            : "Creating..."
           : isEdit
-            ? "ذخیره"
-            : "ایجاد"}
+            ? "Save"
+            : "Create"}
       </Button>
       <Button variant="destructive" onClick={onClose} disabled={isPending}>
-        انصراف
+        Cancel
       </Button>
     </>
   );

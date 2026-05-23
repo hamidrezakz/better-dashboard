@@ -39,7 +39,7 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
       ) : null}
       <FieldGroup>
         <Field data-invalid={Boolean(state.fieldErrors?.email)}>
-          <FieldLabel htmlFor="email">ایمیل</FieldLabel>
+          <FieldLabel htmlFor="email">Email</FieldLabel>
           <InputGroup>
             <InputGroupInput
               id="email"
@@ -61,7 +61,7 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
           <FieldError errors={[{ message: state.fieldErrors?.email }]} />
         </Field>
         <Field data-invalid={Boolean(state.fieldErrors?.password)}>
-          <FieldLabel htmlFor="password">رمز عبور</FieldLabel>
+          <FieldLabel htmlFor="password">Password</FieldLabel>
           <PasswordInput
             id="password"
             name="password"
@@ -72,7 +72,7 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
           <FieldError errors={[{ message: state.fieldErrors?.password }]} />
         </Field>
       </FieldGroup>
-      <FormSubmitButton idleText="ورود" loadingText="در حال ورود..." />
+      <FormSubmitButton idleText="Sign in" loadingText="Signing in..." />
     </form>
   );
 }

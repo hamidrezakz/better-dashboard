@@ -6,10 +6,7 @@ import { NotificationRowActionsMenu } from "@/app/dashboard/organizations/[organ
 import { truncateText } from "@/lib/truncate-text";
 import { type OrganizationNotificationItem } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/lib/notification-form-utils";
 import { organizationNotificationsTablePath } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/lib/notifications-table-params";
-import {
-  formatPersianDate,
-  persianDateTimeOptions,
-} from "@/lib/format-persian-date";
+import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { VisibilityBadge } from "@/components/globals-badge/visibility-badge";
 import { UserProfileCell } from "@/components/user-profile/user-profile-cell";
 import { Button } from "@/components/ui/button";
@@ -58,10 +55,10 @@ export function NotificationsTable({
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0">
-        <CardTitle>اعلان‌ها</CardTitle>
+        <CardTitle>Notifications</CardTitle>
         <Button size="sm" onClick={onCreate}>
           <PlusIcon data-icon="inline-start" />
-          اعلان جدید
+          New notification
         </Button>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -89,21 +86,21 @@ export function NotificationsTable({
                 }),
               )
             }
-            countLabel="اعلان"
+            countLabel="notification"
           >
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>عنوان</TableHead>
-                    <TableHead>مخاطب</TableHead>
+                    <TableHead>Title</TableHead>
+                    <TableHead>Audience</TableHead>
                     <TableHead className="hidden md:table-cell">
-                      گیرنده
+                      Recipient
                     </TableHead>
                     <TableHead className="hidden lg:table-cell">
-                      تاریخ ارسال
+                      Sent
                     </TableHead>
-                    <TableHead className="text-end">عملیات</TableHead>
+                    <TableHead className="text-end">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -142,10 +139,7 @@ export function NotificationsTable({
                         )}
                       </TableCell>
                       <TableCell className="hidden text-xs text-muted-foreground lg:table-cell">
-                        {formatPersianDate(
-                          notification.createdAt,
-                          persianDateTimeOptions,
-                        )}
+                        {formatDate(notification.createdAt, dateTimeOptions)}
                       </TableCell>
                       <TableCell className="text-end">
                         <NotificationRowActionsMenu
@@ -169,7 +163,7 @@ export function NotificationsTable({
           </DashboardTableShell>
         ) : (
           <p className="py-8 text-center text-xs text-muted-foreground">
-            هنوز اعلانی ثبت نشده است.
+            No notifications yet.
           </p>
         )}
       </CardContent>

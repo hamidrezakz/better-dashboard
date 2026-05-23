@@ -11,13 +11,13 @@ export function getNotificationSourceParts(input: {
   const parts: NotificationSourcePart[] = [];
 
   if (input.organizationName) {
-    parts.push({ label: "سازمان", value: input.organizationName });
+    parts.push({ label: "Organization", value: input.organizationName });
   }
   if (input.teamName) {
-    parts.push({ label: "تیم", value: input.teamName });
+    parts.push({ label: "Team", value: input.teamName });
   }
   if (input.createdByName) {
-    parts.push({ label: "ارسال‌کننده", value: input.createdByName });
+    parts.push({ label: "Sender", value: input.createdByName });
   }
 
   return parts;

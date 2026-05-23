@@ -29,8 +29,8 @@ export const userNotificationFilterLabels: Record<
   UserNotificationTableFilter,
   string
 > = {
-  unread: "جدید",
-  read: "خوانده‌شده",
+  unread: "Unread",
+  read: "Read",
 };
 
 export function userNotificationsTablePath(

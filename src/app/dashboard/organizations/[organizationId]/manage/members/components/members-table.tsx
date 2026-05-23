@@ -1,6 +1,6 @@
 "use client";
 
-import { formatPersianDate } from "@/lib/format-persian-date";
+import { formatDate } from "@/lib/format-date";
 import { useRouter } from "next/navigation";
 import type { OrganizationMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/get-organization-members-page";
 import {
@@ -66,7 +66,7 @@ export function MembersTable({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>اعضا</CardTitle>
+        <CardTitle>Members</CardTitle>
         <CardAction>
           <DashboardTableSegmentFilter
             value={filter}
@@ -86,12 +86,12 @@ export function MembersTable({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>نام</TableHead>
-                <TableHead className="hidden sm:table-cell">ایمیل</TableHead>
-                <TableHead>نقش</TableHead>
-                <TableHead className="hidden md:table-cell">تیم‌ها</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead className="hidden sm:table-cell">Email</TableHead>
+                <TableHead>Role</TableHead>
+                <TableHead className="hidden md:table-cell">Teams</TableHead>
                 <TableHead className="hidden lg:table-cell">
-                  تاریخ عضویت
+                  Joined
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -118,7 +118,7 @@ export function MembersTable({
                       {member.teamCount}
                     </TableCell>
                     <TableCell className="hidden lg:table-cell">
-                      {formatPersianDate(member.joinedAt)}
+                      {formatDate(member.joinedAt)}
                     </TableCell>
                   </TableRow>
                 ))
@@ -128,7 +128,7 @@ export function MembersTable({
                     colSpan={5}
                     className="py-6 text-center text-muted-foreground"
                   >
-                    عضوی ثبت نشده است.
+                    No members yet.
                   </TableCell>
                 </TableRow>
               )}

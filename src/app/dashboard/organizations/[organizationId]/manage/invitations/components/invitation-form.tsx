@@ -83,7 +83,7 @@ export function InvitationForm({
   return (
     <div className="space-y-6">
       <fieldset className="space-y-2" disabled={disabled}>
-        <legend className="text-xs font-medium">محدوده عضویت</legend>
+        <legend className="text-xs font-medium">Join scope</legend>
         <ToggleGroup
           value={[form.joinScope]}
           onValueChange={(values) => {
@@ -122,7 +122,7 @@ export function InvitationForm({
         {showTeam ? (
           <div className="space-y-2">
             <FormLabel htmlFor={`${fieldId}-team`} required>
-              تیم
+              Team
             </FormLabel>
             <Select
               value={form.teamId}
@@ -135,10 +135,10 @@ export function InvitationForm({
               disabled={disabled}
             >
               <SelectTrigger id={`${fieldId}-team`} className="w-full">
-                <SelectValue placeholder="انتخاب تیم">
+                <SelectValue placeholder="Select team">
                   {form.teamId === TEAM_NONE_VALUE
-                    ? "انتخاب تیم"
-                    : (teamNameById.get(form.teamId) ?? "انتخاب تیم")}
+                    ? "Select team"
+                    : (teamNameById.get(form.teamId) ?? "Select team")}
                 </SelectValue>
               </SelectTrigger>
               <SelectContent>
@@ -154,7 +154,7 @@ export function InvitationForm({
 
         <div className="space-y-2">
           <FormLabel htmlFor={`${fieldId}-expiry`} required>
-            تاریخ انقضا
+            Expiration date
           </FormLabel>
           <Input
             id={`${fieldId}-expiry`}
@@ -166,7 +166,7 @@ export function InvitationForm({
         </div>
 
         <div className="space-y-2">
-          <FormLabel htmlFor={`${fieldId}-max-uses`}>حداکثر استفاده</FormLabel>
+          <FormLabel htmlFor={`${fieldId}-max-uses`}>Maximum uses</FormLabel>
           <Input
             id={`${fieldId}-max-uses`}
             type="number"
@@ -174,7 +174,7 @@ export function InvitationForm({
             value={form.maxUses}
             disabled={disabled}
             onChange={(event) => onChange({ maxUses: event.target.value })}
-            placeholder="نامحدود"
+            placeholder="Unlimited"
           />
         </div>
       </div>

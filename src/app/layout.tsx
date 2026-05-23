@@ -18,13 +18,13 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="fa-IR"
-      dir="rtl"
+      lang="en"
+      dir="ltr"
       className={cn("h-full", "antialiased", "font-sans", vazirmatn.variable)}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <DirectionProvider direction="rtl">
+        <DirectionProvider direction="ltr">
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

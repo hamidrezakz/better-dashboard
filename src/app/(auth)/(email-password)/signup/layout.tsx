@@ -11,25 +11,25 @@ export default function SignUpLayout({ children }: SignUpLayoutProps) {
   return (
     <div className="flex flex-col gap-4">
       <div className="mb-6 flex flex-col gap-2 text-center">
-        <h1 className="text-2xl font-semibold">ثبت نام</h1>
+        <h1 className="text-2xl font-semibold">Sign up</h1>
         <p className="text-sm text-muted-foreground">
-          حساب کاربری خود را در یک مرحله ایجاد کنید.
+          Create your account in one step.
         </p>
       </div>
       {children}
       <div className="px-2 text-center text-sm">
         <p className="text-muted-foreground">
-          از قبل حساب کاربری دارید؟{" "}
+          Already have an account?{" "}
           <Suspense
             fallback={
               <Link
                 className="font-medium text-primary"
                 href={buildAuthRouteWithRedirect("/login", "/dashboard")}>
-                ورود
+                Sign in
               </Link>
             }>
             <AuthCrossLink className="font-medium text-primary" target="/login">
-              ورود
+              Sign in
             </AuthCrossLink>
           </Suspense>
         </p>

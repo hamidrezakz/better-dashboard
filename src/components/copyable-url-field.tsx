@@ -59,7 +59,7 @@ export function CopyableUrlField({
           size="icon"
           className="shrink-0"
           onClick={onCopy}
-          aria-label={copied ? "کپی شد" : "کپی لینک"}
+          aria-label={copied ? "Copied" : "Copy link"}
         >
           {copied ? (
             <CheckIcon className="text-primary" aria-hidden />
@@ -70,7 +70,7 @@ export function CopyableUrlField({
       </div>
       {copied ? (
         <p className="text-xs text-muted-foreground" aria-live="polite">
-          کپی شد
+          Copied
         </p>
       ) : null}
     </div>

@@ -49,7 +49,7 @@ async function DashboardOrganizationsContent() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>سازمان‌های من</CardTitle>
+        <CardTitle>My organizations</CardTitle>
       </CardHeader>
       <CardContent>
         {memberships.length ? (
@@ -77,7 +77,7 @@ async function DashboardOrganizationsContent() {
                       />
                     }
                   >
-                    مشاهده
+                    View
                   </Button>
                   {isOrganizationManagerRole(membership.role) && (
                     <Button
@@ -91,7 +91,7 @@ async function DashboardOrganizationsContent() {
                         />
                       }
                     >
-                      مدیریت
+                      Manage
                     </Button>
                   )}
                 </div>
@@ -101,8 +101,10 @@ async function DashboardOrganizationsContent() {
         ) : (
           <Empty className="border">
             <EmptyHeader>
-              <EmptyTitle>سازمانی پیدا نشد</EmptyTitle>
-              <EmptyDescription>هنوز عضو هیچ سازمانی نیستید.</EmptyDescription>
+              <EmptyTitle>No organizations</EmptyTitle>
+              <EmptyDescription>
+                You are not a member of any organization yet.
+              </EmptyDescription>
             </EmptyHeader>
           </Empty>
         )}

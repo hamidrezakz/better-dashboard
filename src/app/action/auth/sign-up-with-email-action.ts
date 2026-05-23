@@ -28,11 +28,11 @@ export async function signUpWithEmailAction(
 
   if (!name || !email || !password) {
     return {
-      formError: "لطفا همه فیلدهای الزامی را تکمیل کنید.",
+      formError: "Please complete all required fields.",
       fieldErrors: {
-        name: !name ? "نام کامل الزامی است." : undefined,
-        email: !email ? "ایمیل الزامی است." : undefined,
-        password: !password ? "رمز عبور الزامی است." : undefined,
+        name: !name ? "Full name is required." : undefined,
+        email: !email ? "Email is required." : undefined,
+        password: !password ? "Password is required." : undefined,
       },
       values: { name, email },
     };
@@ -40,9 +40,9 @@ export async function signUpWithEmailAction(
 
   if (!isValidEmail(email)) {
     return {
-      formError: "لطفا یک ایمیل معتبر وارد کنید.",
+      formError: "Please enter a valid email address.",
       fieldErrors: {
-        email: "لطفا یک ایمیل معتبر وارد کنید.",
+        email: "Please enter a valid email address.",
       },
       values: { name, email },
     };
@@ -50,9 +50,9 @@ export async function signUpWithEmailAction(
 
   if (password.length < 8) {
     return {
-      formError: "رمز عبور باید حداقل 8 کاراکتر باشد.",
+      formError: "Password must be at least 8 characters.",
       fieldErrors: {
-        password: "رمز عبور باید حداقل 8 کاراکتر باشد.",
+        password: "Password must be at least 8 characters.",
       },
       values: { name, email },
     };
@@ -73,7 +73,7 @@ export async function signUpWithEmailAction(
       formError: getAuthActionErrorMessage({
         error,
         fallback:
-          "ایجاد حساب کاربری در حال حاضر ممکن نیست. لطفا دوباره تلاش کنید.",
+          "We couldn't create your account right now. Please try again.",
       }),
       values: { name, email },
     };

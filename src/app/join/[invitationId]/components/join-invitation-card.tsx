@@ -12,7 +12,7 @@ type JoinInvitationCardProps = {
 };
 
 function getOrganizationInitial(name: string) {
-  return name.trim().charAt(0) || "؟";
+  return name.trim().charAt(0) || "?";
 }
 
 export function JoinInvitationCard({

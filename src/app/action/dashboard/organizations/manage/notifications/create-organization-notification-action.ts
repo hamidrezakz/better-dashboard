@@ -68,7 +68,7 @@ export async function createOrganizationNotificationAction(
   if (!canManage) {
     return {
       success: false,
-      error: "شما دسترسی لازم برای ارسال نوتیف سازمانی را ندارید.",
+      error: "You don't have permission to send organization notifications.",
     };
   }
 
@@ -76,21 +76,21 @@ export async function createOrganizationNotificationAction(
   if (!title) {
     return {
       success: false,
-      error: "عنوان نوتیف الزامی است.",
+      error: "Notification title is required.",
     };
   }
 
   if (input.audience === "USER_DIRECT" && !input.userId) {
     return {
       success: false,
-      error: "برای مخاطب کاربر مستقیم، انتخاب کاربر الزامی است.",
+      error: "Select a user for direct notifications.",
     };
   }
 
   if (input.audience === "TEAM" && !input.teamId) {
     return {
       success: false,
-      error: "برای مخاطب تیم، انتخاب تیم الزامی است.",
+      error: "Select a team for team notifications.",
     };
   }
 
@@ -103,7 +103,7 @@ export async function createOrganizationNotificationAction(
     if (!relatedUser) {
       return {
         success: false,
-        error: "کاربر انتخابی به این سازمان/تیم مرتبط نیست.",
+        error: "The selected user is not linked to this organization or team.",
       };
     }
   }
@@ -122,7 +122,7 @@ export async function createOrganizationNotificationAction(
     if (!team) {
       return {
         success: false,
-        error: "تیم انتخابی معتبر نیست.",
+        error: "The selected team is not valid.",
       };
     }
   }

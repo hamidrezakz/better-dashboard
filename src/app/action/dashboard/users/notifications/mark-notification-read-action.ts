@@ -47,7 +47,7 @@ export async function markNotificationReadAction(
   if (!notification) {
     return {
       success: false,
-      error: "اعلان موردنظر پیدا نشد.",
+      error: "Notification not found.",
     };
   }
 

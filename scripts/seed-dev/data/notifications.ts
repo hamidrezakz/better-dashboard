@@ -29,12 +29,12 @@ const AUDIENCES: NotificationAudience[] = [
 ];
 
 const TITLES = [
-  "دعوت‌نامه جدید",
-  "عضو جدید به سازمان پیوست",
-  "به‌روزرسانی تنظیمات",
-  "یادآوری امنیتی",
-  "پیام سیستم",
-  "فعالیت تیم",
+  "New invitation",
+  "New member joined the organization",
+  "Settings updated",
+  "Security reminder",
+  "System message",
+  "Team activity",
 ];
 
 export function buildSeedNotifications(): Prisma.NotificationCreateManyInput[] {
@@ -53,7 +53,7 @@ export function buildSeedNotifications(): Prisma.NotificationCreateManyInput[] {
       type: TYPES[i % TYPES.length],
       audience,
       title: TITLES[i % TITLES.length],
-      body: `متن نمونه اعلان شماره ${i + 1} برای تست داشبورد.`,
+      body: `Sample notification body #${i + 1} for dashboard testing.`,
       payload: { seed: true, index: i },
       userId: isDirect ? OWNER_USER_ID : null,
       createdById:

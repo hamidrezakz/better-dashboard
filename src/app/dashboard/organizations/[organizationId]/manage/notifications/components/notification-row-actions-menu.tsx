@@ -51,12 +51,12 @@ export function NotificationRowActionsMenu({
       });
 
       if (!result.success) {
-        onError?.(result.error ?? "حذف اعلان ناموفق بود.");
+        onError?.(result.error ?? "Could not delete the notification.");
         return;
       }
 
       setConfirmOpen(false);
-      onDeleted?.("اعلان حذف شد.");
+      onDeleted?.("Notification deleted.");
       router.refresh();
     });
   };
@@ -66,21 +66,21 @@ export function NotificationRowActionsMenu({
       <DropdownMenu>
         <DropdownMenuTrigger
           render={<Button size="icon-sm" variant="ghost" />}
-          aria-label="عملیات اعلان"
+          aria-label="Notification actions"
         >
           <MoreHorizontalIcon />
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-36">
           <DropdownMenuItem onClick={onView}>
             <EyeIcon />
-            مشاهده
+            View
           </DropdownMenuItem>
           <DropdownMenuItem
             variant="destructive"
             onClick={() => setConfirmOpen(true)}
           >
             <Trash2Icon />
-            حذف
+            Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -88,20 +88,20 @@ export function NotificationRowActionsMenu({
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>حذف اعلان</AlertDialogTitle>
+            <AlertDialogTitle>Delete notification</AlertDialogTitle>
             <AlertDialogDescription>
-              اعلان «{notificationTitle}» برای همیشه حذف می‌شود. این کار قابل
-              بازگشت نیست.
+              &ldquo;{notificationTitle}&rdquo; will be permanently deleted.
+              This cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isPending}>انصراف</AlertDialogCancel>
+            <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
             <AlertDialogAction
               variant="destructive"
               disabled={isPending}
               onClick={handleDelete}
             >
-              حذف
+              Delete
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

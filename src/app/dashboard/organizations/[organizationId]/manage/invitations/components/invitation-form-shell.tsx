@@ -39,10 +39,10 @@ export function InvitationFormShell({
   const { form, onChange, isEdit, canSubmit } = useInvitationForm(target);
 
   const open = Boolean(target);
-  const title = isEdit ? "ویرایش دعوت‌نامه" : "ایجاد دعوت‌نامه";
+  const title = isEdit ? "Edit invitation" : "Create invitation";
   const description = isEdit
-    ? "اطلاعات دعوت‌نامه را به‌روزرسانی کنید."
-    : "لینک دعوت گروهی برای عضویت در سازمان.";
+    ? "Update invitation details."
+    : "Share a link for members to join the organization.";
 
   const handleSubmit = () => {
     if (!form || !target) {
@@ -54,7 +54,7 @@ export function InvitationFormShell({
     if (maxUses === -1) {
       onFeedback({
         kind: "error",
-        message: "حداکثر دفعات استفاده باید یک عدد مثبت باشد.",
+        message: "Maximum uses must be a positive number.",
       });
       return;
     }
@@ -84,8 +84,8 @@ export function InvitationFormShell({
           message:
             result.error ??
             (target.mode === "edit"
-              ? "ویرایش دعوت‌نامه ناموفق بود."
-              : "ایجاد دعوت‌نامه ناموفق بود."),
+              ? "Could not update the invitation."
+              : "Could not create the invitation."),
         });
         return;
       }
@@ -94,8 +94,8 @@ export function InvitationFormShell({
         kind: "success",
         message:
           target.mode === "edit"
-            ? "دعوت‌نامه ویرایش شد."
-            : "دعوت‌نامه جدید ایجاد شد.",
+            ? "Invitation updated."
+            : "Invitation created.",
       });
       onClose();
       router.refresh();

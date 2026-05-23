@@ -112,20 +112,20 @@ export function JoinInvitationPanel({
             size="lg"
           >
             {isPending
-              ? "در حال عضویت..."
+              ? "Joining..."
               : isAuthenticated
-                ? "عضویت"
-                : "ورود و عضویت"}
+                ? "Join"
+                : "Sign in and join"}
           </Button>
 
           {!isAuthenticated ? (
             <p className="text-center text-xs text-muted-foreground">
-              حساب ندارید؟{" "}
+              Don&apos;t have an account?{" "}
               <a
                 className="text-primary underline-offset-4 hover:underline"
                 href={signupPath}
               >
-                ثبت‌نام
+                Sign up
               </a>
             </p>
           ) : null}
@@ -143,7 +143,7 @@ function UnavailableMessage({
   if (preview.isExpired) {
     return (
       <p className="text-center text-sm text-muted-foreground">
-        مهلت این دعوت‌نامه به پایان رسیده است.
+        This invitation has expired.
       </p>
     );
   }
@@ -151,14 +151,14 @@ function UnavailableMessage({
   if (preview.isExhausted) {
     return (
       <p className="text-center text-sm text-muted-foreground">
-        ظرفیت استفاده از این دعوت‌نامه تکمیل شده است.
+        This invitation has reached its usage limit.
       </p>
     );
   }
 
   return (
     <p className="text-center text-sm text-muted-foreground">
-      این دعوت‌نامه دیگر قابل استفاده نیست.
+      This invitation is no longer available.
     </p>
   );
 }

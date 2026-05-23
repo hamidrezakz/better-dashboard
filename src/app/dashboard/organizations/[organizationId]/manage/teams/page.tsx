@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { DashboardTableCardFallback } from "@/app/dashboard/components/dashboard-page-fallbacks";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
-import { formatPersianDate } from "@/lib/format-persian-date";
+import { formatDate } from "@/lib/format-date";
 import { prisma } from "@/lib/prisma";
 
 type OrganizationTeamsPageProps = {
@@ -111,15 +111,15 @@ async function OrganizationTeamsTable({ params }: OrganizationTeamsPageProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>تیم‌ها</CardTitle>
+        <CardTitle>Teams</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>نام تیم</TableHead>
-              <TableHead>تعداد عضو</TableHead>
-              <TableHead>تاریخ ایجاد</TableHead>
+              <TableHead>Team name</TableHead>
+              <TableHead>Members</TableHead>
+              <TableHead>Created</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -128,7 +128,7 @@ async function OrganizationTeamsTable({ params }: OrganizationTeamsPageProps) {
                 <TableRow key={team.id}>
                   <TableCell className="font-medium">{team.name}</TableCell>
                   <TableCell>{team.memberCount}</TableCell>
-                  <TableCell>{formatPersianDate(team.createdAt)}</TableCell>
+                  <TableCell>{formatDate(team.createdAt)}</TableCell>
                 </TableRow>
               ))
             ) : (
@@ -137,7 +137,7 @@ async function OrganizationTeamsTable({ params }: OrganizationTeamsPageProps) {
                   colSpan={3}
                   className="py-6 text-center text-muted-foreground"
                 >
-                  تیمی ثبت نشده است.
+                  No teams yet.
                 </TableCell>
               </TableRow>
             )}
@@ -161,15 +161,15 @@ async function OrganizationOutsiderMembersTable({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>اعضای تیم بدون عضویت سازمانی</CardTitle>
+        <CardTitle>Team members without organization membership</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>نام</TableHead>
-              <TableHead>ایمیل</TableHead>
-              <TableHead>تیم</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Team</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

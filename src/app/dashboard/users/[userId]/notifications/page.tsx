@@ -44,11 +44,11 @@ async function UserNotificationsPageIntro({ userId }: { userId: string }) {
 
   return (
     <div>
-      <h1 className="text-base font-semibold">اعلان‌ها</h1>
+      <h1 className="text-base font-semibold">Notifications</h1>
       <p className="text-sm text-muted-foreground">
         {isOwnInbox
-          ? "همه اعلان‌های مربوط به حساب شما، سازمان‌ها و تیم‌ها."
-          : "اعلان‌های مربوط به این کاربر در سازمان‌ها و تیم‌ها."}
+          ? "All notifications for your account, organizations, and teams."
+          : "Notifications for this user across organizations and teams."}
       </p>
     </div>
   );

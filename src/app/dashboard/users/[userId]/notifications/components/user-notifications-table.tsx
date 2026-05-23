@@ -7,10 +7,7 @@ import {
   userNotificationsTablePath,
   type UserNotificationTableFilter,
 } from "@/app/dashboard/users/[userId]/notifications/lib/user-notifications-table-params";
-import {
-  formatPersianDate,
-  persianDateTimeOptions,
-} from "@/lib/format-persian-date";
+import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { truncateText } from "@/lib/truncate-text";
 import { RequestStatusBadge } from "@/components/globals-badge/request-status-badge";
 import { VisibilityBadge } from "@/components/globals-badge/visibility-badge";
@@ -73,11 +70,11 @@ export function UserNotificationsTable({
   const emptyMessage =
     filter === "unread"
       ? isOwnInbox
-        ? "اعلان خوانده‌نشده‌ای ندارید."
-        : "اعلان خوانده‌نشده‌ای برای این کاربر ثبت نشده است."
+        ? "You have no unread notifications."
+        : "This user has no unread notifications."
       : isOwnInbox
-        ? "اعلان خوانده‌شده‌ای ثبت نشده است."
-        : "اعلان خوانده‌شده‌ای برای این کاربر ثبت نشده است.";
+        ? "You have no read notifications."
+        : "This user has no read notifications.";
 
   const notificationFilterOptions = [
     { value: "unread" as const, label: userNotificationFilterLabels.unread },
@@ -87,7 +84,7 @@ export function UserNotificationsTable({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>اعلان‌ها</CardTitle>
+        <CardTitle>Notifications</CardTitle>
         <CardAction>
           <DashboardTableSegmentFilter
             value={filter}
@@ -104,18 +101,18 @@ export function UserNotificationsTable({
             pageSize={pageSize}
             totalCount={totalCount}
             onPageChange={(nextPage) => navigate({ page: nextPage })}
-            countLabel="اعلان"
+            countLabel="notification"
           >
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>عنوان</TableHead>
-                    <TableHead className="hidden sm:table-cell">نوع</TableHead>
-                    <TableHead>مخاطب</TableHead>
-                    <TableHead className="hidden md:table-cell">منبع</TableHead>
+                    <TableHead>Title</TableHead>
+                    <TableHead className="hidden sm:table-cell">Type</TableHead>
+                    <TableHead>Audience</TableHead>
+                    <TableHead className="hidden md:table-cell">Source</TableHead>
                     <TableHead className="hidden lg:table-cell">
-                      {filter === "read" ? "خوانده‌شده" : "ارسال"}
+                      {filter === "read" ? "Read" : "Sent"}
                     </TableHead>
                   </TableRow>
                 </TableHeader>
@@ -155,11 +152,11 @@ export function UserNotificationsTable({
                         )}
                       </TableCell>
                       <TableCell className="hidden text-xs text-muted-foreground lg:table-cell">
-                        {formatPersianDate(
+                        {formatDate(
                           filter === "read" && notification.readAt
                             ? notification.readAt
                             : notification.createdAt,
-                          persianDateTimeOptions,
+                          dateTimeOptions,
                         )}
                       </TableCell>
                     </TableRow>
