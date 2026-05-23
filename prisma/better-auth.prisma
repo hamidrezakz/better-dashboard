@@ -33,43 +33,19 @@ enum NotificationAudience {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String   @id @default(cuid())
   name          String
   email         String
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean  @default(false)
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   metadata    Json?
   sessions    Session[]
   accounts    Account[]
   teammembers TeamMember[]
   members     Member[]
-
-  // Exam relations
-  createdExams       Exam[]                @relation("ExamCreator")
-  examSessions       ExamSession[]         @relation("ExamParticipant")
-  targetedInSessions ExamSession[]         @relation("ExamTarget")
-  examEnrollments    ExamEnrollment[]      @relation("ExamEnrollmentUser")
-  enrollmentTargets  ExamEnrollment[]      @relation("ExamEnrollmentTarget")
-  examAssignments    ExamAssignment[]      @relation("ExamAssignedUser")
-  examAssignedBy     ExamAssignment[]      @relation("ExamAssignedBy")
-  examFiles          ExamFile[]            @relation("ExamFileUploader")
-  createdMetrics     OrgMetricDefinition[] @relation("OrgMetricCreator")
-  orgMetricValues    OrgMetricValue[]      @relation("OrgMetricSubject")
-
-  // better-s3-objects
-  storageObjects StorageObject[]
-  uploads        Upload[]
-
-  // better-s3-quota (remove if not using quota schema)
-  // list — one user can be billing contact for multiple org quotas
-  storageQuotas StorageQuota[]
-  storageUsage  StorageUsage[]
-
-  // better-s3-activity (remove if not using activity schema)
-  storageActivities StorageActivityLog[]
 
   invitations Invitation[]
 
@@ -136,32 +112,15 @@ model Verification {
 }
 
 model Organization {
-  id                 String               @id @default(cuid())
-  name               String
-  slug               String
-  logo               String?
-  createdAt          DateTime
-  metadata           Json?
-  teams              Team[]
-  members            Member[]
-  invitations        Invitation[]
-
-  // Exam relations
-  exams             Exam[]                @relation("ExamOrganization")
-  examAssignments   ExamAssignment[]      @relation("ExamAssignedOrg")
-  metricDefinitions OrgMetricDefinition[] @relation("OrgMetricDefinitions")
-
-  // better-s3-objects
-  storageObjects StorageObject[]
-  uploads        Upload[]
-
-  // better-s3-quota (remove if not using quota schema)
-  // one-to-one via organizationId @unique
-  storageQuota StorageQuota?
-  storageUsage StorageUsage[]
-
-  // better-s3-activity (remove if not using activity schema)
-  storageActivities StorageActivityLog[]
+  id          String       @id @default(cuid())
+  name        String
+  slug        String
+  logo        String?
+  createdAt   DateTime
+  metadata    Json?
+  teams       Team[]
+  members     Member[]
+  invitations Invitation[]
 
   notifications Notification[]
 
@@ -171,20 +130,14 @@ model Organization {
 }
 
 model Team {
-  id                 String               @id @default(cuid())
-  name               String
-  organizationId     String
-  organization       Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  createdAt          DateTime
-  updatedAt          DateTime?            @updatedAt
-  teammembers        TeamMember[]
-  invitations        Invitation[]
-
-  // Exam relations
-  examAssignments ExamAssignment[] @relation("ExamAssignedTeam")
-
-  // better-s3-objects
-  storageObjects StorageObject[]
+  id             String       @id @default(cuid())
+  name           String
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime
+  updatedAt      DateTime?    @updatedAt
+  teammembers    TeamMember[]
+  invitations    Invitation[]
 
   notifications Notification[]
 
@@ -234,9 +187,6 @@ model Invitation {
   teamId String?
   team   Team?   @relation(fields: [teamId], references: [id], onDelete: SetNull)
 
-  examId String?
-  exam   Exam?   @relation(fields: [examId], references: [id], onDelete: SetNull)
-
   expiresAt DateTime
 
   /// null = unlimited uses
@@ -248,11 +198,8 @@ model Invitation {
 
   createdAt DateTime @default(now())
 
-  examEnrollments ExamEnrollment[]
-
   @@index([organizationId])
   @@index([teamId])
-  @@index([examId])
   @@map("invitation")
   @@schema("auth")
 }

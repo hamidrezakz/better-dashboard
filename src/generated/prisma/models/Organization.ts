@@ -189,14 +189,6 @@ export type OrganizationWhereInput = {
   teams?: Prisma.TeamListRelationFilter
   members?: Prisma.MemberListRelationFilter
   invitations?: Prisma.InvitationListRelationFilter
-  exams?: Prisma.ExamListRelationFilter
-  examAssignments?: Prisma.ExamAssignmentListRelationFilter
-  metricDefinitions?: Prisma.OrgMetricDefinitionListRelationFilter
-  storageObjects?: Prisma.StorageObjectListRelationFilter
-  uploads?: Prisma.UploadListRelationFilter
-  storageQuota?: Prisma.XOR<Prisma.StorageQuotaNullableScalarRelationFilter, Prisma.StorageQuotaWhereInput> | null
-  storageUsage?: Prisma.StorageUsageListRelationFilter
-  storageActivities?: Prisma.StorageActivityLogListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
 }
 
@@ -210,14 +202,6 @@ export type OrganizationOrderByWithRelationInput = {
   teams?: Prisma.TeamOrderByRelationAggregateInput
   members?: Prisma.MemberOrderByRelationAggregateInput
   invitations?: Prisma.InvitationOrderByRelationAggregateInput
-  exams?: Prisma.ExamOrderByRelationAggregateInput
-  examAssignments?: Prisma.ExamAssignmentOrderByRelationAggregateInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionOrderByRelationAggregateInput
-  storageObjects?: Prisma.StorageObjectOrderByRelationAggregateInput
-  uploads?: Prisma.UploadOrderByRelationAggregateInput
-  storageQuota?: Prisma.StorageQuotaOrderByWithRelationInput
-  storageUsage?: Prisma.StorageUsageOrderByRelationAggregateInput
-  storageActivities?: Prisma.StorageActivityLogOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
 }
 
@@ -234,14 +218,6 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   teams?: Prisma.TeamListRelationFilter
   members?: Prisma.MemberListRelationFilter
   invitations?: Prisma.InvitationListRelationFilter
-  exams?: Prisma.ExamListRelationFilter
-  examAssignments?: Prisma.ExamAssignmentListRelationFilter
-  metricDefinitions?: Prisma.OrgMetricDefinitionListRelationFilter
-  storageObjects?: Prisma.StorageObjectListRelationFilter
-  uploads?: Prisma.UploadListRelationFilter
-  storageQuota?: Prisma.XOR<Prisma.StorageQuotaNullableScalarRelationFilter, Prisma.StorageQuotaWhereInput> | null
-  storageUsage?: Prisma.StorageUsageListRelationFilter
-  storageActivities?: Prisma.StorageActivityLogListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
 }, "id" | "slug">
 
@@ -279,14 +255,6 @@ export type OrganizationCreateInput = {
   teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput
   members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
 }
 
@@ -300,14 +268,6 @@ export type OrganizationUncheckedCreateInput = {
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadUncheckedCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaUncheckedCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageUncheckedCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
@@ -321,14 +281,6 @@ export type OrganizationUpdateInput = {
   teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput
   members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
 }
 
@@ -342,14 +294,6 @@ export type OrganizationUncheckedUpdateInput = {
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput
   members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUncheckedUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUncheckedUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
@@ -475,128 +419,6 @@ export type OrganizationUpdateOneWithoutNotificationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutNotificationsInput, Prisma.OrganizationUpdateWithoutNotificationsInput>, Prisma.OrganizationUncheckedUpdateWithoutNotificationsInput>
 }
 
-export type OrganizationCreateNestedOneWithoutStorageActivitiesInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageActivitiesInput, Prisma.OrganizationUncheckedCreateWithoutStorageActivitiesInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutStorageActivitiesInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-}
-
-export type OrganizationUpdateOneWithoutStorageActivitiesNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageActivitiesInput, Prisma.OrganizationUncheckedCreateWithoutStorageActivitiesInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutStorageActivitiesInput
-  upsert?: Prisma.OrganizationUpsertWithoutStorageActivitiesInput
-  disconnect?: Prisma.OrganizationWhereInput | boolean
-  delete?: Prisma.OrganizationWhereInput | boolean
-  connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutStorageActivitiesInput, Prisma.OrganizationUpdateWithoutStorageActivitiesInput>, Prisma.OrganizationUncheckedUpdateWithoutStorageActivitiesInput>
-}
-
-export type OrganizationCreateNestedOneWithoutStorageObjectsInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageObjectsInput, Prisma.OrganizationUncheckedCreateWithoutStorageObjectsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutStorageObjectsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-}
-
-export type OrganizationUpdateOneWithoutStorageObjectsNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageObjectsInput, Prisma.OrganizationUncheckedCreateWithoutStorageObjectsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutStorageObjectsInput
-  upsert?: Prisma.OrganizationUpsertWithoutStorageObjectsInput
-  disconnect?: Prisma.OrganizationWhereInput | boolean
-  delete?: Prisma.OrganizationWhereInput | boolean
-  connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutStorageObjectsInput, Prisma.OrganizationUpdateWithoutStorageObjectsInput>, Prisma.OrganizationUncheckedUpdateWithoutStorageObjectsInput>
-}
-
-export type OrganizationCreateNestedOneWithoutUploadsInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutUploadsInput, Prisma.OrganizationUncheckedCreateWithoutUploadsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutUploadsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-}
-
-export type OrganizationUpdateOneWithoutUploadsNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutUploadsInput, Prisma.OrganizationUncheckedCreateWithoutUploadsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutUploadsInput
-  upsert?: Prisma.OrganizationUpsertWithoutUploadsInput
-  disconnect?: Prisma.OrganizationWhereInput | boolean
-  delete?: Prisma.OrganizationWhereInput | boolean
-  connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutUploadsInput, Prisma.OrganizationUpdateWithoutUploadsInput>, Prisma.OrganizationUncheckedUpdateWithoutUploadsInput>
-}
-
-export type OrganizationCreateNestedOneWithoutStorageQuotaInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageQuotaInput, Prisma.OrganizationUncheckedCreateWithoutStorageQuotaInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutStorageQuotaInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-}
-
-export type OrganizationUpdateOneRequiredWithoutStorageQuotaNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageQuotaInput, Prisma.OrganizationUncheckedCreateWithoutStorageQuotaInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutStorageQuotaInput
-  upsert?: Prisma.OrganizationUpsertWithoutStorageQuotaInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutStorageQuotaInput, Prisma.OrganizationUpdateWithoutStorageQuotaInput>, Prisma.OrganizationUncheckedUpdateWithoutStorageQuotaInput>
-}
-
-export type OrganizationCreateNestedOneWithoutStorageUsageInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageUsageInput, Prisma.OrganizationUncheckedCreateWithoutStorageUsageInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutStorageUsageInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-}
-
-export type OrganizationUpdateOneRequiredWithoutStorageUsageNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageUsageInput, Prisma.OrganizationUncheckedCreateWithoutStorageUsageInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutStorageUsageInput
-  upsert?: Prisma.OrganizationUpsertWithoutStorageUsageInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutStorageUsageInput, Prisma.OrganizationUpdateWithoutStorageUsageInput>, Prisma.OrganizationUncheckedUpdateWithoutStorageUsageInput>
-}
-
-export type OrganizationCreateNestedOneWithoutExamsInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutExamsInput, Prisma.OrganizationUncheckedCreateWithoutExamsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutExamsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-}
-
-export type OrganizationUpdateOneWithoutExamsNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutExamsInput, Prisma.OrganizationUncheckedCreateWithoutExamsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutExamsInput
-  upsert?: Prisma.OrganizationUpsertWithoutExamsInput
-  disconnect?: Prisma.OrganizationWhereInput | boolean
-  delete?: Prisma.OrganizationWhereInput | boolean
-  connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutExamsInput, Prisma.OrganizationUpdateWithoutExamsInput>, Prisma.OrganizationUncheckedUpdateWithoutExamsInput>
-}
-
-export type OrganizationCreateNestedOneWithoutExamAssignmentsInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutExamAssignmentsInput, Prisma.OrganizationUncheckedCreateWithoutExamAssignmentsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutExamAssignmentsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-}
-
-export type OrganizationUpdateOneWithoutExamAssignmentsNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutExamAssignmentsInput, Prisma.OrganizationUncheckedCreateWithoutExamAssignmentsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutExamAssignmentsInput
-  upsert?: Prisma.OrganizationUpsertWithoutExamAssignmentsInput
-  disconnect?: Prisma.OrganizationWhereInput | boolean
-  delete?: Prisma.OrganizationWhereInput | boolean
-  connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutExamAssignmentsInput, Prisma.OrganizationUpdateWithoutExamAssignmentsInput>, Prisma.OrganizationUncheckedUpdateWithoutExamAssignmentsInput>
-}
-
-export type OrganizationCreateNestedOneWithoutMetricDefinitionsInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutMetricDefinitionsInput, Prisma.OrganizationUncheckedCreateWithoutMetricDefinitionsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutMetricDefinitionsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-}
-
-export type OrganizationUpdateOneRequiredWithoutMetricDefinitionsNestedInput = {
-  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutMetricDefinitionsInput, Prisma.OrganizationUncheckedCreateWithoutMetricDefinitionsInput>
-  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutMetricDefinitionsInput
-  upsert?: Prisma.OrganizationUpsertWithoutMetricDefinitionsInput
-  connect?: Prisma.OrganizationWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutMetricDefinitionsInput, Prisma.OrganizationUpdateWithoutMetricDefinitionsInput>, Prisma.OrganizationUncheckedUpdateWithoutMetricDefinitionsInput>
-}
-
 export type OrganizationCreateWithoutTeamsInput = {
   id?: string
   name: string
@@ -606,14 +428,6 @@ export type OrganizationCreateWithoutTeamsInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
 }
 
@@ -626,14 +440,6 @@ export type OrganizationUncheckedCreateWithoutTeamsInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadUncheckedCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaUncheckedCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageUncheckedCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
@@ -662,14 +468,6 @@ export type OrganizationUpdateWithoutTeamsInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
 }
 
@@ -682,14 +480,6 @@ export type OrganizationUncheckedUpdateWithoutTeamsInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUncheckedUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUncheckedUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
@@ -702,14 +492,6 @@ export type OrganizationCreateWithoutMembersInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
 }
 
@@ -722,14 +504,6 @@ export type OrganizationUncheckedCreateWithoutMembersInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadUncheckedCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaUncheckedCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageUncheckedCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
@@ -758,14 +532,6 @@ export type OrganizationUpdateWithoutMembersInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
 }
 
@@ -778,14 +544,6 @@ export type OrganizationUncheckedUpdateWithoutMembersInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUncheckedUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUncheckedUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
@@ -798,14 +556,6 @@ export type OrganizationCreateWithoutInvitationsInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput
   members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
 }
 
@@ -818,14 +568,6 @@ export type OrganizationUncheckedCreateWithoutInvitationsInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadUncheckedCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaUncheckedCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageUncheckedCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedCreateNestedManyWithoutOrganizationInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
@@ -854,14 +596,6 @@ export type OrganizationUpdateWithoutInvitationsInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput
   members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
 }
 
@@ -874,14 +608,6 @@ export type OrganizationUncheckedUpdateWithoutInvitationsInput = {
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput
   members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUncheckedUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUncheckedUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedUpdateManyWithoutOrganizationNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
@@ -895,14 +621,6 @@ export type OrganizationCreateWithoutNotificationsInput = {
   teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput
   members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutNotificationsInput = {
@@ -915,14 +633,6 @@ export type OrganizationUncheckedCreateWithoutNotificationsInput = {
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput
   members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadUncheckedCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaUncheckedCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageUncheckedCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutNotificationsInput = {
@@ -951,14 +661,6 @@ export type OrganizationUpdateWithoutNotificationsInput = {
   teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput
   members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutNotificationsInput = {
@@ -971,782 +673,6 @@ export type OrganizationUncheckedUpdateWithoutNotificationsInput = {
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput
   members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUncheckedUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUncheckedUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationCreateWithoutStorageActivitiesInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationUncheckedCreateWithoutStorageActivitiesInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadUncheckedCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaUncheckedCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageUncheckedCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationCreateOrConnectWithoutStorageActivitiesInput = {
-  where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageActivitiesInput, Prisma.OrganizationUncheckedCreateWithoutStorageActivitiesInput>
-}
-
-export type OrganizationUpsertWithoutStorageActivitiesInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutStorageActivitiesInput, Prisma.OrganizationUncheckedUpdateWithoutStorageActivitiesInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageActivitiesInput, Prisma.OrganizationUncheckedCreateWithoutStorageActivitiesInput>
-  where?: Prisma.OrganizationWhereInput
-}
-
-export type OrganizationUpdateToOneWithWhereWithoutStorageActivitiesInput = {
-  where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutStorageActivitiesInput, Prisma.OrganizationUncheckedUpdateWithoutStorageActivitiesInput>
-}
-
-export type OrganizationUpdateWithoutStorageActivitiesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationUncheckedUpdateWithoutStorageActivitiesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUncheckedUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUncheckedUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUncheckedUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationCreateWithoutStorageObjectsInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationUncheckedCreateWithoutStorageObjectsInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadUncheckedCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaUncheckedCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageUncheckedCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationCreateOrConnectWithoutStorageObjectsInput = {
-  where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageObjectsInput, Prisma.OrganizationUncheckedCreateWithoutStorageObjectsInput>
-}
-
-export type OrganizationUpsertWithoutStorageObjectsInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutStorageObjectsInput, Prisma.OrganizationUncheckedUpdateWithoutStorageObjectsInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageObjectsInput, Prisma.OrganizationUncheckedCreateWithoutStorageObjectsInput>
-  where?: Prisma.OrganizationWhereInput
-}
-
-export type OrganizationUpdateToOneWithWhereWithoutStorageObjectsInput = {
-  where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutStorageObjectsInput, Prisma.OrganizationUncheckedUpdateWithoutStorageObjectsInput>
-}
-
-export type OrganizationUpdateWithoutStorageObjectsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationUncheckedUpdateWithoutStorageObjectsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUncheckedUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUncheckedUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationCreateWithoutUploadsInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationUncheckedCreateWithoutUploadsInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaUncheckedCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageUncheckedCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationCreateOrConnectWithoutUploadsInput = {
-  where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutUploadsInput, Prisma.OrganizationUncheckedCreateWithoutUploadsInput>
-}
-
-export type OrganizationUpsertWithoutUploadsInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutUploadsInput, Prisma.OrganizationUncheckedUpdateWithoutUploadsInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutUploadsInput, Prisma.OrganizationUncheckedCreateWithoutUploadsInput>
-  where?: Prisma.OrganizationWhereInput
-}
-
-export type OrganizationUpdateToOneWithWhereWithoutUploadsInput = {
-  where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutUploadsInput, Prisma.OrganizationUncheckedUpdateWithoutUploadsInput>
-}
-
-export type OrganizationUpdateWithoutUploadsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationUncheckedUpdateWithoutUploadsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUncheckedUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUncheckedUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationCreateWithoutStorageQuotaInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadCreateNestedManyWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationUncheckedCreateWithoutStorageQuotaInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadUncheckedCreateNestedManyWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageUncheckedCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationCreateOrConnectWithoutStorageQuotaInput = {
-  where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageQuotaInput, Prisma.OrganizationUncheckedCreateWithoutStorageQuotaInput>
-}
-
-export type OrganizationUpsertWithoutStorageQuotaInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutStorageQuotaInput, Prisma.OrganizationUncheckedUpdateWithoutStorageQuotaInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageQuotaInput, Prisma.OrganizationUncheckedCreateWithoutStorageQuotaInput>
-  where?: Prisma.OrganizationWhereInput
-}
-
-export type OrganizationUpdateToOneWithWhereWithoutStorageQuotaInput = {
-  where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutStorageQuotaInput, Prisma.OrganizationUncheckedUpdateWithoutStorageQuotaInput>
-}
-
-export type OrganizationUpdateWithoutStorageQuotaInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUpdateManyWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationUncheckedUpdateWithoutStorageQuotaInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUncheckedUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationCreateWithoutStorageUsageInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaCreateNestedOneWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationUncheckedCreateWithoutStorageUsageInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadUncheckedCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaUncheckedCreateNestedOneWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationCreateOrConnectWithoutStorageUsageInput = {
-  where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageUsageInput, Prisma.OrganizationUncheckedCreateWithoutStorageUsageInput>
-}
-
-export type OrganizationUpsertWithoutStorageUsageInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutStorageUsageInput, Prisma.OrganizationUncheckedUpdateWithoutStorageUsageInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutStorageUsageInput, Prisma.OrganizationUncheckedCreateWithoutStorageUsageInput>
-  where?: Prisma.OrganizationWhereInput
-}
-
-export type OrganizationUpdateToOneWithWhereWithoutStorageUsageInput = {
-  where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutStorageUsageInput, Prisma.OrganizationUncheckedUpdateWithoutStorageUsageInput>
-}
-
-export type OrganizationUpdateWithoutStorageUsageInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUpdateOneWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationUncheckedUpdateWithoutStorageUsageInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUncheckedUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUncheckedUpdateOneWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationCreateWithoutExamsInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationUncheckedCreateWithoutExamsInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadUncheckedCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaUncheckedCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageUncheckedCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationCreateOrConnectWithoutExamsInput = {
-  where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutExamsInput, Prisma.OrganizationUncheckedCreateWithoutExamsInput>
-}
-
-export type OrganizationUpsertWithoutExamsInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutExamsInput, Prisma.OrganizationUncheckedUpdateWithoutExamsInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutExamsInput, Prisma.OrganizationUncheckedCreateWithoutExamsInput>
-  where?: Prisma.OrganizationWhereInput
-}
-
-export type OrganizationUpdateToOneWithWhereWithoutExamsInput = {
-  where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutExamsInput, Prisma.OrganizationUncheckedUpdateWithoutExamsInput>
-}
-
-export type OrganizationUpdateWithoutExamsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationUncheckedUpdateWithoutExamsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUncheckedUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationCreateWithoutExamAssignmentsInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamCreateNestedManyWithoutOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationUncheckedCreateWithoutExamAssignmentsInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutOrganizationInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedCreateNestedManyWithoutOrganizationInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadUncheckedCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaUncheckedCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageUncheckedCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationCreateOrConnectWithoutExamAssignmentsInput = {
-  where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutExamAssignmentsInput, Prisma.OrganizationUncheckedCreateWithoutExamAssignmentsInput>
-}
-
-export type OrganizationUpsertWithoutExamAssignmentsInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutExamAssignmentsInput, Prisma.OrganizationUncheckedUpdateWithoutExamAssignmentsInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutExamAssignmentsInput, Prisma.OrganizationUncheckedCreateWithoutExamAssignmentsInput>
-  where?: Prisma.OrganizationWhereInput
-}
-
-export type OrganizationUpdateToOneWithWhereWithoutExamAssignmentsInput = {
-  where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutExamAssignmentsInput, Prisma.OrganizationUncheckedUpdateWithoutExamAssignmentsInput>
-}
-
-export type OrganizationUpdateWithoutExamAssignmentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUpdateManyWithoutOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationUncheckedUpdateWithoutExamAssignmentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUncheckedUpdateManyWithoutOrganizationNestedInput
-  metricDefinitions?: Prisma.OrgMetricDefinitionUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUncheckedUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationCreateWithoutMetricDefinitionsInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedOrganizationInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationUncheckedCreateWithoutMetricDefinitionsInput = {
-  id?: string
-  name: string
-  slug: string
-  logo?: string | null
-  createdAt: Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOrganizationInput
-  members?: Prisma.MemberUncheckedCreateNestedManyWithoutOrganizationInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutOrganizationInput
-  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutOrganizationInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedOrganizationInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutOrganizationInput
-  uploads?: Prisma.UploadUncheckedCreateNestedManyWithoutOrganizationInput
-  storageQuota?: Prisma.StorageQuotaUncheckedCreateNestedOneWithoutOrganizationInput
-  storageUsage?: Prisma.StorageUsageUncheckedCreateNestedManyWithoutOrganizationInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedCreateNestedManyWithoutOrganizationInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutOrganizationInput
-}
-
-export type OrganizationCreateOrConnectWithoutMetricDefinitionsInput = {
-  where: Prisma.OrganizationWhereUniqueInput
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutMetricDefinitionsInput, Prisma.OrganizationUncheckedCreateWithoutMetricDefinitionsInput>
-}
-
-export type OrganizationUpsertWithoutMetricDefinitionsInput = {
-  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutMetricDefinitionsInput, Prisma.OrganizationUncheckedUpdateWithoutMetricDefinitionsInput>
-  create: Prisma.XOR<Prisma.OrganizationCreateWithoutMetricDefinitionsInput, Prisma.OrganizationUncheckedCreateWithoutMetricDefinitionsInput>
-  where?: Prisma.OrganizationWhereInput
-}
-
-export type OrganizationUpdateToOneWithWhereWithoutMetricDefinitionsInput = {
-  where?: Prisma.OrganizationWhereInput
-  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutMetricDefinitionsInput, Prisma.OrganizationUncheckedUpdateWithoutMetricDefinitionsInput>
-}
-
-export type OrganizationUpdateWithoutMetricDefinitionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutOrganizationNestedInput
-}
-
-export type OrganizationUncheckedUpdateWithoutMetricDefinitionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  teams?: Prisma.TeamUncheckedUpdateManyWithoutOrganizationNestedInput
-  members?: Prisma.MemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutOrganizationNestedInput
-  exams?: Prisma.ExamUncheckedUpdateManyWithoutOrganizationNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedOrganizationNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutOrganizationNestedInput
-  uploads?: Prisma.UploadUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageQuota?: Prisma.StorageQuotaUncheckedUpdateOneWithoutOrganizationNestedInput
-  storageUsage?: Prisma.StorageUsageUncheckedUpdateManyWithoutOrganizationNestedInput
-  storageActivities?: Prisma.StorageActivityLogUncheckedUpdateManyWithoutOrganizationNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 
@@ -1758,13 +684,6 @@ export type OrganizationCountOutputType = {
   teams: number
   members: number
   invitations: number
-  exams: number
-  examAssignments: number
-  metricDefinitions: number
-  storageObjects: number
-  uploads: number
-  storageUsage: number
-  storageActivities: number
   notifications: number
 }
 
@@ -1772,13 +691,6 @@ export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Exte
   teams?: boolean | OrganizationCountOutputTypeCountTeamsArgs
   members?: boolean | OrganizationCountOutputTypeCountMembersArgs
   invitations?: boolean | OrganizationCountOutputTypeCountInvitationsArgs
-  exams?: boolean | OrganizationCountOutputTypeCountExamsArgs
-  examAssignments?: boolean | OrganizationCountOutputTypeCountExamAssignmentsArgs
-  metricDefinitions?: boolean | OrganizationCountOutputTypeCountMetricDefinitionsArgs
-  storageObjects?: boolean | OrganizationCountOutputTypeCountStorageObjectsArgs
-  uploads?: boolean | OrganizationCountOutputTypeCountUploadsArgs
-  storageUsage?: boolean | OrganizationCountOutputTypeCountStorageUsageArgs
-  storageActivities?: boolean | OrganizationCountOutputTypeCountStorageActivitiesArgs
   notifications?: boolean | OrganizationCountOutputTypeCountNotificationsArgs
 }
 
@@ -1816,55 +728,6 @@ export type OrganizationCountOutputTypeCountInvitationsArgs<ExtArgs extends runt
 /**
  * OrganizationCountOutputType without action
  */
-export type OrganizationCountOutputTypeCountExamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ExamWhereInput
-}
-
-/**
- * OrganizationCountOutputType without action
- */
-export type OrganizationCountOutputTypeCountExamAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ExamAssignmentWhereInput
-}
-
-/**
- * OrganizationCountOutputType without action
- */
-export type OrganizationCountOutputTypeCountMetricDefinitionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.OrgMetricDefinitionWhereInput
-}
-
-/**
- * OrganizationCountOutputType without action
- */
-export type OrganizationCountOutputTypeCountStorageObjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.StorageObjectWhereInput
-}
-
-/**
- * OrganizationCountOutputType without action
- */
-export type OrganizationCountOutputTypeCountUploadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.UploadWhereInput
-}
-
-/**
- * OrganizationCountOutputType without action
- */
-export type OrganizationCountOutputTypeCountStorageUsageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.StorageUsageWhereInput
-}
-
-/**
- * OrganizationCountOutputType without action
- */
-export type OrganizationCountOutputTypeCountStorageActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.StorageActivityLogWhereInput
-}
-
-/**
- * OrganizationCountOutputType without action
- */
 export type OrganizationCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.NotificationWhereInput
 }
@@ -1880,14 +743,6 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   teams?: boolean | Prisma.Organization$teamsArgs<ExtArgs>
   members?: boolean | Prisma.Organization$membersArgs<ExtArgs>
   invitations?: boolean | Prisma.Organization$invitationsArgs<ExtArgs>
-  exams?: boolean | Prisma.Organization$examsArgs<ExtArgs>
-  examAssignments?: boolean | Prisma.Organization$examAssignmentsArgs<ExtArgs>
-  metricDefinitions?: boolean | Prisma.Organization$metricDefinitionsArgs<ExtArgs>
-  storageObjects?: boolean | Prisma.Organization$storageObjectsArgs<ExtArgs>
-  uploads?: boolean | Prisma.Organization$uploadsArgs<ExtArgs>
-  storageQuota?: boolean | Prisma.Organization$storageQuotaArgs<ExtArgs>
-  storageUsage?: boolean | Prisma.Organization$storageUsageArgs<ExtArgs>
-  storageActivities?: boolean | Prisma.Organization$storageActivitiesArgs<ExtArgs>
   notifications?: boolean | Prisma.Organization$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
@@ -1924,14 +779,6 @@ export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.Interna
   teams?: boolean | Prisma.Organization$teamsArgs<ExtArgs>
   members?: boolean | Prisma.Organization$membersArgs<ExtArgs>
   invitations?: boolean | Prisma.Organization$invitationsArgs<ExtArgs>
-  exams?: boolean | Prisma.Organization$examsArgs<ExtArgs>
-  examAssignments?: boolean | Prisma.Organization$examAssignmentsArgs<ExtArgs>
-  metricDefinitions?: boolean | Prisma.Organization$metricDefinitionsArgs<ExtArgs>
-  storageObjects?: boolean | Prisma.Organization$storageObjectsArgs<ExtArgs>
-  uploads?: boolean | Prisma.Organization$uploadsArgs<ExtArgs>
-  storageQuota?: boolean | Prisma.Organization$storageQuotaArgs<ExtArgs>
-  storageUsage?: boolean | Prisma.Organization$storageUsageArgs<ExtArgs>
-  storageActivities?: boolean | Prisma.Organization$storageActivitiesArgs<ExtArgs>
   notifications?: boolean | Prisma.Organization$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1944,14 +791,6 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     teams: Prisma.$TeamPayload<ExtArgs>[]
     members: Prisma.$MemberPayload<ExtArgs>[]
     invitations: Prisma.$InvitationPayload<ExtArgs>[]
-    exams: Prisma.$ExamPayload<ExtArgs>[]
-    examAssignments: Prisma.$ExamAssignmentPayload<ExtArgs>[]
-    metricDefinitions: Prisma.$OrgMetricDefinitionPayload<ExtArgs>[]
-    storageObjects: Prisma.$StorageObjectPayload<ExtArgs>[]
-    uploads: Prisma.$UploadPayload<ExtArgs>[]
-    storageQuota: Prisma.$StorageQuotaPayload<ExtArgs> | null
-    storageUsage: Prisma.$StorageUsagePayload<ExtArgs>[]
-    storageActivities: Prisma.$StorageActivityLogPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -2358,14 +1197,6 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   teams<T extends Prisma.Organization$teamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$teamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   members<T extends Prisma.Organization$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   invitations<T extends Prisma.Organization$invitationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  exams<T extends Prisma.Organization$examsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$examsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  examAssignments<T extends Prisma.Organization$examAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$examAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExamAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  metricDefinitions<T extends Prisma.Organization$metricDefinitionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$metricDefinitionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrgMetricDefinitionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  storageObjects<T extends Prisma.Organization$storageObjectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$storageObjectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StorageObjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  uploads<T extends Prisma.Organization$uploadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$uploadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UploadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  storageQuota<T extends Prisma.Organization$storageQuotaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$storageQuotaArgs<ExtArgs>>): Prisma.Prisma__StorageQuotaClient<runtime.Types.Result.GetResult<Prisma.$StorageQuotaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  storageUsage<T extends Prisma.Organization$storageUsageArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$storageUsageArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StorageUsagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  storageActivities<T extends Prisma.Organization$storageActivitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$storageActivitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StorageActivityLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.Organization$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2864,193 +1695,6 @@ export type Organization$invitationsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.InvitationScalarFieldEnum | Prisma.InvitationScalarFieldEnum[]
-}
-
-/**
- * Organization.exams
- */
-export type Organization$examsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Exam
-   */
-  select?: Prisma.ExamSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Exam
-   */
-  omit?: Prisma.ExamOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ExamInclude<ExtArgs> | null
-  where?: Prisma.ExamWhereInput
-  orderBy?: Prisma.ExamOrderByWithRelationInput | Prisma.ExamOrderByWithRelationInput[]
-  cursor?: Prisma.ExamWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ExamScalarFieldEnum | Prisma.ExamScalarFieldEnum[]
-}
-
-/**
- * Organization.examAssignments
- */
-export type Organization$examAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ExamAssignment
-   */
-  select?: Prisma.ExamAssignmentSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ExamAssignment
-   */
-  omit?: Prisma.ExamAssignmentOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ExamAssignmentInclude<ExtArgs> | null
-  where?: Prisma.ExamAssignmentWhereInput
-  orderBy?: Prisma.ExamAssignmentOrderByWithRelationInput | Prisma.ExamAssignmentOrderByWithRelationInput[]
-  cursor?: Prisma.ExamAssignmentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ExamAssignmentScalarFieldEnum | Prisma.ExamAssignmentScalarFieldEnum[]
-}
-
-/**
- * Organization.metricDefinitions
- */
-export type Organization$metricDefinitionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the OrgMetricDefinition
-   */
-  select?: Prisma.OrgMetricDefinitionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the OrgMetricDefinition
-   */
-  omit?: Prisma.OrgMetricDefinitionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.OrgMetricDefinitionInclude<ExtArgs> | null
-  where?: Prisma.OrgMetricDefinitionWhereInput
-  orderBy?: Prisma.OrgMetricDefinitionOrderByWithRelationInput | Prisma.OrgMetricDefinitionOrderByWithRelationInput[]
-  cursor?: Prisma.OrgMetricDefinitionWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.OrgMetricDefinitionScalarFieldEnum | Prisma.OrgMetricDefinitionScalarFieldEnum[]
-}
-
-/**
- * Organization.storageObjects
- */
-export type Organization$storageObjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the StorageObject
-   */
-  select?: Prisma.StorageObjectSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the StorageObject
-   */
-  omit?: Prisma.StorageObjectOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.StorageObjectInclude<ExtArgs> | null
-  where?: Prisma.StorageObjectWhereInput
-  orderBy?: Prisma.StorageObjectOrderByWithRelationInput | Prisma.StorageObjectOrderByWithRelationInput[]
-  cursor?: Prisma.StorageObjectWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.StorageObjectScalarFieldEnum | Prisma.StorageObjectScalarFieldEnum[]
-}
-
-/**
- * Organization.uploads
- */
-export type Organization$uploadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Upload
-   */
-  select?: Prisma.UploadSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Upload
-   */
-  omit?: Prisma.UploadOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UploadInclude<ExtArgs> | null
-  where?: Prisma.UploadWhereInput
-  orderBy?: Prisma.UploadOrderByWithRelationInput | Prisma.UploadOrderByWithRelationInput[]
-  cursor?: Prisma.UploadWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.UploadScalarFieldEnum | Prisma.UploadScalarFieldEnum[]
-}
-
-/**
- * Organization.storageQuota
- */
-export type Organization$storageQuotaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the StorageQuota
-   */
-  select?: Prisma.StorageQuotaSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the StorageQuota
-   */
-  omit?: Prisma.StorageQuotaOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.StorageQuotaInclude<ExtArgs> | null
-  where?: Prisma.StorageQuotaWhereInput
-}
-
-/**
- * Organization.storageUsage
- */
-export type Organization$storageUsageArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the StorageUsage
-   */
-  select?: Prisma.StorageUsageSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the StorageUsage
-   */
-  omit?: Prisma.StorageUsageOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.StorageUsageInclude<ExtArgs> | null
-  where?: Prisma.StorageUsageWhereInput
-  orderBy?: Prisma.StorageUsageOrderByWithRelationInput | Prisma.StorageUsageOrderByWithRelationInput[]
-  cursor?: Prisma.StorageUsageWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.StorageUsageScalarFieldEnum | Prisma.StorageUsageScalarFieldEnum[]
-}
-
-/**
- * Organization.storageActivities
- */
-export type Organization$storageActivitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the StorageActivityLog
-   */
-  select?: Prisma.StorageActivityLogSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the StorageActivityLog
-   */
-  omit?: Prisma.StorageActivityLogOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.StorageActivityLogInclude<ExtArgs> | null
-  where?: Prisma.StorageActivityLogWhereInput
-  orderBy?: Prisma.StorageActivityLogOrderByWithRelationInput | Prisma.StorageActivityLogOrderByWithRelationInput[]
-  cursor?: Prisma.StorageActivityLogWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.StorageActivityLogScalarFieldEnum | Prisma.StorageActivityLogScalarFieldEnum[]
 }
 
 /**

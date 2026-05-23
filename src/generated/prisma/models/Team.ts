@@ -185,8 +185,6 @@ export type TeamWhereInput = {
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   teammembers?: Prisma.TeamMemberListRelationFilter
   invitations?: Prisma.InvitationListRelationFilter
-  examAssignments?: Prisma.ExamAssignmentListRelationFilter
-  storageObjects?: Prisma.StorageObjectListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
 }
 
@@ -199,8 +197,6 @@ export type TeamOrderByWithRelationInput = {
   organization?: Prisma.OrganizationOrderByWithRelationInput
   teammembers?: Prisma.TeamMemberOrderByRelationAggregateInput
   invitations?: Prisma.InvitationOrderByRelationAggregateInput
-  examAssignments?: Prisma.ExamAssignmentOrderByRelationAggregateInput
-  storageObjects?: Prisma.StorageObjectOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
 }
 
@@ -216,8 +212,6 @@ export type TeamWhereUniqueInput = Prisma.AtLeast<{
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   teammembers?: Prisma.TeamMemberListRelationFilter
   invitations?: Prisma.InvitationListRelationFilter
-  examAssignments?: Prisma.ExamAssignmentListRelationFilter
-  storageObjects?: Prisma.StorageObjectListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
 }, "id">
 
@@ -251,8 +245,6 @@ export type TeamCreateInput = {
   organization: Prisma.OrganizationCreateNestedOneWithoutTeamsInput
   teammembers?: Prisma.TeamMemberCreateNestedManyWithoutTeamInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutTeamInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedTeamInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutTeamInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutTeamInput
 }
 
@@ -264,8 +256,6 @@ export type TeamUncheckedCreateInput = {
   updatedAt?: Date | string | null
   teammembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutTeamInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTeamInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedTeamInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutTeamInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTeamInput
 }
 
@@ -277,8 +267,6 @@ export type TeamUpdateInput = {
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutTeamsNestedInput
   teammembers?: Prisma.TeamMemberUpdateManyWithoutTeamNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutTeamNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedTeamNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutTeamNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutTeamNestedInput
 }
 
@@ -290,8 +278,6 @@ export type TeamUncheckedUpdateInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   teammembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutTeamNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTeamNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedTeamNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutTeamNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTeamNestedInput
 }
 
@@ -450,38 +436,6 @@ export type TeamUpdateOneWithoutNotificationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TeamUpdateToOneWithWhereWithoutNotificationsInput, Prisma.TeamUpdateWithoutNotificationsInput>, Prisma.TeamUncheckedUpdateWithoutNotificationsInput>
 }
 
-export type TeamCreateNestedOneWithoutStorageObjectsInput = {
-  create?: Prisma.XOR<Prisma.TeamCreateWithoutStorageObjectsInput, Prisma.TeamUncheckedCreateWithoutStorageObjectsInput>
-  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutStorageObjectsInput
-  connect?: Prisma.TeamWhereUniqueInput
-}
-
-export type TeamUpdateOneWithoutStorageObjectsNestedInput = {
-  create?: Prisma.XOR<Prisma.TeamCreateWithoutStorageObjectsInput, Prisma.TeamUncheckedCreateWithoutStorageObjectsInput>
-  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutStorageObjectsInput
-  upsert?: Prisma.TeamUpsertWithoutStorageObjectsInput
-  disconnect?: Prisma.TeamWhereInput | boolean
-  delete?: Prisma.TeamWhereInput | boolean
-  connect?: Prisma.TeamWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TeamUpdateToOneWithWhereWithoutStorageObjectsInput, Prisma.TeamUpdateWithoutStorageObjectsInput>, Prisma.TeamUncheckedUpdateWithoutStorageObjectsInput>
-}
-
-export type TeamCreateNestedOneWithoutExamAssignmentsInput = {
-  create?: Prisma.XOR<Prisma.TeamCreateWithoutExamAssignmentsInput, Prisma.TeamUncheckedCreateWithoutExamAssignmentsInput>
-  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutExamAssignmentsInput
-  connect?: Prisma.TeamWhereUniqueInput
-}
-
-export type TeamUpdateOneWithoutExamAssignmentsNestedInput = {
-  create?: Prisma.XOR<Prisma.TeamCreateWithoutExamAssignmentsInput, Prisma.TeamUncheckedCreateWithoutExamAssignmentsInput>
-  connectOrCreate?: Prisma.TeamCreateOrConnectWithoutExamAssignmentsInput
-  upsert?: Prisma.TeamUpsertWithoutExamAssignmentsInput
-  disconnect?: Prisma.TeamWhereInput | boolean
-  delete?: Prisma.TeamWhereInput | boolean
-  connect?: Prisma.TeamWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.TeamUpdateToOneWithWhereWithoutExamAssignmentsInput, Prisma.TeamUpdateWithoutExamAssignmentsInput>, Prisma.TeamUncheckedUpdateWithoutExamAssignmentsInput>
-}
-
 export type TeamCreateWithoutOrganizationInput = {
   id?: string
   name: string
@@ -489,8 +443,6 @@ export type TeamCreateWithoutOrganizationInput = {
   updatedAt?: Date | string | null
   teammembers?: Prisma.TeamMemberCreateNestedManyWithoutTeamInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutTeamInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedTeamInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutTeamInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutTeamInput
 }
 
@@ -501,8 +453,6 @@ export type TeamUncheckedCreateWithoutOrganizationInput = {
   updatedAt?: Date | string | null
   teammembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutTeamInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTeamInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedTeamInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutTeamInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTeamInput
 }
 
@@ -550,8 +500,6 @@ export type TeamCreateWithoutTeammembersInput = {
   updatedAt?: Date | string | null
   organization: Prisma.OrganizationCreateNestedOneWithoutTeamsInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutTeamInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedTeamInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutTeamInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutTeamInput
 }
 
@@ -562,8 +510,6 @@ export type TeamUncheckedCreateWithoutTeammembersInput = {
   createdAt: Date | string
   updatedAt?: Date | string | null
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTeamInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedTeamInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutTeamInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTeamInput
 }
 
@@ -590,8 +536,6 @@ export type TeamUpdateWithoutTeammembersInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutTeamsNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutTeamNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedTeamNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutTeamNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutTeamNestedInput
 }
 
@@ -602,8 +546,6 @@ export type TeamUncheckedUpdateWithoutTeammembersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTeamNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedTeamNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutTeamNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTeamNestedInput
 }
 
@@ -614,8 +556,6 @@ export type TeamCreateWithoutInvitationsInput = {
   updatedAt?: Date | string | null
   organization: Prisma.OrganizationCreateNestedOneWithoutTeamsInput
   teammembers?: Prisma.TeamMemberCreateNestedManyWithoutTeamInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedTeamInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutTeamInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutTeamInput
 }
 
@@ -626,8 +566,6 @@ export type TeamUncheckedCreateWithoutInvitationsInput = {
   createdAt: Date | string
   updatedAt?: Date | string | null
   teammembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutTeamInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedTeamInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutTeamInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTeamInput
 }
 
@@ -654,8 +592,6 @@ export type TeamUpdateWithoutInvitationsInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutTeamsNestedInput
   teammembers?: Prisma.TeamMemberUpdateManyWithoutTeamNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedTeamNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutTeamNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutTeamNestedInput
 }
 
@@ -666,8 +602,6 @@ export type TeamUncheckedUpdateWithoutInvitationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   teammembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutTeamNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedTeamNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutTeamNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTeamNestedInput
 }
 
@@ -679,8 +613,6 @@ export type TeamCreateWithoutNotificationsInput = {
   organization: Prisma.OrganizationCreateNestedOneWithoutTeamsInput
   teammembers?: Prisma.TeamMemberCreateNestedManyWithoutTeamInput
   invitations?: Prisma.InvitationCreateNestedManyWithoutTeamInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedTeamInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutTeamInput
 }
 
 export type TeamUncheckedCreateWithoutNotificationsInput = {
@@ -691,8 +623,6 @@ export type TeamUncheckedCreateWithoutNotificationsInput = {
   updatedAt?: Date | string | null
   teammembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutTeamInput
   invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTeamInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedTeamInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutTeamInput
 }
 
 export type TeamCreateOrConnectWithoutNotificationsInput = {
@@ -719,8 +649,6 @@ export type TeamUpdateWithoutNotificationsInput = {
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutTeamsNestedInput
   teammembers?: Prisma.TeamMemberUpdateManyWithoutTeamNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutTeamNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedTeamNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutTeamNestedInput
 }
 
 export type TeamUncheckedUpdateWithoutNotificationsInput = {
@@ -731,136 +659,6 @@ export type TeamUncheckedUpdateWithoutNotificationsInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   teammembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutTeamNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTeamNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedTeamNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutTeamNestedInput
-}
-
-export type TeamCreateWithoutStorageObjectsInput = {
-  id?: string
-  name: string
-  createdAt: Date | string
-  updatedAt?: Date | string | null
-  organization: Prisma.OrganizationCreateNestedOneWithoutTeamsInput
-  teammembers?: Prisma.TeamMemberCreateNestedManyWithoutTeamInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutTeamInput
-  examAssignments?: Prisma.ExamAssignmentCreateNestedManyWithoutAssignedTeamInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutTeamInput
-}
-
-export type TeamUncheckedCreateWithoutStorageObjectsInput = {
-  id?: string
-  name: string
-  organizationId: string
-  createdAt: Date | string
-  updatedAt?: Date | string | null
-  teammembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutTeamInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTeamInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedCreateNestedManyWithoutAssignedTeamInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTeamInput
-}
-
-export type TeamCreateOrConnectWithoutStorageObjectsInput = {
-  where: Prisma.TeamWhereUniqueInput
-  create: Prisma.XOR<Prisma.TeamCreateWithoutStorageObjectsInput, Prisma.TeamUncheckedCreateWithoutStorageObjectsInput>
-}
-
-export type TeamUpsertWithoutStorageObjectsInput = {
-  update: Prisma.XOR<Prisma.TeamUpdateWithoutStorageObjectsInput, Prisma.TeamUncheckedUpdateWithoutStorageObjectsInput>
-  create: Prisma.XOR<Prisma.TeamCreateWithoutStorageObjectsInput, Prisma.TeamUncheckedCreateWithoutStorageObjectsInput>
-  where?: Prisma.TeamWhereInput
-}
-
-export type TeamUpdateToOneWithWhereWithoutStorageObjectsInput = {
-  where?: Prisma.TeamWhereInput
-  data: Prisma.XOR<Prisma.TeamUpdateWithoutStorageObjectsInput, Prisma.TeamUncheckedUpdateWithoutStorageObjectsInput>
-}
-
-export type TeamUpdateWithoutStorageObjectsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTeamsNestedInput
-  teammembers?: Prisma.TeamMemberUpdateManyWithoutTeamNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutTeamNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedTeamNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutTeamNestedInput
-}
-
-export type TeamUncheckedUpdateWithoutStorageObjectsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  teammembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutTeamNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTeamNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedTeamNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTeamNestedInput
-}
-
-export type TeamCreateWithoutExamAssignmentsInput = {
-  id?: string
-  name: string
-  createdAt: Date | string
-  updatedAt?: Date | string | null
-  organization: Prisma.OrganizationCreateNestedOneWithoutTeamsInput
-  teammembers?: Prisma.TeamMemberCreateNestedManyWithoutTeamInput
-  invitations?: Prisma.InvitationCreateNestedManyWithoutTeamInput
-  storageObjects?: Prisma.StorageObjectCreateNestedManyWithoutTeamInput
-  notifications?: Prisma.NotificationCreateNestedManyWithoutTeamInput
-}
-
-export type TeamUncheckedCreateWithoutExamAssignmentsInput = {
-  id?: string
-  name: string
-  organizationId: string
-  createdAt: Date | string
-  updatedAt?: Date | string | null
-  teammembers?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutTeamInput
-  invitations?: Prisma.InvitationUncheckedCreateNestedManyWithoutTeamInput
-  storageObjects?: Prisma.StorageObjectUncheckedCreateNestedManyWithoutTeamInput
-  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutTeamInput
-}
-
-export type TeamCreateOrConnectWithoutExamAssignmentsInput = {
-  where: Prisma.TeamWhereUniqueInput
-  create: Prisma.XOR<Prisma.TeamCreateWithoutExamAssignmentsInput, Prisma.TeamUncheckedCreateWithoutExamAssignmentsInput>
-}
-
-export type TeamUpsertWithoutExamAssignmentsInput = {
-  update: Prisma.XOR<Prisma.TeamUpdateWithoutExamAssignmentsInput, Prisma.TeamUncheckedUpdateWithoutExamAssignmentsInput>
-  create: Prisma.XOR<Prisma.TeamCreateWithoutExamAssignmentsInput, Prisma.TeamUncheckedCreateWithoutExamAssignmentsInput>
-  where?: Prisma.TeamWhereInput
-}
-
-export type TeamUpdateToOneWithWhereWithoutExamAssignmentsInput = {
-  where?: Prisma.TeamWhereInput
-  data: Prisma.XOR<Prisma.TeamUpdateWithoutExamAssignmentsInput, Prisma.TeamUncheckedUpdateWithoutExamAssignmentsInput>
-}
-
-export type TeamUpdateWithoutExamAssignmentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutTeamsNestedInput
-  teammembers?: Prisma.TeamMemberUpdateManyWithoutTeamNestedInput
-  invitations?: Prisma.InvitationUpdateManyWithoutTeamNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutTeamNestedInput
-  notifications?: Prisma.NotificationUpdateManyWithoutTeamNestedInput
-}
-
-export type TeamUncheckedUpdateWithoutExamAssignmentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  teammembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutTeamNestedInput
-  invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTeamNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutTeamNestedInput
-  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTeamNestedInput
 }
 
 export type TeamCreateManyOrganizationInput = {
@@ -877,8 +675,6 @@ export type TeamUpdateWithoutOrganizationInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   teammembers?: Prisma.TeamMemberUpdateManyWithoutTeamNestedInput
   invitations?: Prisma.InvitationUpdateManyWithoutTeamNestedInput
-  examAssignments?: Prisma.ExamAssignmentUpdateManyWithoutAssignedTeamNestedInput
-  storageObjects?: Prisma.StorageObjectUpdateManyWithoutTeamNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutTeamNestedInput
 }
 
@@ -889,8 +685,6 @@ export type TeamUncheckedUpdateWithoutOrganizationInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   teammembers?: Prisma.TeamMemberUncheckedUpdateManyWithoutTeamNestedInput
   invitations?: Prisma.InvitationUncheckedUpdateManyWithoutTeamNestedInput
-  examAssignments?: Prisma.ExamAssignmentUncheckedUpdateManyWithoutAssignedTeamNestedInput
-  storageObjects?: Prisma.StorageObjectUncheckedUpdateManyWithoutTeamNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutTeamNestedInput
 }
 
@@ -909,16 +703,12 @@ export type TeamUncheckedUpdateManyWithoutOrganizationInput = {
 export type TeamCountOutputType = {
   teammembers: number
   invitations: number
-  examAssignments: number
-  storageObjects: number
   notifications: number
 }
 
 export type TeamCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   teammembers?: boolean | TeamCountOutputTypeCountTeammembersArgs
   invitations?: boolean | TeamCountOutputTypeCountInvitationsArgs
-  examAssignments?: boolean | TeamCountOutputTypeCountExamAssignmentsArgs
-  storageObjects?: boolean | TeamCountOutputTypeCountStorageObjectsArgs
   notifications?: boolean | TeamCountOutputTypeCountNotificationsArgs
 }
 
@@ -949,20 +739,6 @@ export type TeamCountOutputTypeCountInvitationsArgs<ExtArgs extends runtime.Type
 /**
  * TeamCountOutputType without action
  */
-export type TeamCountOutputTypeCountExamAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ExamAssignmentWhereInput
-}
-
-/**
- * TeamCountOutputType without action
- */
-export type TeamCountOutputTypeCountStorageObjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.StorageObjectWhereInput
-}
-
-/**
- * TeamCountOutputType without action
- */
 export type TeamCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.NotificationWhereInput
 }
@@ -977,8 +753,6 @@ export type TeamSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   teammembers?: boolean | Prisma.Team$teammembersArgs<ExtArgs>
   invitations?: boolean | Prisma.Team$invitationsArgs<ExtArgs>
-  examAssignments?: boolean | Prisma.Team$examAssignmentsArgs<ExtArgs>
-  storageObjects?: boolean | Prisma.Team$storageObjectsArgs<ExtArgs>
   notifications?: boolean | Prisma.Team$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.TeamCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["team"]>
@@ -1014,8 +788,6 @@ export type TeamInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   teammembers?: boolean | Prisma.Team$teammembersArgs<ExtArgs>
   invitations?: boolean | Prisma.Team$invitationsArgs<ExtArgs>
-  examAssignments?: boolean | Prisma.Team$examAssignmentsArgs<ExtArgs>
-  storageObjects?: boolean | Prisma.Team$storageObjectsArgs<ExtArgs>
   notifications?: boolean | Prisma.Team$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.TeamCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1032,8 +804,6 @@ export type $TeamPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     organization: Prisma.$OrganizationPayload<ExtArgs>
     teammembers: Prisma.$TeamMemberPayload<ExtArgs>[]
     invitations: Prisma.$InvitationPayload<ExtArgs>[]
-    examAssignments: Prisma.$ExamAssignmentPayload<ExtArgs>[]
-    storageObjects: Prisma.$StorageObjectPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1439,8 +1209,6 @@ export interface Prisma__TeamClient<T, Null = never, ExtArgs extends runtime.Typ
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   teammembers<T extends Prisma.Team$teammembersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$teammembersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   invitations<T extends Prisma.Team$invitationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  examAssignments<T extends Prisma.Team$examAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$examAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExamAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  storageObjects<T extends Prisma.Team$storageObjectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$storageObjectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StorageObjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.Team$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Team$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1922,54 +1690,6 @@ export type Team$invitationsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.InvitationScalarFieldEnum | Prisma.InvitationScalarFieldEnum[]
-}
-
-/**
- * Team.examAssignments
- */
-export type Team$examAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ExamAssignment
-   */
-  select?: Prisma.ExamAssignmentSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ExamAssignment
-   */
-  omit?: Prisma.ExamAssignmentOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ExamAssignmentInclude<ExtArgs> | null
-  where?: Prisma.ExamAssignmentWhereInput
-  orderBy?: Prisma.ExamAssignmentOrderByWithRelationInput | Prisma.ExamAssignmentOrderByWithRelationInput[]
-  cursor?: Prisma.ExamAssignmentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ExamAssignmentScalarFieldEnum | Prisma.ExamAssignmentScalarFieldEnum[]
-}
-
-/**
- * Team.storageObjects
- */
-export type Team$storageObjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the StorageObject
-   */
-  select?: Prisma.StorageObjectSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the StorageObject
-   */
-  omit?: Prisma.StorageObjectOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.StorageObjectInclude<ExtArgs> | null
-  where?: Prisma.StorageObjectWhereInput
-  orderBy?: Prisma.StorageObjectOrderByWithRelationInput | Prisma.StorageObjectOrderByWithRelationInput[]
-  cursor?: Prisma.StorageObjectWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.StorageObjectScalarFieldEnum | Prisma.StorageObjectScalarFieldEnum[]
 }
 
 /**
