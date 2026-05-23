@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { resolveBreadcrumbLabels } from "@/app/dashboard/lib/resolve-breadcrumb-labels";
+import { resolveBreadcrumbLabels } from "@/app/dashboard/lib/breadcrumbs/resolve-breadcrumb-labels";
 import { getSessionCached } from "@/lib/auth-session";
 
 type EntityType = "user" | "organization";

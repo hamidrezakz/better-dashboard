@@ -17,7 +17,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { type SidebarOrganizationItem } from "@/app/dashboard/lib/sidebar-types";
+import { type SidebarOrganizationItem } from "@/app/dashboard/lib/sidebar/sidebar-types";
 import { Building2Icon, ChevronsUpDownIcon } from "lucide-react";
 
 type OrganizationSwitcherProps = {

@@ -18,7 +18,7 @@ import {
   getDashboardBreadcrumbDynamicLabel,
   getDashboardBreadcrumbLabelClassName,
   isDashboardBreadcrumbSegmentHidden,
-} from "@/app/dashboard/lib/dashboard-breadcrumb-segments";
+} from "@/app/dashboard/lib/breadcrumbs/dashboard-breadcrumb-segments";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { HomeIcon } from "lucide-react";

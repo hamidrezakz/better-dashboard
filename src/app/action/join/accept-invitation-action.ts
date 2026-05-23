@@ -4,7 +4,7 @@ import { updateTag } from "next/cache";
 import { headers } from "next/headers";
 import { joinCacheTags } from "@/app/join/lib/cache-tags";
 import { resolveInvitationJoinScope } from "@/app/join/lib/invitation-scope";
-import { getActiveOrganizationLandingPath } from "@/app/dashboard/lib/dashboard-items";
+import { getActiveOrganizationLandingPath } from "@/app/dashboard/lib/sidebar/dashboard-items";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { joinRoutes } from "@/app/join/lib/join-routes";

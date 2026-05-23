@@ -9,8 +9,8 @@ import {
   DashboardPageTitleFallback,
   DashboardStatCardFallback,
   DashboardTableCardFallback,
-} from "@/app/dashboard/components/dashboard-page-fallbacks";
-import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell";
+} from "@/app/dashboard/components/shell/dashboard-page-fallbacks";
+import { DashboardPageShell } from "@/app/dashboard/components/shell/dashboard-page-shell";
 import { getUserProfilePageData } from "@/app/dashboard/(user)/lib/get-user-profile-page";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { requireAuthSession } from "@/lib/auth-session";

@@ -19,7 +19,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Switch } from "@/components/ui/switch";
-import { type DashboardSidebarConfig } from "@/app/dashboard/lib/sidebar-types";
+import { type DashboardSidebarConfig } from "@/app/dashboard/lib/sidebar/sidebar-types";
 import { ChevronsUpDownIcon, LogOutIcon, MoonIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 

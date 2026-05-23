@@ -3,9 +3,9 @@ import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import {
   buildNotificationVisibilityWhere,
   getUserNotificationScope,
-} from "@/app/dashboard/lib/notification-visibility";
-import type { NotificationViewItem } from "@/app/dashboard/lib/notification-view-types";
-import { buildNotificationSourceInline } from "@/app/dashboard/lib/notification-source-label";
+} from "@/app/dashboard/lib/notifications/notification-visibility";
+import type { NotificationViewItem } from "@/app/dashboard/lib/notifications/notification-view-types";
+import { buildNotificationSourceInline } from "@/app/dashboard/lib/notifications/notification-source-label";
 import {
   parseUserNotificationTableFilter,
   USER_NOTIFICATIONS_PAGE_SIZE,

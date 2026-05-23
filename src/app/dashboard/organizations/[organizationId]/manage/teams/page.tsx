@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DashboardTableCardFallback } from "@/app/dashboard/components/dashboard-page-fallbacks";
+import { DashboardTableCardFallback } from "@/app/dashboard/components/shell/dashboard-page-fallbacks";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import { formatDate } from "@/lib/format-date";
 import { prisma } from "@/lib/prisma";

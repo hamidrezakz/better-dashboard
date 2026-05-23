@@ -5,7 +5,7 @@ import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import {
   buildNotificationVisibilityWhere,
   getUserNotificationScope,
-} from "@/app/dashboard/lib/notification-visibility";
+} from "@/app/dashboard/lib/notifications/notification-visibility";
 import { requireAuthSession } from "@/lib/auth-session";
 import { prisma } from "@/lib/prisma";
 

@@ -1,5 +1,5 @@
-import { DashboardHeaderFallback } from "@/app/dashboard/components/dashboard-header-fallback";
-import { DashboardSidebarFallback } from "@/app/dashboard/components/dashboard-sidebar-fallback";
+import { DashboardHeaderFallback } from "@/app/dashboard/components/shell/dashboard-header-fallback";
+import { DashboardSidebarFallback } from "@/app/dashboard/components/sidebar/dashboard-sidebar-fallback";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 type LoadingFallbacksLayoutProps = {

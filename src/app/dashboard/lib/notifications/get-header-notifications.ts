@@ -6,8 +6,8 @@ import type {
 import {
   buildNotificationVisibilityWhere,
   getUserNotificationScope,
-} from "@/app/dashboard/lib/notification-visibility";
-import { buildNotificationSourceLabel } from "@/app/dashboard/lib/notification-source-label";
+} from "@/app/dashboard/lib/notifications/notification-visibility";
+import { buildNotificationSourceLabel } from "@/app/dashboard/lib/notifications/notification-source-label";
 
 const HEADER_NOTIFICATIONS_LIMIT = 10;
 

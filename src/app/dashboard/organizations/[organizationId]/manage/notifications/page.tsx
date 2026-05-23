@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { DashboardTableCardFallback } from "@/app/dashboard/components/dashboard-page-fallbacks";
+import { DashboardTableCardFallback } from "@/app/dashboard/components/shell/dashboard-page-fallbacks";
 import { NotificationManagementPanel } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/components/notification-management-panel";
 import {
   getOrganizationNotificationsPage,

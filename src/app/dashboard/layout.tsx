@@ -1,13 +1,13 @@
 import { Suspense } from "react";
-import { DashboardAppSidebar } from "@/app/dashboard/components/app-sidebar";
-import { DashboardHeader } from "@/app/dashboard/components/dashboard-header";
+import { DashboardAppSidebar } from "@/app/dashboard/components/sidebar/app-sidebar";
+import { DashboardHeader } from "@/app/dashboard/components/shell/dashboard-header";
 import {
   DashboardLayoutFallback,
   DashboardPageFallback,
-} from "@/app/dashboard/components/dashboard-layout-fallback";
+} from "@/app/dashboard/components/shell/dashboard-layout-fallback";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { requireAuthSession } from "@/lib/auth-session";
-import { getDashboardSidebarConfig } from "@/app/dashboard/lib/get-sidebar-config";
+import { getDashboardSidebarConfig } from "@/app/dashboard/lib/sidebar/get-sidebar-config";
 
 type DashboardLayoutProps = {
   children: React.ReactNode;

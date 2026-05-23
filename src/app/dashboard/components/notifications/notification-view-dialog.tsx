@@ -3,8 +3,8 @@
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { markNotificationReadAction } from "@/app/action/dashboard/users/notifications/mark-notification-read-action";
-import type { NotificationViewItem } from "@/app/dashboard/lib/notification-view-types";
-import { buildNotificationSourceInline } from "@/app/dashboard/lib/notification-source-label";
+import type { NotificationViewItem } from "@/app/dashboard/lib/notifications/notification-view-types";
+import { buildNotificationSourceInline } from "@/app/dashboard/lib/notifications/notification-source-label";
 import { getNotificationTypeBadgeConfig } from "@/components/globals-badge/badge-config";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { Button } from "@/components/ui/button";

@@ -1,10 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { DashboardNavMain } from "@/app/dashboard/components/nav-main";
-import { DashboardNavProjects } from "@/app/dashboard/components/nav-projects";
-import { DashboardNavUser } from "@/app/dashboard/components/nav-user";
-import { OrganizationSwitcher } from "@/app/dashboard/components/organization-switcher";
+import { DashboardNavMain } from "@/app/dashboard/components/sidebar/nav-main";
+import { DashboardNavProjects } from "@/app/dashboard/components/sidebar/nav-projects";
+import { DashboardNavUser } from "@/app/dashboard/components/sidebar/nav-user";
+import { OrganizationSwitcher } from "@/app/dashboard/components/sidebar/organization-switcher";
 import {
   Sidebar,
   SidebarContent,
@@ -15,7 +15,7 @@ import {
 import {
   type DashboardSidebarConfig,
   type SidebarIconName,
-} from "@/app/dashboard/lib/sidebar-types";
+} from "@/app/dashboard/lib/sidebar/sidebar-types";
 import {
   BellIcon,
   FolderIcon,

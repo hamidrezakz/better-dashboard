@@ -12,7 +12,7 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
-import type { SidebarNavigationGroupId } from "@/app/dashboard/lib/sidebar-types";
+import type { SidebarNavigationGroupId } from "@/app/dashboard/lib/sidebar/sidebar-types";
 
 type DashboardNavMainProps = {
   groups: {

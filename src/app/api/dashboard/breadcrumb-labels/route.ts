@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import {
   type BreadcrumbEntityRef,
   resolveBreadcrumbLabels,
-} from "@/app/dashboard/lib/resolve-breadcrumb-labels";
+} from "@/app/dashboard/lib/breadcrumbs/resolve-breadcrumb-labels";
 import { getSessionCached } from "@/lib/auth-session";
 
 function parseItemsParam(raw: string | null): BreadcrumbEntityRef[] {

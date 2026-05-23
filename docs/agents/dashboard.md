@@ -6,17 +6,17 @@ Generic Next.js 16 + `cacheComponents` + Better Auth (org) + Prisma + shadcn/Bas
 
 ## File map
 
-| Piece                                           | Role                                                     |
-| ----------------------------------------------- | -------------------------------------------------------- |
-| `dashboard-routes.ts`                           | URL builders only                                        |
-| `dashboard-nav-labels.ts`                       | Sidebar, breadcrumb segment names, org-manage tab titles |
-| `dashboard-items.ts`                            | Role-based sidebar items                                 |
-| `dashboard-manage-nav.ts`                       | Org manage tab labels, hrefs, active tab detection       |
-| `get-sidebar-config.ts`                         | Cached sidebar data                                      |
-| `dashboard-breadcrumb-segments.ts`              | Hidden segments, ID placeholders                         |
-| `dashboard-breadcrumbs.tsx`                     | Client trail; entity names via API                       |
-| `resolve-breadcrumb-labels.ts` + breadcrumb API | Display names for allowed viewers                        |
-| `badge-labels.ts` (`src/lib/`)                  | Enum/badge copy in tables — not route nav                |
+**Segment SSOT (stay at `dashboard/lib/` root):** `dashboard-routes.ts`, `dashboard-nav-labels.ts`, `cache-tags.ts`, `dashboard-access.ts`.
+
+| Area                   | Path                                                | Role                                                       |
+| ---------------------- | --------------------------------------------------- | ---------------------------------------------------------- |
+| Sidebar                | `lib/sidebar/*`, `components/sidebar/*`             | Items, config, manage tabs, app sidebar, nav, org switcher |
+| Breadcrumbs            | `lib/breadcrumbs/*`, `components/breadcrumbs/*`     | Segment rules, resolver, client trail + breadcrumb API     |
+| Notifications (chrome) | `lib/notifications/*`, `components/notifications/*` | Header dropdown, shared view dialog, visibility/types      |
+| Layout shell           | `components/shell/*`                                | Page shell, header, layout/page fallbacks                  |
+| Badges                 | `badge-labels.ts` (`src/lib/`)                      | Enum/badge copy in tables — not route nav                  |
+
+Route-scoped notification UI stays under `(user)/notifications` and `organizations/.../manage/notifications`.
 
 Feature-specific copy (forms, empty states, dialogs) stays beside that feature unless reused across the segment.
 
@@ -37,11 +37,11 @@ Do not duplicate nav/tab/breadcrumb strings in components.
 
 ## Fork / CLI
 
-Keep `dashboard/lib` and `action/dashboard/...` as a copyable tree. Product-only routes belong in the consuming app. Extension points: `dashboard-routes.ts`, `dashboard-nav-labels.ts`, `dashboard-items.ts`, `cache-tags.ts`, mirrored actions.
+Keep `dashboard/lib` and `action/dashboard/...` as a copyable tree. Product-only routes belong in the consuming app. Extension points: root `dashboard-routes.ts`, `dashboard-nav-labels.ts`, `cache-tags.ts`, plus `lib/sidebar/dashboard-items.ts` when trimming nav. Optional slices: delete matching `lib/<area>/`, `components/<area>/`, route subtrees, and actions together.
 
 ## Mobile breadcrumbs
 
-On small screens the trail keeps the last two visible segments after hidden ones. `users` / `organizations` are always hidden; `manage` is hidden on mobile only so org manage pages read as **organization name + tab** (see `dashboard-breadcrumb-segments.ts`).
+On small screens the trail keeps the last two visible segments after hidden ones. `users` / `organizations` are always hidden; `manage` is hidden on mobile only so org manage pages read as **organization name + tab** (see `lib/breadcrumbs/dashboard-breadcrumb-segments.ts`).
 
 Dedicated back row: per-route metadata next to routes/layouts — document here when added.
 

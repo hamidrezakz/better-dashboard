@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { LoadingFallback } from "@/components/loading-fallback";
-import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell";
+import { DashboardPageShell } from "@/app/dashboard/components/shell/dashboard-page-shell";
 import { requireOrganizationManageAccess } from "@/app/dashboard/lib/dashboard-access";
 import { ManageTabsNav } from "@/app/dashboard/organizations/[organizationId]/manage/components/manage-tabs-nav";
 

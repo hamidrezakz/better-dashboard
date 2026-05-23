@@ -6,7 +6,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   getActiveOrganizationManageTab,
   organizationManageNavItems,
-} from "@/app/dashboard/lib/dashboard-manage-nav";
+} from "@/app/dashboard/lib/sidebar/dashboard-manage-nav";
 
 type ManageTabsNavProps = {
   organizationId: string;

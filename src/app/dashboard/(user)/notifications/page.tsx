@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { LoadingFallback } from "@/components/loading-fallback";
-import { DashboardTableCardFallback } from "@/app/dashboard/components/dashboard-page-fallbacks";
-import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell";
+import { DashboardTableCardFallback } from "@/app/dashboard/components/shell/dashboard-page-fallbacks";
+import { DashboardPageShell } from "@/app/dashboard/components/shell/dashboard-page-shell";
 import { UserNotificationsPanel } from "@/app/dashboard/(user)/notifications/components/user-notifications-panel";
 import {
   getUserNotificationsPage,

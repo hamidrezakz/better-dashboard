@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import { BellIcon } from "lucide-react";
-import { DashboardBreadcrumbs } from "@/app/dashboard/components/dashboard-breadcrumbs";
-import { HeaderNotificationsDropdown } from "@/app/dashboard/components/header-notifications-dropdown";
-import { getHeaderNotificationsData } from "@/app/dashboard/lib/get-header-notifications";
+import { DashboardBreadcrumbs } from "@/app/dashboard/components/breadcrumbs/dashboard-breadcrumbs";
+import { HeaderNotificationsDropdown } from "@/app/dashboard/components/notifications/header-notifications-dropdown";
+import { getHeaderNotificationsData } from "@/app/dashboard/lib/notifications/get-header-notifications";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";

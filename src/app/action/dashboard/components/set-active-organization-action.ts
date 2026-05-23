@@ -7,7 +7,7 @@ import { auth } from "@/lib/auth";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { getUserOrganizationRole } from "@/app/dashboard/lib/dashboard-access";
-import { getActiveOrganizationLandingPath } from "@/app/dashboard/lib/dashboard-items";
+import { getActiveOrganizationLandingPath } from "@/app/dashboard/lib/sidebar/dashboard-items";
 
 type SetActiveOrganizationInput = {
   organizationId: string;

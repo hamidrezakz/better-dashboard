@@ -2,7 +2,7 @@ import type {
   DashboardSidebarConfig,
   SidebarNavigationGroup,
   SidebarNavigationItem,
-} from "@/app/dashboard/lib/sidebar-types";
+} from "@/app/dashboard/lib/sidebar/sidebar-types";
 
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 

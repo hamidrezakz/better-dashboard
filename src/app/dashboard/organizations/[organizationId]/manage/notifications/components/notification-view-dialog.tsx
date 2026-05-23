@@ -1,6 +1,6 @@
 "use client";
 
-import { NotificationViewDialog as SharedNotificationViewDialog } from "@/app/dashboard/components/notification-view-dialog";
+import { NotificationViewDialog as SharedNotificationViewDialog } from "@/app/dashboard/components/notifications/notification-view-dialog";
 import type { OrganizationNotificationItem } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/lib/notification-form-utils";
 
 type NotificationViewDialogProps = {

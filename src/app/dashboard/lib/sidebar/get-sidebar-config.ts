@@ -1,8 +1,8 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { prisma } from "@/lib/prisma";
-import { type DashboardSidebarConfig } from "@/app/dashboard/lib/sidebar-types";
+import { type DashboardSidebarConfig } from "@/app/dashboard/lib/sidebar/sidebar-types";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
-import { getDashboardSidebarItems } from "@/app/dashboard/lib/dashboard-items";
+import { getDashboardSidebarItems } from "@/app/dashboard/lib/sidebar/dashboard-items";
 
 type DashboardSidebarConfigInput = {
   userId: string;

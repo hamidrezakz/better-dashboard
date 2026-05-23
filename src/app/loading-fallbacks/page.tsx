@@ -1,5 +1,5 @@
-import { DashboardLayoutFallback } from "@/app/dashboard/components/dashboard-layout-fallback";
-import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell";
+import { DashboardLayoutFallback } from "@/app/dashboard/components/shell/dashboard-layout-fallback";
+import { DashboardPageShell } from "@/app/dashboard/components/shell/dashboard-page-shell";
 import {
   CardLoadingFallback,
   LoadingFallback,

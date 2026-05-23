@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { NotificationViewDialog } from "@/app/dashboard/components/notification-view-dialog";
+import { NotificationViewDialog } from "@/app/dashboard/components/notifications/notification-view-dialog";
 import { UserNotificationsTable } from "@/app/dashboard/(user)/notifications/components/user-notifications-table";
 import type { UserNotificationListItem } from "@/app/dashboard/(user)/notifications/lib/get-user-notifications-page";
 import type { UserNotificationTableFilter } from "@/app/dashboard/(user)/notifications/lib/user-notifications-table-params";
