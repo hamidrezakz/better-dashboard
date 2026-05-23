@@ -1,74 +1,32 @@
 # Implementation rules & patterns
 
-> **Context:** Short rule via `.cursor/rules/implementation.mdc` on `*.tsx` under `src/app` and `src/components`. Full reference below.
+> **Context:** Rule `.cursor/rules/implementation.mdc` on actions, `auth-session.ts`, `page.tsx`, `layout.tsx`. Canonical detail here.
 
-## Core rules
+## Server-first
 
-### Server-first
+Default Server Components; `"use client"` only for browser interactivity.
 
-- Default to Server Components; add `"use client"` only for browser interactivity and when really needed.
+## Mutations → Server Actions
 
-### Mutations → Server Actions only
+- Path: `src/app/action/<feature>/` — **one action per file**.
+- Mirror the app segment (`action/dashboard/...` mirrors `app/dashboard/...`); segment helpers in `action/<feature>/shared/`.
+- Flow: validate → mutate DB → invalidate cache if needed → return/redirect.
 
-- Path: `src/app/action/<feature>/`, **one action per file** (`logout-action.ts`, …).
-- **Folder layout:** mirror the app segment (e.g. dashboard `components/`, `users/`, `organizations/manage/invitations/`) so actions are easy to find; segment-wide helpers stay in `action/<feature>/shared/`.
-- Flow: validate → mutate DB → update cache (if needed) → return/redirect.
+## Caching reads & writes
 
-### Caching
+- Heavy/repeated reads: `'use cache'` + tags from segment `cache-tags.ts`.
+- After mutations when the **same user** must see fresh UI: **`updateTag`** in that action — see [caching.md](./caching.md).
+- Do not use vague `revalidateTag` in actions when the actor is waiting on updated UI.
 
-- Use `use cache` in server functions that run heavy or repeated reads.
-- Use `updateTag(...)` or `revalidateTag(...)` to invalidate the cache.
-- See [caching.md](./caching.md) for more details.
+## Suspense for runtime reads
 
-### Suspense for runtime reads
+Only the slice that calls `cookies()`, `headers()`, `connection()`, or other request-scoped APIs goes inside `<Suspense>` — not the whole page.
 
-- Only the **dynamic slice** that calls `cookies()`, `headers()`, `connection()`, or other request-scoped APIs goes inside `<Suspense>` — **not** the whole page or layout.
-- Keep static/cached shells (`'use cache'`, deterministic markup) **outside** Suspense so PPR can prerender them.
-- Prefer **small, targeted** boundaries; use **parallel** `<Suspense>` siblings for independent dynamic blocks, and **nested** Suspense when a subtree has its own slow part.
-- See `node_modules/next/dist/docs/01-app/01-getting-started/08-caching.md` (streaming / dynamic holes) and `node_modules/next/dist/docs/01-app/02-guides/streaming.md`.
+Keep static / `'use cache'` markup **outside** Suspense. Prefer small parallel boundaries; nest when a subtree has its own slow part.
 
-### Auth / session (`src/lib/auth-session.ts`)
+Docs: [nextjs.md](./nextjs.md) → `08-caching.md`, `streaming.md`.
 
-Session reads use React `cache()` — **one `getSession` per request**, never `use cache` / `cacheTag` / `revalidateTag` on session.
-
-| Helper                               | Use when                                                                                                         |
-| ------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
-| **`getSessionCached()`**             | Optional session (nullable). **Route Handlers:** if no user → `401` JSON, not `redirect`.                        |
-| **`requireAuthSession()`**           | Must be signed in. **Dashboard** layouts, pages, and Server Actions — default post-login return is `/dashboard`. |
-| **`requireAuthSession(returnPath)`** | Only **outside** the dashboard auth gate (e.g. join before accept) so login returns to the right URL.            |
-
-**Dashboard tree**
-
-- `dashboard/layout.tsx` calls `requireAuthSession()` once (inside Suspense). Descendant layouts use `dashboard-access` guards; they may call `requireAuthSession()` again — same request dedupes via `cache()`.
-- Do **not** pass `redirectTo` under the dashboard layout; it only affects logged-out users and the root layout already handles that.
-- Pages that need `user.id` still call `requireAuthSession()` (no prop); do not rely on layout props for session.
-
-**Server Actions**
-
-- Dashboard mutations: `requireAuthSession()` then use `session.user.id` (or `await requireAuthSession()` as an auth-only gate).
-- Do not use `getSessionCached` + silent no-op when the action must be authenticated — prefer `requireAuthSession` for consistent redirect-to-login.
-
-**Parallel Suspense slices** on one page may each call `requireAuthSession()` (and each call their own `get-*` with `'use cache'`). **Do not** add an extra page-level `cache()` wrapper just to dedupe session — `requireAuthSession` / `getSessionCached` already dedupe per request. Cached data functions dedupe via `'use cache'` + tags. Extra `cache()` on a page is optional only when you intentionally bundle non-cached steps once per segment (rare).
-
-### Copy & styling
-
-- English, single language; no i18n runtime. Nav: `dashboard-nav-labels.ts`. Badges: `badge-translations.ts` — see [dashboard.md](./dashboard.md).
-- Styling: [ui-design.md](./ui-design.md) (logical Tailwind; `lang`/`dir` on root layout only).
-
-## Definition of done
-
-- Server-first; only dynamic slices behind targeted `Suspense` (parallel/nested when useful).
-- New UI/utils: searched upward; shadcn primitives preferred; no duplicate helpers.
-- Tags centralized; mutations use **`updateTag`** when the acting user’s UI must update immediately.
-- Auth compatible with Better Auth + organization plugin.
-- UI uses shared primitives; nav copy centralized per [dashboard.md](./dashboard.md).
-- New UI: shadcn defaults + [ui-design.md](./ui-design.md).
-- Feature fits modular layout; no cross-sibling feature imports.
-- Stays within template scope (Better Auth dashboard slice only).
-
-## Minimal patterns
-
-**Suspense — wrap only the dynamic part**
+### Example
 
 ```tsx
 export default function Page() {
@@ -86,8 +44,44 @@ export default function Page() {
 }
 ```
 
-**Base UI + Link**
+## Auth / session (`src/lib/auth-session.ts`)
+
+Session uses React `cache()` — **one `getSession` per request**. Never `use cache` / `cacheTag` / `revalidateTag` on session.
+
+| Helper                               | Use when                                                                            |
+| ------------------------------------ | ----------------------------------------------------------------------------------- |
+| **`getSessionCached()`**             | Optional session (nullable). Route Handlers: no user → `401` JSON, not redirect.    |
+| **`requireAuthSession()`**           | Must be signed in. Dashboard layouts, pages, actions — default return `/dashboard`. |
+| **`requireAuthSession(returnPath)`** | Outside dashboard auth gate (e.g. join) so login returns to the right URL.          |
+
+**Dashboard tree**
+
+- `dashboard/layout.tsx` calls `requireAuthSession()` once (inside Suspense). Descendants use access guards; repeat `requireAuthSession()` is OK — same-request dedupe via `cache()`.
+- Do **not** pass `redirectTo` under `dashboard/layout`.
+- Pages needing `user.id` call `requireAuthSession()` themselves — do not rely on layout props for session.
+
+**Server Actions**
+
+- Dashboard mutations: `requireAuthSession()` then `session.user.id`.
+- Do not use `getSessionCached` + silent no-op when auth is required.
+
+Parallel Suspense slices may each call `requireAuthSession()` and their own `get-*` with `'use cache'`. Do not add an extra page-level `cache()` wrapper just to dedupe session.
+
+## Base UI + Link
 
 ```tsx
 <Button render={<Link href="/dashboard" />}>Dashboard</Button>
 ```
+
+## Styling & nav copy
+
+[ui-design.md](./ui-design.md) · [dashboard.md](./dashboard.md)
+
+## Definition of done
+
+- Server-first; targeted `Suspense` only where needed.
+- New helpers: searched upward; shadcn first; no duplicate utilities.
+- Tags centralized; dashboard mutations use **`updateTag`** when the actor’s UI must update immediately.
+- Better Auth + organization plugin compatible.
+- Nav copy centralized; modular layout; no cross-sibling feature imports.
+- Template scope only (auth dashboard slice) — see [architecture.md](./architecture.md).

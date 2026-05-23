@@ -1,23 +1,17 @@
 ---
-description: Server Components, Suspense holes, auth session, single-language UI, patterns
-globs: src/app/**/*.tsx,src/components/**/*.tsx,src/app/action/**/*.ts,src/lib/auth-session.ts
+description: RSC, Suspense, session, Server Actions — open implementation.md for detail
+globs: src/app/action/**/*.ts,src/lib/auth-session.ts,src/app/**/page.tsx,src/app/**/layout.tsx
 alwaysApply: false
 ---
 
 # Implementation
 
-**Server-first:** `"use client"` only when needed.
+**Server-first** — `"use client"` only when needed.
 
-**Suspense:** wrap only slices using `cookies()`, `headers()`, `connection()`, etc. Keep static / `'use cache'` shells **outside** Suspense. Prefer small parallel boundaries.
+**Suspense:** only slices that use request APIs (`cookies`, `headers`, `connection`, …). Static / `'use cache'` shells stay **outside** Suspense.
 
-**Session (`auth-session.ts`):** `getSessionCached` (nullable; API → 401) · `requireAuthSession()` for dashboard pages/layouts/actions · `requireAuthSession(returnPath)` only outside dashboard gate (e.g. join). No `redirectTo` under `dashboard/layout`. Request-scoped `cache()` only — never `use cache` / revalidate session. Detail: [implementation.md](docs/agents/implementation.md#auth--session-srclibauth-sessionts).
+**Session:** `auth-session.ts` only — request-scoped `cache()`; never `use cache` / revalidate session. Dashboard tree: `requireAuthSession()` without `redirectTo` under `dashboard/layout`.
 
-**Copy:** English; `dashboard-nav-labels.ts` (orderly for later language changes — no i18n unless asked). **UI:** shadcn defaults, logical Tailwind — `ui-design.mdc`.
+**Actions:** `src/app/action/<feature>/` — one mutation per file. Cache invalidation: `caching.mdc` / [caching.md](docs/agents/caching.md).
 
-**Mutations:** `src/app/action/<feature>/` — validate → DB → cache (if needed) → return/redirect. See `caching` rule when editing actions.
-
-```tsx
-<Button render={<Link href="/dashboard" />}>Dashboard</Button>
-```
-
-Full detail: [docs/agents/implementation.md](docs/agents/implementation.md)
+**Detail (Read):** [docs/agents/implementation.md](docs/agents/implementation.md) — session table, Suspense examples, definition of done. **UI styling:** [ui-design.md](docs/agents/ui-design.md). **Nav copy:** [dashboard.md](docs/agents/dashboard.md).

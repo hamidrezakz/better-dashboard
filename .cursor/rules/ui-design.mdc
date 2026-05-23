@@ -1,11 +1,13 @@
 ---
-description: Logical Tailwind; shadcn defaults; root dir/lang only
+description: Logical Tailwind + shadcn defaults — open ui-design.md for detail
 globs: src/**/*.tsx,src/**/*.css,src/app/**/layout.tsx
 alwaysApply: false
 ---
 
 # UI styling
 
-`lang`/`dir` — root only. **Logical Tailwind** (`me` not `mr`, …). **shadcn** from `src/components/ui` — default styles; compose before custom UI.
+`lang`/`dir` on **root layout only**. **Logical Tailwind** (`me`/`ms`, `start`/`end`, …). **shadcn** from `src/components/ui` — default variants; compose before custom markup. Base UI: `render={<Link … />}`, not `asChild`.
 
-English now; nav copy in `dashboard-nav-labels.ts`. Orderly layout helps future language changes — no i18n stack unless user asks. [ui-design.md](docs/agents/ui-design.md)
+English; dashboard chrome copy in `dashboard-nav-labels.ts` — no i18n unless user asks.
+
+**Detail (Read):** [docs/agents/ui-design.md](docs/agents/ui-design.md).

@@ -5,47 +5,47 @@ alwaysApply: true
 
 # Agent guide (index)
 
-**This file is always injected.** It is a short index, not the full spec.
+**Always injected.** Index only — not the full spec.
 
-## How context is injected (Cursor standard)
+## Context layers
 
-Three layers — use the lightest layer that fits the task:
+| Layer | When                          | Source                                                             |
+| ----- | ----------------------------- | ------------------------------------------------------------------ |
+| **1** | Every chat                    | This file                                                          |
+| **2** | Files you touch match `globs` | [.cursor/rules/\*.mdc](.cursor/rules/) — constraints only          |
+| **3** | Edge cases, tables, examples  | [docs/agents/](docs/agents/) — **Read** when layer 2 is not enough |
 
-| Layer                             | When it applies                                                        | Source                                                                                |
-| --------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| **1. Index (always)**             | Every conversation                                                     | This file (`AGENTS.md`, `alwaysApply: true`)                                          |
-| **2. Context rules (automatic)**  | Cursor attaches matching rules when you touch files that match `globs` | [.cursor/rules/\*.mdc](.cursor/rules/) — concise; `alwaysApply: false`                |
-| **3. Deep reference (on demand)** | Tables, examples, edge cases, or unclear cases                         | [docs/agents/\*.md](docs/agents/) — open with Read only when layer 1–2 are not enough |
+Do not assume layer 3 unless you opened it for this task. If unsure, **Read** the deep doc for that topic (listed below).
 
-Do not assume you have read layer 3 unless you opened that file for the current task. Layer 2 may attach mid-task when relevant files are in context — follow those rules for that work.
+## Project
 
-## Project (layer 1 — always)
+|             |                                                                                         |
+| ----------- | --------------------------------------------------------------------------------------- |
+| **Stack**   | Next.js 16+ (`cacheComponents`), Prisma 7+, Better Auth v1 (org plugin), shadcn/Base UI |
+| **Goal**    | Reusable auth + org/team dashboard template (CLI-injectable feature slices later)       |
+| **Data**    | Better Auth `auth` schema only in core — no product Prisma domains in dashboard core    |
+| **Next.js** | Not training-data — **no web search**; [nextjs.md](docs/agents/nextjs.md)               |
 
-|             |                                                                                                                                                                                                                                      |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Stack**   | Next.js 16+ App Router + `cacheComponents`, Prisma 7+, Better Auth v1 (org plugin), shadcn/Base UI                                                                                                                                   |
-| **Goal**    | **Generic reusable template** — standard auth + org/team dashboard to copy or scaffold (future: CLI injects optional features into the same folder layout)                                                                           |
-| **Data**    | **Better Auth (`auth`) schema only** in this template — no product-specific Prisma domains in core dashboard code                                                                                                                    |
-| **UI**      | English now; copy/routes in segment `lib/` so language can change later without layout churn. **Agents:** styling rules + shadcn defaults — [ui-design.md](docs/agents/ui-design.md). Nav: [dashboard.md](docs/agents/dashboard.md). |
-| **Next.js** | Not training-data Next — **no web search**; `node_modules/next/dist/docs/`                                                                                                                                                           |
+## Layer 2 → deep doc
 
-## Layer 2 — which rule attaches (by glob)
+| Rule                                                   | Globs (summary)                                          | Read for detail                                    |
+| ------------------------------------------------------ | -------------------------------------------------------- | -------------------------------------------------- |
+| [architecture.mdc](.cursor/rules/architecture.mdc)     | `src/app/**`, `src/lib/**`, `src/components/**`          | [architecture.md](docs/agents/architecture.md)     |
+| [dashboard.mdc](.cursor/rules/dashboard.mdc)           | `src/app/dashboard/**`, `api/dashboard/**`               | [dashboard.md](docs/agents/dashboard.md)           |
+| [implementation.mdc](.cursor/rules/implementation.mdc) | `action/**`, `auth-session.ts`, `page.tsx`, `layout.tsx` | [implementation.md](docs/agents/implementation.md) |
+| [caching.mdc](.cursor/rules/caching.mdc)               | `action/**`, `cache-tags.ts`, `get-*.ts`                 | [caching.md](docs/agents/caching.md)               |
+| [nextjs.mdc](.cursor/rules/nextjs.mdc)                 | `next.config.ts`, `cache-tags.ts`, `get-*.ts`            | [nextjs.md](docs/agents/nextjs.md)                 |
+| [ui-design.mdc](.cursor/rules/ui-design.mdc)           | `src/**/*.tsx`, `*.css`, layouts                         | [ui-design.md](docs/agents/ui-design.md)           |
 
-| Rule file                                              | Typical trigger paths                                              | Deep doc                                           |
-| ------------------------------------------------------ | ------------------------------------------------------------------ | -------------------------------------------------- |
-| [architecture.mdc](.cursor/rules/architecture.mdc)     | `src/app/**`, `src/lib/**`, `src/components/**`                    | [architecture.md](docs/agents/architecture.md)     |
-| [dashboard.mdc](.cursor/rules/dashboard.mdc)           | `src/app/dashboard/**`, `src/app/api/dashboard/**`                 | [dashboard.md](docs/agents/dashboard.md)           |
-| [implementation.mdc](.cursor/rules/implementation.mdc) | `src/app/**/*.tsx`, `src/app/action/**/*.ts`, `auth-session.ts`    | [implementation.md](docs/agents/implementation.md) |
-| [caching.mdc](.cursor/rules/caching.mdc)               | `src/app/action/**`, `**/cache-tags.ts`, `src/app/**/lib/get-*.ts` | [caching.md](docs/agents/caching.md)               |
-| [nextjs.mdc](.cursor/rules/nextjs.mdc)                 | `next.config.ts`, `src/app/**`                                     | [nextjs.md](docs/agents/nextjs.md)                 |
-| [ui-design.mdc](.cursor/rules/ui-design.mdc)           | `src/**/*.tsx`, layouts, CSS                                       | [ui-design.md](docs/agents/ui-design.md)           |
+Full doc index: [docs/agents/README.md](docs/agents/README.md).
 
-## Non-negotiables (layer 1 — even without opening more)
+## Non-negotiables
 
-- **Mutations:** `src/app/action/<feature>/`, one action per file; validate → DB → cache (if needed) → return/redirect.
-- **Layout:** sub-feature → segment `lib/` → `src/lib` \| `src/components`; no cross-sibling feature imports — keeps slices removable and CLI-injectable.
-- **Paths & tags:** `*-routes.ts` and `cache-tags.ts` per segment — no hardcoded path/tag strings.
-- **Dashboard nav copy:** `src/app/dashboard/lib/dashboard-nav-labels.ts` for sidebar, breadcrumbs, manage tabs — not duplicated in UI files.
-- **Session:** `src/lib/auth-session.ts` (`getSessionCached` / `requireAuthSession`) — request-scoped only; never `use cache` or revalidate session. Dashboard: `requireAuthSession()` without `redirectTo` under `dashboard/layout`. Details: [implementation.md](docs/agents/implementation.md#auth--session-srclibauth-sessionts).
-- **Same-user UI after dashboard write:** **`updateTag`** in the same Server Action (not bare `revalidateTag`).
-- **UI:** logical Tailwind in new layout code; `dir`/`lang` only on root layout — [ui-design.md](docs/agents/ui-design.md).
+- **Mutations:** `src/app/action/<feature>/`, one file per mutation — validate → DB → cache (if needed) → return/redirect. Flow: [implementation.md](docs/agents/implementation.md).
+- **Layout:** sub-feature → segment `lib/` → `src/lib` \| `src/components`; no cross-sibling feature imports.
+- **Paths & tags:** segment `*-routes.ts` + `cache-tags.ts` — no hardcoded strings.
+- **Dashboard nav text:** `dashboard-nav-labels.ts` only — [dashboard.md](docs/agents/dashboard.md).
+- **Session:** `auth-session.ts`; never `use cache` on session — [implementation.md § Auth](docs/agents/implementation.md#auth--session-srclibauth-sessionts).
+- **After dashboard write (same user):** `updateTag` in that action — [caching.md](docs/agents/caching.md).
+- **UI:** logical Tailwind; `lang`/`dir` root only — [ui-design.md](docs/agents/ui-design.md).
+- **Done checklist:** [implementation.md § Definition of done](docs/agents/implementation.md#definition-of-done).

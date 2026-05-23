@@ -1,17 +1,15 @@
 ---
-description: Dashboard segment — routes, nav labels, breadcrumbs, reusable template scope
+description: Dashboard segment — routes & nav SSOT; open dashboard.md for detail
 globs: src/app/dashboard/**/*,src/app/api/dashboard/**/*
 alwaysApply: false
 ---
 
 # Dashboard segment
 
-**Template, not a single product:** org/team dashboard slice for Next 16 + Better Auth + Prisma. Safe to fork or trim route trees + actions.
+Reusable org/team dashboard slice — safe to fork or trim route trees + matching actions.
 
-**URLs:** `dashboard-routes.ts` only — no hardcoded `/dashboard/...` strings.
+**URLs:** `dashboard-routes.ts` only. **Nav/tab/breadcrumb text:** `dashboard-nav-labels.ts` only.
 
-**Nav copy:** `dashboard-nav-labels.ts`. English, single language. **Style:** `ui-design.mdc`.
+Feature form/dialog copy stays local unless shared across the segment.
 
-**Breadcrumbs:** pathname-driven + optional API for entity names. Feature forms/dialogs keep local copy.
-
-Full detail: [docs/agents/dashboard.md](docs/agents/dashboard.md)
+**Detail (Read):** [docs/agents/dashboard.md](docs/agents/dashboard.md) — files map, breadcrumb flow, new-route checklist.

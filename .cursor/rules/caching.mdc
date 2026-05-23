@@ -1,24 +1,15 @@
 ---
-description: Tagged cache reads/writes — updateTag vs revalidateTag, cache-tags builders
+description: Tagged cache — updateTag for same-user UI; open caching.md for detail
 globs: src/app/action/**/*.ts,**/cache-tags.ts,src/app/**/lib/get-*.ts
 alwaysApply: false
 ---
 
 # Caching
 
-Next.js 16+ — use in-repo docs (`node_modules/next/dist/docs/`), not web search. Start with `08-caching.md` and `09-revalidating.md`.
+In-repo Next docs only — [nextjs.md](docs/agents/nextjs.md). Tags only via segment `cache-tags.ts`.
 
-**Read:** `'use cache'` + `cacheTag(...)` + `cacheLife(...)`; tags only via segment `cache-tags.ts`.
+**Read:** `'use cache'` + `cacheTag` + `cacheLife`. **Write (action, actor must see fresh UI):** `updateTag` in the **same** action — not bare `revalidateTag(tag)`.
 
-**Write (Server Action, same user must see fresh UI):** `updateTag(tag)` in the **same** action that mutated — not bare `revalidateTag(tag)`.
+Never cache or revalidate session ([implementation.md § Auth](docs/agents/implementation.md#auth--session-srclibauth-sessionts)).
 
-| Situation                       | API                                            |
-| ------------------------------- | ---------------------------------------------- |
-| Action + immediate UI for actor | `updateTag`                                    |
-| Action, staleness OK            | `revalidateTag(tag, "max")`                    |
-| Route handler / webhook         | `revalidateTag(tag, "max")` or `{ expire: 0 }` |
-| By URL segment                  | `revalidatePath`                               |
-
-Never cache or revalidate session reads. Reference: `set-active-organization-action.ts`.
-
-Full detail: [docs/agents/caching.md](docs/agents/caching.md) · doc index: [docs/agents/nextjs.md](docs/agents/nextjs.md)
+**Detail (Read):** [docs/agents/caching.md](docs/agents/caching.md) — API table, do/don’t, examples.

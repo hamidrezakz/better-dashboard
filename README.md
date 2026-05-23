@@ -21,6 +21,6 @@ Optional: `pnpm run seed:dev` · `pnpm run auth:generate` (regenerate `prisma/be
 - Actions: `src/app/action/<feature>/` (one file per mutation)
 - Routes & cache: `*-routes.ts`, `cache-tags.ts` per segment
 - Nav labels: `src/app/dashboard/lib/dashboard-nav-labels.ts`
-- Agent docs: [AGENTS.md](./AGENTS.md), [docs/agents/](./docs/agents/)
+- Agents: [AGENTS.md](./AGENTS.md) (always) → `.cursor/rules/*.mdc` (globs) → [docs/agents/](./docs/agents/) (Read for detail)
 
 English; copy in segment `lib/` files. UI: logical spacing + shadcn defaults ([ui-design.md](./docs/agents/ui-design.md)).

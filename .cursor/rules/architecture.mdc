@@ -1,21 +1,19 @@
 ---
-description: Modular layout, phase-1 scope, routes/cache-tags/badges — where code belongs
+description: Where code belongs — modular slices; open architecture.md for detail
 globs: src/app/**/*,src/lib/**/*,src/components/**/*
 alwaysApply: false
 ---
 
 # Architecture
 
-**Template scope:** Better Auth (`auth`) schema only in core — no product-specific Prisma domains in shared dashboard `lib/`. Features are removable subtrees (CLI-ready).
+**Scope:** Better Auth `auth` schema in core only — no product Prisma domains in shared dashboard `lib/`. Features = removable subtrees.
 
-**Dependency:** sub-feature → segment `lib/` → `src/lib` | `src/components`. No cross-sibling imports (e.g. `members/` → not `teams/`).
+**Deps:** sub-feature → segment `lib/` → `src/lib` \| `src/components`. No cross-sibling feature imports.
 
-**Colocate:** pages, UI, feature `lib/`, actions at `src/app/action/<feature>/` (one mutation per file).
+**Colocate:** route tree + segment `lib/` + `src/app/action/<feature>/` (one mutation per file).
 
-**Single source of truth:** `*-routes.ts` and `cache-tags.ts` per segment; badges in shared config; UI from `src/components/ui` (shadcn defaults). Base UI links: `render={<Link … />}`, not `asChild`.
+**SSOT:** `*-routes.ts`, `cache-tags.ts` per segment; UI from `src/components/ui`. Links: `render={<Link … />}`, not `asChild`.
 
-Before new helpers: pick scope upward; compose shadcn primitives first; stay minimal.
+Before new helpers: scope upward; compose shadcn first.
 
-**UI:** [ui-design.md](docs/agents/ui-design.md).
-
-Full detail: [docs/agents/architecture.md](docs/agents/architecture.md)
+**Detail (Read):** [docs/agents/architecture.md](docs/agents/architecture.md). **UI:** [docs/agents/ui-design.md](docs/agents/ui-design.md).

@@ -1,17 +1,20 @@
 # UI styling
 
-> Short rule: `.cursor/rules/ui-design.mdc`
+> **Context:** Rule `.cursor/rules/ui-design.mdc` on `src/**/*.tsx`, CSS, layouts. Canonical detail here.
 
-**Now (what agents enforce):** styling only — logical Tailwind; shadcn defaults.
+## Enforce now
 
-**Later (for humans, not built in template):** dashboard copy is grouped (`dashboard-nav-labels.ts`, badge map, per-feature folders) so someone can swap to another single language or add multilingual structure without fighting the layout. Do not add locale libraries or bilingual wiring unless the user asks.
+- **`lang` / `dir`:** root layout only — not on inner nodes. Changing root `lang`/`dir` should flip the whole app for RTL/LTR without per-page overrides.
+- **Tailwind:** logical spacing and alignment — `ms`/`me`/`ps`/`pe`, `start`/`end`, `text-start`/`text-end`; avoid `ml`/`mr`/`left`/`right` for structure. Popovers: `inline-start` / `inline-end` where applicable.
+- **Components:** `src/components/ui` (shadcn/Base UI), default variants; compose primitives before custom markup. Links: `render={<Link … />}`, not `asChild`.
 
-**Language today:** English only. No i18n runtime.
+## Copy & language
 
-**Direction:** `lang` and `dir` on the root layout only — not on inner nodes.
+- **English** only in the template; no i18n runtime unless the user asks.
+- **Dashboard chrome** (sidebar, breadcrumbs, manage tabs): `src/app/dashboard/lib/dashboard-nav-labels.ts` — not inline in nav components.
+- **Enum/badge table copy:** `src/lib/i18n/badge-translations.ts` (legacy path name).
+- File layout is intentional so a later single-language swap or multilingual setup is straightforward — not agent work unless requested.
 
-**Tailwind:** `ms`/`me`/`ps`/`pe`, `start`/`end`, `text-start`/`text-end` — not `ml`/`mr`/`left`/`right` for structure. Popovers: `inline-start` / `inline-end` where applicable. due to this is a a global application and we wanna make it easy to change the direction of the application, if someone wants to change the direction of the application, they can just change the `lang` and `dir` on the root layout and the application will be changed to the new direction.
+## Later (humans)
 
-**Components:** Use `src/components/ui` (shadcn/Base UI) with **default** variants and stock styling; compose primitives before custom markup. Base UI links: `render={<Link … />}`, not `asChild`.
-
-**Copy:** Nav/chrome strings in `dashboard-nav-labels.ts` — not inline in sidebar/breadcrumb components.
+Grouped copy files (`dashboard-nav-labels`, badges, per-feature folders) support swapping language or adding locales without restructuring routes.
