@@ -2,21 +2,18 @@
  * Cross-cutting dashboard navigation copy (sidebar, breadcrumbs, manage tabs).
  */
 export const dashboardNavLabels = {
-  navMainGroup: "Navigation",
   sidebar: {
     dashboard: "Dashboard",
+    organizationHome: "Overview",
     notifications: "Notifications",
     organizationManagement: "Organization management",
+    groupOrganization: "Organization",
   },
   manageTabs: {
     members: "Members",
     teams: "Teams",
     invitations: "Invitations",
     notifications: "Notifications",
-  },
-  breadcrumbDynamicPrefix: {
-    user: "User",
-    organization: "Organization",
   },
   breadcrumbSegments: {
     dashboard: "Dashboard",

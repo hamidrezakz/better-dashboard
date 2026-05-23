@@ -19,12 +19,14 @@ import {
 import {
   BellIcon,
   FolderIcon,
+  HomeIcon,
   LayoutDashboardIcon,
   Settings2Icon,
   UsersIcon,
 } from "lucide-react";
 
 const iconMap: Record<SidebarIconName, React.ReactNode> = {
+  home: <HomeIcon className="size-4" />,
   "layout-dashboard": <LayoutDashboardIcon className="size-4" />,
   users: <UsersIcon className="size-4" />,
   settings: <Settings2Icon className="size-4" />,
@@ -40,9 +42,12 @@ export function DashboardAppSidebar({
   config,
   ...props
 }: DashboardAppSidebarProps) {
-  const navMain = config.navMain.map((item) => ({
-    ...item,
-    icon: iconMap[item.icon],
+  const navGroups = config.navGroups.map((group) => ({
+    ...group,
+    items: group.items.map((item) => ({
+      ...item,
+      icon: iconMap[item.icon],
+    })),
   }));
 
   const projects = config.projects.map((project) => ({
@@ -59,7 +64,7 @@ export function DashboardAppSidebar({
         />
       </SidebarHeader>
       <SidebarContent>
-        <DashboardNavMain items={navMain} />
+        <DashboardNavMain groups={navGroups} />
         <DashboardNavProjects projects={projects} />
       </SidebarContent>
       <SidebarFooter>

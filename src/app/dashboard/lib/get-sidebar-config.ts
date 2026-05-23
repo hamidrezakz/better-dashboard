@@ -59,7 +59,7 @@ export async function getDashboardSidebarConfig(
     },
     organizations,
     activeOrganizationId,
-    navMain: sidebarItems.navMain,
+    navGroups: sidebarItems.navGroups,
     projects: sidebarItems.projects,
   };
 }

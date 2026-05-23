@@ -39,9 +39,11 @@ Do not duplicate nav/tab/breadcrumb strings in components.
 
 Keep `dashboard/lib` and `action/dashboard/...` as a copyable tree. Product-only routes belong in the consuming app. Extension points: `dashboard-routes.ts`, `dashboard-nav-labels.ts`, `dashboard-items.ts`, `cache-tags.ts`, mirrored actions.
 
-## Mobile header (future)
+## Mobile breadcrumbs
 
-Breadcrumbs shorten on small screens. Dedicated back row: per-route metadata next to routes/layouts — document here when added.
+On small screens the trail keeps the last two visible segments after hidden ones. `users` / `organizations` are always hidden; `manage` is hidden on mobile only so org manage pages read as **organization name + tab** (see `dashboard-breadcrumb-segments.ts`).
+
+Dedicated back row: per-route metadata next to routes/layouts — document here when added.
 
 ## New dashboard route checklist
 

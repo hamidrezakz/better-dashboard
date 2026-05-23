@@ -1,5 +1,8 @@
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
-import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
+import {
+  dashboardRoutes,
+  organizationManageTabPathSuffix,
+} from "@/app/dashboard/lib/dashboard-routes";
 
 export type OrganizationManageTabKey =
   | "members"
@@ -16,25 +19,25 @@ export const organizationManageNavItems: ReadonlyArray<{
   {
     key: "members",
     label: dashboardNavLabels.manageTabs.members,
-    pathSuffix: "/manage/members",
+    pathSuffix: organizationManageTabPathSuffix("members"),
     href: dashboardRoutes.organizationMembers,
   },
   {
     key: "teams",
     label: dashboardNavLabels.manageTabs.teams,
-    pathSuffix: "/manage/teams",
+    pathSuffix: organizationManageTabPathSuffix("teams"),
     href: dashboardRoutes.organizationTeams,
   },
   {
     key: "invitations",
     label: dashboardNavLabels.manageTabs.invitations,
-    pathSuffix: "/manage/invitations",
+    pathSuffix: organizationManageTabPathSuffix("invitations"),
     href: dashboardRoutes.organizationInvitations,
   },
   {
     key: "notifications",
     label: dashboardNavLabels.manageTabs.notifications,
-    pathSuffix: "/manage/notifications",
+    pathSuffix: organizationManageTabPathSuffix("notifications"),
     href: dashboardRoutes.organizationNotifications,
   },
 ] as const;

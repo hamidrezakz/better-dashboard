@@ -1,10 +1,15 @@
 import type {
   DashboardSidebarConfig,
+  SidebarNavigationGroup,
   SidebarNavigationItem,
 } from "@/app/dashboard/lib/sidebar-types";
+
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
+
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
+
 import type { MembershipRole } from "@/generated/prisma/enums";
+
 import { isOrganizationManagerRole } from "@/app/dashboard/lib/dashboard-access";
 
 type DashboardMembershipState =
@@ -14,12 +19,15 @@ type DashboardMembershipState =
 
 type DashboardNavigationContext = {
   userId: string;
+
   activeOrganizationId: string | null;
+
   activeOrganizationRole: MembershipRole | null;
 };
 
 export function getActiveOrganizationLandingPath(input: {
   organizationId: string | null;
+
   role: MembershipRole | null;
 }) {
   if (!input.organizationId) {
@@ -46,7 +54,9 @@ function resolveMembershipState(
 function getNotificationsItem(): SidebarNavigationItem {
   return {
     title: dashboardNavLabels.sidebar.notifications,
+
     url: dashboardRoutes.userNotifications(),
+
     icon: "bell",
   };
 }
@@ -54,8 +64,10 @@ function getNotificationsItem(): SidebarNavigationItem {
 function getPersonalDashboardItem(): SidebarNavigationItem {
   return {
     title: dashboardNavLabels.sidebar.dashboard,
+
     url: dashboardRoutes.home(),
-    icon: "layout-dashboard",
+
+    icon: "home",
   };
 }
 
@@ -63,8 +75,10 @@ function getOrganizationDashboardItem(
   organizationId: string,
 ): SidebarNavigationItem {
   return {
-    title: dashboardNavLabels.sidebar.dashboard,
+    title: dashboardNavLabels.sidebar.organizationHome,
+
     url: dashboardRoutes.organizationRoot(organizationId),
+
     icon: "layout-dashboard",
   };
 }
@@ -74,51 +88,73 @@ function getOrganizationManagementItem(
 ): SidebarNavigationItem {
   return {
     title: dashboardNavLabels.sidebar.organizationManagement,
+
     url: dashboardRoutes.organizationMembers(organizationId),
+
     icon: "settings",
   };
 }
 
-function getPersonalScopeItems(): SidebarNavigationItem[] {
-  return [getPersonalDashboardItem(), getNotificationsItem()];
+function getOrganizationScopeItems(
+  organizationId: string,
+
+  state: DashboardMembershipState,
+): SidebarNavigationItem[] {
+  const items: SidebarNavigationItem[] = [
+    getOrganizationDashboardItem(organizationId),
+  ];
+
+  if (state === "organization-manager") {
+    items.push(getOrganizationManagementItem(organizationId));
+  }
+
+  return items;
 }
 
-function getNavigationByState(
+function getNavigationGroupsByState(
   state: DashboardMembershipState,
+
   context: DashboardNavigationContext,
-): SidebarNavigationItem[] {
+): SidebarNavigationGroup[] {
+  const groups: SidebarNavigationGroup[] = [
+    {
+      id: "home",
+
+      items: [getPersonalDashboardItem()],
+    },
+  ];
+
+  groups.push({
+    id: "personal",
+
+    items: [getNotificationsItem()],
+  });
+
   const organizationId = context.activeOrganizationId;
 
-  if (!organizationId) {
-    return getPersonalScopeItems();
+  if (organizationId && state !== "no-active-organization") {
+    groups.push({
+      id: "organization",
+
+      items: getOrganizationScopeItems(organizationId, state),
+    });
   }
 
-  switch (state) {
-    case "organization-manager":
-      return [
-        getOrganizationManagementItem(organizationId),
-        getNotificationsItem(),
-      ];
-    case "organization-member":
-      return [
-        getOrganizationDashboardItem(organizationId),
-        getNotificationsItem(),
-      ];
-    default:
-      return getPersonalScopeItems();
-  }
+  return groups;
 }
 
 export function getDashboardSidebarItems(
   context: DashboardNavigationContext,
-): Pick<DashboardSidebarConfig, "navMain" | "projects"> {
+): Pick<DashboardSidebarConfig, "navGroups" | "projects"> {
   const membershipState = resolveMembershipState(
     context.activeOrganizationRole,
   );
-  const navMain = getNavigationByState(membershipState, context);
+
+  const navGroups = getNavigationGroupsByState(membershipState, context);
 
   return {
-    navMain,
+    navGroups,
+
     projects: [],
   };
 }

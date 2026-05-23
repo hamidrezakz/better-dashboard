@@ -1,4 +1,5 @@
 export type SidebarIconName =
+  | "home"
   | "layout-dashboard"
   | "users"
   | "settings"
@@ -15,6 +16,13 @@ export type SidebarNavigationItem = {
   }[];
 };
 
+export type SidebarNavigationGroupId = "home" | "organization" | "personal";
+
+export type SidebarNavigationGroup = {
+  id: SidebarNavigationGroupId;
+  items: SidebarNavigationItem[];
+};
+
 export type SidebarOrganizationItem = {
   id: string;
   name: string;
@@ -29,7 +37,7 @@ export type DashboardSidebarConfig = {
   };
   organizations: SidebarOrganizationItem[];
   activeOrganizationId: string | null;
-  navMain: SidebarNavigationItem[];
+  navGroups: SidebarNavigationGroup[];
   projects: {
     name: string;
     url: string;

@@ -13,9 +13,11 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import {
-  dashboardBreadcrumbHiddenSegments,
   dashboardBreadcrumbSegmentLabels,
+  formatDashboardBreadcrumbLabel,
   getDashboardBreadcrumbDynamicLabel,
+  getDashboardBreadcrumbLabelClassName,
+  isDashboardBreadcrumbSegmentHidden,
 } from "@/app/dashboard/lib/dashboard-breadcrumb-segments";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -194,14 +196,16 @@ export function DashboardBreadcrumbs() {
       return {
         key: `${segment}-${index}`,
         href: cumulativePath,
-        label: translatedLabel,
+        label: formatDashboardBreadcrumbLabel(translatedLabel, { isMobile }),
         segment,
       };
     },
   );
 
+  const breadcrumbLabelClassName = getDashboardBreadcrumbLabelClassName();
+
   const displayNodes = allNodes.filter(
-    (node) => !dashboardBreadcrumbHiddenSegments.has(node.segment),
+    (node) => !isDashboardBreadcrumbSegmentHidden(node.segment, { isMobile }),
   );
 
   const visibleNodes = isMobile ? displayNodes.slice(-2) : displayNodes;
@@ -226,9 +230,14 @@ export function DashboardBreadcrumbs() {
               <BreadcrumbSeparator />
               <BreadcrumbItem>
                 {isLastItem ? (
-                  <BreadcrumbPage>{node.label}</BreadcrumbPage>
+                  <BreadcrumbPage className={breadcrumbLabelClassName}>
+                    {node.label}
+                  </BreadcrumbPage>
                 ) : (
-                  <BreadcrumbLink render={<Link href={node.href} />}>
+                  <BreadcrumbLink
+                    className={breadcrumbLabelClassName}
+                    render={<Link href={node.href} />}
+                  >
                     {node.label}
                   </BreadcrumbLink>
                 )}
