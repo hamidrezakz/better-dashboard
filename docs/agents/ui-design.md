@@ -4,7 +4,7 @@
 
 ## Enforce now
 
-- **`lang` / `dir`:** root layout only — not on inner nodes. Changing root `lang`/`dir` should flip the whole app for RTL/LTR without per-page overrides.
+- **`lang` / `dir`:** root layout only — not on inner nodes. Defaults live in `src/lib/app-locale.ts`; root `layout.tsx` and `DirectionProvider` read from there. Changing locale should flip the whole app for RTL/LTR without per-page overrides.
 - **Tailwind:** logical spacing and alignment — `ms`/`me`/`ps`/`pe`, `start`/`end`, `text-start`/`text-end`; avoid `ml`/`mr`/`left`/`right` for structure. Popovers: `inline-start` / `inline-end` where applicable.
 - **Components:** `src/components/ui` (shadcn/Base UI), default variants; compose primitives before custom markup. Links: `render={<Link … />}`, not `asChild`.
 

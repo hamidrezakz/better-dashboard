@@ -30,7 +30,7 @@ export const INVITATION_COUNT = 96;
 
 export const NOTIFICATION_COUNT = 128;
 
-export const USER_EMAIL_DOMAIN = "dev.namazi.local";
+export const USER_EMAIL_DOMAIN = "dev.better-dashboard.local";
 
 export function fakeUserEmail(index: number) {
   return `seed.user.${String(index).padStart(3, "0")}@${USER_EMAIL_DOMAIN}`;

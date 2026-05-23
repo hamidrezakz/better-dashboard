@@ -31,7 +31,7 @@ Do not duplicate nav/tab/breadcrumb strings in components.
 ## Copy
 
 - English; strings in `dashboard-nav-labels.ts` and badge map. No i18n runtime in template.
-- Another language: edit copy files + root `lang`/`dir` — [ui-design.md](./ui-design.md).
+- Another language: edit copy files + `src/lib/app-locale.ts` (and matching font if needed) — [ui-design.md](./ui-design.md).
 - **Trim feature:** delete subtree (routes + actions + nav keys).
 
 ## Fork / CLI

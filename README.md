@@ -23,4 +23,4 @@ Optional: `pnpm run seed:dev` · `pnpm run auth:generate` (regenerate `prisma/be
 - Nav labels: `src/app/dashboard/lib/dashboard-nav-labels.ts`
 - Agents: [AGENTS.md](./AGENTS.md) (always) → `.cursor/rules/*.mdc` (globs) → [docs/agents/](./docs/agents/) (Read for detail)
 
-English; copy in segment `lib/` files. UI: logical spacing + shadcn defaults ([ui-design.md](./docs/agents/ui-design.md)).
+English; copy in segment `lib/` files. Default `lang`/`dir`: [src/lib/app-locale.ts](./src/lib/app-locale.ts). UI: logical spacing + shadcn defaults ([ui-design.md](./docs/agents/ui-design.md)).

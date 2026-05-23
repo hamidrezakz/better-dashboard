@@ -6,7 +6,7 @@ alwaysApply: false
 
 # UI styling
 
-`lang`/`dir` on **root layout only**. **Logical Tailwind** (`me`/`ms`, `start`/`end`, …). **shadcn** from `src/components/ui` — default variants; compose before custom markup. Base UI: `render={<Link … />}`, not `asChild`.
+`lang`/`dir` on **root layout only** — defaults from `src/lib/app-locale.ts`. **Logical Tailwind** (`me`/`ms`, `start`/`end`, …). **shadcn** from `src/components/ui` — default variants; compose before custom markup. Base UI: `render={<Link … />}`, not `asChild`.
 
 English; dashboard chrome copy in `dashboard-nav-labels.ts` — no i18n unless user asks.
 
