@@ -1,7 +1,7 @@
 import {
-  type BreadcrumbEntityRef,
-  type BreadcrumbEntityType,
-  breadcrumbEntityKey,
+  type EntityRef,
+  type EntityType,
+  entityKey,
 } from "@/app/dashboard/lib/breadcrumbs/breadcrumb-entity";
 import {
   canAccessOrganization,
@@ -9,69 +9,58 @@ import {
 } from "@/app/dashboard/lib/dashboard-access";
 import { prisma } from "@/lib/prisma";
 
-export type { BreadcrumbEntityRef } from "@/app/dashboard/lib/breadcrumbs/breadcrumb-entity";
+export type { EntityRef } from "@/app/dashboard/lib/breadcrumbs/breadcrumb-entity";
 
-export type BreadcrumbLabelsResult = Record<string, string | null>;
+export type EntityLabels = Record<string, string | null>;
 
-const resolveLabel: Record<
-  BreadcrumbEntityType,
-  (viewerUserId: string, entityId: string) => Promise<string | null>
+const fetchLabel: Record<
+  EntityType,
+  (viewerUserId: string, id: string) => Promise<string | null>
 > = {
-  user: async (viewerUserId, entityId) => {
-    if (
-      !(await canAccessUserProfile({
-        viewerUserId,
-        targetUserId: entityId,
-      }))
-    ) {
+  user: async (viewerUserId, id) => {
+    if (!(await canAccessUserProfile({ viewerUserId, targetUserId: id }))) {
       return null;
     }
     const user = await prisma.user.findUnique({
-      where: { id: entityId },
+      where: { id },
       select: { name: true },
     });
     return user?.name?.trim() ?? null;
   },
-  organization: async (viewerUserId, entityId) => {
-    if (
-      !(await canAccessOrganization({
-        viewerUserId,
-        organizationId: entityId,
-      }))
-    ) {
+  organization: async (viewerUserId, id) => {
+    if (!(await canAccessOrganization({ viewerUserId, organizationId: id }))) {
       return null;
     }
     const organization = await prisma.organization.findUnique({
-      where: { id: entityId },
+      where: { id },
       select: { name: true },
     });
     return organization?.name?.trim() ?? null;
   },
 };
 
-export async function resolveBreadcrumbLabels(
+export async function resolveEntityLabels(
   viewerUserId: string,
-  entities: BreadcrumbEntityRef[],
-): Promise<BreadcrumbLabelsResult> {
-  const unique = new Map<string, BreadcrumbEntityRef>();
+  entities: EntityRef[],
+): Promise<EntityLabels> {
+  const unique = new Map<string, EntityRef>();
 
   for (const entity of entities) {
     const id = entity.id.trim();
     if (!id) {
       continue;
     }
-    const ref: BreadcrumbEntityRef = { type: entity.type, id };
-    unique.set(breadcrumbEntityKey(ref), ref);
+    const ref: EntityRef = { type: entity.type, id };
+    unique.set(entityKey(ref), ref);
   }
 
-  const result: BreadcrumbLabelsResult = {};
+  const labels: EntityLabels = {};
 
   await Promise.all(
-    [...unique.values()].map(async (entity) => {
-      const key = breadcrumbEntityKey(entity);
-      result[key] = await resolveLabel[entity.type](viewerUserId, entity.id);
+    [...unique.values()].map(async (ref) => {
+      labels[entityKey(ref)] = await fetchLabel[ref.type](viewerUserId, ref.id);
     }),
   );
 
-  return result;
+  return labels;
 }

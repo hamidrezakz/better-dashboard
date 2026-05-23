@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import {
-  type BreadcrumbEntityRef,
-  breadcrumbEntityKey,
-  parseBreadcrumbEntityListParam,
+  type EntityRef,
+  entityKey,
+  parseEntitiesQuery,
 } from "@/app/dashboard/lib/breadcrumbs/breadcrumb-entity";
-import { resolveBreadcrumbLabels } from "@/app/dashboard/lib/breadcrumbs/resolve-breadcrumb-labels";
+import { resolveEntityLabels } from "@/app/dashboard/lib/breadcrumbs/resolve-breadcrumb-labels";
 import { getSessionCached } from "@/lib/auth-session";
 
 export async function GET(request: Request) {
@@ -18,17 +18,15 @@ export async function GET(request: Request) {
   const entity = searchParams.get("entity");
   const id = searchParams.get("id")?.trim();
 
-  const entities = parseBreadcrumbEntityListParam(
-    entity && id ? `${entity}:${id}` : null,
-  );
-  const ref: BreadcrumbEntityRef | undefined = entities[0];
+  const entities = parseEntitiesQuery(entity && id ? `${entity}:${id}` : null);
+  const ref: EntityRef | undefined = entities[0];
 
   if (!ref) {
     return NextResponse.json({ error: "Invalid query" }, { status: 400 });
   }
 
-  const labels = await resolveBreadcrumbLabels(session.user.id, [ref]);
-  const label = labels[breadcrumbEntityKey(ref)] ?? null;
+  const labels = await resolveEntityLabels(session.user.id, [ref]);
+  const label = labels[entityKey(ref)] ?? null;
 
   return NextResponse.json({ label });
 }

@@ -1,47 +1,42 @@
 import {
-  breadcrumbEntityKey,
-  breadcrumbEntityTypeForParentSegment,
+  entityKey,
+  parentEntityType,
 } from "@/app/dashboard/lib/breadcrumbs/breadcrumb-entity";
 import {
-  dashboardBreadcrumbSegmentLabels,
-  getDashboardBreadcrumbDynamicLabel,
-  isDashboardBreadcrumbSegmentHidden,
+  fallbackSegmentLabel,
+  isSegmentHidden,
+  segmentLabels,
 } from "@/app/dashboard/lib/breadcrumbs/dashboard-breadcrumb-segments";
 
-export type DashboardBreadcrumbNode = {
+export type TrailNode = {
   key: string;
   href: string;
   label: string;
   segment: string;
 };
 
-export function getPathSegmentsAfterDashboard(pathname: string): string[] {
-  const segments = pathname.split("/").filter(Boolean);
-  const dashboardIndex = segments.indexOf("dashboard");
-  return dashboardIndex >= 0 ? segments.slice(dashboardIndex + 1) : [];
+export function segmentsAfterDashboard(pathname: string): string[] {
+  const parts = pathname.split("/").filter(Boolean);
+  const i = parts.indexOf("dashboard");
+  return i >= 0 ? parts.slice(i + 1) : [];
 }
 
-export function buildDashboardBreadcrumbTrail(input: {
+export function buildTrail(input: {
   segments: string[];
   homeHref: string;
-  resolvedEntityLabels: Record<string, string>;
-}): DashboardBreadcrumbNode[] {
+  resolvedLabels: Record<string, string>;
+}): TrailNode[] {
   let href = input.homeHref;
 
   return input.segments.map((segment, index) => {
     href = `${href}/${segment}`;
-    const parentSegment = input.segments[index - 1];
+    const parent = input.segments[index - 1];
 
-    let label =
-      dashboardBreadcrumbSegmentLabels[segment] ??
-      getDashboardBreadcrumbDynamicLabel(segment, parentSegment);
+    let label = segmentLabels[segment] ?? fallbackSegmentLabel(segment, parent);
 
-    const entityType = breadcrumbEntityTypeForParentSegment(parentSegment);
-    if (entityType) {
-      const resolved =
-        input.resolvedEntityLabels[
-          breadcrumbEntityKey({ type: entityType, id: segment })
-        ];
+    const type = parentEntityType(parent);
+    if (type) {
+      const resolved = input.resolvedLabels[entityKey({ type, id: segment })];
       if (resolved) {
         label = resolved;
       }
@@ -56,12 +51,12 @@ export function buildDashboardBreadcrumbTrail(input: {
   });
 }
 
-export function filterDashboardBreadcrumbTrail(
-  nodes: DashboardBreadcrumbNode[],
+export function visibleTrail(
+  nodes: TrailNode[],
   options: { isMobile: boolean },
-): DashboardBreadcrumbNode[] {
+): TrailNode[] {
   const visible = nodes.filter(
-    (node) => !isDashboardBreadcrumbSegmentHidden(node.segment, options),
+    (node) => !isSegmentHidden(node.segment, options),
   );
   return options.isMobile ? visible.slice(-2) : visible;
 }

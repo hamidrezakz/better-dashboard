@@ -1,30 +1,31 @@
-import { breadcrumbEntityTypeForParentSegment } from "@/app/dashboard/lib/breadcrumbs/breadcrumb-entity";
+import { parentEntityType } from "@/app/dashboard/lib/breadcrumbs/breadcrumb-entity";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 
-export const dashboardBreadcrumbSegmentLabels: Record<string, string> = {
+export const segmentLabels: Record<string, string> = {
   ...dashboardNavLabels.breadcrumbSegments,
 };
 
-export const dashboardBreadcrumbLabelClassName =
+export const labelClassName =
   "max-w-[9rem] truncate sm:max-w-[10rem] md:max-w-[12rem]";
 
-/** Always omitted from the trail (`…/users/:id` → show user name only). */
-const BREADCRUMB_SEGMENTS_ALWAYS_HIDDEN = new Set(["users", "organizations"]);
+const HIDDEN_ALWAYS = new Set(["users", "organizations"]);
+const HIDDEN_ON_MOBILE = new Set(["manage"]);
 
-/** Omitted on small screens so org manage reads as org name + tab. */
-const BREADCRUMB_SEGMENTS_HIDDEN_ON_MOBILE = new Set(["manage"]);
-
-export function isDashboardBreadcrumbSegmentHidden(
+export function isSegmentHidden(
   segment: string,
   options: { isMobile: boolean },
 ) {
-  if (BREADCRUMB_SEGMENTS_ALWAYS_HIDDEN.has(segment)) {
+  if (HIDDEN_ALWAYS.has(segment)) {
     return true;
   }
-  return options.isMobile && BREADCRUMB_SEGMENTS_HIDDEN_ON_MOBILE.has(segment);
+  return options.isMobile && HIDDEN_ON_MOBILE.has(segment);
 }
 
-function decodePathSegment(segment: string) {
+/**
+ * URL path segments are often percent-encoded (`%20` = space). decodeURIComponent
+ * turns that into normal text for the breadcrumb until the API returns the real name.
+ */
+function decodeSegmentForDisplay(segment: string) {
   try {
     return decodeURIComponent(segment);
   } catch {
@@ -32,13 +33,13 @@ function decodePathSegment(segment: string) {
   }
 }
 
-/** Fallback label for dynamic IDs until `/api/dashboard/breadcrumb-labels` resolves. */
-export function getDashboardBreadcrumbDynamicLabel(
+/** Placeholder for entity IDs until `/api/dashboard/breadcrumb-labels` responds. */
+export function fallbackSegmentLabel(
   segment: string,
-  previousSegment: string | undefined,
+  parentSegment: string | undefined,
 ) {
-  if (breadcrumbEntityTypeForParentSegment(previousSegment)) {
-    return decodePathSegment(segment);
+  if (parentEntityType(parentSegment)) {
+    return decodeSegmentForDisplay(segment);
   }
   return segment;
 }

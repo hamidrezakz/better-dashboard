@@ -12,15 +12,15 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import {
-  breadcrumbEntitiesInPath,
-  breadcrumbEntityKey,
-  serializeBreadcrumbEntityList,
+  entitiesInSegments,
+  entityKey,
+  formatEntitiesQuery,
 } from "@/app/dashboard/lib/breadcrumbs/breadcrumb-entity";
-import { dashboardBreadcrumbLabelClassName } from "@/app/dashboard/lib/breadcrumbs/dashboard-breadcrumb-segments";
+import { labelClassName } from "@/app/dashboard/lib/breadcrumbs/dashboard-breadcrumb-segments";
 import {
-  buildDashboardBreadcrumbTrail,
-  filterDashboardBreadcrumbTrail,
-  getPathSegmentsAfterDashboard,
+  buildTrail,
+  segmentsAfterDashboard,
+  visibleTrail,
 } from "@/app/dashboard/lib/breadcrumbs/dashboard-breadcrumb-trail";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -34,19 +34,16 @@ export function DashboardBreadcrumbs() {
   );
   const pendingKeysRef = useRef<Set<string>>(new Set());
 
-  const segmentsAfterDashboard = useMemo(
-    () => getPathSegmentsAfterDashboard(pathname),
-    [pathname],
-  );
+  const segments = useMemo(() => segmentsAfterDashboard(pathname), [pathname]);
 
   const entitiesToResolve = useMemo(
-    () => breadcrumbEntitiesInPath(segmentsAfterDashboard),
-    [segmentsAfterDashboard],
+    () => entitiesInSegments(segments),
+    [segments],
   );
 
   useEffect(() => {
     const unresolved = entitiesToResolve.filter((entity) => {
-      const key = breadcrumbEntityKey(entity);
+      const key = entityKey(entity);
       return !resolvedLabels[key] && !pendingKeysRef.current.has(key);
     });
 
@@ -55,13 +52,13 @@ export function DashboardBreadcrumbs() {
     }
 
     for (const entity of unresolved) {
-      pendingKeysRef.current.add(breadcrumbEntityKey(entity));
+      pendingKeysRef.current.add(entityKey(entity));
     }
 
     let cancelled = false;
 
     async function fetchLabels() {
-      const items = serializeBreadcrumbEntityList(unresolved);
+      const items = formatEntitiesQuery(unresolved);
       let labelsFromApi: Record<string, string | null> = {};
 
       try {
@@ -85,7 +82,7 @@ export function DashboardBreadcrumbs() {
 
       const nextLabels: Record<string, string> = {};
       for (const entity of unresolved) {
-        const key = breadcrumbEntityKey(entity);
+        const key = entityKey(entity);
         pendingKeysRef.current.delete(key);
         const label = labelsFromApi[key]?.trim();
         if (label) {
@@ -117,7 +114,7 @@ export function DashboardBreadcrumbs() {
     };
   }, [entitiesToResolve, resolvedLabels]);
 
-  if (!segmentsAfterDashboard.length) {
+  if (!segments.length) {
     return (
       <Breadcrumb>
         <BreadcrumbList>
@@ -132,12 +129,12 @@ export function DashboardBreadcrumbs() {
   }
 
   const homeHref = dashboardRoutes.home();
-  const trail = buildDashboardBreadcrumbTrail({
-    segments: segmentsAfterDashboard,
+  const trail = buildTrail({
+    segments,
     homeHref,
-    resolvedEntityLabels: resolvedLabels,
+    resolvedLabels,
   });
-  const visibleNodes = filterDashboardBreadcrumbTrail(trail, { isMobile });
+  const nodes = visibleTrail(trail, { isMobile });
 
   return (
     <Breadcrumb>
@@ -151,20 +148,20 @@ export function DashboardBreadcrumbs() {
           </BreadcrumbLink>
         </BreadcrumbItem>
 
-        {visibleNodes.map((node, index) => {
-          const isLastItem = index === visibleNodes.length - 1;
+        {nodes.map((node, index) => {
+          const isLast = index === nodes.length - 1;
 
           return (
             <Fragment key={node.key}>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                {isLastItem ? (
-                  <BreadcrumbPage className={dashboardBreadcrumbLabelClassName}>
+                {isLast ? (
+                  <BreadcrumbPage className={labelClassName}>
                     {node.label}
                   </BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink
-                    className={dashboardBreadcrumbLabelClassName}
+                    className={labelClassName}
                     render={<Link href={node.href} />}
                   >
                     {node.label}
