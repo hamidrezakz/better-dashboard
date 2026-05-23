@@ -3,16 +3,13 @@
 import { useActionState } from "react";
 import { changePasswordAction } from "@/app/action/dashboard/users/account/change-password-action";
 import { ACCOUNT_PASSWORD_FORM_INITIAL_STATE } from "@/app/action/dashboard/users/account/shared/account-form-state";
-import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { accountCopy } from "@/app/dashboard/(user)/account/lib/account-copy";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  AccountSectionCard,
+  AccountSectionCardBody,
+  AccountSectionCardFooter,
+} from "@/app/dashboard/(user)/account/components/account-section-card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   Field,
   FieldError,
@@ -22,8 +19,6 @@ import {
 import { FormSubmitButton } from "@/components/form/form-submit-button";
 import { PasswordInput } from "@/components/form/password-input";
 
-const copy = dashboardNavLabels.accountPage;
-
 export function AccountChangePasswordForm() {
   const [state, formAction] = useActionState(
     changePasswordAction,
@@ -31,13 +26,9 @@ export function AccountChangePasswordForm() {
   );
 
   return (
-    <Card className="gap-0">
+    <AccountSectionCard title={accountCopy.security.title}>
       <form action={formAction} noValidate>
-        <CardHeader className="border-b">
-          <CardTitle>{copy.securityTitle}</CardTitle>
-          <CardDescription>{copy.securityDescription}</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4 py-5">
+        <AccountSectionCardBody className="space-y-4">
           {state.success ? (
             <Alert>
               <AlertDescription>Your password was updated.</AlertDescription>
@@ -93,15 +84,15 @@ export function AccountChangePasswordForm() {
               />
             </Field>
           </FieldGroup>
-        </CardContent>
-        <CardFooter className="justify-end border-t bg-muted/20">
+        </AccountSectionCardBody>
+        <AccountSectionCardFooter>
           <FormSubmitButton
             idleText="Update password"
             loadingText="Updating…"
             className="w-auto min-w-32"
           />
-        </CardFooter>
+        </AccountSectionCardFooter>
       </form>
-    </Card>
+    </AccountSectionCard>
   );
 }

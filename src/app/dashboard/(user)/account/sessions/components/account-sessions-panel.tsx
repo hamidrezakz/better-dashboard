@@ -11,18 +11,15 @@ import {
 import { revokeOtherSessionsAction } from "@/app/action/dashboard/users/account/revoke-other-sessions-action";
 import { revokeSessionAction } from "@/app/action/dashboard/users/account/revoke-session-action";
 import type { SessionDeviceDisplay } from "@/app/dashboard/(user)/account/lib/format-session-device";
-import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
+import { accountCopy } from "@/app/dashboard/(user)/account/lib/account-copy";
+import {
+  AccountSectionCard,
+  AccountSectionCardBody,
+} from "@/app/dashboard/(user)/account/components/account-section-card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
 
 export type AccountSessionDisplay = {
   id: string;
@@ -38,7 +35,7 @@ type AccountSessionsPanelProps = {
   currentSessionToken: string;
 };
 
-const copy = dashboardNavLabels.accountPage;
+const copy = accountCopy.sessions;
 
 export function AccountSessionsPanel({
   sessions,
@@ -88,33 +85,22 @@ export function AccountSessionsPanel({
         disabled={isRevokingOthers}
         onClick={handleRevokeOthers}
       >
-        {isRevokingOthers
-          ? copy.sessionsSigningOutOthers
-          : copy.sessionsSignOutOthers}
+        {isRevokingOthers ? copy.signingOutOthers : copy.signOutOthers}
       </Button>
     ) : undefined;
 
   if (!sessions.length) {
     return (
-      <Card className="gap-0">
-        <CardHeader className="border-b">
-          <CardTitle>{copy.sessionsTitle}</CardTitle>
-          <CardDescription>{copy.sessionsDescription}</CardDescription>
-        </CardHeader>
-        <CardContent className="py-5">
-          <p className="text-sm text-muted-foreground">{copy.sessionsEmpty}</p>
-        </CardContent>
-      </Card>
+      <AccountSectionCard title={copy.title}>
+        <AccountSectionCardBody>
+          <p className="text-sm text-muted-foreground">{copy.empty}</p>
+        </AccountSectionCardBody>
+      </AccountSectionCard>
     );
   }
 
   return (
-    <Card className="gap-0">
-      <CardHeader className="border-b">
-        <CardTitle>{copy.sessionsTitle}</CardTitle>
-        <CardDescription>{copy.sessionsDescription}</CardDescription>
-        {headerAction ? <CardAction>{headerAction}</CardAction> : null}
-      </CardHeader>
+    <AccountSectionCard title={copy.title} action={headerAction}>
       <CardContent className="space-y-4 p-0">
         {error ? (
           <Alert variant="destructive" className="mx-6 mt-5">
@@ -134,7 +120,7 @@ export function AccountSessionsPanel({
                     </p>
                     {isCurrent ? (
                       <Badge variant="secondary" className="font-normal">
-                        {copy.sessionsCurrentDevice}
+                        {copy.currentDevice}
                       </Badge>
                     ) : null}
                   </div>
@@ -144,40 +130,40 @@ export function AccountSessionsPanel({
                     </p>
                   ) : null}
                   <p className="text-xs text-muted-foreground">
-                    {copy.sessionsSignedIn} {session.signedInLabel}
+                    {copy.signedIn} {session.signedInLabel}
                     {session.ipLabel
-                      ? ` · ${copy.sessionsIp} ${session.ipLabel}`
+                      ? ` · ${copy.ip} ${session.ipLabel}`
                       : null}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    {copy.sessionsExpires} {session.expiresLabel}
+                    {copy.expires} {session.expiresLabel}
                   </p>
+                  {sessions.length === 1 && isCurrent ? (
+                    <p className="pt-1 text-sm text-muted-foreground">
+                      {copy.onlyThisDevice}
+                    </p>
+                  ) : null}
                 </div>
                 {!isCurrent ? (
                   <Button
                     type="button"
-                    variant="ghost"
+                    variant="destructive"
                     size="sm"
                     className="shrink-0"
                     disabled={pendingToken === session.token}
                     onClick={() => handleRevoke(session.token)}
                   >
                     {pendingToken === session.token
-                      ? copy.sessionsRevoking
-                      : copy.sessionsRevoke}
+                      ? copy.revoking
+                      : copy.revoke}
                   </Button>
                 ) : null}
               </li>
             );
           })}
         </ul>
-        {sessions.length === 1 ? (
-          <p className="border-t px-6 py-4 text-sm text-muted-foreground">
-            {copy.sessionsOnlyThisDevice}
-          </p>
-        ) : null}
       </CardContent>
-    </Card>
+    </AccountSectionCard>
   );
 }
 

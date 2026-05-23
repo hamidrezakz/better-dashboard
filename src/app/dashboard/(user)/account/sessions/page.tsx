@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-import { LoadingFallback } from "@/components/loading-fallback";
 import { AccountSessionsPanel } from "@/app/dashboard/(user)/account/sessions/components/account-sessions-panel";
 import { getAccountSessions } from "@/app/dashboard/(user)/account/lib/get-account-sessions";
 import { getSessionDeviceDisplay } from "@/app/dashboard/(user)/account/lib/format-session-device";
@@ -10,15 +8,7 @@ import {
 } from "@/app/dashboard/(user)/account/lib/format-session-meta";
 import { requireAuthSession } from "@/lib/auth-session";
 
-export default function AccountSessionsPage() {
-  return (
-    <Suspense fallback={<LoadingFallback className="min-h-[20vh]" />}>
-      <AccountSessionsPageContent />
-    </Suspense>
-  );
-}
-
-async function AccountSessionsPageContent() {
+export default async function AccountSessionsPage() {
   const session = await requireAuthSession();
   const sessions = await getAccountSessions();
 
