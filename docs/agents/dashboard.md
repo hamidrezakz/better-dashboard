@@ -11,6 +11,7 @@ Generic Next.js 16 + `cacheComponents` + Better Auth (org) + Prisma + shadcn/Bas
 | `dashboard-routes.ts`                           | URL builders only                                        |
 | `dashboard-nav-labels.ts`                       | Sidebar, breadcrumb segment names, org-manage tab titles |
 | `dashboard-items.ts`                            | Role-based sidebar items                                 |
+| `dashboard-manage-nav.ts`                       | Org manage tab labels, hrefs, active tab detection       |
 | `get-sidebar-config.ts`                         | Cached sidebar data                                      |
 | `dashboard-breadcrumb-segments.ts`              | Hidden segments, ID placeholders                         |
 | `dashboard-breadcrumbs.tsx`                     | Client trail; entity names via API                       |

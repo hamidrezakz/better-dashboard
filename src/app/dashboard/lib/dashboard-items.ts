@@ -74,54 +74,38 @@ function getOrganizationManagementItem(
 ): SidebarNavigationItem {
   return {
     title: dashboardNavLabels.sidebar.organizationManagement,
-    url: dashboardRoutes.organizationRoot(organizationId),
+    url: dashboardRoutes.organizationMembers(organizationId),
     icon: "settings",
   };
 }
 
-function getNoActiveOrganizationItems(
-  context: DashboardNavigationContext,
-): SidebarNavigationItem[] {
+function getPersonalScopeItems(): SidebarNavigationItem[] {
   return [getPersonalDashboardItem(), getNotificationsItem()];
-}
-
-function getMemberItems(
-  context: DashboardNavigationContext,
-): SidebarNavigationItem[] {
-  if (!context.activeOrganizationId) {
-    return getNoActiveOrganizationItems(context);
-  }
-
-  return [
-    getOrganizationDashboardItem(context.activeOrganizationId),
-    getNotificationsItem(),
-  ];
-}
-
-function getManagerItems(
-  context: DashboardNavigationContext,
-): SidebarNavigationItem[] {
-  if (!context.activeOrganizationId) {
-    return getNoActiveOrganizationItems(context);
-  }
-
-  return [
-    getOrganizationManagementItem(context.activeOrganizationId),
-    getNotificationsItem(),
-  ];
 }
 
 function getNavigationByState(
   state: DashboardMembershipState,
   context: DashboardNavigationContext,
-) {
+): SidebarNavigationItem[] {
+  const organizationId = context.activeOrganizationId;
+
+  if (!organizationId) {
+    return getPersonalScopeItems();
+  }
+
   switch (state) {
-    case "organization-member":
-      return getMemberItems(context);
     case "organization-manager":
-      return getManagerItems(context);
+      return [
+        getOrganizationManagementItem(organizationId),
+        getNotificationsItem(),
+      ];
+    case "organization-member":
+      return [
+        getOrganizationDashboardItem(organizationId),
+        getNotificationsItem(),
+      ];
     default:
-      return getNoActiveOrganizationItems(context);
+      return getPersonalScopeItems();
   }
 }
 

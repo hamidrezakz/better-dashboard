@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { DirectionProvider } from "@/components/ui/direction";
 import { appLocale } from "@/lib/app-locale";
 import localFont from "next/font/local";
+import { Geist, Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+
+const fontSans = Geist({
+  subsets: ["latin"],
+});
 
 const vazirmatn = localFont({
   src: "../../public/fonts/Vazirmatn-VariableFont_wght.ttf",
@@ -30,7 +37,13 @@ export default function RootLayout({
     <html
       lang={appLocale.lang}
       dir={appLocale.dir}
-      className={cn("h-full", "antialiased", "font-sans", vazirmatn.variable)}
+      className={cn(
+        "h-full",
+        "antialiased",
+        fontSans.className,
+        inter.variable,
+        "font-sans",
+      )}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
