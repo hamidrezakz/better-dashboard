@@ -54,6 +54,11 @@ export function getDashboardSidebarItems(
       id: "personal",
       items: [
         {
+          title: dashboardNavLabels.sidebar.account,
+          url: dashboardRoutes.accountProfile(),
+          icon: "user",
+        },
+        {
           title: dashboardNavLabels.sidebar.notifications,
           url: dashboardRoutes.userNotifications(),
           icon: "bell",

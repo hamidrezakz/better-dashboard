@@ -2,6 +2,7 @@ export type SidebarIconName =
   | "home"
   | "layout-dashboard"
   | "users"
+  | "user"
   | "settings"
   | "folder"
   | "bell";

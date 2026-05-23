@@ -1,7 +1,10 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { logoutAction } from "@/app/action/dashboard/components/logout-action";
+import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
+import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -20,7 +23,12 @@ import {
 } from "@/components/ui/sidebar";
 import { Switch } from "@/components/ui/switch";
 import { type DashboardSidebarConfig } from "@/app/dashboard/lib/sidebar/sidebar-types";
-import { ChevronsUpDownIcon, LogOutIcon, MoonIcon } from "lucide-react";
+import {
+  ChevronsUpDownIcon,
+  LogOutIcon,
+  MoonIcon,
+  UserCircleIcon,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 
 type DashboardNavUserProps = {
@@ -117,6 +125,15 @@ export function DashboardNavUser({ user }: DashboardNavUserProps) {
                   </div>
                 </div>
               </DropdownMenuLabel>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem
+                render={<Link href={dashboardRoutes.accountProfile()} />}
+              >
+                <UserCircleIcon />
+                {dashboardNavLabels.sidebar.account}
+              </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DashboardNavUserThemeItem />

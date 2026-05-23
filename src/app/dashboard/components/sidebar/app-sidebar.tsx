@@ -18,6 +18,7 @@ import {
 } from "@/app/dashboard/lib/sidebar/sidebar-types";
 import {
   BellIcon,
+  CircleUserIcon,
   FolderIcon,
   HomeIcon,
   LayoutDashboardIcon,
@@ -29,6 +30,7 @@ const iconMap: Record<SidebarIconName, React.ReactNode> = {
   home: <HomeIcon className="size-4" />,
   "layout-dashboard": <LayoutDashboardIcon className="size-4" />,
   users: <UsersIcon className="size-4" />,
+  user: <CircleUserIcon className="size-4" />,
   settings: <Settings2Icon className="size-4" />,
   folder: <FolderIcon className="size-4" />,
   bell: <BellIcon className="size-4" />,

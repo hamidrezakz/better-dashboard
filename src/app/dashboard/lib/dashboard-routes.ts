@@ -4,6 +4,10 @@ const DASHBOARD_BASE_PATH = "/dashboard";
 export const dashboardRouteSegments = {
   organizations: "organizations",
   notifications: "notifications",
+  account: "account",
+  profile: "profile",
+  security: "security",
+  sessions: "sessions",
   manage: "manage",
   members: "members",
   teams: "teams",
@@ -35,6 +39,13 @@ export const dashboardRoutes = {
     `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.organizations}`,
   userNotifications: () =>
     `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.notifications}`,
+  account: () => `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.account}`,
+  accountProfile: () =>
+    `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.account}/${dashboardRouteSegments.profile}`,
+  accountSecurity: () =>
+    `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.account}/${dashboardRouteSegments.security}`,
+  accountSessions: () =>
+    `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.account}/${dashboardRouteSegments.sessions}`,
   organizationRoot: (organizationId: string) =>
     organizationPath(organizationId),
   organizationManageRoot: (organizationId: string) =>
