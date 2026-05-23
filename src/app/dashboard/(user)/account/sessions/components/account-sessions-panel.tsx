@@ -2,26 +2,43 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
+import {
+  LaptopIcon,
+  MonitorIcon,
+  SmartphoneIcon,
+  TabletIcon,
+} from "lucide-react";
 import { revokeOtherSessionsAction } from "@/app/action/dashboard/users/account/revoke-other-sessions-action";
 import { revokeSessionAction } from "@/app/action/dashboard/users/account/revoke-session-action";
+import type { SessionDeviceDisplay } from "@/app/dashboard/(user)/account/lib/format-session-device";
+import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export type AccountSessionDisplay = {
   id: string;
   token: string;
-  createdAt: string;
-  expiresAt: string;
-  ipAddress: string | null;
-  userAgent: string | null;
+  device: SessionDeviceDisplay;
+  signedInLabel: string;
+  expiresLabel: string;
+  ipLabel: string | null;
 };
 
 type AccountSessionsPanelProps = {
   sessions: AccountSessionDisplay[];
   currentSessionToken: string;
 };
+
+const copy = dashboardNavLabels.accountPage;
 
 export function AccountSessionsPanel({
   sessions,
@@ -62,66 +79,78 @@ export function AccountSessionsPanel({
     });
   };
 
+  const headerAction =
+    otherSessions.length > 0 ? (
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        disabled={isRevokingOthers}
+        onClick={handleRevokeOthers}
+      >
+        {isRevokingOthers
+          ? copy.sessionsSigningOutOthers
+          : copy.sessionsSignOutOthers}
+      </Button>
+    ) : undefined;
+
   if (!sessions.length) {
     return (
-      <Card className="max-w-2xl">
-        <CardHeader>
-          <CardTitle>Sessions</CardTitle>
+      <Card className="gap-0">
+        <CardHeader className="border-b">
+          <CardTitle>{copy.sessionsTitle}</CardTitle>
+          <CardDescription>{copy.sessionsDescription}</CardDescription>
         </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground">
-            No active sessions were found.
-          </p>
+        <CardContent className="py-5">
+          <p className="text-sm text-muted-foreground">{copy.sessionsEmpty}</p>
         </CardContent>
       </Card>
     );
   }
 
   return (
-    <Card className="max-w-2xl">
-      <CardHeader className="flex flex-row flex-wrap items-center justify-between gap-2">
-        <CardTitle>Sessions</CardTitle>
-        {otherSessions.length > 0 ? (
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            disabled={isRevokingOthers}
-            onClick={handleRevokeOthers}
-          >
-            {isRevokingOthers ? "Signing out..." : "Sign out other sessions"}
-          </Button>
-        ) : null}
+    <Card className="gap-0">
+      <CardHeader className="border-b">
+        <CardTitle>{copy.sessionsTitle}</CardTitle>
+        <CardDescription>{copy.sessionsDescription}</CardDescription>
+        {headerAction ? <CardAction>{headerAction}</CardAction> : null}
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 p-0">
         {error ? (
-          <Alert variant="destructive">
+          <Alert variant="destructive" className="mx-6 mt-5">
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         ) : null}
-        <ul className="divide-y rounded-lg border">
+        <ul className="divide-y">
           {sessions.map((session) => {
             const isCurrent = session.token === currentSessionToken;
             return (
-              <li
-                key={session.id}
-                className="flex flex-wrap items-start justify-between gap-3 p-3"
-              >
-                <div className="min-w-0 space-y-1">
+              <li key={session.id} className="flex items-start gap-4 px-6 py-4">
+                <SessionDeviceIcon kind={session.device.kind} />
+                <div className="min-w-0 flex-1 space-y-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-sm font-medium">
-                      {formatSessionLabel(session.userAgent)}
-                    </span>
+                    <p className="text-sm font-medium">
+                      {session.device.title}
+                    </p>
                     {isCurrent ? (
-                      <Badge variant="secondary">This device</Badge>
+                      <Badge variant="secondary" className="font-normal">
+                        {copy.sessionsCurrentDevice}
+                      </Badge>
                     ) : null}
                   </div>
+                  {session.device.subtitle ? (
+                    <p className="text-sm text-muted-foreground">
+                      {session.device.subtitle}
+                    </p>
+                  ) : null}
                   <p className="text-xs text-muted-foreground">
-                    {session.ipAddress ? `IP ${session.ipAddress} · ` : null}
-                    Signed in {formatDateTime(session.createdAt)}
+                    {copy.sessionsSignedIn} {session.signedInLabel}
+                    {session.ipLabel
+                      ? ` · ${copy.sessionsIp} ${session.ipLabel}`
+                      : null}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    Expires {formatDateTime(session.expiresAt)}
+                    {copy.sessionsExpires} {session.expiresLabel}
                   </p>
                 </div>
                 {!isCurrent ? (
@@ -129,10 +158,13 @@ export function AccountSessionsPanel({
                     type="button"
                     variant="ghost"
                     size="sm"
+                    className="shrink-0"
                     disabled={pendingToken === session.token}
                     onClick={() => handleRevoke(session.token)}
                   >
-                    {pendingToken === session.token ? "Revoking..." : "Revoke"}
+                    {pendingToken === session.token
+                      ? copy.sessionsRevoking
+                      : copy.sessionsRevoke}
                   </Button>
                 ) : null}
               </li>
@@ -140,8 +172,8 @@ export function AccountSessionsPanel({
           })}
         </ul>
         {sessions.length === 1 ? (
-          <p className="text-sm text-muted-foreground">
-            You are only signed in on this device.
+          <p className="border-t px-6 py-4 text-sm text-muted-foreground">
+            {copy.sessionsOnlyThisDevice}
           </p>
         ) : null}
       </CardContent>
@@ -149,19 +181,17 @@ export function AccountSessionsPanel({
   );
 }
 
-function formatSessionLabel(userAgent: string | null) {
-  if (!userAgent) {
-    return "Unknown device";
+function SessionDeviceIcon({ kind }: { kind: SessionDeviceDisplay["kind"] }) {
+  const className = "mt-0.5 size-5 shrink-0 text-muted-foreground";
+
+  switch (kind) {
+    case "mobile":
+      return <SmartphoneIcon className={className} aria-hidden />;
+    case "tablet":
+      return <TabletIcon className={className} aria-hidden />;
+    case "desktop":
+      return <MonitorIcon className={className} aria-hidden />;
+    default:
+      return <LaptopIcon className={className} aria-hidden />;
   }
-
-  const trimmed = userAgent.trim();
-  if (trimmed.length <= 72) {
-    return trimmed;
-  }
-
-  return `${trimmed.slice(0, 69)}...`;
-}
-
-function formatDateTime(iso: string) {
-  return new Date(iso).toLocaleString();
 }

@@ -1,37 +1,37 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AccountChangePasswordForm } from "@/app/dashboard/(user)/account/security/components/account-change-password-form";
+import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 type AccountSecurityPanelProps = {
   hasPasswordCredential: boolean;
 };
+
+const copy = dashboardNavLabels.accountPage;
 
 export function AccountSecurityPanel({
   hasPasswordCredential,
 }: AccountSecurityPanelProps) {
   if (!hasPasswordCredential) {
     return (
-      <Card className="max-w-lg">
-        <CardHeader>
-          <CardTitle>Password</CardTitle>
+      <Card className="gap-0">
+        <CardHeader className="border-b">
+          <CardTitle>{copy.securityTitle}</CardTitle>
+          <CardDescription>{copy.securityDescription}</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="py-5">
           <p className="text-sm text-muted-foreground">
-            Your account does not use email and password sign-in, so you cannot
-            change a password here.
+            {copy.securityUnavailable}
           </p>
         </CardContent>
       </Card>
     );
   }
 
-  return (
-    <Card className="max-w-lg">
-      <CardHeader>
-        <CardTitle>Password</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <AccountChangePasswordForm />
-      </CardContent>
-    </Card>
-  );
+  return <AccountChangePasswordForm />;
 }

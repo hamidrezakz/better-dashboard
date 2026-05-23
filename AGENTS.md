@@ -47,5 +47,5 @@ Full doc index: [docs/agents/README.md](docs/agents/README.md).
 - **Dashboard nav text:** `dashboard-nav-labels.ts` only — [dashboard.md](docs/agents/dashboard.md).
 - **Session:** `auth-session.ts`; never `use cache` on session — [implementation.md § Auth](docs/agents/implementation.md#auth--session-srclibauth-sessionts).
 - **After dashboard write (same user):** `updateTag` in that action — [caching.md](docs/agents/caching.md).
-- **UI:** logical Tailwind; `lang`/`dir` root only — [ui-design.md](docs/agents/ui-design.md).
+- **UI:** shadcn `src/components/ui` (default variants); reuse or hoist shared UI to the highest relevant scope; logical Tailwind; `lang`/`dir` root only — [ui-design.md](docs/agents/ui-design.md).
 - **Done checklist:** [implementation.md § Definition of done](docs/agents/implementation.md#definition-of-done).
