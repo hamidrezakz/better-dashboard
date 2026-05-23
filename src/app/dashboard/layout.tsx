@@ -1,10 +1,10 @@
 import { Suspense } from "react";
 import { DashboardAppSidebar } from "@/app/dashboard/components/sidebar/app-sidebar";
-import { DashboardHeader } from "@/app/dashboard/components/shell/dashboard-header";
+import { DashboardHeader } from "@/app/dashboard/components/dashboard-header";
 import {
   DashboardLayoutFallback,
   DashboardPageFallback,
-} from "@/app/dashboard/components/shell/dashboard-layout-fallback";
+} from "@/app/dashboard/dashboard-layout-fallback";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { requireAuthSession } from "@/lib/auth-session";
 import { getDashboardSidebarConfig } from "@/app/dashboard/lib/sidebar/get-sidebar-config";

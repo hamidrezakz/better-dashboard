@@ -9,8 +9,8 @@ import { RoleBadge } from "@/components/globals-badge/role-badge";
 import {
   DashboardPageTitleFallback,
   DashboardStatCardFallback,
-} from "@/app/dashboard/components/shell/dashboard-page-fallbacks";
-import { DashboardPageShell } from "@/app/dashboard/components/shell/dashboard-page-shell";
+} from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
+import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-shell";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import { isOrganizationManagerRole } from "@/app/dashboard/lib/dashboard-access";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";

@@ -1,21 +1,20 @@
-import { DashboardHeaderFallback } from "@/app/dashboard/components/shell/dashboard-header-fallback";
+import { DashboardHeaderFallback } from "@/app/dashboard/components/dashboard-header-fallback";
 import { DashboardSidebarFallback } from "@/app/dashboard/components/sidebar/dashboard-sidebar-fallback";
+import { LoadingFallback } from "@/components/loading-fallback";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
-type LoadingFallbacksLayoutProps = {
-  children: React.ReactNode;
-};
-
-export default function LoadingFallbacksLayout({
-  children,
-}: LoadingFallbacksLayoutProps) {
+export function DashboardLayoutFallback() {
   return (
     <SidebarProvider>
       <DashboardSidebarFallback />
       <SidebarInset className="flex min-h-svh flex-col">
         <DashboardHeaderFallback />
-        <div className="flex min-h-0 flex-1 flex-col">{children}</div>
+        <LoadingFallback className="flex-1" />
       </SidebarInset>
     </SidebarProvider>
   );
+}
+
+export function DashboardPageFallback() {
+  return <LoadingFallback className="flex-1 min-h-0" />;
 }

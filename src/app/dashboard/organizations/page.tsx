@@ -9,8 +9,8 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { RoleBadge } from "@/components/globals-badge/role-badge";
-import { DashboardOrganizationsCardFallback } from "@/app/dashboard/components/shell/dashboard-page-fallbacks";
-import { DashboardPageShell } from "@/app/dashboard/components/shell/dashboard-page-shell";
+import { DashboardOrganizationsCardFallback } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
+import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-shell";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { isOrganizationManagerRole } from "@/app/dashboard/lib/dashboard-access";
 import { requireAuthSession } from "@/lib/auth-session";
