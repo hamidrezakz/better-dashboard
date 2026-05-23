@@ -1,32 +1,14 @@
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
-import { truncateText } from "@/lib/truncate-text";
 
 export const dashboardBreadcrumbSegmentLabels: Record<string, string> = {
   ...dashboardNavLabels.breadcrumbSegments,
 };
-
-export const dashboardBreadcrumbLabelMaxLength = {
-  default: 36,
-  mobile: 22,
-  unresolvedId: 10,
-} as const;
 
 const breadcrumbLabelClassName =
   "max-w-[9rem] truncate sm:max-w-[12rem] md:max-w-[14rem]";
 
 export function getDashboardBreadcrumbLabelClassName() {
   return breadcrumbLabelClassName;
-}
-
-export function formatDashboardBreadcrumbLabel(
-  label: string,
-  options: { isMobile: boolean },
-) {
-  const maxLength = options.isMobile
-    ? dashboardBreadcrumbLabelMaxLength.mobile
-    : dashboardBreadcrumbLabelMaxLength.default;
-
-  return truncateText(label, maxLength);
 }
 
 export const dashboardBreadcrumbHiddenSegments = new Set([
@@ -64,10 +46,7 @@ export function getDashboardBreadcrumbDynamicLabel(
   previousSegment: string | undefined,
 ) {
   if (previousSegment === "users" || previousSegment === "organizations") {
-    return truncateText(
-      decodePathSegment(segment),
-      dashboardBreadcrumbLabelMaxLength.unresolvedId,
-    );
+    return decodePathSegment(segment);
   }
 
   return segment;

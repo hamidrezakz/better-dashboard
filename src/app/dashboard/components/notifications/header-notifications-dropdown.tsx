@@ -11,7 +11,6 @@ import type { NotificationViewItem } from "@/app/dashboard/lib/notifications/not
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { buildNotificationSourceInline } from "@/app/dashboard/lib/notifications/notification-source-label";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
-import { truncateText } from "@/lib/truncate-text";
 import { NotificationTypeBadge } from "@/components/globals-badge/notification-type-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -27,8 +26,6 @@ type HeaderNotificationsDropdownProps = {
   hasMore: boolean;
   unreadTotalCount: number;
 };
-
-const HEADER_TITLE_MAX = 120;
 
 function toViewItem(item: HeaderNotificationItem): NotificationViewItem {
   return {
@@ -89,7 +86,7 @@ function NotificationList({
                     aria-hidden
                   />
 
-                  {truncateText(item.title, HEADER_TITLE_MAX)}
+                  {item.title}
                 </p>
                 <span className="block truncate text-[0.625rem] text-muted-foreground/90">
                   {sourceInline ? <span>{sourceInline} </span> : null}

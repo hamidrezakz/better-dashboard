@@ -8,7 +8,6 @@ import {
   type UserNotificationTableFilter,
 } from "@/app/dashboard/(user)/notifications/lib/user-notifications-table-params";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
-import { truncateText } from "@/lib/truncate-text";
 import { RequestStatusBadge } from "@/components/globals-badge/request-status-badge";
 import {
   Card,
@@ -27,9 +26,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-const TABLE_TITLE_MAX = 36;
-const TABLE_BODY_MAX = 48;
 
 type UserNotificationsTableProps = {
   isOwnInbox: boolean;
@@ -122,12 +118,12 @@ export function UserNotificationsTable({
                       onClick={() => onView(notification)}
                     >
                       <TableCell className="max-w-[14rem] sm:max-w-xs">
-                        <p className="font-medium leading-none">
-                          {truncateText(notification.title, TABLE_TITLE_MAX)}
+                        <p className="truncate font-medium leading-none">
+                          {notification.title}
                         </p>
                         {notification.body ? (
-                          <p className="mt-0.5 text-[0.7rem] text-muted-foreground">
-                            {truncateText(notification.body, TABLE_BODY_MAX)}
+                          <p className="mt-0.5 truncate text-[0.7rem] text-muted-foreground">
+                            {notification.body}
                           </p>
                         ) : null}
                       </TableCell>

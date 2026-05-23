@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/breadcrumb";
 import {
   dashboardBreadcrumbSegmentLabels,
-  formatDashboardBreadcrumbLabel,
   getDashboardBreadcrumbDynamicLabel,
   getDashboardBreadcrumbLabelClassName,
   isDashboardBreadcrumbSegmentHidden,
@@ -196,7 +195,7 @@ export function DashboardBreadcrumbs() {
       return {
         key: `${segment}-${index}`,
         href: cumulativePath,
-        label: formatDashboardBreadcrumbLabel(translatedLabel, { isMobile }),
+        label: translatedLabel,
         segment,
       };
     },

@@ -3,7 +3,6 @@
 import { PlusIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { NotificationRowActionsMenu } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/components/notification-row-actions-menu";
-import { truncateText } from "@/lib/truncate-text";
 import { type OrganizationNotificationItem } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/lib/notification-form-utils";
 import { organizationNotificationsTablePath } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/lib/notifications-table-params";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
@@ -20,9 +19,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-const TABLE_TITLE_MAX = 36;
-const TABLE_BODY_MAX = 48;
 
 type NotificationsTableProps = {
   organizationId: string;
@@ -97,9 +93,7 @@ export function NotificationsTable({
                     <TableHead className="hidden md:table-cell">
                       Recipient
                     </TableHead>
-                    <TableHead className="hidden lg:table-cell">
-                      Sent
-                    </TableHead>
+                    <TableHead className="hidden lg:table-cell">Sent</TableHead>
                     <TableHead className="text-end">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -107,12 +101,12 @@ export function NotificationsTable({
                   {notifications.map((notification) => (
                     <TableRow key={notification.id}>
                       <TableCell className="max-w-[14rem] sm:max-w-xs">
-                        <p className="font-medium leading-none">
-                          {truncateText(notification.title, TABLE_TITLE_MAX)}
+                        <p className="truncate font-medium leading-none">
+                          {notification.title}
                         </p>
                         {notification.body ? (
-                          <p className="mt-0.5 text-[0.7rem] text-muted-foreground">
-                            {truncateText(notification.body, TABLE_BODY_MAX)}
+                          <p className="mt-0.5 truncate text-[0.7rem] text-muted-foreground">
+                            {notification.body}
                           </p>
                         ) : null}
                       </TableCell>
