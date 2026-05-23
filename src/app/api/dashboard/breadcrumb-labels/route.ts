@@ -1,35 +1,7 @@
 import { NextResponse } from "next/server";
-import {
-  type BreadcrumbEntityRef,
-  resolveBreadcrumbLabels,
-} from "@/app/dashboard/lib/breadcrumbs/resolve-breadcrumb-labels";
+import { parseBreadcrumbEntityListParam } from "@/app/dashboard/lib/breadcrumbs/breadcrumb-entity";
+import { resolveBreadcrumbLabels } from "@/app/dashboard/lib/breadcrumbs/resolve-breadcrumb-labels";
 import { getSessionCached } from "@/lib/auth-session";
-
-function parseItemsParam(raw: string | null): BreadcrumbEntityRef[] {
-  if (!raw?.trim()) {
-    return [];
-  }
-
-  const entities: BreadcrumbEntityRef[] = [];
-
-  for (const part of raw.split(",")) {
-    const trimmed = part.trim();
-    if (!trimmed) {
-      continue;
-    }
-    const colon = trimmed.indexOf(":");
-    if (colon <= 0) {
-      continue;
-    }
-    const type = trimmed.slice(0, colon);
-    const id = trimmed.slice(colon + 1).trim();
-    if ((type === "user" || type === "organization") && id) {
-      entities.push({ type, id });
-    }
-  }
-
-  return entities;
-}
 
 export async function GET(request: Request) {
   const session = await getSessionCached();
@@ -39,7 +11,7 @@ export async function GET(request: Request) {
   }
 
   const { searchParams } = new URL(request.url);
-  const entities = parseItemsParam(searchParams.get("items"));
+  const entities = parseBreadcrumbEntityListParam(searchParams.get("items"));
 
   if (!entities.length) {
     return NextResponse.json({ labels: {} });

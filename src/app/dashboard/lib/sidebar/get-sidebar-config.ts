@@ -1,8 +1,8 @@
 import { cacheLife, cacheTag } from "next/cache";
-import { prisma } from "@/lib/prisma";
+import { getDashboardSidebarItems } from "@/app/dashboard/lib/sidebar/dashboard-items";
 import { type DashboardSidebarConfig } from "@/app/dashboard/lib/sidebar/sidebar-types";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
-import { getDashboardSidebarItems } from "@/app/dashboard/lib/sidebar/dashboard-items";
+import { prisma } from "@/lib/prisma";
 
 type DashboardSidebarConfigInput = {
   userId: string;
@@ -21,15 +21,9 @@ export async function getDashboardSidebarConfig(
   cacheTag(dashboardCacheTags.sidebarConfigByUser(input.userId));
 
   const memberships = await prisma.member.findMany({
-    where: {
-      userId: input.userId,
-    },
-    include: {
-      organization: true,
-    },
-    orderBy: {
-      createdAt: "asc",
-    },
+    where: { userId: input.userId },
+    include: { organization: true },
+    orderBy: { createdAt: "asc" },
   });
 
   const organizations = memberships.map((membership) => ({
@@ -41,14 +35,14 @@ export async function getDashboardSidebarConfig(
   const activeOrganizationId =
     input.activeOrganizationId ?? organizations[0]?.id ?? null;
 
-  const activeOrganizationMembership = memberships.find(
+  const activeMembership = memberships.find(
     (membership) => membership.organizationId === activeOrganizationId,
   );
 
-  const sidebarItems = getDashboardSidebarItems({
+  const { navGroups, projects } = getDashboardSidebarItems({
     userId: input.userId,
     activeOrganizationId,
-    activeOrganizationRole: activeOrganizationMembership?.role ?? null,
+    activeOrganizationRole: activeMembership?.role ?? null,
   });
 
   return {
@@ -59,7 +53,7 @@ export async function getDashboardSidebarConfig(
     },
     organizations,
     activeOrganizationId,
-    navGroups: sidebarItems.navGroups,
-    projects: sidebarItems.projects,
+    navGroups,
+    projects,
   };
 }
