@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { BellIcon, CheckCheckIcon, ChevronLeftIcon } from "lucide-react";
+import { BellIcon, CheckCheckIcon, ChevronRightIcon } from "lucide-react";
 import { markAllNotificationsAsReadAction } from "@/app/action/dashboard/users/notifications/mark-all-notifications-read-action";
 import { NotificationViewDialog } from "@/app/dashboard/components/notification-view-dialog";
 import type { HeaderNotificationItem } from "@/app/dashboard/lib/get-header-notifications";
@@ -175,13 +175,13 @@ export function HeaderNotificationsDropdown({
           </div>
 
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
-            className="h-auto shrink-0 w-full justify-between rounded-none border-t! bg-muted/30 px-2.5 py-2 text-[0.6875rem] hover:bg-muted/60"
+            className="h-auto shrink-0 w-full justify-between rounded-none px-2.5 py-2 text-[0.6875rem]"
             render={<Link href={dashboardRoutes.userNotifications(userId)} />}
           >
             {hasMore ? "View all notifications" : "Notification center"}
-            <ChevronLeftIcon className="size-3.5 opacity-60" />
+            <ChevronRightIcon className="size-3.5 opacity-60" />
           </Button>
         </DropdownMenuContent>
       </DropdownMenu>
