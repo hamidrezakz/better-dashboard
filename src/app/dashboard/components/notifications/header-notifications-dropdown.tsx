@@ -173,6 +173,7 @@ export function HeaderNotificationsDropdown({
             variant="outline"
             size="sm"
             className="h-auto shrink-0 w-full justify-between rounded-none px-2.5 py-2 text-[0.6875rem]"
+            nativeButton={false}
             render={<Link href={dashboardRoutes.userNotifications()} />}
           >
             {hasMore ? "View all notifications" : "Notification center"}

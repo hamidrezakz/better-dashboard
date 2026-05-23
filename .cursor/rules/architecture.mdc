@@ -12,7 +12,7 @@ alwaysApply: false
 
 **Colocate:** route tree + segment `lib/` + `src/app/action/<feature>/` (one mutation per file).
 
-**SSOT:** `*-routes.ts`, `cache-tags.ts` per segment; UI from `src/components/ui`. Links: `render={<Link … />}`, not `asChild`.
+**SSOT:** `*-routes.ts`, `cache-tags.ts` per segment; UI from `src/components/ui`. Links: `render={<Link … />}`, not `asChild`; `Button`/`TabsTrigger` + Link need `nativeButton={false}` — [ui-design.md](docs/agents/ui-design.md).
 
 Before new helpers: scope upward; compose shadcn first.
 

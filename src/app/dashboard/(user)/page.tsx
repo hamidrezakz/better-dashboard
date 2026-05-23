@@ -129,6 +129,7 @@ async function UserProfileNotificationsStat() {
         <Button
           size="sm"
           variant="ghost"
+          nativeButton={false}
           render={<Link href={dashboardRoutes.userNotifications()} />}
         >
           View
@@ -171,6 +172,7 @@ async function UserProfileMembershipsCard() {
               <Button
                 size="sm"
                 variant="ghost"
+                nativeButton={false}
                 render={
                   <Link
                     href={dashboardRoutes.organizationRoot(

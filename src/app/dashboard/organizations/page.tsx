@@ -69,6 +69,7 @@ async function DashboardOrganizationsContent() {
                   <Button
                     size="sm"
                     variant="ghost"
+                    nativeButton={false}
                     render={
                       <Link
                         href={dashboardRoutes.organizationRoot(
@@ -83,6 +84,7 @@ async function DashboardOrganizationsContent() {
                     <Button
                       size="sm"
                       variant="outline"
+                      nativeButton={false}
                       render={
                         <Link
                           href={dashboardRoutes.organizationMembers(

@@ -116,6 +116,7 @@ async function OrganizationPageHeader({ params }: OrganizationPageProps) {
       {canManage && (
         <Button
           size="sm"
+          nativeButton={false}
           render={
             <Link
               href={dashboardRoutes.organizationMembers(data.organization.id)}
