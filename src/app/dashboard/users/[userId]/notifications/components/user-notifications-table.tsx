@@ -1,0 +1,179 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import type { UserNotificationListItem } from "@/app/dashboard/users/[userId]/notifications/lib/get-user-notifications-page";
+import {
+  userNotificationFilterLabels,
+  userNotificationsTablePath,
+  type UserNotificationTableFilter,
+} from "@/app/dashboard/users/[userId]/notifications/lib/user-notifications-table-params";
+import {
+  formatPersianDate,
+  persianDateTimeOptions,
+} from "@/lib/format-persian-date";
+import { truncateText } from "@/lib/truncate-text";
+import { RequestStatusBadge } from "@/components/globals-badge/request-status-badge";
+import { VisibilityBadge } from "@/components/globals-badge/visibility-badge";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { DashboardTableSegmentFilter } from "@/components/dashboard-table/dashboard-table-segment-filter";
+import { DashboardTableShell } from "@/components/dashboard-table/dashboard-table-shell";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
+const TABLE_TITLE_MAX = 36;
+const TABLE_BODY_MAX = 48;
+
+type UserNotificationsTableProps = {
+  userId: string;
+  isOwnInbox: boolean;
+  notifications: UserNotificationListItem[];
+  page: number;
+  pageSize: number;
+  totalCount: number;
+  filter: UserNotificationTableFilter;
+  onView: (notification: UserNotificationListItem) => void;
+};
+
+export function UserNotificationsTable({
+  userId,
+  isOwnInbox,
+  notifications,
+  page,
+  pageSize,
+  totalCount,
+  filter,
+  onView,
+}: UserNotificationsTableProps) {
+  const router = useRouter();
+
+  const navigate = (input: {
+    page?: number;
+    filter?: UserNotificationTableFilter;
+  }) => {
+    router.push(
+      userNotificationsTablePath(userId, {
+        page: input.page,
+        filter: input.filter ?? filter,
+      }),
+    );
+  };
+
+  const emptyMessage =
+    filter === "unread"
+      ? isOwnInbox
+        ? "اعلان خوانده‌نشده‌ای ندارید."
+        : "اعلان خوانده‌نشده‌ای برای این کاربر ثبت نشده است."
+      : isOwnInbox
+        ? "اعلان خوانده‌شده‌ای ثبت نشده است."
+        : "اعلان خوانده‌شده‌ای برای این کاربر ثبت نشده است.";
+
+  const notificationFilterOptions = [
+    { value: "unread" as const, label: userNotificationFilterLabels.unread },
+    { value: "read" as const, label: userNotificationFilterLabels.read },
+  ];
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>اعلان‌ها</CardTitle>
+        <CardAction>
+          <DashboardTableSegmentFilter
+            value={filter}
+            options={notificationFilterOptions}
+            onValueChange={(next) => navigate({ page: 1, filter: next })}
+          />
+        </CardAction>
+      </CardHeader>
+
+      <CardContent className="space-y-4">
+        {totalCount > 0 ? (
+          <DashboardTableShell
+            page={page}
+            pageSize={pageSize}
+            totalCount={totalCount}
+            onPageChange={(nextPage) => navigate({ page: nextPage })}
+            countLabel="اعلان"
+          >
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>عنوان</TableHead>
+                    <TableHead className="hidden sm:table-cell">نوع</TableHead>
+                    <TableHead>مخاطب</TableHead>
+                    <TableHead className="hidden md:table-cell">منبع</TableHead>
+                    <TableHead className="hidden lg:table-cell">
+                      {filter === "read" ? "خوانده‌شده" : "ارسال"}
+                    </TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {notifications.map((notification) => (
+                    <TableRow
+                      key={notification.id}
+                      className="cursor-pointer"
+                      onClick={() => onView(notification)}
+                    >
+                      <TableCell className="max-w-[14rem] sm:max-w-xs">
+                        <p className="font-medium leading-none">
+                          {truncateText(notification.title, TABLE_TITLE_MAX)}
+                        </p>
+                        {notification.body ? (
+                          <p className="mt-0.5 text-[0.7rem] text-muted-foreground">
+                            {truncateText(notification.body, TABLE_BODY_MAX)}
+                          </p>
+                        ) : null}
+                      </TableCell>
+                      <TableCell className="hidden sm:table-cell">
+                        <RequestStatusBadge status={notification.type} />
+                      </TableCell>
+                      <TableCell>
+                        <VisibilityBadge visibility={notification.audience} />
+                      </TableCell>
+                      <TableCell className="hidden max-w-[12rem] text-xs md:table-cell">
+                        {notification.sourceLabel ? (
+                          <span
+                            className="line-clamp-2 leading-relaxed"
+                            title={notification.sourceLabel}
+                          >
+                            {notification.sourceLabel}
+                          </span>
+                        ) : (
+                          <span className="text-muted-foreground">—</span>
+                        )}
+                      </TableCell>
+                      <TableCell className="hidden text-xs text-muted-foreground lg:table-cell">
+                        {formatPersianDate(
+                          filter === "read" && notification.readAt
+                            ? notification.readAt
+                            : notification.createdAt,
+                          persianDateTimeOptions,
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </DashboardTableShell>
+        ) : (
+          <p className="py-8 text-center text-xs text-muted-foreground">
+            {emptyMessage}
+          </p>
+        )}
+      </CardContent>
+    </Card>
+  );
+}

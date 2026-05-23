@@ -1,0 +1,24 @@
+---
+description: Tagged cache reads/writes — updateTag vs revalidateTag, cache-tags builders
+globs: src/app/action/**/*.ts,**/cache-tags.ts,src/app/**/lib/get-*.ts
+alwaysApply: false
+---
+
+# Caching
+
+Next.js 16+ — use in-repo docs (`node_modules/next/dist/docs/`), not web search. Start with `08-caching.md` and `09-revalidating.md`.
+
+**Read:** `'use cache'` + `cacheTag(...)` + `cacheLife(...)`; tags only via segment `cache-tags.ts`.
+
+**Write (Server Action, same user must see fresh UI):** `updateTag(tag)` in the **same** action that mutated — not bare `revalidateTag(tag)`.
+
+| Situation                       | API                                            |
+| ------------------------------- | ---------------------------------------------- |
+| Action + immediate UI for actor | `updateTag`                                    |
+| Action, staleness OK            | `revalidateTag(tag, "max")`                    |
+| Route handler / webhook         | `revalidateTag(tag, "max")` or `{ expire: 0 }` |
+| By URL segment                  | `revalidatePath`                               |
+
+Never cache or revalidate session reads. Reference: `set-active-organization-action.ts`.
+
+Full detail: [docs/agents/caching.md](docs/agents/caching.md) · doc index: [docs/agents/nextjs.md](docs/agents/nextjs.md)

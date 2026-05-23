@@ -1,0 +1,148 @@
+import { cacheLife, cacheTag } from "next/cache";
+import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
+import {
+  MEMBERS_PAGE_SIZE,
+  parseMemberTableFilter,
+  type MemberTableFilter,
+} from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/members-table-params";
+import type { MembershipRole } from "@/generated/prisma/enums";
+import type { Prisma } from "@/generated/prisma/client";
+import { prisma } from "@/lib/prisma";
+import {
+  clampDashboardTablePage,
+  parseDashboardTableFilter,
+  parseDashboardTablePage,
+} from "@/lib/dashboard-table-search-params";
+
+export type OrganizationMemberItem = {
+  id: string;
+  userId: string;
+  name: string;
+  email: string;
+  image: string | null;
+  role: MembershipRole;
+  joinedAt: string;
+  teamCount: number;
+};
+
+export type OrganizationMembersPageQuery = {
+  page: number;
+  pageSize: number;
+  filter: MemberTableFilter;
+};
+
+export type OrganizationMembersPageResult = {
+  members: OrganizationMemberItem[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+  filter: MemberTableFilter;
+};
+
+function buildMembersWhere(
+  organizationId: string,
+  filter: MemberTableFilter,
+): Prisma.MemberWhereInput {
+  const where: Prisma.MemberWhereInput = {
+    organizationId,
+  };
+
+  if (filter === "managers") {
+    where.role = { in: ["OWNER", "ADMIN"] };
+  } else if (filter === "members") {
+    where.role = "MEMBER";
+  }
+
+  return where;
+}
+
+export function parseOrganizationMembersPageQuery(
+  searchParams: Record<string, string | string[] | undefined>,
+): OrganizationMembersPageQuery {
+  return {
+    page: parseDashboardTablePage(searchParams),
+    pageSize: MEMBERS_PAGE_SIZE,
+    filter: parseMemberTableFilter(parseDashboardTableFilter(searchParams)),
+  };
+}
+
+async function loadOrganizationMembersPage(
+  organizationId: string,
+  query: OrganizationMembersPageQuery,
+): Promise<OrganizationMembersPageResult> {
+  const where = buildMembersWhere(organizationId, query.filter);
+
+  const totalCount = await prisma.member.count({ where });
+  const page = clampDashboardTablePage(query.page, totalCount, query.pageSize);
+  const skip = (page - 1) * query.pageSize;
+
+  const members = await prisma.member.findMany({
+    where,
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          image: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    skip,
+    take: query.pageSize,
+  });
+
+  const userIds = members.map((member) => member.userId);
+  const teamCountMap = new Map<string, number>();
+
+  if (userIds.length > 0) {
+    const teamMemberships = await prisma.teamMember.findMany({
+      where: {
+        userId: { in: userIds },
+        team: {
+          organizationId,
+        },
+      },
+      select: {
+        userId: true,
+      },
+    });
+
+    for (const membership of teamMemberships) {
+      const currentCount = teamCountMap.get(membership.userId) ?? 0;
+      teamCountMap.set(membership.userId, currentCount + 1);
+    }
+  }
+
+  return {
+    members: members.map((member) => ({
+      id: member.id,
+      userId: member.userId,
+      name: member.user.name,
+      email: member.user.email,
+      image: member.user.image,
+      role: member.role,
+      joinedAt: member.createdAt.toISOString(),
+      teamCount: teamCountMap.get(member.userId) ?? 0,
+    })),
+    totalCount,
+    page,
+    pageSize: query.pageSize,
+    filter: query.filter,
+  };
+}
+
+export async function getOrganizationMembersPage(
+  organizationId: string,
+  query: OrganizationMembersPageQuery,
+) {
+  "use cache";
+
+  cacheLife("minutes");
+  cacheTag(dashboardCacheTags.organizationMembersById(organizationId));
+
+  return loadOrganizationMembersPage(organizationId, query);
+}

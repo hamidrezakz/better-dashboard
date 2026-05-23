@@ -1,0 +1,294 @@
+/// Controls who can discover and join an organization or team.
+/// Used for configuring invitation links and membership requests.
+
+enum MembershipRole {
+  OWNER
+  ADMIN
+  MEMBER
+
+  @@map("membership_role")
+  @@schema("auth")
+}
+
+enum NotificationType {
+  SYSTEM
+  INVITATION
+  ORGANIZATION
+  TEAM
+  SECURITY
+  BILLING
+  CUSTOM
+
+  @@schema("auth")
+}
+
+enum NotificationAudience {
+  USER_DIRECT
+  ORG_ALL
+  ORG_ADMINS
+  ORG_MEMBERS
+  TEAM
+
+  @@schema("auth")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  metadata    Json?
+  sessions    Session[]
+  accounts    Account[]
+  teammembers TeamMember[]
+  members     Member[]
+
+  // Exam relations
+  createdExams       Exam[]                @relation("ExamCreator")
+  examSessions       ExamSession[]         @relation("ExamParticipant")
+  targetedInSessions ExamSession[]         @relation("ExamTarget")
+  examEnrollments    ExamEnrollment[]      @relation("ExamEnrollmentUser")
+  enrollmentTargets  ExamEnrollment[]      @relation("ExamEnrollmentTarget")
+  examAssignments    ExamAssignment[]      @relation("ExamAssignedUser")
+  examAssignedBy     ExamAssignment[]      @relation("ExamAssignedBy")
+  examFiles          ExamFile[]            @relation("ExamFileUploader")
+  createdMetrics     OrgMetricDefinition[] @relation("OrgMetricCreator")
+  orgMetricValues    OrgMetricValue[]      @relation("OrgMetricSubject")
+
+  // better-s3-objects
+  storageObjects StorageObject[]
+  uploads        Upload[]
+
+  // better-s3-quota (remove if not using quota schema)
+  // list — one user can be billing contact for multiple org quotas
+  storageQuotas StorageQuota[]
+  storageUsage  StorageUsage[]
+
+  // better-s3-activity (remove if not using activity schema)
+  storageActivities StorageActivityLog[]
+
+  invitations Invitation[]
+
+  notifications        Notification[] @relation("NotificationRecipient")
+  notificationsCreated Notification[] @relation("NotificationCreatedBy")
+
+  @@unique([email])
+  @@map("user")
+  @@schema("auth")
+}
+
+model Session {
+  id                   String   @id @default(cuid())
+  expiresAt            DateTime
+  token                String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  ipAddress            String?
+  userAgent            String?
+  userId               String
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  impersonatedBy       String?
+  activeOrganizationId String?
+  activeTeamId         String?
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+  @@schema("auth")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+  @@schema("auth")
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+  @@schema("auth")
+}
+
+model Organization {
+  id                 String               @id @default(cuid())
+  name               String
+  slug               String
+  logo               String?
+  createdAt          DateTime
+  metadata           Json?
+  teams              Team[]
+  members            Member[]
+  invitations        Invitation[]
+
+  // Exam relations
+  exams             Exam[]                @relation("ExamOrganization")
+  examAssignments   ExamAssignment[]      @relation("ExamAssignedOrg")
+  metricDefinitions OrgMetricDefinition[] @relation("OrgMetricDefinitions")
+
+  // better-s3-objects
+  storageObjects StorageObject[]
+  uploads        Upload[]
+
+  // better-s3-quota (remove if not using quota schema)
+  // one-to-one via organizationId @unique
+  storageQuota StorageQuota?
+  storageUsage StorageUsage[]
+
+  // better-s3-activity (remove if not using activity schema)
+  storageActivities StorageActivityLog[]
+
+  notifications Notification[]
+
+  @@unique([slug])
+  @@map("organization")
+  @@schema("auth")
+}
+
+model Team {
+  id                 String               @id @default(cuid())
+  name               String
+  organizationId     String
+  organization       Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  createdAt          DateTime
+  updatedAt          DateTime?            @updatedAt
+  teammembers        TeamMember[]
+  invitations        Invitation[]
+
+  // Exam relations
+  examAssignments ExamAssignment[] @relation("ExamAssignedTeam")
+
+  // better-s3-objects
+  storageObjects StorageObject[]
+
+  notifications Notification[]
+
+  @@index([organizationId])
+  @@map("team")
+  @@schema("auth")
+}
+
+model TeamMember {
+  id        String    @id @default(cuid())
+  teamId    String
+  team      Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime?
+
+  @@index([teamId])
+  @@index([userId])
+  @@map("teamMember")
+  @@schema("auth")
+}
+
+model Member {
+  id             String         @id @default(cuid())
+  organizationId String
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role           MembershipRole @default(MEMBER)
+  metadata       Json?
+  createdAt      DateTime
+
+  @@index([organizationId])
+  @@index([userId])
+  @@map("member")
+  @@schema("auth")
+}
+
+/// Shareable link invite; anyone with the link can join within limits.
+model Invitation {
+  id String @id @default(cuid())
+
+  /// null when invite is scoped to a team only (no org membership implied)
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  teamId String?
+  team   Team?   @relation(fields: [teamId], references: [id], onDelete: SetNull)
+
+  examId String?
+  exam   Exam?   @relation(fields: [examId], references: [id], onDelete: SetNull)
+
+  expiresAt DateTime
+
+  /// null = unlimited uses
+  maxUses   Int?
+  usedCount Int  @default(0)
+
+  inviterId String
+  inviter   User   @relation(fields: [inviterId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  examEnrollments ExamEnrollment[]
+
+  @@index([organizationId])
+  @@index([teamId])
+  @@index([examId])
+  @@map("invitation")
+  @@schema("auth")
+}
+
+model Notification {
+  id       String               @id @default(cuid())
+  type     NotificationType
+  audience NotificationAudience
+  title    String
+  body     String?
+  payload  Json?
+
+  userId String?
+  user   User?   @relation("NotificationRecipient", fields: [userId], references: [id], onDelete: SetNull)
+
+  createdById String?
+  createdBy   User?   @relation("NotificationCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+
+  teamId String?
+  team   Team?   @relation(fields: [teamId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  expiresAt DateTime?
+  readAt    DateTime?
+
+  @@index([type])
+  @@index([audience])
+  @@index([userId])
+  @@index([createdById])
+  @@index([organizationId])
+  @@index([teamId])
+  @@index([createdAt])
+  @@map("notification")
+  @@schema("auth")
+}

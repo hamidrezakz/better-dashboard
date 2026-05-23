@@ -1,0 +1,23 @@
+---
+description: Server Components, Suspense holes, auth session, single-language UI, patterns
+globs: src/app/**/*.tsx,src/components/**/*.tsx,src/app/action/**/*.ts,src/lib/auth-session.ts
+alwaysApply: false
+---
+
+# Implementation
+
+**Server-first:** `"use client"` only when needed.
+
+**Suspense:** wrap only slices using `cookies()`, `headers()`, `connection()`, etc. Keep static / `'use cache'` shells **outside** Suspense. Prefer small parallel boundaries.
+
+**Session (`auth-session.ts`):** `getSessionCached` (nullable; API → 401) · `requireAuthSession()` for dashboard pages/layouts/actions · `requireAuthSession(returnPath)` only outside dashboard gate (e.g. join). No `redirectTo` under `dashboard/layout`. Request-scoped `cache()` only — never `use cache` / revalidate session. Detail: [implementation.md](docs/agents/implementation.md#auth--session-srclibauth-sessionts).
+
+**Copy:** Single language (sample: Persian + RTL). Nav: `dashboard-nav-labels.ts`. No i18n runtime — see `dashboard.mdc`.
+
+**Mutations:** `src/app/action/<feature>/` — validate → DB → cache (if needed) → return/redirect. See `caching` rule when editing actions.
+
+```tsx
+<Button render={<Link href="/dashboard" />}>داشبورد</Button>
+```
+
+Full detail: [docs/agents/implementation.md](docs/agents/implementation.md)

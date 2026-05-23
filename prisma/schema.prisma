@@ -1,0 +1,13 @@
+// Main Prisma schema — datasource + generator
+// All *.prisma files in this folder are merged automatically (Prisma 7+).
+// Connection URL is configured in prisma.config.ts (Prisma 7 convention).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  schemas  = ["auth", "storage", "exam"]
+}

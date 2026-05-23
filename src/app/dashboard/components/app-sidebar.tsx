@@ -1,0 +1,71 @@
+"use client";
+
+import * as React from "react";
+import { DashboardNavMain } from "@/app/dashboard/components/nav-main";
+import { DashboardNavProjects } from "@/app/dashboard/components/nav-projects";
+import { DashboardNavUser } from "@/app/dashboard/components/nav-user";
+import { OrganizationSwitcher } from "@/app/dashboard/components/organization-switcher";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarRail,
+} from "@/components/ui/sidebar";
+import {
+  type DashboardSidebarConfig,
+  type SidebarIconName,
+} from "@/app/dashboard/lib/sidebar-types";
+import {
+  BellIcon,
+  FolderIcon,
+  LayoutDashboardIcon,
+  Settings2Icon,
+  UsersIcon,
+} from "lucide-react";
+
+const iconMap: Record<SidebarIconName, React.ReactNode> = {
+  "layout-dashboard": <LayoutDashboardIcon className="size-4" />,
+  users: <UsersIcon className="size-4" />,
+  settings: <Settings2Icon className="size-4" />,
+  folder: <FolderIcon className="size-4" />,
+  bell: <BellIcon className="size-4" />,
+};
+
+type DashboardAppSidebarProps = {
+  config: DashboardSidebarConfig;
+} & React.ComponentProps<typeof Sidebar>;
+
+export function DashboardAppSidebar({
+  config,
+  ...props
+}: DashboardAppSidebarProps) {
+  const navMain = config.navMain.map((item) => ({
+    ...item,
+    icon: iconMap[item.icon],
+  }));
+
+  const projects = config.projects.map((project) => ({
+    ...project,
+    icon: iconMap[project.icon],
+  }));
+
+  return (
+    <Sidebar side="right" {...props}>
+      <SidebarHeader>
+        <OrganizationSwitcher
+          organizations={config.organizations}
+          activeOrganizationId={config.activeOrganizationId}
+        />
+      </SidebarHeader>
+      <SidebarContent>
+        <DashboardNavMain items={navMain} />
+        <DashboardNavProjects projects={projects} />
+      </SidebarContent>
+      <SidebarFooter>
+        <DashboardNavUser user={config.user} />
+      </SidebarFooter>
+      <SidebarRail />
+    </Sidebar>
+  );
+}

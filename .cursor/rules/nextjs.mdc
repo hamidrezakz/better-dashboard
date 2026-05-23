@@ -1,0 +1,21 @@
+---
+description: Next.js 16 in-repo doc paths (cacheComponents) — no web search
+globs: next.config.ts,src/app/**/*
+alwaysApply: false
+---
+
+# Next.js 16+ (this repo)
+
+Training-data Next.js is outdated. **Do not web-search** — read `node_modules/next/dist/docs/` if needed.
+
+| Topic                        | Path under `node_modules/next/dist/docs/`                                |
+| ---------------------------- | ------------------------------------------------------------------------ |
+| Caching / PPR holes          | `01-app/01-getting-started/08-caching.md`                                |
+| Revalidating                 | `01-app/01-getting-started/09-revalidating.md`                           |
+| Server Actions               | `01-app/01-getting-started/07-mutating-data.md`                          |
+| Streaming / Suspense         | `01-app/02-guides/streaming.md`                                          |
+| `cacheComponents`            | `01-app/03-api-reference/05-config/01-next-config-js/cacheComponents.md` |
+| `use cache`                  | `01-app/03-api-reference/01-directives/use-cache.md`                     |
+| `cacheTag` / `updateTag` / … | `01-app/03-api-reference/04-functions/cacheTag.md` (+ siblings)          |
+
+Full index: [docs/agents/nextjs.md](docs/agents/nextjs.md)

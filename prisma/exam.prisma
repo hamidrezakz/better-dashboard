@@ -1,0 +1,433 @@
+// ─── Enums ───────────────────────────────────────────────────────────────────
+
+enum ExamType {
+  EXAM // Graded — has correct answers
+  SURVEY // Ungraded — opinion collection
+  QUESTIONNAIRE // Scored — personality / performance index
+  ASSESSMENT // 360° — participant evaluates a target person
+  FORM // Structured data collection — no scoring
+
+  @@map("exam_type")
+  @@schema("exam")
+}
+
+enum ExamVisibility {
+  ANONYMOUS // No login required; IP is recorded
+  PUBLIC // Login required; open link, anyone can join
+  PRIVATE // Invite-only via Invitation link
+  RESTRICTED // Scoped to specific org / team / user(s) via ExamAssignment
+
+  @@map("exam_visibility")
+  @@schema("exam")
+}
+
+enum ExamStatus {
+  DRAFT
+  PUBLISHED
+  CLOSED
+  ARCHIVED
+
+  @@map("exam_status")
+  @@schema("exam")
+}
+
+enum QuestionType {
+  // Choice
+  SINGLE_CHOICE
+  MULTIPLE_CHOICE
+  TRUE_FALSE
+  // Text
+  SHORT_TEXT
+  LONG_TEXT
+  // Structured input
+  NUMERIC
+  DATE
+  EMAIL
+  PHONE
+  FILE
+  // Scale
+  RATING
+
+  @@map("question_type")
+  @@schema("exam")
+}
+
+enum SessionStatus {
+  IN_PROGRESS
+  COMPLETED
+  TIMED_OUT
+  ABANDONED
+
+  @@map("session_status")
+  @@schema("exam")
+}
+
+enum EnrollmentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  INVITED
+
+  @@map("enrollment_status")
+  @@schema("exam")
+}
+
+enum AssigneeType {
+  USER
+  TEAM
+  ORGANIZATION
+
+  @@map("assignee_type")
+  @@schema("exam")
+}
+
+enum ExamFileRole {
+  ATTACHMENT // Distributed to participants before/during the exam
+  ANSWER_KEY // Released after the exam closes
+
+  @@map("exam_file_role")
+  @@schema("exam")
+}
+
+// ─── Models ──────────────────────────────────────────────────────────────────
+
+model Exam {
+  id          String         @id @default(cuid())
+  title       String
+  description String?
+  type        ExamType       @default(EXAM)
+  visibility  ExamVisibility @default(PRIVATE)
+  status      ExamStatus     @default(DRAFT)
+
+  organizationId String?
+  organization   Organization? @relation("ExamOrganization", fields: [organizationId], references: [id], onDelete: SetNull)
+  createdById    String
+  createdBy      User          @relation("ExamCreator", fields: [createdById], references: [id])
+
+  startsAt     DateTime?
+  endsAt       DateTime?
+  timeLimitMin Int?
+
+  /// Scoring dimensions. Always define at least one variable.
+  /// EXAM: one variable, key = "score". QUESTIONNAIRE: N variables.
+  /// @type {ExamVariable[]}
+  variables Json?
+
+  /// Max achievable score per variable — recomputed when questions change.
+  /// @type {Record<string, number>}
+  cachedScores Json?
+
+  /// @type {ExamSettings}
+  settings Json?
+  tags     String[]
+
+  aiNote String?
+
+  /// Position on the org member profile page. null = not shown on profile.
+  /// Only meaningful when organizationId is set.
+  profileOrder Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sections    ExamSection[]
+  sessions    ExamSession[]
+  enrollments ExamEnrollment[]
+  assignments ExamAssignment[]
+  files       ExamFile[]
+  invitations Invitation[]
+
+  @@index([organizationId])
+  @@index([createdById])
+  @@index([status])
+  @@map("exam")
+  @@schema("exam")
+}
+
+model ExamSection {
+  id     String @id @default(cuid())
+  examId String
+  exam   Exam   @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  title        String
+  description  String?
+  order        Int
+  timeLimitMin Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  questions Question[]
+
+  @@unique([examId, order])
+  @@index([examId])
+  @@map("exam_section")
+  @@schema("exam")
+}
+
+model Question {
+  id        String      @id @default(cuid())
+  sectionId String
+  section   ExamSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  type     QuestionType
+  order    Int
+  required Boolean      @default(true)
+
+  text String
+  hint String?
+
+  mediaObjectId String?
+  mediaObject   StorageObject? @relation("QuestionMedia", fields: [mediaObjectId], references: [id], onDelete: SetNull)
+
+  /// @type {QuestionOption[]}
+  /// Each option may have isCorrect (EXAM) and/or scores (QUESTIONNAIRE/SURVEY/ASSESSMENT).
+  options Json?
+
+  /// @type {CorrectAnswer}
+  /// For SHORT_TEXT and NUMERIC only. Choice types use option.isCorrect.
+  correctAnswer Json?
+
+  /// EXAM: max points for this question — contributes to cachedScores.
+  points Float?
+
+  /// @type {QuestionMetadata}
+  metadata Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  answers Answer[]
+
+  @@unique([sectionId, order])
+  @@index([sectionId])
+  @@index([mediaObjectId])
+  @@map("question")
+  @@schema("exam")
+}
+
+model ExamSession {
+  id     String @id @default(cuid())
+  examId String
+  exam   Exam   @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  /// null only when exam.visibility = ANONYMOUS
+  participantId String?
+  participant   User?   @relation("ExamParticipant", fields: [participantId], references: [id], onDelete: Cascade)
+
+  /// Recorded when exam.visibility = ANONYMOUS to prevent re-submission
+  ipAddress String?
+
+  /// ASSESSMENT: the member being evaluated
+  targetId String?
+  target   User?   @relation("ExamTarget", fields: [targetId], references: [id], onDelete: SetNull)
+
+  status      SessionStatus @default(IN_PROGRESS)
+  startedAt   DateTime      @default(now())
+  completedAt DateTime?
+
+  /// Earned score per variable. @type {Record<string, number>}
+  scores Json?
+
+  /// Snapshot of exam.cachedScores at submission time. @type {Record<string, number>}
+  maxScores Json?
+
+  /// @type {SessionProgress}
+  progress Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  answers Answer[]
+
+  @@index([examId])
+  @@index([participantId])
+  @@index([targetId])
+  @@map("exam_session")
+  @@schema("exam")
+}
+
+model Answer {
+  id         String      @id @default(cuid())
+  sessionId  String
+  session    ExamSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  questionId String
+  question   Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  /// @type {AnswerValue}
+  value Json
+
+  /// EXAM: whether the answer is correct (null for manual/ungraded questions).
+  isCorrect Boolean?
+
+  /// Points earned per variable from this answer. @type {Record<string, number>}
+  /// EXAM: { "score": <points> }  QUESTIONNAIRE: { "E": 3, "A": 0 }
+  scores Json?
+
+  answeredAt DateTime @default(now())
+
+  @@unique([sessionId, questionId])
+  @@index([sessionId])
+  @@index([questionId])
+  @@map("answer")
+  @@schema("exam")
+}
+
+model ExamEnrollment {
+  id     String @id @default(cuid())
+  examId String
+  exam   Exam   @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation("ExamEnrollmentUser", fields: [userId], references: [id], onDelete: Cascade)
+
+  status EnrollmentStatus @default(PENDING)
+
+  /// ASSESSMENT: the org member this enrollee will evaluate
+  targetId String?
+  target   User?   @relation("ExamEnrollmentTarget", fields: [targetId], references: [id], onDelete: SetNull)
+
+  /// Set when the enrollment was created via an Invitation link (PRIVATE exams)
+  invitationId String?
+  invitation   Invitation? @relation(fields: [invitationId], references: [id], onDelete: SetNull)
+
+  invitedAt DateTime  @default(now())
+  joinedAt  DateTime?
+
+  @@unique([examId, userId, targetId])
+  @@index([examId])
+  @@index([userId])
+  @@index([targetId])
+  @@index([invitationId])
+  @@map("exam_enrollment")
+  @@schema("exam")
+}
+
+/// Assigns an exam to a user, team, or organisation. Exactly one assignee FK is set.
+model ExamAssignment {
+  id     String @id @default(cuid())
+  examId String
+  exam   Exam   @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  assigneeType AssigneeType
+
+  assignedUserId String?
+  assignedUser   User?   @relation("ExamAssignedUser", fields: [assignedUserId], references: [id], onDelete: Cascade)
+
+  assignedTeamId String?
+  assignedTeam   Team?   @relation("ExamAssignedTeam", fields: [assignedTeamId], references: [id], onDelete: Cascade)
+
+  assignedOrganizationId String?
+  assignedOrganization   Organization? @relation("ExamAssignedOrg", fields: [assignedOrganizationId], references: [id], onDelete: Cascade)
+
+  assignedById String
+  assignedBy   User   @relation("ExamAssignedBy", fields: [assignedById], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([examId, assignedUserId])
+  @@unique([examId, assignedTeamId])
+  @@unique([examId, assignedOrganizationId])
+  @@index([examId])
+  @@index([assignedUserId])
+  @@index([assignedTeamId])
+  @@index([assignedOrganizationId])
+  @@map("exam_assignment")
+  @@schema("exam")
+}
+
+model ExamFile {
+  id     String @id @default(cuid())
+  examId String
+  exam   Exam   @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  role ExamFileRole
+
+  storageObjectId String        @unique
+  storageObject   StorageObject @relation("ExamFileObject", fields: [storageObjectId], references: [id])
+
+  label      String?
+  releasedAt DateTime?
+
+  uploadedById String
+  uploadedBy   User   @relation("ExamFileUploader", fields: [uploadedById], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([examId])
+  @@index([uploadedById])
+  @@map("exam_file")
+  @@schema("exam")
+}
+
+// ─── Org Metric Definitions ───────────────────────────────────────────────────
+
+enum MetricFormula {
+  AVERAGE
+  WEIGHTED_AVERAGE
+  SUM
+  MIN
+  MAX
+
+  @@map("metric_formula")
+  @@schema("exam")
+}
+
+/// An org-defined composite metric derived from variables across one or more exams.
+/// Enables orgs to build cross-exam KPIs (e.g. "Leadership Score") from existing
+/// exam variables, with a configurable aggregation formula and per-source weights.
+model OrgMetricDefinition {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation("OrgMetricDefinitions", fields: [organizationId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String?
+  formula     MetricFormula @default(WEIGHTED_AVERAGE)
+
+  /// Which exam variables feed this metric and how.
+  /// @type {MetricSource[]}
+  sources Json
+
+  /// Position in the org member profile chart. null = not shown on profile.
+  profileOrder Int?
+
+  createdById String
+  createdBy   User   @relation("OrgMetricCreator", fields: [createdById], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  values OrgMetricValue[]
+
+  @@index([organizationId])
+  @@index([createdById])
+  @@map("org_metric_definition")
+  @@schema("exam")
+}
+
+/// Cached composite metric value for a specific subject (target user).
+/// Recomputed whenever relevant exam sessions are completed or updated.
+model OrgMetricValue {
+  id           String              @id @default(cuid())
+  definitionId String
+  definition   OrgMetricDefinition @relation(fields: [definitionId], references: [id], onDelete: Cascade)
+
+  /// The person being measured (may be a target who never sat the exam themselves).
+  subjectId String
+  subject   User   @relation("OrgMetricSubject", fields: [subjectId], references: [id], onDelete: Cascade)
+
+  value Float
+
+  /// Per-source detail for drill-down: which session contributed what score.
+  /// @type {MetricBreakdownEntry[]}
+  breakdown Json?
+
+  computedAt DateTime @default(now())
+
+  @@unique([definitionId, subjectId])
+  @@index([definitionId])
+  @@index([subjectId])
+  @@map("org_metric_value")
+  @@schema("exam")
+}
