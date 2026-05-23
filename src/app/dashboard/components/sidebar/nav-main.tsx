@@ -49,7 +49,7 @@ export function DashboardNavMain({ groups }: DashboardNavMainProps) {
         const label = getGroupLabel(group.id);
 
         return (
-          <SidebarGroup key={group.id}>
+          <SidebarGroup key={group.id} className="mt-2">
             {label ? <SidebarGroupLabel>{label}</SidebarGroupLabel> : null}
             <SidebarMenu>
               {group.items.map((item) => (
