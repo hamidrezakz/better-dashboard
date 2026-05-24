@@ -24,7 +24,7 @@ export const accountCopy = {
     signOutOthers: "Sign out other sessions",
     signingOutOthers: "Signing out…",
     signedIn: "Signed in",
-    expires: "Ends",
-    ip: "IP",
+    expires: "Session ends",
+    ip: "IP address",
   },
 } as const;

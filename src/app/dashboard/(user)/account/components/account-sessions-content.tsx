@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { Fragment, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
   LaptopIcon,
@@ -14,12 +14,23 @@ import { accountCopy } from "@/app/dashboard/(user)/account/lib/account-copy";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemGroup,
+  ItemMedia,
+  ItemSeparator,
+  ItemTitle,
+} from "@/components/ui/item";
 
 export type AccountSessionDisplay = {
   id: string;
   token: string;
   device: SessionDeviceDisplay;
   signedInLabel: string;
+  signedInTitle: string;
   expiresLabel: string;
   ipLabel: string | null;
 };
@@ -59,61 +70,103 @@ export function AccountSessionsContent({
     return <p className="text-sm text-muted-foreground">{copy.empty}</p>;
   }
 
+  const onlyCurrentDevice =
+    sessions.length === 1 && sessions[0]?.token === currentSessionToken;
+
   return (
-    <ul className="space-y-4">
-      {sessions.map((session) => {
-        const isCurrent = session.token === currentSessionToken;
-        const isPending = pendingToken === session.token && isRevoking;
-        return (
-          <li key={session.id} className="flex items-start gap-3">
-            <SessionDeviceIcon kind={session.device.kind} />
-            <div className="min-w-0 flex-1 space-y-1">
-              <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                <p className="text-sm font-medium">{session.device.title}</p>
-                {isCurrent ? (
-                  <Badge variant="secondary" className="font-normal">
-                    {copy.currentDevice}
-                  </Badge>
-                ) : null}
-              </div>
-              {session.device.subtitle ? (
-                <p className="text-sm text-muted-foreground">
-                  {session.device.subtitle}
-                </p>
-              ) : null}
-              <p className="text-xs text-muted-foreground">
-                {copy.signedIn} {session.signedInLabel}
-                {" · "}
-                {copy.expires} {session.expiresLabel}
-                {session.ipLabel ? ` · ${copy.ip} ${session.ipLabel}` : null}
-              </p>
-              {sessions.length === 1 && isCurrent ? (
-                <p className="text-sm text-muted-foreground">
-                  {copy.onlyThisDevice}
-                </p>
-              ) : null}
-            </div>
-            {!isCurrent ? (
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className="shrink-0"
-                disabled={disabled || isPending}
-                onClick={() => handleRevoke(session.token)}
+    <div className="space-y-3">
+      <ItemGroup className="gap-0" role="list">
+        {sessions.map((session, index) => {
+          const isCurrent = session.token === currentSessionToken;
+          const isPending = pendingToken === session.token && isRevoking;
+
+          return (
+            <Fragment key={session.id}>
+              {index > 0 ? <ItemSeparator /> : null}
+              <Item
+                role="listitem"
+                variant="default"
+                className="items-start border-0 px-0 py-3"
               >
-                {isPending ? copy.revoking : copy.revoke}
-              </Button>
-            ) : null}
-          </li>
-        );
-      })}
-    </ul>
+                <ItemMedia variant="icon" className="mt-0.5">
+                  <SessionDeviceIcon kind={session.device.kind} />
+                </ItemMedia>
+                <ItemContent className="min-w-0 gap-2">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <ItemTitle className="text-sm">
+                      {session.device.title}
+                    </ItemTitle>
+                    {isCurrent ? (
+                      <Badge variant="secondary" className="font-normal">
+                        {copy.currentDevice}
+                      </Badge>
+                    ) : null}
+                  </div>
+                  {session.device.subtitle ? (
+                    <ItemDescription className="text-sm">
+                      {session.device.subtitle}
+                    </ItemDescription>
+                  ) : null}
+                  <SessionMetaList session={session} />
+                </ItemContent>
+                {!isCurrent ? (
+                  <ItemActions className="self-start">
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="sm"
+                      disabled={disabled || isPending}
+                      onClick={() => handleRevoke(session.token)}
+                    >
+                      {isPending ? copy.revoking : copy.revoke}
+                    </Button>
+                  </ItemActions>
+                ) : null}
+              </Item>
+            </Fragment>
+          );
+        })}
+      </ItemGroup>
+      {onlyCurrentDevice ? (
+        <p className="text-sm text-muted-foreground">{copy.onlyThisDevice}</p>
+      ) : null}
+    </div>
+  );
+}
+
+function SessionMetaList({ session }: { session: AccountSessionDisplay }) {
+  const rows: { label: string; value: string; title?: string }[] = [
+    {
+      label: copy.signedIn,
+      value: session.signedInLabel,
+      title: session.signedInTitle,
+    },
+    { label: copy.expires, value: session.expiresLabel },
+  ];
+
+  if (session.ipLabel) {
+    rows.push({ label: copy.ip, value: session.ipLabel });
+  }
+
+  return (
+    <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1 text-xs">
+      {rows.map((row) => (
+        <Fragment key={row.label}>
+          <dt className="text-muted-foreground">{row.label}</dt>
+          <dd
+            className="text-end text-foreground tabular-nums"
+            title={row.title}
+          >
+            {row.value}
+          </dd>
+        </Fragment>
+      ))}
+    </dl>
   );
 }
 
 function SessionDeviceIcon({ kind }: { kind: SessionDeviceDisplay["kind"] }) {
-  const className = "mt-0.5 size-5 shrink-0 text-muted-foreground";
+  const className = "size-4 text-muted-foreground";
 
   switch (kind) {
     case "mobile":

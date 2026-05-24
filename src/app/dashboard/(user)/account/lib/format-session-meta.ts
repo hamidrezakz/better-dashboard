@@ -1,12 +1,34 @@
-import { format, formatDistanceToNow } from "date-fns";
+import {
+  differenceInDays,
+  format,
+  formatDistanceToNow,
+  isBefore,
+} from "date-fns";
 
 export function formatSessionSignedIn(iso: string) {
   const date = new Date(iso);
   return formatDistanceToNow(date, { addSuffix: true });
 }
 
+/** Full timestamp for tooltips and screen readers. */
+export function formatSessionSignedInTitle(iso: string) {
+  return format(new Date(iso), "MMM d, yyyy · h:mm a");
+}
+
 export function formatSessionExpires(iso: string) {
-  return format(new Date(iso), "MMM d, yyyy");
+  const date = new Date(iso);
+  const now = new Date();
+
+  if (isBefore(date, now)) {
+    return format(date, "MMM d, yyyy");
+  }
+
+  const daysUntil = differenceInDays(date, now);
+  if (daysUntil <= 14) {
+    return formatDistanceToNow(date, { addSuffix: true });
+  }
+
+  return format(date, "MMM d, yyyy");
 }
 
 /** Hide loopback / empty IPv6 placeholders; keep real addresses for context. */
