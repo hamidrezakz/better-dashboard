@@ -6,12 +6,10 @@ alwaysApply: false
 
 # UI styling
 
-`lang`/`dir` on **root layout only** — defaults from `src/lib/app-locale.ts`. **Logical Tailwind** (`me`/`ms`, `start`/`end`, …). **shadcn** from `src/components/ui` — default variants; compose before custom markup. **Never hand-edit `src/components/ui/*`** for app behavior or fixes — wrap/extend in `src/app/**` or `src/components/` (outside `ui/`); regen primitives with shadcn CLI. Reuse existing UI up the tree; hoist shared pieces to the highest relevant scope (segment `components/` → `src/components/`). Base UI: `render={<Link … />}`, not `asChild`. **`Button` / `TabsTrigger` + `Link`:** `nativeButton={false}` at call sites in app code.
+`lang`/`dir` on **root layout only** (`src/lib/app-locale.ts`). **Logical Tailwind** (`me`/`ms`, `start`/`end`, …).
 
-English; dashboard chrome copy in `dashboard-nav-labels.ts` — no i18n unless user asks.
+**shadcn** from `src/components/ui` — default variants; **never hand-edit `src/components/ui/*`**. App behavior in `src/app/**` or `src/components/` (outside `ui/`); regen primitives via shadcn CLI.
 
-**Dashboard tables:** long DB-backed text → `truncate` + field-level `max-w-*` on the text node; no global table layout helpers — [ui-design.md § Dashboard tables](docs/agents/ui-design.md#dashboard-tables-variable-db-text).
-
-**Mutation toasts:** `toast.success` / `toast.error` from `sonner` at call site — no wrapper module.
+Reuse UI up the tree; hoist to highest relevant scope — [architecture.md § Placement](docs/agents/architecture.md#placement).
 
 **Detail (Read):** [docs/agents/ui-design.md](docs/agents/ui-design.md).

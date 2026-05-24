@@ -10,10 +10,10 @@ alwaysApply: false
 
 **Deps:** sub-feature → segment `lib/` → `src/lib` \| `src/components`. No cross-sibling feature imports.
 
-**Colocate:** route tree + segment `lib/` + `src/app/action/<feature>/` (one mutation per file).
+**Action-first:** colocate `app/<segment>/` + matching `app/action/<segment>/` (one mutation per file).
 
-**SSOT:** `*-routes.ts`, `cache-tags.ts` per segment; UI from `src/components/ui`. Links: `render={<Link … />}`, not `asChild`; `Button`/`TabsTrigger` + Link need `nativeButton={false}` — [ui-design.md](docs/agents/ui-design.md).
+**SSOT:** `*-routes.ts`, `cache-tags.ts` per segment.
 
-Before new helpers: scope upward; compose shadcn first; reuse or hoist shared UI — do not duplicate. **No thin wrappers** (re-export/rename of `toast`, lodash, shadcn) or extra files for ~10–20 line one-offs — inline unless truly reused or segment SSOT — [architecture.md § Do not over-extract](docs/agents/architecture.md#do-not-over-extract).
+**Before new code:** search upward; inline by default — [architecture.md § Placement](docs/agents/architecture.md#placement).
 
-**Detail (Read):** [docs/agents/architecture.md](docs/agents/architecture.md). **UI:** [docs/agents/ui-design.md](docs/agents/ui-design.md).
+**Detail (Read):** [docs/agents/architecture.md](docs/agents/architecture.md).

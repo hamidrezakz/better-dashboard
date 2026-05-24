@@ -8,10 +8,12 @@ alwaysApply: false
 
 **Server-first** — `"use client"` only when needed.
 
+**Action-first:** `src/app/action/<segment>/` mirrors routes — one mutation per file. `app/api/` = auth + read-only GET only.
+
 **Suspense:** only slices that use request APIs (`cookies`, `headers`, `connection`, …). Static / `'use cache'` shells stay **outside** Suspense.
 
-**Session:** `auth-session.ts` only — request-scoped `cache()`; never `use cache` / revalidate session. Dashboard tree: `requireAuthSession()` without `redirectTo` under `dashboard/layout`.
+**Session:** `auth-session.ts` only — request-scoped `cache()`; never `use cache` / revalidate session. Dashboard: `requireAuthSession()` without `redirectTo` under `dashboard/layout`.
 
-**Actions:** `src/app/action/<feature>/` — one mutation per file. Cache invalidation: `caching.mdc` / [caching.md](docs/agents/caching.md).
+**Cache:** [caching.mdc](.cursor/rules/caching.mdc) / [caching.md](docs/agents/caching.md).
 
-**Detail (Read):** [docs/agents/implementation.md](docs/agents/implementation.md) — session table, Suspense examples, definition of done. **UI styling:** [ui-design.md](docs/agents/ui-design.md). **Nav copy:** [dashboard.md](docs/agents/dashboard.md).
+**Detail (Read):** [docs/agents/implementation.md](docs/agents/implementation.md).

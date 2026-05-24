@@ -1,49 +1,81 @@
-# Dashboard segment (reusable template)
+# Dashboard segment
 
 > **Context:** Rule `.cursor/rules/dashboard.mdc` on `src/app/dashboard/**` and dashboard APIs. Canonical detail here.
 
-Generic Next.js 16 + `cacheComponents` + Better Auth (org) + Prisma + shadcn/Base UI dashboard slice — copy, fork, or CLI scaffold.
+Copyable org/team dashboard slice — fork, trim route trees, or CLI scaffold. Placement rules: [architecture.md § Placement](./architecture.md#placement).
 
-## File map
+## Segment SSOT (`dashboard/lib/`)
 
-**Segment SSOT (stay at `dashboard/lib/` root):** `dashboard-routes.ts`, `dashboard-nav-labels.ts`, `cache-tags.ts`, `dashboard-access.ts`.
+| File                      | Role                                    |
+| ------------------------- | --------------------------------------- |
+| `dashboard-routes.ts`     | All dashboard URLs — no hardcoded paths |
+| `dashboard-nav-labels.ts` | Sidebar, breadcrumbs, manage tabs (just global things)       |
+| `cache-tags.ts`           | Tag builders for reads/writes           |
+| `dashboard-access.ts`     | Access guards                           |
 
-| Area                   | Path                                                | Role                                                                                                                                                                    |
-| ---------------------- | --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Sidebar                | `lib/sidebar/*`, `components/sidebar/*`             | Items, config, manage tabs, app sidebar, nav, org switcher; `dashboard-sidebar-close-on-navigate.tsx` closes mobile sheet on route change (not `components/ui/sidebar`) |
-| Breadcrumbs            | `lib/breadcrumbs/*`, `components/breadcrumbs/*`     | Segment rules, resolver, client trail + breadcrumb API                                                                                                                  |
-| Notifications (chrome) | `lib/notifications/*`, `components/notifications/*` | Header dropdown, shared view dialog, visibility/types                                                                                                                   |
-| Layout shell           | `components/shell/*`                                | Page shell, header, layout/page fallbacks                                                                                                                               |
-| Badges                 | `badge-labels.ts` (`src/lib/`)                      | Enum/badge copy in tables — not route nav                                                                                                                               |
+Badge enum copy: `src/lib/badge-labels.ts` (not route nav).
 
-Route-scoped notification UI stays under `(user)/notifications` and `organizations/.../manage/notifications`.
+## Segment `components/`
 
-Feature-specific copy (forms, empty states, dialogs) stays beside that feature unless reused across the segment.
+Shared chrome and shells — hoist here when **two or more** dashboard areas need the same UI:
+
+| Area                   | Path                                                                                              |
+| ---------------------- | ------------------------------------------------------------------------------------------------- |
+| Form shell             | `components/form-shell/` (`DashboardFormShell`, footer actions)                                   |
+| Page shell             | `components/dashboard-page-shell/`                                                                |
+| Sidebar                | `components/sidebar/` (+ `dashboard-sidebar-close-on-navigate.tsx` — not `components/ui/sidebar`) |
+| Breadcrumbs            | `components/breadcrumbs/`                                                                         |
+| Notifications (chrome) | `components/notifications/`                                                                       |
+
+**Middle tier:** `organizations/[organizationId]/manage/components/` when shared only within org-manage (e.g. `OrganizationMembersMultiCombobox`).
+
+**Stay local:** feature forms, panels, row menus, field components beside that route (e.g. `(user)/account/components/`). Feature copy (empty states, dialogs) stays local unless reused across the segment.
+
+Route-scoped notification pages: `(user)/notifications`, `organizations/.../manage/notifications`.
 
 ## Navigation flow
 
-1. **Links** from `dashboardRoutes` (and other segment `*-routes.ts`).
-2. **Sidebar** server-side: session + DB → `getDashboardSidebarConfig` → items.
-3. **Breadcrumbs** from URL; static text from `dashboardNavLabels.breadcrumbSegments`; dynamic IDs via resolver when allowed.
-4. **Org manage tabs:** labels from `dashboardNavLabels.manageTabs`, hrefs from `dashboardRoutes`.
+1. **Links** — `dashboardRoutes` (and other segment `*-routes.ts`).
+2. **Sidebar** — session + DB → `getDashboardSidebarConfig` → items.
+3. **Breadcrumbs** — URL + `dashboardNavLabels.breadcrumbSegments`; dynamic IDs via resolver when allowed.
+4. **Org manage tabs** — labels from `dashboardNavLabels.manageTabs`, hrefs from `dashboardRoutes`.
 
 Do not duplicate nav/tab/breadcrumb strings in components.
 
-## Copy
+## Tables (variable DB text)
 
-- English; strings in `dashboard-nav-labels.ts` and badge map. No i18n runtime in template.
-- Another language: edit copy files + `src/lib/app-locale.ts` (and matching font if needed) — [ui-design.md](./ui-design.md).
-- **Trim feature:** delete subtree (routes + actions + nav keys).
+Do **not** change table layout globally unless the user asks.
 
-## Fork / CLI
+Long DB-backed cell text (email, title, body, names):
 
-Keep `dashboard/lib` and `action/dashboard/...` as a copyable tree. Product-only routes belong in the consuming app. Extension points: root `dashboard-routes.ts`, `dashboard-nav-labels.ts`, `cache-tags.ts`, plus `lib/sidebar/dashboard-items.ts` when trimming nav. Optional slices: delete matching `lib/<area>/`, `components/<area>/`, route subtrees, and actions together.
+- **`truncate`** on the text node (`<span>` / `<p>`), with **`block`** or **`max-w-*`** on that node.
+- Tune **`max-w-*` per field** (e.g. email `max-w-md`, titles `max-w-xs sm:max-w-sm`).
+- **`title={fullValue}`** when truncation hides meaning.
+- Badges, counts, dates, action menus: leave as-is unless they overflow.
+
+Reuse `DashboardTableShell` from `src/components/dashboard-table/` for paginated lists.
+
+## Forms & feedback
+
+**Toasts:** `toast.success` / `toast.error` from `sonner` at the call site — no wrapper module. `<Toaster />` in root layout.
+
+**Field validation:** errors after blur or submit attempt; `aria-invalid` / `aria-describedby`. Server errors → toast unless dialog stays open with inline copy.
+
+**Form shell footers:** `DashboardFormShellFooterActions` in `components/form-shell/`. DOM order: **Cancel** (outline) then **primary**; mobile uses `flex-col-reverse` so primary is on top. `variant="destructive"` only for destructive actions, not Cancel.
+
+## Copy & locale
+
+- English in template; no i18n runtime unless requested.
+- Chrome copy in `dashboard-nav-labels.ts` only. (just global dashboard labels that really needed to be. not one placeables...)
+- Other language: edit copy files + `src/lib/app-locale.ts` — [ui-design.md](./ui-design.md).
 
 ## Mobile breadcrumbs
 
-On small screens the trail keeps the last two visible segments after hidden ones. `users` / `organizations` are always hidden; `manage` is hidden on mobile only so org manage pages read as **organization name + tab** (see `lib/breadcrumbs/dashboard-breadcrumb-segments.ts`).
+Last two segments visible after hidden ones. `users` / `organizations` always hidden; `manage` hidden on mobile only (org name + tab). See `lib/breadcrumbs/dashboard-breadcrumb-segments.ts`.
 
-Dedicated back row: per-route metadata next to routes/layouts — document here when added.
+## Fork / CLI
+
+Keep `dashboard/lib` + `action/dashboard/...` as one tree. Trim: delete route subtree, matching actions, and unused keys in `dashboard-nav-labels` / `lib/sidebar/dashboard-items.ts`. Product-only routes belong in the consuming app.
 
 ## New dashboard route checklist
 

@@ -1,26 +1,41 @@
 # Better Dashboard
 
-Reusable Next.js template: Better Auth (orgs/teams), Prisma (`auth` schema), modular dashboard under `src/app/dashboard/`.
+Reusable **Next.js 16** template: **Better Auth** (organizations + teams), **Prisma 7**, and a modular dashboard you can fork or trim.
 
-**Stack:** Next.js 16+ (`cacheComponents`), Better Auth, Prisma 7, PostgreSQL, shadcn/Base UI.
+**Human overview:** [docs/README.md](./docs/README.md) — what it is, goals, stack, folder layout.  
+**AI / agents:** [AGENTS.md](./AGENTS.md) → `.cursor/rules/*.mdc` → [docs/agents/](./docs/agents/).
+
+## Stack
+
+|                 |                                                                                                              |
+| --------------- | ------------------------------------------------------------------------------------------------------------ |
+| **Next.js 16**  | App Router, React 19, **`cacheComponents: true`** (tagged cache, `updateTag`)                                |
+| **Better Auth** | v1, email/password, **organization plugin** (orgs, teams, members, invitations)                              |
+| **Prisma 7**    | PostgreSQL, `auth` schema from Better Auth                                                                   |
+| **UI**          | **shadcn/ui** on **Base UI**, default style **`base-mira`** (`components.json`), logical Tailwind, RTL-ready |
 
 ## Setup
 
 ```bash
 pnpm install
-# configure .env (database, auth secrets)
+# configure .env (DATABASE_URL, BETTER_AUTH_SECRET, BETTER_AUTH_URL, …)
 pnpm exec prisma generate
 pnpm exec prisma db push
 pnpm dev
 ```
 
-Optional: `pnpm run seed:dev` · `pnpm run auth:generate` (regenerate `prisma/better-auth.prisma`)
+Optional:
+
+- `pnpm run seed:dev` — sample orgs, teams, users
+- `pnpm run auth:generate` — regenerate `prisma/better-auth.prisma` from `src/lib/auth.ts`
+
+Open [http://localhost:3000](http://localhost:3000).
 
 ## Conventions
 
-- Actions: `src/app/action/<feature>/` (one file per mutation)
-- Routes & cache: `*-routes.ts`, `cache-tags.ts` per segment
-- Nav labels: `src/app/dashboard/lib/dashboard-nav-labels.ts`
-- Agents: [AGENTS.md](./AGENTS.md) (always) → `.cursor/rules/*.mdc` (globs) → [docs/agents/](./docs/agents/) (Read for detail)
-
-English; copy in segment `lib/` files. Default `lang`/`dir`: [src/lib/app-locale.ts](./src/lib/app-locale.ts). UI: logical spacing + shadcn defaults ([ui-design.md](./docs/agents/ui-design.md)).
+- **Action-first:** `src/app/action/<segment>/` mirrors routes (one file per mutation); `app/api/` = Better Auth + read-only GET only
+- **Routes & cache:** `*-routes.ts`, `cache-tags.ts` per app segment (e.g. `src/app/dashboard/lib/`)
+- **Nav labels:** `src/app/dashboard/lib/dashboard-nav-labels.ts`
+- **Placement & reuse:** [architecture.md § Placement](./docs/agents/architecture.md#placement)
+- **Locale:** English by default; `lang` / `dir` from [src/lib/app-locale.ts](./src/lib/app-locale.ts)
+- **UI:** compose `src/components/ui/*`; don’t hand-edit generated shadcn files — use the shadcn CLI

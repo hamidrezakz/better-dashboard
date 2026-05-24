@@ -12,4 +12,4 @@ Reusable org/team dashboard slice — safe to fork or trim route trees + matchin
 
 Feature form/dialog copy stays local unless shared across the segment.
 
-**Detail (Read):** [docs/agents/dashboard.md](docs/agents/dashboard.md) — files map, breadcrumb flow, new-route checklist.
+**Detail (Read):** [docs/agents/dashboard.md](docs/agents/dashboard.md).

@@ -6,10 +6,10 @@ alwaysApply: false
 
 # Caching
 
-In-repo Next docs only — [nextjs.md](docs/agents/nextjs.md). Tags only via segment `cache-tags.ts`.
+In-repo Next docs — [nextjs.md](docs/agents/nextjs.md). Tags only via segment `cache-tags.ts`.
 
-**Read:** `'use cache'` + `cacheTag` + `cacheLife`. **Write (action, actor must see fresh UI):** `updateTag` in the **same** action — not bare `revalidateTag(tag)`.
+**Read:** `'use cache'` + `cacheTag` + `cacheLife`. **Write (actor must see fresh UI):** `updateTag` in the **same** action — not bare `revalidateTag(tag)`.
 
-Never cache or revalidate session ([implementation.md § Auth](docs/agents/implementation.md#auth--session-srclibauth-sessionts)).
+Session: never cache or revalidate — [implementation.md § Auth](docs/agents/implementation.md#auth--session-srclibauth-sessionts).
 
-**Detail (Read):** [docs/agents/caching.md](docs/agents/caching.md) — API table, do/don’t, examples.
+**Detail (Read):** [docs/agents/caching.md](docs/agents/caching.md).

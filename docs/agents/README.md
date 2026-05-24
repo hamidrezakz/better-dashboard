@@ -2,23 +2,21 @@
 
 **Not injected by default.** Open with Read when layer 1–2 are not enough.
 
-## Model
+## Workflow
 
-| Layer                                        | Role                                                |
-| -------------------------------------------- | --------------------------------------------------- |
-| [AGENTS.md](../../AGENTS.md)                 | Index + non-negotiables (always)                    |
-| [.cursor/rules/\*.mdc](../../.cursor/rules/) | Short constraints when globs match                  |
-| This folder                                  | Tables, examples, checklists — **canonical detail** |
+1. [AGENTS.md](../../AGENTS.md) — always (index + non-negotiables).
+2. Matching [.cursor/rules/\*.mdc](../../.cursor/rules/) when you touch files in those globs.
+3. One file below when you need tables, examples, or checklists.
 
-**DRY:** Each topic has one home here. `.mdc` files only repeat what must be enforced in-context; everything else lives below.
+**DRY:** Each topic has one home here. `.mdc` files enforce in-context only; detail lives below.
 
 ## Files
 
-| File                                     | Open when                                            |
-| ---------------------------------------- | ---------------------------------------------------- |
-| [architecture.md](./architecture.md)     | Where code belongs, modularity, CLI-ready slices     |
-| [dashboard.md](./dashboard.md)           | Routes, nav labels, breadcrumbs, new dashboard route |
-| [implementation.md](./implementation.md) | RSC, Suspense, actions, session, definition of done  |
-| [caching.md](./caching.md)               | `cacheTag`, `updateTag`, invalidation                |
-| [nextjs.md](./nextjs.md)                 | In-repo Next.js doc paths                            |
-| [ui-design.md](./ui-design.md)           | Logical Tailwind, shadcn, root `lang`/`dir`          |
+| File                                     | Open when                                             |
+| ---------------------------------------- | ----------------------------------------------------- |
+| [architecture.md](./architecture.md)     | **Placement**, layout, SSOT, over-extract, CLI slices |
+| [dashboard.md](./dashboard.md)           | Dashboard routes, nav, tables/forms, new route        |
+| [implementation.md](./implementation.md) | RSC, Suspense, actions, session, definition of done   |
+| [caching.md](./caching.md)               | `cacheTag`, `updateTag`, invalidation                 |
+| [nextjs.md](./nextjs.md)                 | In-repo Next.js doc paths                             |
+| [ui-design.md](./ui-design.md)           | Logical Tailwind, shadcn vendor boundary, Link+Button |
