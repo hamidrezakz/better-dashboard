@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { deleteOrganizationTeamAction } from "@/app/action/dashboard/organizations/manage/teams/delete-organization-team-action";
@@ -8,27 +7,34 @@ import {
   TeamFormShell,
   type TeamFormShellTarget,
 } from "@/app/dashboard/organizations/[organizationId]/manage/teams/components/team-form-shell";
+import { AddTeamMembersFormShell } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/components/add-team-members-form-shell";
+import { TeamMembersTable } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/components/team-members-table";
+import { TeamDetailStats } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/components/team-detail-stats";
 import { TeamManageHeader } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/components/team-manage-header";
-import type { OrganizationTeamPageResult } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/get-organization-team-page";
+import type { OrganizationTeamDetailPageResult } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/get-organization-team-detail-page";
 import type { OrganizationTeamItem } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/team-form-utils";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
-import { formatDate } from "@/lib/format-date";
-import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
 type TeamDetailPanelProps = {
   organizationId: string;
-  team: OrganizationTeamPageResult;
+  data: OrganizationTeamDetailPageResult;
 };
 
-function teamToItem(team: OrganizationTeamPageResult): OrganizationTeamItem {
+function teamToItem(
+  team: OrganizationTeamDetailPageResult["team"],
+): OrganizationTeamItem {
   return {
     id: team.id,
     name: team.name,
@@ -39,7 +45,7 @@ function teamToItem(team: OrganizationTeamPageResult): OrganizationTeamItem {
 
 export function TeamDetailPanel({
   organizationId,
-  team,
+  data,
 }: TeamDetailPanelProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -50,20 +56,16 @@ export function TeamDetailPanel({
   const [formTarget, setFormTarget] = useState<TeamFormShellTarget | null>(
     null,
   );
+  const [addMembersOpen, setAddMembersOpen] = useState(false);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+
+  const excludeUserIds = data.members.map((member) => member.userId);
 
   const handleDelete = () => {
-    if (
-      !window.confirm(
-        `Delete "${team.name}"? This cannot be undone. The team must have no members.`,
-      )
-    ) {
-      return;
-    }
-
     startTransition(async () => {
       const result = await deleteOrganizationTeamAction({
         organizationId,
-        teamId: team.id,
+        teamId: data.team.id,
       });
 
       if (!result.success) {
@@ -71,9 +73,11 @@ export function TeamDetailPanel({
           kind: "error",
           message: result.error ?? "Could not delete the team.",
         });
+        setDeleteConfirmOpen(false);
         return;
       }
 
+      setDeleteConfirmOpen(false);
       router.push(dashboardRoutes.organizationTeams(organizationId));
       router.refresh();
     });
@@ -83,7 +87,7 @@ export function TeamDetailPanel({
     <div className="space-y-4">
       <TeamManageHeader
         organizationId={organizationId}
-        teamName={team.name}
+        teamName={data.team.name}
         actions={
           <>
             <Button
@@ -92,7 +96,7 @@ export function TeamDetailPanel({
               size="sm"
               disabled={isPending}
               onClick={() =>
-                setFormTarget({ mode: "edit", team: teamToItem(team) })
+                setFormTarget({ mode: "edit", team: teamToItem(data.team) })
               }
             >
               {dashboardNavLabels.teamManage.editTeam}
@@ -102,7 +106,7 @@ export function TeamDetailPanel({
               variant="destructive"
               size="sm"
               disabled={isPending}
-              onClick={handleDelete}
+              onClick={() => setDeleteConfirmOpen(true)}
             >
               {dashboardNavLabels.teamManage.deleteTeam}
             </Button>
@@ -122,42 +126,33 @@ export function TeamDetailPanel({
         </p>
       ) : null}
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Overview</CardTitle>
-          <CardDescription>Team details and membership.</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <dl className="grid gap-3 text-sm sm:grid-cols-2">
-            <div>
-              <dt className="text-muted-foreground">Members</dt>
-              <dd className="font-medium">{team.memberCount}</dd>
-            </div>
-            <div>
-              <dt className="text-muted-foreground">Created</dt>
-              <dd className="font-medium">{formatDate(team.createdAt)}</dd>
-            </div>
-            <div>
-              <dt className="text-muted-foreground">Last updated</dt>
-              <dd className="font-medium">{formatDate(team.updatedAt)}</dd>
-            </div>
-          </dl>
+      <TeamDetailStats
+        memberCount={data.team.memberCount}
+        organizationMemberCount={data.organizationMemberCount}
+        createdAt={data.team.createdAt}
+        updatedAt={data.team.updatedAt}
+      />
 
-          <Button
-            nativeButton={false}
-            render={
-              <Link
-                href={dashboardRoutes.organizationTeamMembers(
-                  organizationId,
-                  team.id,
-                )}
-              />
-            }
-          >
-            {dashboardNavLabels.teamManage.manageMembers}
-          </Button>
-        </CardContent>
-      </Card>
+      <TeamMembersTable
+        organizationId={organizationId}
+        teamId={data.team.id}
+        members={data.members}
+        page={data.page}
+        pageSize={data.pageSize}
+        totalCount={data.totalCount}
+        feedback={feedback}
+        onAddMembers={() => setAddMembersOpen(true)}
+        onFeedback={setFeedback}
+      />
+
+      <AddTeamMembersFormShell
+        organizationId={organizationId}
+        teamId={data.team.id}
+        open={addMembersOpen}
+        excludeUserIds={excludeUserIds}
+        onClose={() => setAddMembersOpen(false)}
+        onFeedback={setFeedback}
+      />
 
       <TeamFormShell
         organizationId={organizationId}
@@ -165,6 +160,28 @@ export function TeamDetailPanel({
         onClose={() => setFormTarget(null)}
         onFeedback={setFeedback}
       />
+
+      <AlertDialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete team</AlertDialogTitle>
+            <AlertDialogDescription>
+              &ldquo;{data.team.name}&rdquo; will be permanently deleted. The
+              team must have no members. This cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              variant="destructive"
+              disabled={isPending}
+              onClick={handleDelete}
+            >
+              Delete team
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

@@ -6,12 +6,17 @@ import {
 
 export const TEAM_MEMBERS_PAGE_SIZE = 10;
 
+export type OrganizationTeamMembersPageQuery = {
+  page: number;
+  pageSize: number;
+};
+
 export function organizationTeamMembersTablePath(
   organizationId: string,
   teamId: string,
   input?: DashboardTableSearchParamsInput,
 ) {
-  const base = dashboardRoutes.organizationTeamMembers(organizationId, teamId);
+  const base = dashboardRoutes.organizationTeam(organizationId, teamId);
 
   if (!input) {
     return base;

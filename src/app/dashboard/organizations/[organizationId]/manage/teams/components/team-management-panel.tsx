@@ -40,7 +40,6 @@ export function TeamManagementPanel({
         teams={teams}
         feedback={feedback}
         onCreate={() => setFormTarget({ mode: "create" })}
-        onEdit={(team) => setFormTarget({ mode: "edit", team })}
         onFeedback={setFeedback}
       />
 

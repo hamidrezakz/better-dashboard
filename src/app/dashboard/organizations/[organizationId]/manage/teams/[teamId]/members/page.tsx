@@ -1,56 +1,16 @@
-import { Suspense } from "react";
-import { notFound } from "next/navigation";
-import { DashboardTableCardFallback } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
-import { TeamMemberManagementPanel } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/components/team-member-management-panel";
-import {
-  getOrganizationTeamMembersPage,
-  parseOrganizationTeamMembersPageQuery,
-} from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/lib/get-organization-team-members-page";
+import { redirect } from "next/navigation";
+import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 
-type OrganizationTeamMembersPageProps = {
+type OrganizationTeamMembersRedirectProps = {
   params: Promise<{
     organizationId: string;
     teamId: string;
   }>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-export default function OrganizationTeamMembersPage(
-  props: OrganizationTeamMembersPageProps,
-) {
-  return (
-    <Suspense fallback={<DashboardTableCardFallback />}>
-      <OrganizationTeamMembersPageContent {...props} />
-    </Suspense>
-  );
-}
-
-async function OrganizationTeamMembersPageContent({
+export default async function OrganizationTeamMembersRedirectPage({
   params,
-  searchParams,
-}: OrganizationTeamMembersPageProps) {
+}: OrganizationTeamMembersRedirectProps) {
   const { organizationId, teamId } = await params;
-  const resolvedSearchParams = await searchParams;
-  const query = parseOrganizationTeamMembersPageQuery(resolvedSearchParams);
-  const data = await getOrganizationTeamMembersPage({
-    organizationId,
-    teamId,
-    query,
-  });
-
-  if (!data) {
-    notFound();
-  }
-
-  return (
-    <TeamMemberManagementPanel
-      organizationId={organizationId}
-      teamId={teamId}
-      teamName={data.team.name}
-      members={data.members}
-      page={data.page}
-      pageSize={data.pageSize}
-      totalCount={data.totalCount}
-    />
-  );
+  redirect(dashboardRoutes.organizationTeam(organizationId, teamId));
 }

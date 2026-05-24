@@ -1,13 +1,11 @@
 "use server";
 
-import { headers } from "next/headers";
 import { canManageOrganization } from "@/app/dashboard/lib/dashboard-access";
 import { getOrganizationTeamInOrg } from "@/app/dashboard/organizations/[organizationId]/manage/lib/organization-team-access";
 import { validateTeamName } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/team-form-utils";
 import { invalidateOrganizationManageCache } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
-import { getOrganizationManageActionErrorMessage } from "@/app/action/dashboard/organizations/manage/shared/organization-manage-action-error";
 import { requireAuthSession } from "@/lib/auth-session";
-import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
 type UpdateOrganizationTeamInput = {
   organizationId: string;
@@ -53,27 +51,15 @@ export async function updateOrganizationTeamAction(
     return { success: false, error: "Team not found." };
   }
 
-  try {
-    await auth.api.updateTeam({
-      headers: await headers(),
-      body: {
-        teamId: input.teamId,
-        data: {
-          name: input.name.trim(),
-        },
-      },
-    });
+  await prisma.team.update({
+    where: { id: input.teamId },
+    data: {
+      name: input.name.trim(),
+      updatedAt: new Date(),
+    },
+  });
 
-    invalidateOrganizationManageCache(input.organizationId);
+  invalidateOrganizationManageCache(input.organizationId);
 
-    return { success: true };
-  } catch (error) {
-    return {
-      success: false,
-      error: getOrganizationManageActionErrorMessage(
-        error,
-        "Could not update the team.",
-      ),
-    };
-  }
+  return { success: true };
 }

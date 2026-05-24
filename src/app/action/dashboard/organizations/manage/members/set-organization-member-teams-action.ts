@@ -1,12 +1,9 @@
 "use server";
 
-import { headers } from "next/headers";
 import { canManageOrganization } from "@/app/dashboard/lib/dashboard-access";
 import { getOrganizationMemberById } from "@/app/dashboard/organizations/[organizationId]/manage/lib/organization-member-guards";
 import { invalidateOrganizationManageCache } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
-import { getOrganizationManageActionErrorMessage } from "@/app/action/dashboard/organizations/manage/shared/organization-manage-action-error";
 import { requireAuthSession } from "@/lib/auth-session";
-import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 type SetOrganizationMemberTeamsInput = {
@@ -85,39 +82,38 @@ export async function setOrganizationMemberTeamsAction(
     (teamId) => !nextTeamIdSet.has(teamId),
   );
 
-  const requestHeaders = await headers();
+  const now = new Date();
 
-  try {
-    for (const teamId of toAdd) {
-      await auth.api.addTeamMember({
-        headers: requestHeaders,
-        body: {
-          teamId,
-          userId: member.userId,
-        },
-      });
-    }
+  if (toRemove.length) {
+    await prisma.teamMember.deleteMany({
+      where: {
+        userId: member.userId,
+        teamId: { in: toRemove },
+      },
+    });
 
-    for (const teamId of toRemove) {
-      await auth.api.removeTeamMember({
-        headers: requestHeaders,
-        body: {
-          teamId,
-          userId: member.userId,
-        },
-      });
-    }
-
-    invalidateOrganizationManageCache(input.organizationId);
-
-    return { success: true };
-  } catch (error) {
-    return {
-      success: false,
-      error: getOrganizationManageActionErrorMessage(
-        error,
-        "Could not update team memberships.",
-      ),
-    };
+    await prisma.team.updateMany({
+      where: { id: { in: toRemove } },
+      data: { updatedAt: now },
+    });
   }
+
+  if (toAdd.length) {
+    await prisma.teamMember.createMany({
+      data: toAdd.map((teamId) => ({
+        teamId,
+        userId: member.userId,
+        createdAt: now,
+      })),
+    });
+
+    await prisma.team.updateMany({
+      where: { id: { in: toAdd } },
+      data: { updatedAt: now },
+    });
+  }
+
+  invalidateOrganizationManageCache(input.organizationId);
+
+  return { success: true };
 }

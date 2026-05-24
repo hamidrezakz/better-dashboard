@@ -1,9 +1,7 @@
 "use client";
 
 import { PlusIcon } from "lucide-react";
-import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { removeOrganizationTeamMemberAction } from "@/app/action/dashboard/organizations/manage/teams/remove-organization-team-member-action";
 import { TeamMemberRowActionsMenu } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/components/team-member-row-actions-menu";
 import { organizationTeamMembersTablePath } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/lib/team-members-table-params";
 import type { OrganizationTeamMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/lib/get-organization-team-members-page";
@@ -54,7 +52,6 @@ export function TeamMembersTable({
   onFeedback,
 }: TeamMembersTableProps) {
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
 
   const navigate = (nextPage: number) => {
     router.push(
@@ -64,42 +61,10 @@ export function TeamMembersTable({
     );
   };
 
-  const handleRemove = (member: OrganizationTeamMemberItem) => {
-    if (
-      !window.confirm(
-        `Remove ${member.name} from this team? They will remain in the organization.`,
-      )
-    ) {
-      return;
-    }
-
-    startTransition(async () => {
-      const result = await removeOrganizationTeamMemberAction({
-        organizationId,
-        teamId,
-        userId: member.userId,
-      });
-
-      if (!result.success) {
-        onFeedback({
-          kind: "error",
-          message: result.error ?? "Could not remove the team member.",
-        });
-        return;
-      }
-
-      onFeedback({
-        kind: "success",
-        message: "Member removed from the team.",
-      });
-      router.refresh();
-    });
-  };
-
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{dashboardNavLabels.manageTabs.teamMembers}</CardTitle>
+        <CardTitle>Members</CardTitle>
         <CardAction>
           <Button type="button" size="sm" onClick={onAddMembers}>
             <PlusIcon />
@@ -164,9 +129,10 @@ export function TeamMembersTable({
                     </TableCell>
                     <TableCell>
                       <TeamMemberRowActionsMenu
+                        organizationId={organizationId}
+                        teamId={teamId}
                         member={member}
-                        disabled={isPending}
-                        onRemove={() => handleRemove(member)}
+                        onFeedback={onFeedback}
                       />
                     </TableCell>
                   </TableRow>

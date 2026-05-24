@@ -1,6 +1,5 @@
 "use server";
 
-import { headers } from "next/headers";
 import {
   canManageOrganization,
   isDashboardSuperAdmin,
@@ -10,9 +9,8 @@ import {
   getOrganizationMemberById,
 } from "@/app/dashboard/organizations/[organizationId]/manage/lib/organization-member-guards";
 import { invalidateOrganizationManageCache } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
-import { getOrganizationManageActionErrorMessage } from "@/app/action/dashboard/organizations/manage/shared/organization-manage-action-error";
 import { requireAuthSession } from "@/lib/auth-session";
-import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
 type RemoveOrganizationMemberInput = {
   organizationId: string;
@@ -70,25 +68,21 @@ export async function removeOrganizationMemberAction(
     }
   }
 
-  try {
-    await auth.api.removeMember({
-      headers: await headers(),
-      body: {
-        memberIdOrEmail: input.memberId,
-        organizationId: input.organizationId,
+  await prisma.$transaction([
+    prisma.teamMember.deleteMany({
+      where: {
+        userId: member.userId,
+        team: {
+          organizationId: input.organizationId,
+        },
       },
-    });
+    }),
+    prisma.member.delete({
+      where: { id: input.memberId },
+    }),
+  ]);
 
-    invalidateOrganizationManageCache(input.organizationId);
+  invalidateOrganizationManageCache(input.organizationId);
 
-    return { success: true };
-  } catch (error) {
-    return {
-      success: false,
-      error: getOrganizationManageActionErrorMessage(
-        error,
-        "Could not remove the member.",
-      ),
-    };
-  }
+  return { success: true };
 }

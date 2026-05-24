@@ -2,16 +2,25 @@
 
 import { formatDate } from "@/lib/format-date";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { removeOrganizationMemberAction } from "@/app/action/dashboard/organizations/manage/members/remove-organization-member-action";
 import { MemberRowActionsMenu } from "@/app/dashboard/organizations/[organizationId]/manage/members/components/member-row-actions-menu";
-import { MemberTeamBadges } from "@/app/dashboard/organizations/[organizationId]/manage/members/components/member-team-badges";
 import type { OrganizationMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/get-organization-members-page";
 import {
   memberFilterLabels,
   organizationMembersTablePath,
   type MemberTableFilter,
 } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/members-table-params";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import {
   Card,
   CardAction,
@@ -63,6 +72,8 @@ export function MembersTable({
 }: MembersTableProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [removeTarget, setRemoveTarget] =
+    useState<OrganizationMemberItem | null>(null);
 
   const navigate = (input: { page?: number; filter?: MemberTableFilter }) => {
     router.push(
@@ -80,19 +91,15 @@ export function MembersTable({
     }),
   );
 
-  const handleRemove = (member: OrganizationMemberItem) => {
-    if (
-      !window.confirm(
-        `Remove ${member.name} from this organization? They will lose access to organization resources.`,
-      )
-    ) {
+  const handleRemove = () => {
+    if (!removeTarget) {
       return;
     }
 
     startTransition(async () => {
       const result = await removeOrganizationMemberAction({
         organizationId,
-        memberId: member.id,
+        memberId: removeTarget.id,
       });
 
       if (!result.success) {
@@ -103,6 +110,7 @@ export function MembersTable({
         return;
       }
 
+      setRemoveTarget(null);
       onFeedback({
         kind: "success",
         message: "Member removed from the organization.",
@@ -149,7 +157,6 @@ export function MembersTable({
                 <TableHead>Name</TableHead>
                 <TableHead className="hidden sm:table-cell">Email</TableHead>
                 <TableHead>Role</TableHead>
-                <TableHead className="hidden md:table-cell">Teams</TableHead>
                 <TableHead className="hidden lg:table-cell">Joined</TableHead>
                 <TableHead className="w-12">
                   <span className="sr-only">Actions</span>
@@ -180,15 +187,6 @@ export function MembersTable({
                     <TableCell>
                       <RoleBadge role={member.role} />
                     </TableCell>
-                    <TableCell className="hidden md:table-cell">
-                      <MemberTeamBadges
-                        organizationId={organizationId}
-                        userId={member.userId}
-                        teams={member.teams}
-                        disabled={isPending}
-                        onFeedback={onFeedback}
-                      />
-                    </TableCell>
                     <TableCell className="hidden lg:table-cell">
                       {formatDate(member.joinedAt)}
                     </TableCell>
@@ -199,7 +197,7 @@ export function MembersTable({
                         canRemove={member.userId !== actorUserId}
                         onChangeRole={() => onChangeRole(member)}
                         onManageTeams={() => onManageTeams(member)}
-                        onRemove={() => handleRemove(member)}
+                        onRemove={() => setRemoveTarget(member)}
                       />
                     </TableCell>
                   </TableRow>
@@ -207,7 +205,7 @@ export function MembersTable({
               ) : (
                 <TableRow>
                   <TableCell
-                    colSpan={6}
+                    colSpan={5}
                     className="py-6 text-center text-muted-foreground"
                   >
                     No members yet.
@@ -218,6 +216,36 @@ export function MembersTable({
           </Table>
         </DashboardTableShell>
       </CardContent>
+
+      <AlertDialog
+        open={Boolean(removeTarget)}
+        onOpenChange={(open) => {
+          if (!open) {
+            setRemoveTarget(null);
+          }
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remove from organization</AlertDialogTitle>
+            <AlertDialogDescription>
+              {removeTarget
+                ? `${removeTarget.name} will lose access to this organization and its teams. This cannot be undone.`
+                : null}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              variant="destructive"
+              disabled={isPending}
+              onClick={handleRemove}
+            >
+              Remove member
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Card>
   );
 }

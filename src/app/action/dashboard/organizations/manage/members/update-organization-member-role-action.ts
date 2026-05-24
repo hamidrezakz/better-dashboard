@@ -1,6 +1,5 @@
 "use server";
 
-import { headers } from "next/headers";
 import {
   canManageOrganization,
   isDashboardSuperAdmin,
@@ -13,10 +12,10 @@ import {
   getOrganizationMemberById,
 } from "@/app/dashboard/organizations/[organizationId]/manage/lib/organization-member-guards";
 import { invalidateOrganizationManageCache } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
-import { getOrganizationManageActionErrorMessage } from "@/app/action/dashboard/organizations/manage/shared/organization-manage-action-error";
 import type { MembershipRole } from "@/generated/prisma/enums";
 import { requireAuthSession } from "@/lib/auth-session";
-import { auth } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+
 type UpdateOrganizationMemberRoleInput = {
   organizationId: string;
   memberId: string;
@@ -105,26 +104,12 @@ export async function updateOrganizationMemberRoleAction(
     }
   }
 
-  try {
-    await auth.api.updateMemberRole({
-      headers: await headers(),
-      body: {
-        memberId: input.memberId,
-        role: input.role.toLowerCase(),
-        organizationId: input.organizationId,
-      },
-    });
+  await prisma.member.update({
+    where: { id: input.memberId },
+    data: { role: input.role },
+  });
 
-    invalidateOrganizationManageCache(input.organizationId);
+  invalidateOrganizationManageCache(input.organizationId);
 
-    return { success: true };
-  } catch (error) {
-    return {
-      success: false,
-      error: getOrganizationManageActionErrorMessage(
-        error,
-        "Could not update the member role.",
-      ),
-    };
-  }
+  return { success: true };
 }

@@ -1,11 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { PlusIcon } from "lucide-react";
-import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { deleteOrganizationTeamAction } from "@/app/action/dashboard/organizations/manage/teams/delete-organization-team-action";
-import { TeamRowActionsMenu } from "@/app/dashboard/organizations/[organizationId]/manage/teams/components/team-row-actions-menu";
 import type { OrganizationTeamItem } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/team-form-utils";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
@@ -32,7 +28,6 @@ type TeamsTableProps = {
   teams: OrganizationTeamItem[];
   feedback: { kind: "success" | "error"; message: string } | null;
   onCreate: () => void;
-  onEdit: (team: OrganizationTeamItem) => void;
   onFeedback: (
     feedback: { kind: "success" | "error"; message: string } | null,
   ) => void;
@@ -43,41 +38,11 @@ export function TeamsTable({
   teams,
   feedback,
   onCreate,
-  onEdit,
-  onFeedback,
 }: TeamsTableProps) {
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
 
-  const handleDelete = (team: OrganizationTeamItem) => {
-    if (
-      !window.confirm(
-        `Delete "${team.name}"? This cannot be undone. The team must have no members.`,
-      )
-    ) {
-      return;
-    }
-
-    startTransition(async () => {
-      const result = await deleteOrganizationTeamAction({
-        organizationId,
-        teamId: team.id,
-      });
-
-      if (!result.success) {
-        onFeedback({
-          kind: "error",
-          message: result.error ?? "Could not delete the team.",
-        });
-        return;
-      }
-
-      onFeedback({
-        kind: "success",
-        message: "Team deleted.",
-      });
-      router.refresh();
-    });
+  const openTeam = (teamId: string) => {
+    router.push(dashboardRoutes.organizationTeam(organizationId, teamId));
   };
 
   return (
@@ -111,45 +76,31 @@ export function TeamsTable({
               <TableHead>Team name</TableHead>
               <TableHead>Members</TableHead>
               <TableHead className="hidden sm:table-cell">Created</TableHead>
-              <TableHead className="w-12">
-                <span className="sr-only">Actions</span>
-              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {teams.length ? (
               teams.map((team) => (
-                <TableRow key={team.id}>
+                <TableRow
+                  key={team.id}
+                  className="cursor-pointer"
+                  onClick={() => openTeam(team.id)}
+                >
                   <TableCell className="font-medium">
-                    <Link
-                      href={dashboardRoutes.organizationTeam(
-                        organizationId,
-                        team.id,
-                      )}
-                      className="block max-w-48 truncate hover:underline"
-                      title={team.name}
-                    >
+                    <span className="block max-w-48 truncate" title={team.name}>
                       {team.name}
-                    </Link>
+                    </span>
                   </TableCell>
                   <TableCell>{team.memberCount}</TableCell>
                   <TableCell className="hidden sm:table-cell">
                     {formatDate(team.createdAt)}
-                  </TableCell>
-                  <TableCell>
-                    <TeamRowActionsMenu
-                      team={team}
-                      disabled={isPending}
-                      onEdit={() => onEdit(team)}
-                      onDelete={() => handleDelete(team)}
-                    />
                   </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={4}
+                  colSpan={3}
                   className="py-6 text-center text-muted-foreground"
                 >
                   No teams yet.

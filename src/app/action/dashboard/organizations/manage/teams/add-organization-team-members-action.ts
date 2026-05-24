@@ -1,12 +1,9 @@
 "use server";
 
-import { headers } from "next/headers";
 import { canManageOrganization } from "@/app/dashboard/lib/dashboard-access";
 import { getOrganizationTeamInOrg } from "@/app/dashboard/organizations/[organizationId]/manage/lib/organization-team-access";
 import { invalidateOrganizationManageCache } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
-import { getOrganizationManageActionErrorMessage } from "@/app/action/dashboard/organizations/manage/shared/organization-manage-action-error";
 import { requireAuthSession } from "@/lib/auth-session";
-import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 type AddOrganizationTeamMembersInput = {
@@ -79,46 +76,38 @@ export async function addOrganizationTeamMembersAction(
     };
   }
 
-  const requestHeaders = await headers();
-  let addedCount = 0;
+  const existing = await prisma.teamMember.findMany({
+    where: {
+      teamId: input.teamId,
+      userId: { in: userIdsToAdd },
+    },
+    select: { userId: true },
+  });
 
-  try {
-    for (const userId of userIdsToAdd) {
-      const existing = await prisma.teamMember.findFirst({
-        where: {
-          teamId: input.teamId,
-          userId,
-        },
-        select: { id: true },
-      });
+  const existingIds = new Set(existing.map((row) => row.userId));
+  const toCreate = userIdsToAdd.filter((userId) => !existingIds.has(userId));
 
-      if (existing) {
-        continue;
-      }
+  if (toCreate.length) {
+    const now = new Date();
 
-      await auth.api.addTeamMember({
-        headers: requestHeaders,
-        body: {
-          teamId: input.teamId,
-          userId,
-        },
-      });
-      addedCount += 1;
-    }
+    await prisma.teamMember.createMany({
+      data: toCreate.map((userId) => ({
+        userId,
+        teamId: input.teamId,
+        createdAt: now,
+      })),
+    });
 
-    invalidateOrganizationManageCache(input.organizationId);
-
-    return {
-      success: true,
-      addedCount,
-    };
-  } catch (error) {
-    return {
-      success: false,
-      error: getOrganizationManageActionErrorMessage(
-        error,
-        "Could not add team members.",
-      ),
-    };
+    await prisma.team.update({
+      where: { id: input.teamId },
+      data: { updatedAt: now },
+    });
   }
+
+  invalidateOrganizationManageCache(input.organizationId);
+
+  return {
+    success: true,
+    addedCount: toCreate.length,
+  };
 }
