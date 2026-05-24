@@ -33,11 +33,7 @@ type TeamMembersTableProps = {
   page: number;
   pageSize: number;
   totalCount: number;
-  feedback: { kind: "success" | "error"; message: string } | null;
   onAddMembers: () => void;
-  onFeedback: (
-    feedback: { kind: "success" | "error"; message: string } | null,
-  ) => void;
 };
 
 export function TeamMembersTable({
@@ -47,9 +43,7 @@ export function TeamMembersTable({
   page,
   pageSize,
   totalCount,
-  feedback,
   onAddMembers,
-  onFeedback,
 }: TeamMembersTableProps) {
   const router = useRouter();
 
@@ -73,19 +67,7 @@ export function TeamMembersTable({
         </CardAction>
       </CardHeader>
 
-      <CardContent className="space-y-4">
-        {feedback ? (
-          <p
-            className={
-              feedback.kind === "error"
-                ? "text-sm text-destructive"
-                : "text-sm text-muted-foreground"
-            }
-          >
-            {feedback.message}
-          </p>
-        ) : null}
-
+      <CardContent>
         <DashboardTableShell
           page={page}
           pageSize={pageSize}
@@ -132,7 +114,6 @@ export function TeamMembersTable({
                         organizationId={organizationId}
                         teamId={teamId}
                         member={member}
-                        onFeedback={onFeedback}
                       />
                     </TableCell>
                   </TableRow>

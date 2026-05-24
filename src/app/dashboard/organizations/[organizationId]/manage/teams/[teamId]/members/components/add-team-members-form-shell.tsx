@@ -4,11 +4,12 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { addOrganizationTeamMembersAction } from "@/app/action/dashboard/organizations/manage/teams/add-organization-team-members-action";
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
+import { DashboardFormShellFooterActions } from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions";
 import { OrganizationMembersMultiCombobox } from "@/app/dashboard/organizations/[organizationId]/manage/components/organization-members-multi-combobox";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
+import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
 import type { UserSearchOption } from "@/app/action/dashboard/users/search-users-action";
 import { FormLabel } from "@/components/form/form-label";
-import { Button } from "@/components/ui/button";
 
 type AddTeamMembersFormShellProps = {
   organizationId: string;
@@ -16,9 +17,6 @@ type AddTeamMembersFormShellProps = {
   open: boolean;
   excludeUserIds: string[];
   onClose: () => void;
-  onFeedback: (
-    feedback: { kind: "success" | "error"; message: string } | null,
-  ) => void;
 };
 
 export function AddTeamMembersFormShell({
@@ -27,22 +25,21 @@ export function AddTeamMembersFormShell({
   open,
   excludeUserIds,
   onClose,
-  onFeedback,
 }: AddTeamMembersFormShellProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [selectedUsers, setSelectedUsers] = useState<UserSearchOption[]>([]);
 
+  const handleClose = () => {
+    setSelectedUsers([]);
+    onClose();
+  };
+
   const handleSubmit = () => {
     if (!selectedUsers.length) {
-      onFeedback({
-        kind: "error",
-        message: "Select at least one member to add.",
-      });
+      dashboardToast.error("Select at least one member to add.");
       return;
     }
-
-    onFeedback(null);
 
     startTransition(async () => {
       const result = await addOrganizationTeamMembersAction({
@@ -52,22 +49,17 @@ export function AddTeamMembersFormShell({
       });
 
       if (!result.success) {
-        onFeedback({
-          kind: "error",
-          message: result.error ?? "Could not add team members.",
-        });
+        dashboardToast.error(result.error ?? "Could not add team members.");
         return;
       }
 
       const addedCount = result.addedCount ?? selectedUsers.length;
 
-      onFeedback({
-        kind: "success",
-        message:
-          addedCount === 1
-            ? "1 member added to the team."
-            : `${addedCount} members added to the team.`,
-      });
+      dashboardToast.success(
+        addedCount === 1
+          ? "1 member added to the team."
+          : `${addedCount} members added to the team.`,
+      );
       setSelectedUsers([]);
       onClose();
       router.refresh();
@@ -79,33 +71,24 @@ export function AddTeamMembersFormShell({
       open={open}
       onOpenChange={(nextOpen) => {
         if (!nextOpen) {
-          setSelectedUsers([]);
-          onClose();
+          handleClose();
         }
       }}
       title={dashboardNavLabels.teamManage.addMembers}
       description="Search and select organization members to add to this team."
       footer={
-        <>
-          <Button
-            type="button"
-            variant="outline"
-            disabled={isPending}
-            onClick={() => {
-              setSelectedUsers([]);
-              onClose();
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="button"
-            disabled={isPending || !selectedUsers.length}
-            onClick={handleSubmit}
-          >
-            Add members
-          </Button>
-        </>
+        <DashboardFormShellFooterActions
+          cancel={{
+            label: "Cancel",
+            onClick: handleClose,
+            disabled: isPending,
+          }}
+          primary={{
+            label: "Add members",
+            onClick: handleSubmit,
+            disabled: isPending || !selectedUsers.length,
+          }}
+        />
       }
     >
       <div className="space-y-2">

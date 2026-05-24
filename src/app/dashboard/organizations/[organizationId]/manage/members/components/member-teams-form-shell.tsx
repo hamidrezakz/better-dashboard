@@ -4,10 +4,11 @@ import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { setOrganizationMemberTeamsAction } from "@/app/action/dashboard/organizations/manage/members/set-organization-member-teams-action";
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
+import { DashboardFormShellFooterActions } from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
+import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
 import type { OrganizationMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/get-organization-members-page";
 import { FormLabel } from "@/components/form/form-label";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 
@@ -17,9 +18,6 @@ type MemberTeamsFormShellProps = {
   teams: Array<{ id: string; name: string }>;
   open: boolean;
   onClose: () => void;
-  onFeedback: (
-    feedback: { kind: "success" | "error"; message: string } | null,
-  ) => void;
 };
 
 export function MemberTeamsFormShell({
@@ -28,7 +26,6 @@ export function MemberTeamsFormShell({
   teams,
   open,
   onClose,
-  onFeedback,
 }: MemberTeamsFormShellProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -55,8 +52,6 @@ export function MemberTeamsFormShell({
       return;
     }
 
-    onFeedback(null);
-
     startTransition(async () => {
       const result = await setOrganizationMemberTeamsAction({
         organizationId,
@@ -65,17 +60,13 @@ export function MemberTeamsFormShell({
       });
 
       if (!result.success) {
-        onFeedback({
-          kind: "error",
-          message: result.error ?? "Could not update team memberships.",
-        });
+        dashboardToast.error(
+          result.error ?? "Could not update team memberships.",
+        );
         return;
       }
 
-      onFeedback({
-        kind: "success",
-        message: "Team memberships updated.",
-      });
+      dashboardToast.success("Team memberships updated.");
       onClose();
       router.refresh();
     });
@@ -96,23 +87,18 @@ export function MemberTeamsFormShell({
           : "Manage team memberships."
       }
       footer={
-        <>
-          <Button
-            type="button"
-            variant="outline"
-            disabled={isPending}
-            onClick={onClose}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="button"
-            disabled={isPending || !member}
-            onClick={handleSubmit}
-          >
-            Save teams
-          </Button>
-        </>
+        <DashboardFormShellFooterActions
+          cancel={{
+            label: "Cancel",
+            onClick: onClose,
+            disabled: isPending,
+          }}
+          primary={{
+            label: "Save teams",
+            onClick: handleSubmit,
+            disabled: isPending || !member,
+          }}
+        />
       }
     >
       {member ? (

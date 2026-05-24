@@ -7,11 +7,6 @@ import { NotificationViewDialog } from "@/app/dashboard/organizations/[organizat
 import { NotificationsTable } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/components/notifications-table";
 import type { OrganizationNotificationItem } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/lib/notification-form-utils";
 
-type NotificationFeedback = {
-  kind: "success" | "error";
-  message: string;
-};
-
 type NotificationManagementPanelProps = {
   organizationId: string;
   teams: Array<{
@@ -32,7 +27,6 @@ export function NotificationManagementPanel({
   pageSize,
   totalCount,
 }: NotificationManagementPanelProps) {
-  const [feedback, setFeedback] = useState<NotificationFeedback | null>(null);
   const [viewNotification, setViewNotification] =
     useState<OrganizationNotificationItem | null>(null);
   const [formTarget, setFormTarget] = useState<NotificationFormTarget | null>(
@@ -47,10 +41,8 @@ export function NotificationManagementPanel({
         page={page}
         pageSize={pageSize}
         totalCount={totalCount}
-        feedback={feedback}
         onView={setViewNotification}
         onCreate={() => setFormTarget({ mode: "create" })}
-        onFeedback={setFeedback}
       />
 
       <NotificationViewDialog
@@ -63,7 +55,6 @@ export function NotificationManagementPanel({
         target={formTarget}
         teams={teams}
         onClose={() => setFormTarget(null)}
-        onFeedback={setFeedback}
       />
     </div>
   );

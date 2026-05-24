@@ -9,11 +9,6 @@ import { InvitationViewDialog } from "@/app/dashboard/organizations/[organizatio
 import { InvitationsTable } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/components/invitations-table";
 import type { OrganizationInvitationItem } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-form-utils";
 
-type InvitationFeedback = {
-  kind: "success" | "error";
-  message: string;
-};
-
 type InvitationManagementPanelProps = {
   organizationId: string;
   teams: Array<{
@@ -34,7 +29,6 @@ export function InvitationManagementPanel({
   pageSize,
   totalCount,
 }: InvitationManagementPanelProps) {
-  const [feedback, setFeedback] = useState<InvitationFeedback | null>(null);
   const [viewInvitation, setViewInvitation] =
     useState<OrganizationInvitationItem | null>(null);
   const [formTarget, setFormTarget] =
@@ -48,11 +42,9 @@ export function InvitationManagementPanel({
         page={page}
         pageSize={pageSize}
         totalCount={totalCount}
-        feedback={feedback}
         onView={setViewInvitation}
         onEdit={(invitation) => setFormTarget({ mode: "edit", invitation })}
         onCreate={() => setFormTarget({ mode: "create" })}
-        onFeedback={setFeedback}
       />
 
       <InvitationViewDialog
@@ -65,7 +57,6 @@ export function InvitationManagementPanel({
         target={formTarget}
         teams={teams}
         onClose={() => setFormTarget(null)}
-        onFeedback={setFeedback}
       />
     </div>
   );

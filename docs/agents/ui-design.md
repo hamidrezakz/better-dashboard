@@ -21,6 +21,14 @@ For cell content that comes from the database and can be long (email, title, bod
 - Add **`title={fullValue}`** when truncation hides meaningful text.
 - Badges, counts, dates, and action menus: leave as-is unless they overflow.
 
+## Dashboard feedback & form footers
+
+**Mutation feedback (success / server error):** use `dashboardToast` from `src/app/dashboard/lib/dashboard-toast.ts` (Sonner). `<Toaster />` is mounted in the root layout. Do **not** lift feedback into table/panel state or render banners above tables — toasts survive client navigation within the app.
+
+**Field validation (client):** show errors only after the field is touched (blur) or submit was attempted. Use `aria-invalid` and `aria-describedby` on the control. Keep server/action errors on toast unless the dialog stays open and inline copy is required.
+
+**Form shell footers:** use `DashboardFormShellFooterActions` from `src/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions.tsx`. DOM order is always **Cancel** (outline) then **primary**; `DashboardFormShellFooter` applies `flex-col-reverse` on mobile so primary appears on top. Reserve `variant="destructive"` for destructive **actions** (delete, remove), never for Cancel.
+
 ## Copy & language
 
 - **English** only in the template; no i18n runtime unless the user asks.

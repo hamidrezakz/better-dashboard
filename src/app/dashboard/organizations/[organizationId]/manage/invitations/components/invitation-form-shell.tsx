@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createOrganizationInvitationAction } from "@/app/action/dashboard/organizations/manage/invitations/create-organization-invitation-action";
 import { updateOrganizationInvitationAction } from "@/app/action/dashboard/organizations/manage/invitations/update-organization-invitation-action";
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
+import { DashboardFormShellFooterActions } from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions";
 import {
   InvitationForm,
   useInvitationForm,
@@ -14,7 +15,7 @@ import {
   parsePositiveNumberInput,
   TEAM_NONE_VALUE,
 } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-form-utils";
-import { Button } from "@/components/ui/button";
+import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
 
 export type InvitationFormShellTarget = InvitationFormTarget;
 
@@ -23,9 +24,6 @@ export type InvitationFormShellProps = {
   target: InvitationFormShellTarget | null;
   teams: Array<{ id: string; name: string }>;
   onClose: () => void;
-  onFeedback: (
-    feedback: { kind: "success" | "error"; message: string } | null,
-  ) => void;
 };
 
 export function InvitationFormShell({
@@ -33,7 +31,6 @@ export function InvitationFormShell({
   target,
   teams,
   onClose,
-  onFeedback,
 }: InvitationFormShellProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -53,14 +50,9 @@ export function InvitationFormShell({
     const maxUses = parsePositiveNumberInput(form.maxUses);
 
     if (maxUses === -1) {
-      onFeedback({
-        kind: "error",
-        message: "Maximum uses must be a positive number.",
-      });
+      dashboardToast.error("Maximum uses must be a positive number.");
       return;
     }
-
-    onFeedback(null);
 
     startTransition(async () => {
       const payload = {
@@ -80,28 +72,30 @@ export function InvitationFormShell({
           : await createOrganizationInvitationAction(payload);
 
       if (!result.success) {
-        onFeedback({
-          kind: "error",
-          message:
-            result.error ??
+        dashboardToast.error(
+          result.error ??
             (target.mode === "edit"
               ? "Could not update the invitation."
               : "Could not create the invitation."),
-        });
+        );
         return;
       }
 
-      onFeedback({
-        kind: "success",
-        message:
-          target.mode === "edit"
-            ? "Invitation updated."
-            : "Invitation created.",
-      });
+      dashboardToast.success(
+        target.mode === "edit" ? "Invitation updated." : "Invitation created.",
+      );
       onClose();
       router.refresh();
     });
   };
+
+  const primaryLabel = isPending
+    ? isEdit
+      ? "Saving..."
+      : "Creating..."
+    : isEdit
+      ? "Save"
+      : "Create";
 
   return (
     <DashboardFormShell
@@ -114,20 +108,18 @@ export function InvitationFormShell({
       title={title}
       description={description}
       footer={
-        <>
-          <Button disabled={isPending || !canSubmit} onClick={handleSubmit}>
-            {isPending
-              ? isEdit
-                ? "Saving..."
-                : "Creating..."
-              : isEdit
-                ? "Save"
-                : "Create"}
-          </Button>
-          <Button variant="destructive" onClick={onClose} disabled={isPending}>
-            Cancel
-          </Button>
-        </>
+        <DashboardFormShellFooterActions
+          cancel={{
+            label: "Cancel",
+            onClick: onClose,
+            disabled: isPending,
+          }}
+          primary={{
+            label: primaryLabel,
+            onClick: handleSubmit,
+            disabled: isPending || !canSubmit,
+          }}
+        />
       }
     >
       {form ? (

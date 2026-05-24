@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { MoreHorizontalIcon, Trash2Icon } from "lucide-react";
 import { removeOrganizationTeamMemberAction } from "@/app/action/dashboard/organizations/manage/teams/remove-organization-team-member-action";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
+import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
 import type { OrganizationTeamMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/lib/get-organization-team-members-page";
 import {
   AlertDialog,
@@ -28,16 +29,12 @@ type TeamMemberRowActionsMenuProps = {
   organizationId: string;
   teamId: string;
   member: OrganizationTeamMemberItem;
-  onFeedback: (
-    feedback: { kind: "success" | "error"; message: string } | null,
-  ) => void;
 };
 
 export function TeamMemberRowActionsMenu({
   organizationId,
   teamId,
   member,
-  onFeedback,
 }: TeamMemberRowActionsMenuProps) {
   const router = useRouter();
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -52,18 +49,14 @@ export function TeamMemberRowActionsMenu({
       });
 
       if (!result.success) {
-        onFeedback({
-          kind: "error",
-          message: result.error ?? "Could not remove the team member.",
-        });
+        dashboardToast.error(
+          result.error ?? "Could not remove the team member.",
+        );
         return;
       }
 
       setConfirmOpen(false);
-      onFeedback({
-        kind: "success",
-        message: "Member removed from the team.",
-      });
+      dashboardToast.success("Member removed from the team.");
       router.refresh();
     });
   };

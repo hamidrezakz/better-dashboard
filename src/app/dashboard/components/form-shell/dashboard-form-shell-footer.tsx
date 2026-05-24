@@ -18,7 +18,7 @@ export function DashboardFormShellFooter({
   return (
     <div
       className={cn(
-        "flex w-full flex-col gap-2 **:data-[slot=button]:w-full",
+        "flex w-full flex-col-reverse gap-2 sm:flex-row sm:justify-end **:data-[slot=button]:w-full sm:**:data-[slot=button]:w-auto",
         className,
       )}
     >

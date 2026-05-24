@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { removeOrganizationMemberAction } from "@/app/action/dashboard/organizations/manage/members/remove-organization-member-action";
 import { MemberRowActionsMenu } from "@/app/dashboard/organizations/[organizationId]/manage/members/components/member-row-actions-menu";
+import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
 import type { OrganizationMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/get-organization-members-page";
 import {
   memberFilterLabels,
@@ -49,12 +50,8 @@ type MembersTableProps = {
   totalCount: number;
   filter: MemberTableFilter;
   actorUserId: string;
-  feedback: { kind: "success" | "error"; message: string } | null;
   onChangeRole: (member: OrganizationMemberItem) => void;
   onManageTeams: (member: OrganizationMemberItem) => void;
-  onFeedback: (
-    feedback: { kind: "success" | "error"; message: string } | null,
-  ) => void;
 };
 
 export function MembersTable({
@@ -65,10 +62,8 @@ export function MembersTable({
   totalCount,
   filter,
   actorUserId,
-  feedback,
   onChangeRole,
   onManageTeams,
-  onFeedback,
 }: MembersTableProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -103,18 +98,12 @@ export function MembersTable({
       });
 
       if (!result.success) {
-        onFeedback({
-          kind: "error",
-          message: result.error ?? "Could not remove the member.",
-        });
+        dashboardToast.error(result.error ?? "Could not remove the member.");
         return;
       }
 
       setRemoveTarget(null);
-      onFeedback({
-        kind: "success",
-        message: "Member removed from the organization.",
-      });
+      dashboardToast.success("Member removed from the organization.");
       router.refresh();
     });
   };
@@ -132,19 +121,7 @@ export function MembersTable({
         </CardAction>
       </CardHeader>
 
-      <CardContent className="space-y-4">
-        {feedback ? (
-          <p
-            className={
-              feedback.kind === "error"
-                ? "text-sm text-destructive"
-                : "text-sm text-muted-foreground"
-            }
-          >
-            {feedback.message}
-          </p>
-        ) : null}
-
+      <CardContent>
         <DashboardTableShell
           page={page}
           pageSize={pageSize}

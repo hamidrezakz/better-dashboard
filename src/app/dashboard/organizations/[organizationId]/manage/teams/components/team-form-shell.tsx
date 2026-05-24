@@ -1,17 +1,18 @@
 "use client";
 
-import { useTransition } from "react";
+import { useId, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createOrganizationTeamAction } from "@/app/action/dashboard/organizations/manage/teams/create-organization-team-action";
 import { updateOrganizationTeamAction } from "@/app/action/dashboard/organizations/manage/teams/update-organization-team-action";
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
+import { DashboardFormShellFooterActions } from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions";
 import {
   TeamForm,
   useTeamForm,
   type TeamFormTarget,
 } from "@/app/dashboard/organizations/[organizationId]/manage/teams/components/team-form";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
-import { Button } from "@/components/ui/button";
+import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
 
 export type TeamFormShellTarget = TeamFormTarget;
 
@@ -19,20 +20,25 @@ type TeamFormShellProps = {
   organizationId: string;
   target: TeamFormShellTarget | null;
   onClose: () => void;
-  onFeedback: (
-    feedback: { kind: "success" | "error"; message: string } | null,
-  ) => void;
 };
 
 export function TeamFormShell({
   organizationId,
   target,
   onClose,
-  onFeedback,
 }: TeamFormShellProps) {
   const router = useRouter();
+  const nameErrorId = useId();
   const [isPending, startTransition] = useTransition();
-  const { form, onChange, isEdit, canSubmit, nameError } = useTeamForm(target);
+  const {
+    form,
+    onChange,
+    markNameTouched,
+    attemptSubmit,
+    isEdit,
+    canSubmit,
+    displayNameError,
+  } = useTeamForm(target);
 
   const open = Boolean(target);
   const title = isEdit
@@ -43,11 +49,9 @@ export function TeamFormShell({
     : "Create a team for this organization.";
 
   const handleSubmit = () => {
-    if (!form || !target || !canSubmit) {
+    if (!form || !target || !attemptSubmit()) {
       return;
     }
-
-    onFeedback(null);
 
     startTransition(async () => {
       const result =
@@ -63,17 +67,11 @@ export function TeamFormShell({
             });
 
       if (!result.success) {
-        onFeedback({
-          kind: "error",
-          message: result.error ?? "Could not save the team.",
-        });
+        dashboardToast.error(result.error ?? "Could not save the team.");
         return;
       }
 
-      onFeedback({
-        kind: "success",
-        message: isEdit ? "Team updated." : "Team created.",
-      });
+      dashboardToast.success(isEdit ? "Team updated." : "Team created.");
       onClose();
       router.refresh();
     });
@@ -90,37 +88,30 @@ export function TeamFormShell({
       title={title}
       description={description}
       footer={
-        <>
-          <Button
-            type="button"
-            variant="outline"
-            disabled={isPending}
-            onClick={onClose}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="button"
-            disabled={isPending || !canSubmit}
-            onClick={handleSubmit}
-          >
-            {isEdit ? "Save changes" : "Create team"}
-          </Button>
-        </>
+        <DashboardFormShellFooterActions
+          cancel={{
+            label: "Cancel",
+            onClick: onClose,
+            disabled: isPending,
+          }}
+          primary={{
+            label: isEdit ? "Save changes" : "Create team",
+            onClick: handleSubmit,
+            disabled: isPending || !canSubmit,
+          }}
+        />
       }
     >
       {form && target ? (
-        <div className="space-y-4">
-          <TeamForm
-            target={target}
-            form={form}
-            onChange={onChange}
-            disabled={isPending}
-          />
-          {nameError ? (
-            <p className="text-sm text-destructive">{nameError}</p>
-          ) : null}
-        </div>
+        <TeamForm
+          target={target}
+          form={form}
+          onChange={onChange}
+          onNameBlur={markNameTouched}
+          disabled={isPending}
+          nameError={displayNameError}
+          nameErrorId={nameErrorId}
+        />
       ) : null}
     </DashboardFormShell>
   );

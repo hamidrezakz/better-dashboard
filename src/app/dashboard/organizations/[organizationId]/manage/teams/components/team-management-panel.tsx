@@ -12,11 +12,6 @@ import type {
   OrganizationTeamItem,
 } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/team-form-utils";
 
-type TeamFeedback = {
-  kind: "success" | "error";
-  message: string;
-};
-
 type TeamManagementPanelProps = {
   organizationId: string;
   teams: OrganizationTeamItem[];
@@ -28,7 +23,6 @@ export function TeamManagementPanel({
   teams,
   outsiderTeamMembers,
 }: TeamManagementPanelProps) {
-  const [feedback, setFeedback] = useState<TeamFeedback | null>(null);
   const [formTarget, setFormTarget] = useState<TeamFormShellTarget | null>(
     null,
   );
@@ -38,9 +32,7 @@ export function TeamManagementPanel({
       <TeamsTable
         organizationId={organizationId}
         teams={teams}
-        feedback={feedback}
         onCreate={() => setFormTarget({ mode: "create" })}
-        onFeedback={setFeedback}
       />
 
       <OutsiderTeamMembersTable items={outsiderTeamMembers} />
@@ -49,7 +41,6 @@ export function TeamManagementPanel({
         organizationId={organizationId}
         target={formTarget}
         onClose={() => setFormTarget(null)}
-        onFeedback={setFeedback}
       />
     </div>
   );

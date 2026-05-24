@@ -15,6 +15,7 @@ import type { OrganizationTeamDetailPageResult } from "@/app/dashboard/organizat
 import type { OrganizationTeamItem } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/team-form-utils";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
+import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -49,10 +50,6 @@ export function TeamDetailPanel({
 }: TeamDetailPanelProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [feedback, setFeedback] = useState<{
-    kind: "success" | "error";
-    message: string;
-  } | null>(null);
   const [formTarget, setFormTarget] = useState<TeamFormShellTarget | null>(
     null,
   );
@@ -69,14 +66,12 @@ export function TeamDetailPanel({
       });
 
       if (!result.success) {
-        setFeedback({
-          kind: "error",
-          message: result.error ?? "Could not delete the team.",
-        });
+        dashboardToast.error(result.error ?? "Could not delete the team.");
         setDeleteConfirmOpen(false);
         return;
       }
 
+      dashboardToast.success("Team deleted.");
       setDeleteConfirmOpen(false);
       router.push(dashboardRoutes.organizationTeams(organizationId));
       router.refresh();
@@ -114,18 +109,6 @@ export function TeamDetailPanel({
         }
       />
 
-      {feedback ? (
-        <p
-          className={
-            feedback.kind === "error"
-              ? "text-sm text-destructive"
-              : "text-sm text-muted-foreground"
-          }
-        >
-          {feedback.message}
-        </p>
-      ) : null}
-
       <TeamDetailStats
         memberCount={data.team.memberCount}
         organizationMemberCount={data.organizationMemberCount}
@@ -140,9 +123,7 @@ export function TeamDetailPanel({
         page={data.page}
         pageSize={data.pageSize}
         totalCount={data.totalCount}
-        feedback={feedback}
         onAddMembers={() => setAddMembersOpen(true)}
-        onFeedback={setFeedback}
       />
 
       <AddTeamMembersFormShell
@@ -151,14 +132,12 @@ export function TeamDetailPanel({
         open={addMembersOpen}
         excludeUserIds={excludeUserIds}
         onClose={() => setAddMembersOpen(false)}
-        onFeedback={setFeedback}
       />
 
       <TeamFormShell
         organizationId={organizationId}
         target={formTarget}
         onClose={() => setFormTarget(null)}
-        onFeedback={setFeedback}
       />
 
       <AlertDialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>

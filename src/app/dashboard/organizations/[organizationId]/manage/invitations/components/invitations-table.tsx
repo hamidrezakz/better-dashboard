@@ -4,6 +4,7 @@ import { PlusIcon } from "lucide-react";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { deleteOrganizationInvitationAction } from "@/app/action/dashboard/organizations/manage/invitations/delete-organization-invitation-action";
+import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
 import { InvitationRowActionsMenu } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/components/invitation-row-actions-menu";
 import { resolveInvitationJoinScope } from "@/app/join/lib/invitation-scope";
 import {
@@ -33,14 +34,9 @@ type InvitationsTableProps = {
   page: number;
   pageSize: number;
   totalCount: number;
-  feedback: { kind: "success" | "error"; message: string } | null;
   onView: (invitation: OrganizationInvitationItem) => void;
   onEdit: (invitation: OrganizationInvitationItem) => void;
   onCreate: () => void;
-  onFeedback: (feedback: {
-    kind: "success" | "error";
-    message: string;
-  }) => void;
 };
 
 export function InvitationsTable({
@@ -49,11 +45,9 @@ export function InvitationsTable({
   page,
   pageSize,
   totalCount,
-  feedback,
   onView,
   onEdit,
   onCreate,
-  onFeedback,
 }: InvitationsTableProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -66,17 +60,13 @@ export function InvitationsTable({
       });
 
       if (!result.success) {
-        onFeedback({
-          kind: "error",
-          message: result.error ?? "Could not delete the invitation.",
-        });
+        dashboardToast.error(
+          result.error ?? "Could not delete the invitation.",
+        );
         return;
       }
 
-      onFeedback({
-        kind: "success",
-        message: "Invitation deleted.",
-      });
+      dashboardToast.success("Invitation deleted.");
       router.refresh();
     });
   };
@@ -90,19 +80,7 @@ export function InvitationsTable({
           Create invitation
         </Button>
       </CardHeader>
-      <CardContent className="space-y-4">
-        {feedback ? (
-          <p
-            className={
-              feedback.kind === "error"
-                ? "text-xs text-destructive"
-                : "text-xs text-emerald-600"
-            }
-          >
-            {feedback.message}
-          </p>
-        ) : null}
-
+      <CardContent>
         {totalCount > 0 ? (
           <DashboardTableShell
             page={page}

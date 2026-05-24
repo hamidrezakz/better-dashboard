@@ -26,17 +26,12 @@ import {
 type TeamsTableProps = {
   organizationId: string;
   teams: OrganizationTeamItem[];
-  feedback: { kind: "success" | "error"; message: string } | null;
   onCreate: () => void;
-  onFeedback: (
-    feedback: { kind: "success" | "error"; message: string } | null,
-  ) => void;
 };
 
 export function TeamsTable({
   organizationId,
   teams,
-  feedback,
   onCreate,
 }: TeamsTableProps) {
   const router = useRouter();
@@ -57,19 +52,7 @@ export function TeamsTable({
         </CardAction>
       </CardHeader>
 
-      <CardContent className="space-y-4">
-        {feedback ? (
-          <p
-            className={
-              feedback.kind === "error"
-                ? "text-sm text-destructive"
-                : "text-sm text-muted-foreground"
-            }
-          >
-            {feedback.message}
-          </p>
-        ) : null}
-
+      <CardContent>
         <Table>
           <TableHeader>
             <TableRow>

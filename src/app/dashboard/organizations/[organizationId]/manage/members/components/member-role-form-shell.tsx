@@ -4,11 +4,12 @@ import { useEffect, useId, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { updateOrganizationMemberRoleAction } from "@/app/action/dashboard/organizations/manage/members/update-organization-member-role-action";
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
+import { DashboardFormShellFooterActions } from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
+import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
 import type { OrganizationMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/get-organization-members-page";
 import type { MembershipRole } from "@/generated/prisma/enums";
 import { FormLabel } from "@/components/form/form-label";
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -23,9 +24,6 @@ type MemberRoleFormShellProps = {
   actorRole: MembershipRole | null;
   open: boolean;
   onClose: () => void;
-  onFeedback: (
-    feedback: { kind: "success" | "error"; message: string } | null,
-  ) => void;
 };
 
 function roleOptions(actorRole: MembershipRole | null): MembershipRole[] {
@@ -46,7 +44,6 @@ export function MemberRoleFormShell({
   actorRole,
   open,
   onClose,
-  onFeedback,
 }: MemberRoleFormShellProps) {
   const router = useRouter();
   const fieldId = useId();
@@ -67,8 +64,6 @@ export function MemberRoleFormShell({
       return;
     }
 
-    onFeedback(null);
-
     startTransition(async () => {
       const result = await updateOrganizationMemberRoleAction({
         organizationId,
@@ -77,17 +72,13 @@ export function MemberRoleFormShell({
       });
 
       if (!result.success) {
-        onFeedback({
-          kind: "error",
-          message: result.error ?? "Could not update the member role.",
-        });
+        dashboardToast.error(
+          result.error ?? "Could not update the member role.",
+        );
         return;
       }
 
-      onFeedback({
-        kind: "success",
-        message: "Member role updated.",
-      });
+      dashboardToast.success("Member role updated.");
       onClose();
       router.refresh();
     });
@@ -108,23 +99,18 @@ export function MemberRoleFormShell({
           : "Update member role."
       }
       footer={
-        <>
-          <Button
-            type="button"
-            variant="outline"
-            disabled={isPending}
-            onClick={onClose}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="button"
-            disabled={isPending || !canSubmit}
-            onClick={handleSubmit}
-          >
-            Save role
-          </Button>
-        </>
+        <DashboardFormShellFooterActions
+          cancel={{
+            label: "Cancel",
+            onClick: onClose,
+            disabled: isPending,
+          }}
+          primary={{
+            label: "Save role",
+            onClick: handleSubmit,
+            disabled: isPending || !canSubmit,
+          }}
+        />
       }
     >
       {member ? (

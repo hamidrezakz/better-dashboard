@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { EyeIcon, MoreHorizontalIcon, Trash2Icon } from "lucide-react";
 import { deleteOrganizationNotificationAction } from "@/app/action/dashboard/organizations/manage/notifications/delete-organization-notification-action";
+import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,8 +28,6 @@ type NotificationRowActionsMenuProps = {
   notificationId: string;
   notificationTitle: string;
   onView: () => void;
-  onDeleted?: (message: string) => void;
-  onError?: (message: string) => void;
 };
 
 export function NotificationRowActionsMenu({
@@ -36,8 +35,6 @@ export function NotificationRowActionsMenu({
   notificationId,
   notificationTitle,
   onView,
-  onDeleted,
-  onError,
 }: NotificationRowActionsMenuProps) {
   const router = useRouter();
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -51,12 +48,14 @@ export function NotificationRowActionsMenu({
       });
 
       if (!result.success) {
-        onError?.(result.error ?? "Could not delete the notification.");
+        dashboardToast.error(
+          result.error ?? "Could not delete the notification.",
+        );
         return;
       }
 
       setConfirmOpen(false);
-      onDeleted?.("Notification deleted.");
+      dashboardToast.success("Notification deleted.");
       router.refresh();
     });
   };

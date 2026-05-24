@@ -31,10 +31,6 @@ export function MemberManagementPanel({
   actorUserId,
   actorRole,
 }: MemberManagementPanelProps) {
-  const [feedback, setFeedback] = useState<{
-    kind: "success" | "error";
-    message: string;
-  } | null>(null);
   const [roleMember, setRoleMember] = useState<OrganizationMemberItem | null>(
     null,
   );
@@ -52,10 +48,8 @@ export function MemberManagementPanel({
         totalCount={totalCount}
         filter={filter}
         actorUserId={actorUserId}
-        feedback={feedback}
         onChangeRole={setRoleMember}
         onManageTeams={setTeamsMember}
-        onFeedback={setFeedback}
       />
 
       <MemberRoleFormShell
@@ -64,7 +58,6 @@ export function MemberManagementPanel({
         actorRole={actorRole}
         open={Boolean(roleMember)}
         onClose={() => setRoleMember(null)}
-        onFeedback={setFeedback}
       />
 
       <MemberTeamsFormShell
@@ -73,7 +66,6 @@ export function MemberManagementPanel({
         teams={teams}
         open={Boolean(teamsMember)}
         onClose={() => setTeamsMember(null)}
-        onFeedback={setFeedback}
       />
     </div>
   );

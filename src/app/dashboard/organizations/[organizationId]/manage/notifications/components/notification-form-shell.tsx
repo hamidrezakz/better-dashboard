@@ -4,6 +4,7 @@ import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createOrganizationNotificationAction } from "@/app/action/dashboard/organizations/manage/notifications/create-organization-notification-action";
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
+import { DashboardFormShellFooterActions } from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions";
 import {
   NotificationForm,
   useNotificationForm,
@@ -13,16 +14,13 @@ import {
   audienceNeedsTeam,
   audienceNeedsUser,
 } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/lib/notification-form-utils";
-import { Button } from "@/components/ui/button";
+import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
 
 export type NotificationFormShellProps = {
   organizationId: string;
   target: NotificationFormTarget | null;
   teams: Array<{ id: string; name: string }>;
   onClose: () => void;
-  onFeedback: (
-    feedback: { kind: "success" | "error"; message: string } | null,
-  ) => void;
 };
 
 export function NotificationFormShell({
@@ -30,7 +28,6 @@ export function NotificationFormShell({
   target,
   teams,
   onClose,
-  onFeedback,
 }: NotificationFormShellProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -42,8 +39,6 @@ export function NotificationFormShell({
     if (!form || !target) {
       return;
     }
-
-    onFeedback(null);
 
     startTransition(async () => {
       const result = await createOrganizationNotificationAction({
@@ -58,17 +53,13 @@ export function NotificationFormShell({
       });
 
       if (!result.success) {
-        onFeedback({
-          kind: "error",
-          message: result.error ?? "Could not send the notification.",
-        });
+        dashboardToast.error(
+          result.error ?? "Could not send the notification.",
+        );
         return;
       }
 
-      onFeedback({
-        kind: "success",
-        message: "Notification sent.",
-      });
+      dashboardToast.success("Notification sent.");
       onClose();
       router.refresh();
     });
@@ -85,14 +76,18 @@ export function NotificationFormShell({
       title="New notification"
       description="Send a notification to organization members."
       footer={
-        <>
-          <Button disabled={isPending || !canSubmit} onClick={handleSubmit}>
-            {isPending ? "Sending..." : "Send notification"}
-          </Button>
-          <Button variant="destructive" onClick={onClose} disabled={isPending}>
-            Cancel
-          </Button>
-        </>
+        <DashboardFormShellFooterActions
+          cancel={{
+            label: "Cancel",
+            onClick: onClose,
+            disabled: isPending,
+          }}
+          primary={{
+            label: isPending ? "Sending..." : "Send notification",
+            onClick: handleSubmit,
+            disabled: isPending || !canSubmit,
+          }}
+        />
       }
     >
       {form ? (

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { DirectionProvider } from "@/components/ui/direction";
+import { Toaster } from "@/components/ui/sonner";
 import { appLocale } from "@/lib/app-locale";
 import localFont from "next/font/local";
 import { Geist, Inter } from "next/font/google";
@@ -55,6 +56,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <Toaster richColors closeButton position="top-center" />
           </ThemeProvider>
         </DirectionProvider>
       </body>

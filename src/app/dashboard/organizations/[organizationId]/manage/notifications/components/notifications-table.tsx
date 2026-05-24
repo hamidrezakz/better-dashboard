@@ -26,13 +26,8 @@ type NotificationsTableProps = {
   page: number;
   pageSize: number;
   totalCount: number;
-  feedback: { kind: "success" | "error"; message: string } | null;
   onView: (notification: OrganizationNotificationItem) => void;
   onCreate: () => void;
-  onFeedback: (feedback: {
-    kind: "success" | "error";
-    message: string;
-  }) => void;
 };
 
 export function NotificationsTable({
@@ -41,10 +36,8 @@ export function NotificationsTable({
   page,
   pageSize,
   totalCount,
-  feedback,
   onView,
   onCreate,
-  onFeedback,
 }: NotificationsTableProps) {
   const router = useRouter();
 
@@ -57,19 +50,7 @@ export function NotificationsTable({
           New notification
         </Button>
       </CardHeader>
-      <CardContent className="space-y-4">
-        {feedback ? (
-          <p
-            className={
-              feedback.kind === "error"
-                ? "text-xs text-destructive"
-                : "text-xs text-emerald-600"
-            }
-          >
-            {feedback.message}
-          </p>
-        ) : null}
-
+      <CardContent>
         {totalCount > 0 ? (
           <DashboardTableShell
             page={page}
@@ -144,12 +125,6 @@ export function NotificationsTable({
                           notificationId={notification.id}
                           notificationTitle={notification.title}
                           onView={() => onView(notification)}
-                          onDeleted={(message) =>
-                            onFeedback({ kind: "success", message })
-                          }
-                          onError={(message) =>
-                            onFeedback({ kind: "error", message })
-                          }
                         />
                       </TableCell>
                     </TableRow>
