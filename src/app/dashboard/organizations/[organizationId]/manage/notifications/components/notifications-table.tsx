@@ -100,12 +100,12 @@ export function NotificationsTable({
                 <TableBody>
                   {notifications.map((notification) => (
                     <TableRow key={notification.id}>
-                      <TableCell className="max-w-56 sm:max-w-xs">
-                        <p className="truncate font-medium leading-none">
+                      <TableCell>
+                        <p className="max-w-xs truncate font-medium leading-none sm:max-w-sm">
                           {notification.title}
                         </p>
                         {notification.body ? (
-                          <p className="mt-0.5 truncate text-[0.7rem] text-muted-foreground">
+                          <p className="mt-0.5 max-w-xs truncate text-[0.7rem] text-muted-foreground sm:max-w-sm">
                             {notification.body}
                           </p>
                         ) : null}
@@ -123,7 +123,10 @@ export function NotificationsTable({
                             }}
                           />
                         ) : notification.teamName ? (
-                          <span className="text-xs">
+                          <span
+                            className="block max-w-40 truncate text-xs"
+                            title={notification.teamName}
+                          >
                             {notification.teamName}
                           </span>
                         ) : (

@@ -143,7 +143,7 @@ export function InvitationsTable({
                           <p className="font-medium leading-none">
                             {getInvitationContactLabel()}
                           </p>
-                          <p className="mt-0.5 text-[0.7rem] text-muted-foreground">
+                          <p className="mt-0.5 max-w-xs truncate text-[0.7rem] text-muted-foreground sm:max-w-sm">
                             {formatInvitationUsageLabel(
                               invitation.usedCount,
                               invitation.maxUses,
@@ -156,7 +156,10 @@ export function InvitationsTable({
                           <div className="flex flex-col items-start gap-1">
                             <InvitationJoinScopeBadge scope={joinScope} />
                             {invitation.teamName ? (
-                              <span className="text-[0.7rem] text-muted-foreground">
+                              <span
+                                className="block max-w-40 truncate text-[0.7rem] text-muted-foreground"
+                                title={invitation.teamName}
+                              >
                                 {invitation.teamName}
                               </span>
                             ) : null}

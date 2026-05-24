@@ -10,4 +10,6 @@ alwaysApply: false
 
 English; dashboard chrome copy in `dashboard-nav-labels.ts` — no i18n unless user asks.
 
+**Dashboard tables:** long DB-backed text → `truncate` + field-level `max-w-*` on the text node; no global table layout helpers — [ui-design.md § Dashboard tables](docs/agents/ui-design.md#dashboard-tables-variable-db-text).
+
 **Detail (Read):** [docs/agents/ui-design.md](docs/agents/ui-design.md).

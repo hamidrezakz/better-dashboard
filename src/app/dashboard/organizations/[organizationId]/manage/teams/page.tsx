@@ -126,7 +126,11 @@ async function OrganizationTeamsTable({ params }: OrganizationTeamsPageProps) {
             {data.teams.length ? (
               data.teams.map((team) => (
                 <TableRow key={team.id}>
-                  <TableCell className="font-medium">{team.name}</TableCell>
+                  <TableCell className="font-medium">
+                    <span className="block max-w-48 truncate" title={team.name}>
+                      {team.name}
+                    </span>
+                  </TableCell>
                   <TableCell>{team.memberCount}</TableCell>
                   <TableCell>{formatDate(team.createdAt)}</TableCell>
                 </TableRow>
@@ -175,11 +179,30 @@ async function OrganizationOutsiderMembersTable({
           <TableBody>
             {data.outsiderTeamMembers.map((item) => (
               <TableRow key={item.id}>
-                <TableCell className="font-medium">{item.userName}</TableCell>
-                <TableCell className="text-muted-foreground">
-                  {item.userEmail}
+                <TableCell className="font-medium">
+                  <span
+                    className="block max-w-48 truncate"
+                    title={item.userName}
+                  >
+                    {item.userName}
+                  </span>
                 </TableCell>
-                <TableCell>{item.teamName}</TableCell>
+                <TableCell className="text-muted-foreground">
+                  <span
+                    className="block max-w-md truncate"
+                    title={item.userEmail}
+                  >
+                    {item.userEmail}
+                  </span>
+                </TableCell>
+                <TableCell>
+                  <span
+                    className="block max-w-40 truncate"
+                    title={item.teamName}
+                  >
+                    {item.teamName}
+                  </span>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

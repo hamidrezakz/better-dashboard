@@ -117,12 +117,12 @@ export function UserNotificationsTable({
                       className="cursor-pointer"
                       onClick={() => onView(notification)}
                     >
-                      <TableCell className="56 sm:max-w-xs">
-                        <p className="truncate font-medium leading-none">
+                      <TableCell>
+                        <p className="max-w-xs truncate font-medium leading-none sm:max-w-sm">
                           {notification.title}
                         </p>
                         {notification.body ? (
-                          <p className="mt-0.5 truncate text-[0.7rem] text-muted-foreground">
+                          <p className="mt-0.5 max-w-xs truncate text-[0.7rem] text-muted-foreground sm:max-w-sm">
                             {notification.body}
                           </p>
                         ) : null}
@@ -130,9 +130,12 @@ export function UserNotificationsTable({
                       <TableCell className="hidden sm:table-cell">
                         <RequestStatusBadge status={notification.type} />
                       </TableCell>
-                      <TableCell className="hidden 56 truncate text-xs text-muted-foreground md:table-cell">
+                      <TableCell className="hidden text-xs text-muted-foreground md:table-cell">
                         {notification.sourceLabel ? (
-                          <span title={notification.sourceLabel}>
+                          <span
+                            className="block max-w-48 truncate"
+                            title={notification.sourceLabel}
+                          >
                             {notification.sourceLabel}
                           </span>
                         ) : (

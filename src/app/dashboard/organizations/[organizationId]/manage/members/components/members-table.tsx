@@ -90,9 +90,7 @@ export function MembersTable({
                 <TableHead className="hidden sm:table-cell">Email</TableHead>
                 <TableHead>Role</TableHead>
                 <TableHead className="hidden md:table-cell">Teams</TableHead>
-                <TableHead className="hidden lg:table-cell">
-                  Joined
-                </TableHead>
+                <TableHead className="hidden lg:table-cell">Joined</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -109,7 +107,12 @@ export function MembersTable({
                       />
                     </TableCell>
                     <TableCell className="hidden text-muted-foreground sm:table-cell">
-                      {member.email}
+                      <span
+                        className="block max-w-md truncate"
+                        title={member.email}
+                      >
+                        {member.email}
+                      </span>
                     </TableCell>
                     <TableCell>
                       <RoleBadge role={member.role} />
