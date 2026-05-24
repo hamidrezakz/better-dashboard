@@ -6,7 +6,7 @@ import { updateOrganizationMemberRoleAction } from "@/app/action/dashboard/organ
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
 import { DashboardFormShellFooterActions } from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
-import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
+import { toast } from "sonner";
 import type { OrganizationMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/get-organization-members-page";
 import type { MembershipRole } from "@/generated/prisma/enums";
 import { FormLabel } from "@/components/form/form-label";
@@ -72,13 +72,11 @@ export function MemberRoleFormShell({
       });
 
       if (!result.success) {
-        dashboardToast.error(
-          result.error ?? "Could not update the member role.",
-        );
+        toast.error(result.error ?? "Could not update the member role.");
         return;
       }
 
-      dashboardToast.success("Member role updated.");
+      toast.success("Member role updated.");
       onClose();
       router.refresh();
     });

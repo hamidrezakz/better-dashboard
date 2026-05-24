@@ -15,7 +15,7 @@ import type { OrganizationTeamDetailPageResult } from "@/app/dashboard/organizat
 import type { OrganizationTeamItem } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/team-form-utils";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
-import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
+import { toast } from "sonner";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -66,12 +66,12 @@ export function TeamDetailPanel({
       });
 
       if (!result.success) {
-        dashboardToast.error(result.error ?? "Could not delete the team.");
+        toast.error(result.error ?? "Could not delete the team.");
         setDeleteConfirmOpen(false);
         return;
       }
 
-      dashboardToast.success("Team deleted.");
+      toast.success("Team deleted.");
       setDeleteConfirmOpen(false);
       router.push(dashboardRoutes.organizationTeams(organizationId));
       router.refresh();

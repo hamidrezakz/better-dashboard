@@ -64,3 +64,13 @@ src/
 1. Pick scope — segment-wide goes in segment `lib/` / `components/`, not buried in one sub-feature.
 2. Compose shadcn primitives first.
 3. Stay minimal; match nearby conventions.
+
+### Do not over-extract
+
+**No** new file, component, or helper for a one-off or ~10–20 line snippet that only re-exports or renames an existing API (e.g. `toast.success` → `dashboardToast.success`). Inline at the call site unless there is real shared logic (validation, branching, copy tables, repeated markup).
+
+**Extract** when: the same non-trivial UI or logic appears in multiple places, or the segment needs a true SSOT (`*-routes.ts`, `cache-tags.ts`, `dashboard-nav-labels.ts`).
+
+**Bad:** thin wrapper around Sonner, lodash, or a shadcn primitive; a sibling component that differs by one prop or class; splitting a small form into many single-field files.
+
+**Good:** `import { toast } from "sonner"` in the form shell; one `MembersTable` with column config; shared `DashboardFormShellFooterActions` used across dialogs.

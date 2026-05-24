@@ -12,4 +12,6 @@ English; dashboard chrome copy in `dashboard-nav-labels.ts` — no i18n unless u
 
 **Dashboard tables:** long DB-backed text → `truncate` + field-level `max-w-*` on the text node; no global table layout helpers — [ui-design.md § Dashboard tables](docs/agents/ui-design.md#dashboard-tables-variable-db-text).
 
+**Mutation toasts:** `toast.success` / `toast.error` from `sonner` at call site — no wrapper module.
+
 **Detail (Read):** [docs/agents/ui-design.md](docs/agents/ui-design.md).

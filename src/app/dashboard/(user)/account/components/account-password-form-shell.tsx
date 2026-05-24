@@ -7,7 +7,7 @@ import { AccountPasswordFormFields } from "@/app/dashboard/(user)/account/compon
 import { accountCopy } from "@/app/dashboard/(user)/account/lib/account-copy";
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
 import { DashboardFormShellFooterActions } from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions";
-import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
 type AccountPasswordFormShellProps = {
@@ -35,12 +35,12 @@ export function AccountPasswordFormShell({
     }
     if (state.success) {
       setIsSubmitting(false);
-      dashboardToast.success("Your password was updated.");
+      toast.success("Your password was updated.");
       formRef.current?.reset();
       onClose();
     } else if (state.formError) {
       setIsSubmitting(false);
-      dashboardToast.error(state.formError);
+      toast.error(state.formError);
     } else if (state.fieldErrors) {
       setIsSubmitting(false);
     }

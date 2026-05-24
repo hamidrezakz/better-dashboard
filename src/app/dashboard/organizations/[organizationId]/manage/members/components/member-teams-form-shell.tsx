@@ -6,7 +6,7 @@ import { setOrganizationMemberTeamsAction } from "@/app/action/dashboard/organiz
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
 import { DashboardFormShellFooterActions } from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
-import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
+import { toast } from "sonner";
 import type { OrganizationMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/get-organization-members-page";
 import { FormLabel } from "@/components/form/form-label";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -60,13 +60,11 @@ export function MemberTeamsFormShell({
       });
 
       if (!result.success) {
-        dashboardToast.error(
-          result.error ?? "Could not update team memberships.",
-        );
+        toast.error(result.error ?? "Could not update team memberships.");
         return;
       }
 
-      dashboardToast.success("Team memberships updated.");
+      toast.success("Team memberships updated.");
       onClose();
       router.refresh();
     });

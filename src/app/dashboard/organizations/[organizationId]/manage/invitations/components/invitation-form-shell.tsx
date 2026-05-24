@@ -15,7 +15,7 @@ import {
   parsePositiveNumberInput,
   TEAM_NONE_VALUE,
 } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-form-utils";
-import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
+import { toast } from "sonner";
 
 export type InvitationFormShellTarget = InvitationFormTarget;
 
@@ -50,7 +50,7 @@ export function InvitationFormShell({
     const maxUses = parsePositiveNumberInput(form.maxUses);
 
     if (maxUses === -1) {
-      dashboardToast.error("Maximum uses must be a positive number.");
+      toast.error("Maximum uses must be a positive number.");
       return;
     }
 
@@ -72,7 +72,7 @@ export function InvitationFormShell({
           : await createOrganizationInvitationAction(payload);
 
       if (!result.success) {
-        dashboardToast.error(
+        toast.error(
           result.error ??
             (target.mode === "edit"
               ? "Could not update the invitation."
@@ -81,7 +81,7 @@ export function InvitationFormShell({
         return;
       }
 
-      dashboardToast.success(
+      toast.success(
         target.mode === "edit" ? "Invitation updated." : "Invitation created.",
       );
       onClose();

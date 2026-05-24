@@ -48,4 +48,5 @@ Full doc index: [docs/agents/README.md](docs/agents/README.md).
 - **Session:** `auth-session.ts`; never `use cache` on session — [implementation.md § Auth](docs/agents/implementation.md#auth--session-srclibauth-sessionts).
 - **After dashboard write (same user):** `updateTag` in that action — [caching.md](docs/agents/caching.md).
 - **UI:** shadcn `src/components/ui` (default variants); **do not hand-edit `src/components/ui/*`** — project behavior in `src/app/**` or non-ui `src/components/`; refresh primitives via shadcn CLI; logical Tailwind; `lang`/`dir` root only — [ui-design.md](docs/agents/ui-design.md).
+- **No over-extraction:** inline small one-offs; no thin wrappers around existing APIs (`toast`, shadcn, lodash) or extra components/files for ~10–20 lines used once — [architecture.md § Do not over-extract](docs/agents/architecture.md#do-not-over-extract).
 - **Done checklist:** [implementation.md § Definition of done](docs/agents/implementation.md#definition-of-done).

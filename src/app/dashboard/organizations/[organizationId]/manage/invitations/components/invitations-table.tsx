@@ -4,7 +4,7 @@ import { PlusIcon } from "lucide-react";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { deleteOrganizationInvitationAction } from "@/app/action/dashboard/organizations/manage/invitations/delete-organization-invitation-action";
-import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
+import { toast } from "sonner";
 import { InvitationRowActionsMenu } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/components/invitation-row-actions-menu";
 import { resolveInvitationJoinScope } from "@/app/join/lib/invitation-scope";
 import {
@@ -60,13 +60,11 @@ export function InvitationsTable({
       });
 
       if (!result.success) {
-        dashboardToast.error(
-          result.error ?? "Could not delete the invitation.",
-        );
+        toast.error(result.error ?? "Could not delete the invitation.");
         return;
       }
 
-      dashboardToast.success("Invitation deleted.");
+      toast.success("Invitation deleted.");
       router.refresh();
     });
   };

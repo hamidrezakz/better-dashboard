@@ -14,6 +14,6 @@ alwaysApply: false
 
 **SSOT:** `*-routes.ts`, `cache-tags.ts` per segment; UI from `src/components/ui`. Links: `render={<Link … />}`, not `asChild`; `Button`/`TabsTrigger` + Link need `nativeButton={false}` — [ui-design.md](docs/agents/ui-design.md).
 
-Before new helpers: scope upward; compose shadcn first; reuse or hoist shared UI — do not duplicate.
+Before new helpers: scope upward; compose shadcn first; reuse or hoist shared UI — do not duplicate. **No thin wrappers** (re-export/rename of `toast`, lodash, shadcn) or extra files for ~10–20 line one-offs — inline unless truly reused or segment SSOT — [architecture.md § Do not over-extract](docs/agents/architecture.md#do-not-over-extract).
 
 **Detail (Read):** [docs/agents/architecture.md](docs/agents/architecture.md). **UI:** [docs/agents/ui-design.md](docs/agents/ui-design.md).

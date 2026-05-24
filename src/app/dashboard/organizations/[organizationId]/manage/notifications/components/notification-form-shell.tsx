@@ -14,7 +14,7 @@ import {
   audienceNeedsTeam,
   audienceNeedsUser,
 } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/lib/notification-form-utils";
-import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
+import { toast } from "sonner";
 
 export type NotificationFormShellProps = {
   organizationId: string;
@@ -53,13 +53,11 @@ export function NotificationFormShell({
       });
 
       if (!result.success) {
-        dashboardToast.error(
-          result.error ?? "Could not send the notification.",
-        );
+        toast.error(result.error ?? "Could not send the notification.");
         return;
       }
 
-      dashboardToast.success("Notification sent.");
+      toast.success("Notification sent.");
       onClose();
       router.refresh();
     });

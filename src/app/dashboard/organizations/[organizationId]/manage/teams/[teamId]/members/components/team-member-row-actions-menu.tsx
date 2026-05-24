@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { MoreHorizontalIcon, Trash2Icon } from "lucide-react";
 import { removeOrganizationTeamMemberAction } from "@/app/action/dashboard/organizations/manage/teams/remove-organization-team-member-action";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
-import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
+import { toast } from "sonner";
 import type { OrganizationTeamMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/lib/get-organization-team-members-page";
 import {
   AlertDialog,
@@ -49,14 +49,12 @@ export function TeamMemberRowActionsMenu({
       });
 
       if (!result.success) {
-        dashboardToast.error(
-          result.error ?? "Could not remove the team member.",
-        );
+        toast.error(result.error ?? "Could not remove the team member.");
         return;
       }
 
       setConfirmOpen(false);
-      dashboardToast.success("Member removed from the team.");
+      toast.success("Member removed from the team.");
       router.refresh();
     });
   };

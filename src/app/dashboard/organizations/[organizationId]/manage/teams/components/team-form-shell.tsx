@@ -12,7 +12,7 @@ import {
   type TeamFormTarget,
 } from "@/app/dashboard/organizations/[organizationId]/manage/teams/components/team-form";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
-import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
+import { toast } from "sonner";
 
 export type TeamFormShellTarget = TeamFormTarget;
 
@@ -67,11 +67,11 @@ export function TeamFormShell({
             });
 
       if (!result.success) {
-        dashboardToast.error(result.error ?? "Could not save the team.");
+        toast.error(result.error ?? "Could not save the team.");
         return;
       }
 
-      dashboardToast.success(isEdit ? "Team updated." : "Team created.");
+      toast.success(isEdit ? "Team updated." : "Team created.");
       onClose();
       router.refresh();
     });

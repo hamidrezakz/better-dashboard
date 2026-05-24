@@ -8,7 +8,7 @@ import { AccountProfileFormFields } from "@/app/dashboard/(user)/account/compone
 import { accountCopy } from "@/app/dashboard/(user)/account/lib/account-copy";
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
 import { DashboardFormShellFooterActions } from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions";
-import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
+import { toast } from "sonner";
 
 type AccountProfileFormShellProps = {
   profile: {
@@ -40,12 +40,12 @@ export function AccountProfileFormShell({
     }
     if (state.success) {
       setIsSubmitting(false);
-      dashboardToast.success("Your profile was updated.");
+      toast.success("Your profile was updated.");
       onClose();
       router.refresh();
     } else if (state.formError) {
       setIsSubmitting(false);
-      dashboardToast.error(state.formError);
+      toast.error(state.formError);
     } else if (state.fieldErrors) {
       setIsSubmitting(false);
     }

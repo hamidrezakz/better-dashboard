@@ -12,7 +12,7 @@ import { revokeOtherSessionsAction } from "@/app/action/dashboard/users/account/
 import { revokeSessionAction } from "@/app/action/dashboard/users/account/revoke-session-action";
 import type { SessionDeviceDisplay } from "@/app/dashboard/(user)/account/lib/format-session-device";
 import { accountCopy } from "@/app/dashboard/(user)/account/lib/account-copy";
-import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
+import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -54,10 +54,10 @@ export function AccountSessionsContent({
       const result = await revokeSessionAction({ token });
       setPendingToken(null);
       if (!result.success) {
-        dashboardToast.error(result.error ?? "Could not revoke session.");
+        toast.error(result.error ?? "Could not revoke session.");
         return;
       }
-      dashboardToast.success("Session revoked.");
+      toast.success("Session revoked.");
       router.refresh();
     })();
   };
@@ -66,12 +66,12 @@ export function AccountSessionsContent({
     startRevokeOthers(async () => {
       const result = await revokeOtherSessionsAction();
       if (!result.success) {
-        dashboardToast.error(
+        toast.error(
           result.error ?? "Could not revoke other sessions.",
         );
         return;
       }
-      dashboardToast.success("Other sessions were signed out.");
+      toast.success("Other sessions were signed out.");
       router.refresh();
     });
   }, [router]);

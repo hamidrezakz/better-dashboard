@@ -7,7 +7,7 @@ import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashbo
 import { DashboardFormShellFooterActions } from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions";
 import { OrganizationMembersMultiCombobox } from "@/app/dashboard/organizations/[organizationId]/manage/components/organization-members-multi-combobox";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
-import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
+import { toast } from "sonner";
 import type { UserSearchOption } from "@/app/action/dashboard/users/search-users-action";
 import { FormLabel } from "@/components/form/form-label";
 
@@ -37,7 +37,7 @@ export function AddTeamMembersFormShell({
 
   const handleSubmit = () => {
     if (!selectedUsers.length) {
-      dashboardToast.error("Select at least one member to add.");
+      toast.error("Select at least one member to add.");
       return;
     }
 
@@ -49,13 +49,13 @@ export function AddTeamMembersFormShell({
       });
 
       if (!result.success) {
-        dashboardToast.error(result.error ?? "Could not add team members.");
+        toast.error(result.error ?? "Could not add team members.");
         return;
       }
 
       const addedCount = result.addedCount ?? selectedUsers.length;
 
-      dashboardToast.success(
+      toast.success(
         addedCount === 1
           ? "1 member added to the team."
           : `${addedCount} members added to the team.`,

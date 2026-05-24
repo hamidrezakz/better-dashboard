@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { removeOrganizationMemberAction } from "@/app/action/dashboard/organizations/manage/members/remove-organization-member-action";
 import { MemberRowActionsMenu } from "@/app/dashboard/organizations/[organizationId]/manage/members/components/member-row-actions-menu";
-import { dashboardToast } from "@/app/dashboard/lib/dashboard-toast";
+import { toast } from "sonner";
 import type { OrganizationMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/get-organization-members-page";
 import {
   memberFilterLabels,
@@ -98,12 +98,12 @@ export function MembersTable({
       });
 
       if (!result.success) {
-        dashboardToast.error(result.error ?? "Could not remove the member.");
+        toast.error(result.error ?? "Could not remove the member.");
         return;
       }
 
       setRemoveTarget(null);
-      dashboardToast.success("Member removed from the organization.");
+      toast.success("Member removed from the organization.");
       router.refresh();
     });
   };

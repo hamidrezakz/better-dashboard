@@ -23,7 +23,7 @@ For cell content that comes from the database and can be long (email, title, bod
 
 ## Dashboard feedback & form footers
 
-**Mutation feedback (success / server error):** use `dashboardToast` from `src/app/dashboard/lib/dashboard-toast.ts` (Sonner). `<Toaster />` is mounted in the root layout. Do **not** lift feedback into table/panel state or render banners above tables — toasts survive client navigation within the app.
+**Mutation feedback (success / server error):** call `toast.success` / `toast.error` from `sonner` at the call site — no segment wrapper module. `<Toaster />` is mounted in the root layout. Do **not** lift feedback into table/panel state or render banners above tables — toasts survive client navigation within the app.
 
 **Field validation (client):** show errors only after the field is touched (blur) or submit was attempted. Use `aria-invalid` and `aria-describedby` on the control. Keep server/action errors on toast unless the dialog stays open and inline copy is required.
 
