@@ -33,6 +33,8 @@ export function organizationManageTabPathSuffix(
   return `/${dashboardRouteSegments.manage}/${dashboardRouteSegments[tab]}`;
 }
 
+export type AccountSettingsSection = "profile" | "security" | "sessions";
+
 export const dashboardRoutes = {
   home: () => DASHBOARD_BASE_PATH,
   organizations: () =>
@@ -40,6 +42,8 @@ export const dashboardRoutes = {
   userNotifications: () =>
     `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.notifications}`,
   account: () => `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.account}`,
+  accountSection: (section: AccountSettingsSection) =>
+    `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.account}?section=${section}`,
   accountProfile: () =>
     `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.account}/${dashboardRouteSegments.profile}`,
   accountSecurity: () =>

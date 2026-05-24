@@ -10,13 +10,14 @@ export const dashboardNavLabels = {
     organizationManagement: "Organization management",
     groupOrganization: "Organization",
   },
-  accountTabs: {
+  accountSettings: {
     profile: "Profile",
-    security: "Security",
-    sessions: "Sessions",
-  },
-  accountHome: {
-    manageAccount: "Manage account",
+    security: "Password",
+    sessions: "Active sessions",
+    profileDescription: "Name and profile photo",
+    securityDescription: "Change your sign-in password",
+    sessionsDescription: "Devices where you are signed in",
+    editProfile: "Edit profile",
   },
   manageTabs: {
     members: "Members",

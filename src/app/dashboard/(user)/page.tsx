@@ -12,7 +12,6 @@ import {
 } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
 import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-shell";
 import { getUserProfilePageData } from "@/app/dashboard/(user)/lib/get-user-profile-page";
-import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { requireAuthSession } from "@/lib/auth-session";
 
@@ -56,18 +55,8 @@ async function UserProfileHeader() {
   }
 
   return (
-    <div className="flex flex-wrap items-start justify-between gap-3">
-      <div>
-        <h1 className="text-base font-semibold">{data.user.name}</h1>
-      </div>
-      <Button
-        size="sm"
-        variant="outline"
-        nativeButton={false}
-        render={<Link href={dashboardRoutes.accountProfile()} />}
-      >
-        {dashboardNavLabels.accountHome.manageAccount}
-      </Button>
+    <div>
+      <h1 className="text-base font-semibold">{data.user.name}</h1>
     </div>
   );
 }

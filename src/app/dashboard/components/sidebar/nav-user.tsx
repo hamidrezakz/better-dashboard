@@ -129,7 +129,7 @@ export function DashboardNavUser({ user }: DashboardNavUserProps) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem
-                render={<Link href={dashboardRoutes.accountProfile()} />}
+                render={<Link href={dashboardRoutes.account()} />}
               >
                 <UserCircleIcon />
                 {dashboardNavLabels.sidebar.account}
