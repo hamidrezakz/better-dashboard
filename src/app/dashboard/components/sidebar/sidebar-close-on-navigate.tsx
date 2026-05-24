@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/components/ui/sidebar";
 
 /** Closes the mobile sheet sidebar when the route changes. */
-export function DashboardSidebarCloseOnNavigate() {
+function DashboardSidebarCloseOnNavigateInner() {
   const pathname = usePathname();
   const { setOpenMobile } = useSidebar();
 
@@ -14,4 +14,13 @@ export function DashboardSidebarCloseOnNavigate() {
   }, [pathname, setOpenMobile]);
 
   return null;
+}
+
+/** `usePathname()` must render inside Suspense for static/PPR routes. */
+export function DashboardSidebarCloseOnNavigate() {
+  return (
+    <Suspense fallback={null}>
+      <DashboardSidebarCloseOnNavigateInner />
+    </Suspense>
+  );
 }
