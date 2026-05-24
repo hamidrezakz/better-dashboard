@@ -6,6 +6,7 @@ import {
 import {
   canAccessOrganization,
   canAccessUserProfile,
+  canManageOrganization,
 } from "@/app/dashboard/lib/dashboard-access";
 import { prisma } from "@/lib/prisma";
 
@@ -36,6 +37,30 @@ const fetchLabel: Record<
       select: { name: true },
     });
     return organization?.name?.trim() ?? null;
+  },
+  team: async (viewerUserId, id) => {
+    const team = await prisma.team.findUnique({
+      where: { id },
+      select: {
+        name: true,
+        organizationId: true,
+      },
+    });
+
+    if (!team) {
+      return null;
+    }
+
+    if (
+      !(await canManageOrganization({
+        viewerUserId,
+        organizationId: team.organizationId,
+      }))
+    ) {
+      return null;
+    }
+
+    return team.name?.trim() ?? null;
   },
 };
 

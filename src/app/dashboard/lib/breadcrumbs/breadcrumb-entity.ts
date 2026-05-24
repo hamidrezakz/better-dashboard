@@ -1,5 +1,5 @@
-/** Dynamic trail segments: IDs under `users/` or `organizations/` in the URL. */
-export type EntityType = "user" | "organization";
+/** Dynamic trail segments: IDs under `users/`, `organizations/`, or `teams/` in the URL. */
+export type EntityType = "user" | "organization" | "team";
 
 export type EntityRef = {
   type: EntityType;
@@ -9,6 +9,7 @@ export type EntityRef = {
 const PARENT_TO_ENTITY: Record<string, EntityType> = {
   users: "user",
   organizations: "organization",
+  teams: "team",
 };
 
 /** Map key in API JSON and client state, e.g. `organization:abc`. */
@@ -57,7 +58,7 @@ export function parseEntitiesQuery(raw: string | null): EntityRef[] {
     }
     const type = trimmed.slice(0, colon);
     const id = trimmed.slice(colon + 1).trim();
-    if ((type === "user" || type === "organization") && id) {
+    if ((type === "user" || type === "organization" || type === "team") && id) {
       out.push({ type, id });
     }
   }

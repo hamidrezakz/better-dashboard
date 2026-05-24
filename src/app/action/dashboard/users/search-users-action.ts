@@ -11,6 +11,7 @@ type SearchUsersInput = {
   query: string;
   organizationId?: string;
   teamId?: string;
+  excludeUserIds?: string[];
 };
 
 function buildUserSearchWhere(
@@ -35,6 +36,12 @@ function buildUserSearchWhere(
   if (input.organizationId) {
     scopeFilters.push({
       members: { some: { organizationId: input.organizationId } },
+    });
+  }
+
+  if (input.excludeUserIds?.length) {
+    scopeFilters.push({
+      id: { notIn: input.excludeUserIds },
     });
   }
 

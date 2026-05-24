@@ -1,17 +1,15 @@
 "use client";
 
-import { formatDate } from "@/lib/format-date";
-import { useRouter } from "next/navigation";
+import { PlusIcon } from "lucide-react";
 import { useTransition } from "react";
-import { removeOrganizationMemberAction } from "@/app/action/dashboard/organizations/manage/members/remove-organization-member-action";
-import { MemberRowActionsMenu } from "@/app/dashboard/organizations/[organizationId]/manage/members/components/member-row-actions-menu";
-import { MemberTeamBadges } from "@/app/dashboard/organizations/[organizationId]/manage/members/components/member-team-badges";
-import type { OrganizationMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/get-organization-members-page";
-import {
-  memberFilterLabels,
-  organizationMembersTablePath,
-  type MemberTableFilter,
-} from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/members-table-params";
+import { useRouter } from "next/navigation";
+import { removeOrganizationTeamMemberAction } from "@/app/action/dashboard/organizations/manage/teams/remove-organization-team-member-action";
+import { TeamMemberRowActionsMenu } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/components/team-member-row-actions-menu";
+import { organizationTeamMembersTablePath } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/lib/team-members-table-params";
+import type { OrganizationTeamMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/lib/get-organization-team-members-page";
+import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
+import { formatDate } from "@/lib/format-date";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
@@ -19,7 +17,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DashboardTableSegmentFilter } from "@/components/dashboard-table/dashboard-table-segment-filter";
 import { DashboardTableShell } from "@/components/dashboard-table/dashboard-table-shell";
 import {
   Table,
@@ -29,83 +26,71 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { RoleBadge } from "@/components/globals-badge/role-badge";
 import { UserProfileCell } from "@/components/user-profile/user-profile-cell";
 
-type MembersTableProps = {
+type TeamMembersTableProps = {
   organizationId: string;
-  members: OrganizationMemberItem[];
+  teamId: string;
+  members: OrganizationTeamMemberItem[];
   page: number;
   pageSize: number;
   totalCount: number;
-  filter: MemberTableFilter;
-  actorUserId: string;
   feedback: { kind: "success" | "error"; message: string } | null;
-  onChangeRole: (member: OrganizationMemberItem) => void;
-  onManageTeams: (member: OrganizationMemberItem) => void;
+  onAddMembers: () => void;
   onFeedback: (
     feedback: { kind: "success" | "error"; message: string } | null,
   ) => void;
 };
 
-export function MembersTable({
+export function TeamMembersTable({
   organizationId,
+  teamId,
   members,
   page,
   pageSize,
   totalCount,
-  filter,
-  actorUserId,
   feedback,
-  onChangeRole,
-  onManageTeams,
+  onAddMembers,
   onFeedback,
-}: MembersTableProps) {
+}: TeamMembersTableProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  const navigate = (input: { page?: number; filter?: MemberTableFilter }) => {
+  const navigate = (nextPage: number) => {
     router.push(
-      organizationMembersTablePath(organizationId, {
-        page: input.page,
-        filter: input.filter ?? filter,
+      organizationTeamMembersTablePath(organizationId, teamId, {
+        page: nextPage,
       }),
     );
   };
 
-  const memberFilterOptions = (["all", "managers", "members"] as const).map(
-    (value) => ({
-      value,
-      label: memberFilterLabels[value],
-    }),
-  );
-
-  const handleRemove = (member: OrganizationMemberItem) => {
+  const handleRemove = (member: OrganizationTeamMemberItem) => {
     if (
       !window.confirm(
-        `Remove ${member.name} from this organization? They will lose access to organization resources.`,
+        `Remove ${member.name} from this team? They will remain in the organization.`,
       )
     ) {
       return;
     }
 
     startTransition(async () => {
-      const result = await removeOrganizationMemberAction({
+      const result = await removeOrganizationTeamMemberAction({
         organizationId,
-        memberId: member.id,
+        teamId,
+        userId: member.userId,
       });
 
       if (!result.success) {
         onFeedback({
           kind: "error",
-          message: result.error ?? "Could not remove the member.",
+          message: result.error ?? "Could not remove the team member.",
         });
         return;
       }
 
       onFeedback({
         kind: "success",
-        message: "Member removed from the organization.",
+        message: "Member removed from the team.",
       });
       router.refresh();
     });
@@ -114,13 +99,12 @@ export function MembersTable({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Members</CardTitle>
+        <CardTitle>{dashboardNavLabels.manageTabs.teamMembers}</CardTitle>
         <CardAction>
-          <DashboardTableSegmentFilter
-            value={filter}
-            options={memberFilterOptions}
-            onValueChange={(next) => navigate({ page: 1, filter: next })}
-          />
+          <Button type="button" size="sm" onClick={onAddMembers}>
+            <PlusIcon />
+            {dashboardNavLabels.teamManage.addMembers}
+          </Button>
         </CardAction>
       </CardHeader>
 
@@ -141,16 +125,14 @@ export function MembersTable({
           page={page}
           pageSize={pageSize}
           totalCount={totalCount}
-          onPageChange={(nextPage) => navigate({ page: nextPage })}
+          onPageChange={navigate}
         >
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
                 <TableHead className="hidden sm:table-cell">Email</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead className="hidden md:table-cell">Teams</TableHead>
-                <TableHead className="hidden lg:table-cell">Joined</TableHead>
+                <TableHead className="hidden md:table-cell">Joined</TableHead>
                 <TableHead className="w-12">
                   <span className="sr-only">Actions</span>
                 </TableHead>
@@ -177,28 +159,13 @@ export function MembersTable({
                         {member.email}
                       </span>
                     </TableCell>
-                    <TableCell>
-                      <RoleBadge role={member.role} />
-                    </TableCell>
                     <TableCell className="hidden md:table-cell">
-                      <MemberTeamBadges
-                        organizationId={organizationId}
-                        userId={member.userId}
-                        teams={member.teams}
-                        disabled={isPending}
-                        onFeedback={onFeedback}
-                      />
-                    </TableCell>
-                    <TableCell className="hidden lg:table-cell">
                       {formatDate(member.joinedAt)}
                     </TableCell>
                     <TableCell>
-                      <MemberRowActionsMenu
+                      <TeamMemberRowActionsMenu
                         member={member}
                         disabled={isPending}
-                        canRemove={member.userId !== actorUserId}
-                        onChangeRole={() => onChangeRole(member)}
-                        onManageTeams={() => onManageTeams(member)}
                         onRemove={() => handleRemove(member)}
                       />
                     </TableCell>
@@ -207,10 +174,10 @@ export function MembersTable({
               ) : (
                 <TableRow>
                   <TableCell
-                    colSpan={6}
+                    colSpan={4}
                     className="py-6 text-center text-muted-foreground"
                   >
-                    No members yet.
+                    No team members yet.
                   </TableCell>
                 </TableRow>
               )}

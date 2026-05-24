@@ -14,6 +14,11 @@ import {
   parseDashboardTablePage,
 } from "@/lib/dashboard-table-search-params";
 
+export type OrganizationMemberTeamItem = {
+  id: string;
+  name: string;
+};
+
 export type OrganizationMemberItem = {
   id: string;
   userId: string;
@@ -22,7 +27,7 @@ export type OrganizationMemberItem = {
   image: string | null;
   role: MembershipRole;
   joinedAt: string;
-  teamCount: number;
+  teams: OrganizationMemberTeamItem[];
 };
 
 export type OrganizationMembersPageQuery = {
@@ -96,7 +101,7 @@ async function loadOrganizationMembersPage(
   });
 
   const userIds = members.map((member) => member.userId);
-  const teamCountMap = new Map<string, number>();
+  const teamsByUserId = new Map<string, OrganizationMemberTeamItem[]>();
 
   if (userIds.length > 0) {
     const teamMemberships = await prisma.teamMember.findMany({
@@ -108,12 +113,27 @@ async function loadOrganizationMembersPage(
       },
       select: {
         userId: true,
+        team: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+      orderBy: {
+        team: {
+          name: "asc",
+        },
       },
     });
 
     for (const membership of teamMemberships) {
-      const currentCount = teamCountMap.get(membership.userId) ?? 0;
-      teamCountMap.set(membership.userId, currentCount + 1);
+      const current = teamsByUserId.get(membership.userId) ?? [];
+      current.push({
+        id: membership.team.id,
+        name: membership.team.name,
+      });
+      teamsByUserId.set(membership.userId, current);
     }
   }
 
@@ -126,7 +146,7 @@ async function loadOrganizationMembersPage(
       image: member.user.image,
       role: member.role,
       joinedAt: member.createdAt.toISOString(),
-      teamCount: teamCountMap.get(member.userId) ?? 0,
+      teams: teamsByUserId.get(member.userId) ?? [],
     })),
     totalCount,
     page,
