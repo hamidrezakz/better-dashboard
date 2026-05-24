@@ -4,16 +4,17 @@ import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createOrganizationInvitationAction } from "@/app/action/dashboard/organizations/manage/invitations/create-organization-invitation-action";
 import { updateOrganizationInvitationAction } from "@/app/action/dashboard/organizations/manage/invitations/update-organization-invitation-action";
+import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
 import {
   InvitationForm,
   useInvitationForm,
   type InvitationFormTarget,
 } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/components/invitation-form";
-import { InvitationFormShellSurface } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/components/invitation-form-shell-surface";
 import {
   parsePositiveNumberInput,
   TEAM_NONE_VALUE,
 } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-form-utils";
+import { Button } from "@/components/ui/button";
 
 export type InvitationFormShellTarget = InvitationFormTarget;
 
@@ -103,7 +104,7 @@ export function InvitationFormShell({
   };
 
   return (
-    <InvitationFormShellSurface
+    <DashboardFormShell
       open={open}
       onOpenChange={(nextOpen) => {
         if (!nextOpen) {
@@ -112,11 +113,22 @@ export function InvitationFormShell({
       }}
       title={title}
       description={description}
-      isEdit={isEdit}
-      isPending={isPending}
-      canSubmit={canSubmit}
-      onClose={onClose}
-      onSubmit={handleSubmit}
+      footer={
+        <>
+          <Button disabled={isPending || !canSubmit} onClick={handleSubmit}>
+            {isPending
+              ? isEdit
+                ? "Saving..."
+                : "Creating..."
+              : isEdit
+                ? "Save"
+                : "Create"}
+          </Button>
+          <Button variant="destructive" onClick={onClose} disabled={isPending}>
+            Cancel
+          </Button>
+        </>
+      }
     >
       {form ? (
         <InvitationForm
@@ -126,6 +138,6 @@ export function InvitationFormShell({
           onChange={onChange}
         />
       ) : null}
-    </InvitationFormShellSurface>
+    </DashboardFormShell>
   );
 }

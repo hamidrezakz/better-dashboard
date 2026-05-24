@@ -3,16 +3,17 @@
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createOrganizationNotificationAction } from "@/app/action/dashboard/organizations/manage/notifications/create-organization-notification-action";
+import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
 import {
   NotificationForm,
   useNotificationForm,
   type NotificationFormTarget,
 } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/components/notification-form";
-import { NotificationFormShellSurface } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/components/notification-form-shell-surface";
 import {
   audienceNeedsTeam,
   audienceNeedsUser,
 } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/lib/notification-form-utils";
+import { Button } from "@/components/ui/button";
 
 export type NotificationFormShellProps = {
   organizationId: string;
@@ -74,7 +75,7 @@ export function NotificationFormShell({
   };
 
   return (
-    <NotificationFormShellSurface
+    <DashboardFormShell
       open={open}
       onOpenChange={(nextOpen) => {
         if (!nextOpen) {
@@ -83,10 +84,16 @@ export function NotificationFormShell({
       }}
       title="New notification"
       description="Send a notification to organization members."
-      isPending={isPending}
-      canSubmit={canSubmit}
-      onClose={onClose}
-      onSubmit={handleSubmit}
+      footer={
+        <>
+          <Button disabled={isPending || !canSubmit} onClick={handleSubmit}>
+            {isPending ? "Sending..." : "Send notification"}
+          </Button>
+          <Button variant="destructive" onClick={onClose} disabled={isPending}>
+            Cancel
+          </Button>
+        </>
+      }
     >
       {form ? (
         <NotificationForm
@@ -97,6 +104,6 @@ export function NotificationFormShell({
           onChange={onChange}
         />
       ) : null}
-    </NotificationFormShellSurface>
+    </DashboardFormShell>
   );
 }
