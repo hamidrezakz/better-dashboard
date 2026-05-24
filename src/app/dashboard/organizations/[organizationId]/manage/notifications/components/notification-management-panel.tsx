@@ -7,6 +7,17 @@ import { NotificationViewDialog } from "@/app/dashboard/organizations/[organizat
 import { NotificationsTable } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/components/notifications-table";
 import type { OrganizationNotificationItem } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/lib/notification-form-utils";
 
+type NotificationPanelTarget =
+  | { kind: "view"; notification: OrganizationNotificationItem }
+  | NotificationFormTarget
+  | null;
+
+function isViewTarget(
+  target: NotificationPanelTarget,
+): target is { kind: "view"; notification: OrganizationNotificationItem } {
+  return target !== null && "kind" in target && target.kind === "view";
+}
+
 type NotificationManagementPanelProps = {
   organizationId: string;
   teams: Array<{
@@ -27,11 +38,12 @@ export function NotificationManagementPanel({
   pageSize,
   totalCount,
 }: NotificationManagementPanelProps) {
-  const [viewNotification, setViewNotification] =
-    useState<OrganizationNotificationItem | null>(null);
-  const [formTarget, setFormTarget] = useState<NotificationFormTarget | null>(
-    null,
-  );
+  const [panelTarget, setPanelTarget] = useState<NotificationPanelTarget>(null);
+
+  const viewNotification = isViewTarget(panelTarget)
+    ? panelTarget.notification
+    : null;
+  const formTarget = isViewTarget(panelTarget) ? null : panelTarget;
 
   return (
     <div className="space-y-4">
@@ -41,20 +53,22 @@ export function NotificationManagementPanel({
         page={page}
         pageSize={pageSize}
         totalCount={totalCount}
-        onView={setViewNotification}
-        onCreate={() => setFormTarget({ mode: "create" })}
+        onView={(notification) =>
+          setPanelTarget({ kind: "view", notification })
+        }
+        onCreate={() => setPanelTarget({ mode: "create" })}
       />
 
       <NotificationViewDialog
         notification={viewNotification}
-        onClose={() => setViewNotification(null)}
+        onClose={() => setPanelTarget(null)}
       />
 
       <NotificationFormShell
         organizationId={organizationId}
         target={formTarget}
         teams={teams}
-        onClose={() => setFormTarget(null)}
+        onClose={() => setPanelTarget(null)}
       />
     </div>
   );

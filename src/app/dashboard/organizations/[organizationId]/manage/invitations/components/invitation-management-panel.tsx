@@ -9,6 +9,11 @@ import { InvitationViewDialog } from "@/app/dashboard/organizations/[organizatio
 import { InvitationsTable } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/components/invitations-table";
 import type { OrganizationInvitationItem } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-form-utils";
 
+type InvitationPanelTarget =
+  | { kind: "view"; invitation: OrganizationInvitationItem }
+  | InvitationFormShellTarget
+  | null;
+
 type InvitationManagementPanelProps = {
   organizationId: string;
   teams: Array<{
@@ -21,6 +26,21 @@ type InvitationManagementPanelProps = {
   totalCount: number;
 };
 
+function isViewTarget(
+  target: InvitationPanelTarget,
+): target is { kind: "view"; invitation: OrganizationInvitationItem } {
+  return target !== null && "kind" in target && target.kind === "view";
+}
+
+function toFormTarget(
+  target: InvitationPanelTarget,
+): InvitationFormShellTarget | null {
+  if (!target || isViewTarget(target)) {
+    return null;
+  }
+  return target;
+}
+
 export function InvitationManagementPanel({
   organizationId,
   teams,
@@ -29,10 +49,12 @@ export function InvitationManagementPanel({
   pageSize,
   totalCount,
 }: InvitationManagementPanelProps) {
-  const [viewInvitation, setViewInvitation] =
-    useState<OrganizationInvitationItem | null>(null);
-  const [formTarget, setFormTarget] =
-    useState<InvitationFormShellTarget | null>(null);
+  const [panelTarget, setPanelTarget] = useState<InvitationPanelTarget>(null);
+
+  const viewInvitation = isViewTarget(panelTarget)
+    ? panelTarget.invitation
+    : null;
+  const formTarget = toFormTarget(panelTarget);
 
   return (
     <div className="space-y-4">
@@ -42,21 +64,21 @@ export function InvitationManagementPanel({
         page={page}
         pageSize={pageSize}
         totalCount={totalCount}
-        onView={setViewInvitation}
-        onEdit={(invitation) => setFormTarget({ mode: "edit", invitation })}
-        onCreate={() => setFormTarget({ mode: "create" })}
+        onView={(invitation) => setPanelTarget({ kind: "view", invitation })}
+        onEdit={(invitation) => setPanelTarget({ mode: "edit", invitation })}
+        onCreate={() => setPanelTarget({ mode: "create" })}
       />
 
       <InvitationViewDialog
         invitation={viewInvitation}
-        onClose={() => setViewInvitation(null)}
+        onClose={() => setPanelTarget(null)}
       />
 
       <InvitationFormShell
         organizationId={organizationId}
         target={formTarget}
         teams={teams}
-        onClose={() => setFormTarget(null)}
+        onClose={() => setPanelTarget(null)}
       />
     </div>
   );

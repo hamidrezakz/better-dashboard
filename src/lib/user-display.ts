@@ -4,11 +4,12 @@ export type UserProfileDisplay = {
   image?: string | null;
 };
 
-export function getUserInitials(name: string): string {
+/** Display initials from a person's name (avatar fallback). */
+export function getUserInitials(name: string, emptyFallback = "?"): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
 
   if (parts.length === 0) {
-    return "?";
+    return emptyFallback;
   }
 
   if (parts.length === 1) {

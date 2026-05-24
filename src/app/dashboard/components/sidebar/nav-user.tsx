@@ -30,21 +30,11 @@ import {
   UserCircleIcon,
 } from "lucide-react";
 import { useTheme } from "next-themes";
+import { getUserInitials } from "@/lib/user-display";
 
 type DashboardNavUserProps = {
   user: DashboardSidebarConfig["user"];
 };
-
-function getInitials(name: string) {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (!parts.length) {
-    return "US";
-  }
-  if (parts.length === 1) {
-    return parts[0].slice(0, 2).toUpperCase();
-  }
-  return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
-}
 
 function DashboardNavUserThemeItem() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -98,7 +88,9 @@ export function DashboardNavUser({ user }: DashboardNavUserProps) {
           >
             <Avatar>
               <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+              <AvatarFallback>
+                {getUserInitials(user.name, "US")}
+              </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-start text-sm leading-tight">
               <span className="truncate font-medium">{user.name}</span>
@@ -117,7 +109,9 @@ export function DashboardNavUser({ user }: DashboardNavUserProps) {
                 <div className="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
                   <Avatar>
                     <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+                    <AvatarFallback>
+                      {getUserInitials(user.name, "US")}
+                    </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-start text-sm leading-tight">
                     <span className="truncate font-medium">{user.name}</span>

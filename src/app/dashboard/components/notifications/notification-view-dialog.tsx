@@ -5,17 +5,11 @@ import { useRouter } from "next/navigation";
 import { markNotificationReadAction } from "@/app/action/dashboard/users/notifications/mark-notification-read-action";
 import type { NotificationViewItem } from "@/app/dashboard/lib/notifications/notification-view-types";
 import { buildNotificationSourceInline } from "@/app/dashboard/lib/notifications/notification-source-label";
+import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
 import { getNotificationTypeBadgeConfig } from "@/components/globals-badge/badge-config";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { Button } from "@/components/ui/button";
 import { BellIcon, CheckCheckIcon, ClockIcon, LayersIcon } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 
 type NotificationViewDialogProps = {
   notification: NotificationViewItem | null;
@@ -66,77 +60,61 @@ export function NotificationViewDialog({
       })
     : null;
 
-  const typeIcon = displayed
-    ? getNotificationTypeBadgeConfig(displayed.type).icon
-    : null;
-
   return (
-    <Dialog
+    <DashboardFormShell
       open={Boolean(notification)}
       onOpenChange={(open) => {
         if (!open) {
           onClose();
         }
       }}
-    >
-      <DialogContent className="flex max-h-[85vh] flex-col gap-0 overflow-hidden p-0 sm:max-w-md">
-        <DialogHeader className="shrink-0 space-y-1 px-4 pt-4 pb-2">
-          <DialogTitle className="flex items-center gap-1.5">
-            <BellIcon className="size-3.5 shrink-0 text-muted-foreground" />
-            Notification details
-          </DialogTitle>
-        </DialogHeader>
-
-        {displayed ? (
-          <div className="min-h-0 flex-1 overflow-y-auto px-4 my-3 pb-4">
-            <div className="flex gap-3">
-              <div className="min-w-0 flex-1 space-y-6">
-                <div className="flex space-y-2 flex-col">
-                  <p className="text-base font-semibold leading-snug">
-                    {displayed.title}
-                  </p>
-
-                  {displayed.body ? (
-                    <p className="whitespace-pre-wrap wrap-break-word text-xs leading-relaxed text-muted-foreground">
-                      {displayed.body}
-                    </p>
-                  ) : null}
-                </div>
-
-                <div className="flex flex-col gap-1 text-[0.625rem] text-muted-foreground/90">
-                  {sourceInline ? (
-                    <p className="flex items-start gap-1.5">
-                      <LayersIcon className="mt-px size-3 shrink-0 opacity-70" />
-                      <span>{sourceInline}</span>
-                    </p>
-                  ) : null}
-                  <p className="flex items-center gap-1.5">
-                    <ClockIcon className="size-3 shrink-0 opacity-70" />
-                    <span>
-                      {formatDate(displayed.createdAt, dateTimeOptions)}
-                    </span>
-                  </p>
-                  {displayed.readAt ? (
-                    <p className="flex items-center gap-1.5">
-                      <CheckCheckIcon className="size-3 shrink-0 opacity-70" />
-                      <span>
-                        Read{" "}
-                        {formatDate(displayed.readAt, dateTimeOptions)}
-                      </span>
-                    </p>
-                  ) : null}
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : null}
-
-        <DialogFooter className="shrink-0 px-4 pb-4">
-          <Button variant="outline" className="w-full" onClick={onClose}>
+      title="Notification details"
+      description=" "
+      footer={
+        <div className="flex w-full justify-end">
+          <Button type="button" variant="outline" onClick={onClose}>
             Close
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </div>
+      }
+    >
+      {displayed ? (
+        <div className="space-y-6">
+          <div className="flex flex-col space-y-2">
+            <p className="flex items-center gap-1.5 text-base font-semibold leading-snug">
+              <BellIcon className="size-3.5 shrink-0 text-muted-foreground" />
+              {displayed.title}
+            </p>
+
+            {displayed.body ? (
+              <p className="whitespace-pre-wrap wrap-break-word text-xs leading-relaxed text-muted-foreground">
+                {displayed.body}
+              </p>
+            ) : null}
+          </div>
+
+          <div className="flex flex-col gap-1 text-[0.625rem] text-muted-foreground/90">
+            {sourceInline ? (
+              <p className="flex items-start gap-1.5">
+                <LayersIcon className="mt-px size-3 shrink-0 opacity-70" />
+                <span>{sourceInline}</span>
+              </p>
+            ) : null}
+            <p className="flex items-center gap-1.5">
+              <ClockIcon className="size-3 shrink-0 opacity-70" />
+              <span>{formatDate(displayed.createdAt, dateTimeOptions)}</span>
+            </p>
+            {displayed.readAt ? (
+              <p className="flex items-center gap-1.5">
+                <CheckCheckIcon className="size-3 shrink-0 opacity-70" />
+                <span>
+                  Read {formatDate(displayed.readAt, dateTimeOptions)}
+                </span>
+              </p>
+            ) : null}
+          </div>
+        </div>
+      ) : null}
+    </DashboardFormShell>
   );
 }

@@ -1,23 +1,17 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { ChevronRightIcon } from "lucide-react";
-import { AccountPasswordFormShell } from "@/app/dashboard/(user)/account/components/account-password-form-shell";
-import { AccountProfileFormShell } from "@/app/dashboard/(user)/account/components/account-profile-form-shell";
+import { AccountSettingsPanel } from "@/app/dashboard/(user)/account/components/account-settings-panel";
 import type { AccountSessionDisplay } from "@/app/dashboard/(user)/account/components/account-sessions-content";
-import { AccountSessionsFormShell } from "@/app/dashboard/(user)/account/components/account-sessions-form-shell";
-import {
-  accountListSettingsItems,
-  writeAccountSectionToUrl,
-} from "@/app/dashboard/(user)/account/lib/account-settings-items";
+import { accountListSettingsItems } from "@/app/dashboard/(user)/account/lib/account-settings-items";
+import type { AccountPanel } from "@/app/dashboard/(user)/account/lib/account-panel";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
-import type { AccountSettingsSection } from "@/app/dashboard/lib/dashboard-routes";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getUserInitials } from "@/lib/user-display";
 import { cn } from "@/lib/utils";
 
 type AccountSettingsHubProps = {
-  initialSection: AccountSettingsSection | null;
   profile: {
     name: string;
     email: string;
@@ -29,30 +23,12 @@ type AccountSettingsHubProps = {
 };
 
 export function AccountSettingsHub({
-  initialSection,
   profile,
   hasPasswordCredential,
   sessions,
   currentSessionToken,
 }: AccountSettingsHubProps) {
-  const pathname = usePathname();
-  const [openSection, setOpenSection] = useState<AccountSettingsSection | null>(
-    initialSection,
-  );
-
-  const closeSection = useCallback(() => {
-    setOpenSection(null);
-    writeAccountSectionToUrl(pathname, null);
-  }, [pathname]);
-
-  const openSectionPanel = useCallback(
-    (section: AccountSettingsSection) => {
-      setOpenSection(section);
-      writeAccountSectionToUrl(pathname, section);
-    },
-    [pathname],
-  );
-
+  const [openSection, setOpenSection] = useState<AccountPanel | null>(null);
   const previewImage = profile.image ?? "";
 
   return (
@@ -61,11 +37,13 @@ export function AccountSettingsHub({
         <button
           type="button"
           className={settingsRowClassName()}
-          onClick={() => openSectionPanel("profile")}
+          onClick={() => setOpenSection("profile")}
         >
           <Avatar className="size-12">
             <AvatarImage src={previewImage} alt={profile.name} />
-            <AvatarFallback>{getInitials(profile.name)}</AvatarFallback>
+            <AvatarFallback>
+              {getUserInitials(profile.name, "??")}
+            </AvatarFallback>
           </Avatar>
           <div className="min-w-0 flex-1 text-start">
             <p className="truncate text-sm font-medium">{profile.name}</p>
@@ -85,7 +63,7 @@ export function AccountSettingsHub({
               key={item.key}
               type="button"
               className={cn(settingsRowClassName(), "rounded-none border-0")}
-              onClick={() => openSectionPanel(item.key)}
+              onClick={() => setOpenSection(item.key)}
             >
               <div className="min-w-0 flex-1 text-start">
                 <p className="text-sm font-medium">{item.label}</p>
@@ -99,28 +77,14 @@ export function AccountSettingsHub({
         </div>
       </div>
 
-      {openSection === "profile" ? (
-        <AccountProfileFormShell
-          profile={profile}
-          open
-          onClose={closeSection}
-        />
-      ) : null}
-      {openSection === "security" ? (
-        <AccountPasswordFormShell
-          hasPasswordCredential={hasPasswordCredential}
-          open
-          onClose={closeSection}
-        />
-      ) : null}
-      {openSection === "sessions" ? (
-        <AccountSessionsFormShell
-          sessions={sessions}
-          currentSessionToken={currentSessionToken}
-          open
-          onClose={closeSection}
-        />
-      ) : null}
+      <AccountSettingsPanel
+        section={openSection}
+        onClose={() => setOpenSection(null)}
+        profile={profile}
+        hasPasswordCredential={hasPasswordCredential}
+        sessions={sessions}
+        currentSessionToken={currentSessionToken}
+      />
     </>
   );
 }
@@ -130,15 +94,4 @@ function settingsRowClassName() {
     "flex w-full items-center gap-4 rounded-lg border px-4 py-3 text-start transition-colors",
     "hover:bg-muted/50 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none",
   );
-}
-
-function getInitials(name: string) {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (!parts.length) {
-    return "??";
-  }
-  if (parts.length === 1) {
-    return parts[0].slice(0, 2).toUpperCase();
-  }
-  return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
 }

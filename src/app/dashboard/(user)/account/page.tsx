@@ -1,27 +1,12 @@
 import { notFound } from "next/navigation";
 import { AccountSettingsHub } from "@/app/dashboard/(user)/account/components/account-settings-hub";
+import { mapAccountSessionsForDisplay } from "@/app/dashboard/(user)/account/lib/account-session-display";
 import { getAccountProfile } from "@/app/dashboard/(user)/account/lib/get-account-profile";
 import { getAccountSessions } from "@/app/dashboard/(user)/account/lib/get-account-sessions";
-import { getSessionDeviceDisplay } from "@/app/dashboard/(user)/account/lib/format-session-device";
-import {
-  formatSessionExpires,
-  formatSessionIpAddress,
-  formatSessionSignedIn,
-} from "@/app/dashboard/(user)/account/lib/format-session-meta";
 import { getUserHasPasswordCredential } from "@/app/dashboard/(user)/account/lib/get-user-has-password-credential";
-import { isAccountSettingsSection } from "@/app/dashboard/(user)/account/lib/account-settings-items";
 import { requireAuthSession } from "@/lib/auth-session";
 
-type AccountPageProps = {
-  searchParams: Promise<{ section?: string }>;
-};
-
-export default async function AccountPage({ searchParams }: AccountPageProps) {
-  const { section: sectionParam } = await searchParams;
-  const initialSection = isAccountSettingsSection(sectionParam)
-    ? sectionParam
-    : null;
-
+export default async function AccountPage() {
   const session = await requireAuthSession();
   const [profile, hasPasswordCredential, sessions] = await Promise.all([
     getAccountProfile(session.user.id),
@@ -35,25 +20,10 @@ export default async function AccountPage({ searchParams }: AccountPageProps) {
 
   return (
     <AccountSettingsHub
-      initialSection={initialSection}
       profile={profile}
       hasPasswordCredential={hasPasswordCredential}
       currentSessionToken={session.session.token}
-      sessions={sessions.map((row) => {
-        const device = getSessionDeviceDisplay(row.userAgent);
-        const createdAt = row.createdAt.toISOString();
-        const expiresAt = row.expiresAt.toISOString();
-        const ip = formatSessionIpAddress(row.ipAddress);
-
-        return {
-          id: row.id,
-          token: row.token,
-          device,
-          signedInLabel: formatSessionSignedIn(createdAt),
-          expiresLabel: formatSessionExpires(expiresAt),
-          ipLabel: ip,
-        };
-      })}
+      sessions={mapAccountSessionsForDisplay(sessions)}
     />
   );
 }

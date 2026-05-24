@@ -11,6 +11,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { getUserInitials } from "@/lib/user-display";
 
 type AccountProfileFormFieldsProps = {
   formId: string;
@@ -40,7 +41,7 @@ export function AccountProfileFormFields({
         <Avatar className="size-14">
           <AvatarImage src={previewImage} alt={values.name} />
           <AvatarFallback className="text-sm">
-            {getInitials(values.name)}
+            {getUserInitials(values.name)}
           </AvatarFallback>
         </Avatar>
         <div className="min-w-0">
@@ -106,15 +107,4 @@ function resolveProfileValues(
     name: state.values?.name ?? profile.name,
     image: state.values?.image ?? profile.image ?? "",
   };
-}
-
-function getInitials(name: string) {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (!parts.length) {
-    return "??";
-  }
-  if (parts.length === 1) {
-    return parts[0].slice(0, 2).toUpperCase();
-  }
-  return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
 }

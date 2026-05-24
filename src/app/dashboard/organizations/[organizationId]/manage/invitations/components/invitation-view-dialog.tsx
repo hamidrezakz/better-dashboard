@@ -5,6 +5,7 @@ import {
   getInvitationContactLabel,
   type OrganizationInvitationItem,
 } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-form-utils";
+import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { formatInvitationUsageLabel } from "@/lib/invitation-display-status";
 import { joinRoutes } from "@/app/join/lib/join-routes";
@@ -16,13 +17,6 @@ import {
   DetailMetadataRow,
 } from "@/components/detail-metadata-list";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 
 type InvitationViewDialogProps = {
   invitation: OrganizationInvitationItem | null;
@@ -41,76 +35,71 @@ export function InvitationViewDialog({
     : "unknown";
 
   return (
-    <Dialog
+    <DashboardFormShell
       open={Boolean(invitation)}
       onOpenChange={(open) => {
         if (!open) {
           onClose();
         }
       }}
-    >
-      <DialogContent className="flex max-h-[85vh] flex-col gap-0 overflow-hidden p-0 sm:max-w-md">
-        <DialogHeader className="shrink-0 space-y-1 px-4 pt-4 pb-2">
-          <DialogTitle>Invitation details</DialogTitle>
-        </DialogHeader>
-
-        {invitation ? (
-          <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-4">
-            <div className="space-y-4">
-              <DetailMetadataList className="text-xs">
-                <DetailMetadataRow label="Type">
-                  <span>{getInvitationContactLabel()}</span>
-                </DetailMetadataRow>
-                <DetailMetadataRow label="Destination">
-                  <div className="flex flex-col items-end gap-1">
-                    <InvitationJoinScopeBadge scope={joinScope} />
-                    {invitation.teamName ? (
-                      <span className="text-[0.6875rem] text-muted-foreground">
-                        {invitation.teamName}
-                      </span>
-                    ) : null}
-                  </div>
-                </DetailMetadataRow>
-                <DetailMetadataRow label="Status">
-                  <InvitationDisplayStatusBadge invitation={invitation} />
-                </DetailMetadataRow>
-                <DetailMetadataRow label="Expires">
-                  <span className="text-muted-foreground tabular-nums">
-                    {formatDate(invitation.expiresAt, dateTimeOptions)}
-                  </span>
-                </DetailMetadataRow>
-                <DetailMetadataRow label="Created">
-                  <span className="text-muted-foreground tabular-nums">
-                    {formatDate(invitation.createdAt, dateTimeOptions)}
-                  </span>
-                </DetailMetadataRow>
-                <DetailMetadataRow label="Usage">
-                  <span>
-                    {formatInvitationUsageLabel(
-                      invitation.usedCount,
-                      invitation.maxUses,
-                    )}
-                  </span>
-                </DetailMetadataRow>
-                <DetailMetadataRow label="Created by">
-                  <span>{invitation.inviterName}</span>
-                </DetailMetadataRow>
-              </DetailMetadataList>
-
-              <CopyableUrlField
-                label="Join link"
-                url={joinRoutes.invitationAbsolute(invitation.id)}
-              />
-            </div>
-          </div>
-        ) : null}
-
-        <DialogFooter className="shrink-0 px-4 pb-4">
-          <Button variant="outline" className="w-full" onClick={onClose}>
+      title="Invitation details"
+      description=" "
+      footer={
+        <div className="flex w-full justify-end">
+          <Button type="button" variant="outline" onClick={onClose}>
             Close
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </div>
+      }
+    >
+      {invitation ? (
+        <div className="space-y-4">
+          <DetailMetadataList className="text-xs">
+            <DetailMetadataRow label="Type">
+              <span>{getInvitationContactLabel()}</span>
+            </DetailMetadataRow>
+            <DetailMetadataRow label="Destination">
+              <div className="flex flex-col items-end gap-1">
+                <InvitationJoinScopeBadge scope={joinScope} />
+                {invitation.teamName ? (
+                  <span className="text-[0.6875rem] text-muted-foreground">
+                    {invitation.teamName}
+                  </span>
+                ) : null}
+              </div>
+            </DetailMetadataRow>
+            <DetailMetadataRow label="Status">
+              <InvitationDisplayStatusBadge invitation={invitation} />
+            </DetailMetadataRow>
+            <DetailMetadataRow label="Expires">
+              <span className="text-muted-foreground tabular-nums">
+                {formatDate(invitation.expiresAt, dateTimeOptions)}
+              </span>
+            </DetailMetadataRow>
+            <DetailMetadataRow label="Created">
+              <span className="text-muted-foreground tabular-nums">
+                {formatDate(invitation.createdAt, dateTimeOptions)}
+              </span>
+            </DetailMetadataRow>
+            <DetailMetadataRow label="Usage">
+              <span>
+                {formatInvitationUsageLabel(
+                  invitation.usedCount,
+                  invitation.maxUses,
+                )}
+              </span>
+            </DetailMetadataRow>
+            <DetailMetadataRow label="Created by">
+              <span>{invitation.inviterName}</span>
+            </DetailMetadataRow>
+          </DetailMetadataList>
+
+          <CopyableUrlField
+            label="Join link"
+            url={joinRoutes.invitationAbsolute(invitation.id)}
+          />
+        </div>
+      ) : null}
+    </DashboardFormShell>
   );
 }
