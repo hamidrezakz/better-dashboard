@@ -1,11 +1,14 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { revokeOtherSessionsAction } from "@/app/action/dashboard/users/account/revoke-other-sessions-action";
 import type { AccountSessionDisplay } from "@/app/dashboard/(user)/account/components/account-sessions-content";
 import { AccountSessionsContent } from "@/app/dashboard/(user)/account/components/account-sessions-content";
 import { accountCopy } from "@/app/dashboard/(user)/account/lib/account-copy";
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
 import { DashboardFormShellFooterActions } from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
 type AccountSessionsFormShellProps = {
@@ -21,19 +24,24 @@ export function AccountSessionsFormShell({
   open,
   onClose,
 }: AccountSessionsFormShellProps) {
-  const [revokeOthers, setRevokeOthers] = useState<(() => void) | null>(null);
-  const [isRevokingOthers, setIsRevokingOthers] = useState(false);
-
-  const handleRevokeOthersReady = useCallback(
-    (handler: (() => void) | null) => {
-      setRevokeOthers(handler);
-    },
-    [],
-  );
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const hasOtherSessions = sessions.some(
     (session) => session.token !== currentSessionToken,
   );
+
+  const handleRevokeOthers = () => {
+    startTransition(async () => {
+      const result = await revokeOtherSessionsAction();
+      if (!result.success) {
+        toast.error(result.error ?? "Could not revoke other sessions.");
+        return;
+      }
+      toast.success("Other sessions were signed out.");
+      router.refresh();
+    });
+  };
 
   return (
     <DashboardFormShell
@@ -47,19 +55,19 @@ export function AccountSessionsFormShell({
       description={accountCopy.sessions.description}
       contentClassName="px-0"
       footer={
-        hasOtherSessions && revokeOthers ? (
+        hasOtherSessions ? (
           <DashboardFormShellFooterActions
             cancel={{
               label: "Close",
               onClick: onClose,
-              disabled: isRevokingOthers,
+              disabled: isPending,
             }}
             primary={{
-              label: isRevokingOthers
+              label: isPending
                 ? accountCopy.sessions.signingOutOthers
                 : accountCopy.sessions.signOutOthers,
-              onClick: revokeOthers,
-              disabled: isRevokingOthers,
+              onClick: handleRevokeOthers,
+              disabled: isPending,
             }}
           />
         ) : (
@@ -74,8 +82,7 @@ export function AccountSessionsFormShell({
       <AccountSessionsContent
         sessions={sessions}
         currentSessionToken={currentSessionToken}
-        onRevokeOthersReady={handleRevokeOthersReady}
-        onRevokeOthersPendingChange={setIsRevokingOthers}
+        disabled={isPending}
       />
     </DashboardFormShell>
   );

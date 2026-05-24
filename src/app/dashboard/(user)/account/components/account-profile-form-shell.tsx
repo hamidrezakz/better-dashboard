@@ -1,9 +1,12 @@
 "use client";
 
-import { useActionState, useEffect, useId, useRef, useState } from "react";
+import { useId, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { updateProfileAction } from "@/app/action/dashboard/users/account/update-profile-action";
-import { ACCOUNT_PROFILE_FORM_INITIAL_STATE } from "@/app/action/dashboard/users/account/shared/account-form-state";
+import {
+  ACCOUNT_PROFILE_FORM_INITIAL_STATE,
+  type AccountProfileFormState,
+} from "@/app/action/dashboard/users/account/shared/account-form-state";
 import { AccountProfileFormFields } from "@/app/dashboard/(user)/account/components/account-profile-form-fields";
 import { accountCopy } from "@/app/dashboard/(user)/account/lib/account-copy";
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
@@ -28,32 +31,35 @@ export function AccountProfileFormShell({
   const router = useRouter();
   const formId = useId();
   const formRef = useRef<HTMLFormElement>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [state, formAction] = useActionState(
-    updateProfileAction,
+  const [isPending, startTransition] = useTransition();
+  const [state, setState] = useState<AccountProfileFormState>(
     ACCOUNT_PROFILE_FORM_INITIAL_STATE,
   );
 
-  useEffect(() => {
-    if (!open) {
+  const handleSubmit = () => {
+    if (!formRef.current) {
       return;
     }
-    if (state.success) {
-      setIsSubmitting(false);
-      toast.success("Your profile was updated.");
-      onClose();
-      router.refresh();
-    } else if (state.formError) {
-      setIsSubmitting(false);
-      toast.error(state.formError);
-    } else if (state.fieldErrors) {
-      setIsSubmitting(false);
-    }
-  }, [state, open, onClose, router]);
 
-  const handleSubmit = () => {
-    setIsSubmitting(true);
-    formRef.current?.requestSubmit();
+    const formData = new FormData(formRef.current);
+    startTransition(async () => {
+      const nextState = await updateProfileAction(
+        ACCOUNT_PROFILE_FORM_INITIAL_STATE,
+        formData,
+      );
+      setState(nextState);
+
+      if (nextState.success) {
+        toast.success("Your profile was updated.");
+        onClose();
+        router.refresh();
+        return;
+      }
+
+      if (nextState.formError) {
+        toast.error(nextState.formError);
+      }
+    });
   };
 
   return (
@@ -71,23 +77,25 @@ export function AccountProfileFormShell({
           cancel={{
             label: "Cancel",
             onClick: onClose,
-            disabled: isSubmitting,
+            disabled: isPending,
           }}
           primary={{
-            label: isSubmitting ? "Saving…" : "Save changes",
+            label: isPending ? "Saving…" : "Save changes",
             onClick: handleSubmit,
-            disabled: isSubmitting,
+            disabled: isPending,
           }}
         />
       }
     >
       <form
-        key={open ? "open" : "closed"}
         ref={formRef}
         id={formId}
-        action={formAction}
         noValidate
-        className="contents"
+        className="space-y-4"
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleSubmit();
+        }}
       >
         <AccountProfileFormFields
           formId={formId}

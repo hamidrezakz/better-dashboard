@@ -1,8 +1,11 @@
 "use client";
 
-import { useActionState, useEffect, useId, useRef, useState } from "react";
+import { useId, useRef, useState, useTransition } from "react";
 import { changePasswordAction } from "@/app/action/dashboard/users/account/change-password-action";
-import { ACCOUNT_PASSWORD_FORM_INITIAL_STATE } from "@/app/action/dashboard/users/account/shared/account-form-state";
+import {
+  ACCOUNT_PASSWORD_FORM_INITIAL_STATE,
+  type AccountPasswordFormState,
+} from "@/app/action/dashboard/users/account/shared/account-form-state";
 import { AccountPasswordFormFields } from "@/app/dashboard/(user)/account/components/account-password-form-fields";
 import { accountCopy } from "@/app/dashboard/(user)/account/lib/account-copy";
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
@@ -23,32 +26,35 @@ export function AccountPasswordFormShell({
 }: AccountPasswordFormShellProps) {
   const formId = useId();
   const formRef = useRef<HTMLFormElement>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [state, formAction] = useActionState(
-    changePasswordAction,
+  const [isPending, startTransition] = useTransition();
+  const [state, setState] = useState<AccountPasswordFormState>(
     ACCOUNT_PASSWORD_FORM_INITIAL_STATE,
   );
 
-  useEffect(() => {
-    if (!open) {
+  const handleSubmit = () => {
+    if (!formRef.current) {
       return;
     }
-    if (state.success) {
-      setIsSubmitting(false);
-      toast.success("Your password was updated.");
-      formRef.current?.reset();
-      onClose();
-    } else if (state.formError) {
-      setIsSubmitting(false);
-      toast.error(state.formError);
-    } else if (state.fieldErrors) {
-      setIsSubmitting(false);
-    }
-  }, [state, open, onClose]);
 
-  const handleSubmit = () => {
-    setIsSubmitting(true);
-    formRef.current?.requestSubmit();
+    const formData = new FormData(formRef.current);
+    startTransition(async () => {
+      const nextState = await changePasswordAction(
+        ACCOUNT_PASSWORD_FORM_INITIAL_STATE,
+        formData,
+      );
+      setState(nextState);
+
+      if (nextState.success) {
+        toast.success("Your password was updated.");
+        formRef.current?.reset();
+        onClose();
+        return;
+      }
+
+      if (nextState.formError) {
+        toast.error(nextState.formError);
+      }
+    });
   };
 
   return (
@@ -71,12 +77,12 @@ export function AccountPasswordFormShell({
             cancel={{
               label: "Cancel",
               onClick: onClose,
-              disabled: isSubmitting,
+              disabled: isPending,
             }}
             primary={{
-              label: isSubmitting ? "Updating…" : "Update password",
+              label: isPending ? "Updating…" : "Update password",
               onClick: handleSubmit,
-              disabled: isSubmitting,
+              disabled: isPending,
             }}
           />
         ) : (
@@ -90,12 +96,14 @@ export function AccountPasswordFormShell({
     >
       {hasPasswordCredential ? (
         <form
-          key={open ? "open" : "closed"}
           ref={formRef}
           id={formId}
-          action={formAction}
           noValidate
-          className="contents"
+          className="space-y-4"
+          onSubmit={(event) => {
+            event.preventDefault();
+            handleSubmit();
+          }}
         >
           <AccountPasswordFormFields formId={formId} state={state} />
         </form>

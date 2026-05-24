@@ -120,22 +120,28 @@ export function AccountSettingsHub({
         </div>
       </div>
 
-      <AccountProfileFormShell
-        profile={profile}
-        open={openSection === "profile"}
-        onClose={closeSection}
-      />
-      <AccountPasswordFormShell
-        hasPasswordCredential={hasPasswordCredential}
-        open={openSection === "security"}
-        onClose={closeSection}
-      />
-      <AccountSessionsFormShell
-        sessions={sessions}
-        currentSessionToken={currentSessionToken}
-        open={openSection === "sessions"}
-        onClose={closeSection}
-      />
+      {openSection === "profile" ? (
+        <AccountProfileFormShell
+          profile={profile}
+          open
+          onClose={closeSection}
+        />
+      ) : null}
+      {openSection === "security" ? (
+        <AccountPasswordFormShell
+          hasPasswordCredential={hasPasswordCredential}
+          open
+          onClose={closeSection}
+        />
+      ) : null}
+      {openSection === "sessions" ? (
+        <AccountSessionsFormShell
+          sessions={sessions}
+          currentSessionToken={currentSessionToken}
+          open
+          onClose={closeSection}
+        />
+      ) : null}
     </>
   );
 }

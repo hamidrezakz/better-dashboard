@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
   LaptopIcon,
@@ -8,7 +8,6 @@ import {
   SmartphoneIcon,
   TabletIcon,
 } from "lucide-react";
-import { revokeOtherSessionsAction } from "@/app/action/dashboard/users/account/revoke-other-sessions-action";
 import { revokeSessionAction } from "@/app/action/dashboard/users/account/revoke-session-action";
 import type { SessionDeviceDisplay } from "@/app/dashboard/(user)/account/lib/format-session-device";
 import { accountCopy } from "@/app/dashboard/(user)/account/lib/account-copy";
@@ -28,8 +27,7 @@ export type AccountSessionDisplay = {
 type AccountSessionsContentProps = {
   sessions: AccountSessionDisplay[];
   currentSessionToken: string;
-  onRevokeOthersReady?: (handler: (() => void) | null) => void;
-  onRevokeOthersPendingChange?: (pending: boolean) => void;
+  disabled?: boolean;
 };
 
 const copy = accountCopy.sessions;
@@ -37,20 +35,15 @@ const copy = accountCopy.sessions;
 export function AccountSessionsContent({
   sessions,
   currentSessionToken,
-  onRevokeOthersReady,
-  onRevokeOthersPendingChange,
+  disabled = false,
 }: AccountSessionsContentProps) {
   const router = useRouter();
-  const [pendingToken, setPendingToken] = React.useState<string | null>(null);
-  const [isRevokingOthers, startRevokeOthers] = React.useTransition();
-
-  const otherSessions = sessions.filter(
-    (session) => session.token !== currentSessionToken,
-  );
+  const [pendingToken, setPendingToken] = useState<string | null>(null);
+  const [isRevoking, startRevoke] = useTransition();
 
   const handleRevoke = (token: string) => {
     setPendingToken(token);
-    void (async () => {
+    startRevoke(async () => {
       const result = await revokeSessionAction({ token });
       setPendingToken(null);
       if (!result.success) {
@@ -59,51 +52,23 @@ export function AccountSessionsContent({
       }
       toast.success("Session revoked.");
       router.refresh();
-    })();
-  };
-
-  const handleRevokeOthers = React.useCallback(() => {
-    startRevokeOthers(async () => {
-      const result = await revokeOtherSessionsAction();
-      if (!result.success) {
-        toast.error(
-          result.error ?? "Could not revoke other sessions.",
-        );
-        return;
-      }
-      toast.success("Other sessions were signed out.");
-      router.refresh();
     });
-  }, [router]);
-
-  React.useEffect(() => {
-    onRevokeOthersPendingChange?.(isRevokingOthers);
-  }, [isRevokingOthers, onRevokeOthersPendingChange]);
-
-  React.useEffect(() => {
-    if (otherSessions.length > 0) {
-      onRevokeOthersReady?.(handleRevokeOthers);
-    } else {
-      onRevokeOthersReady?.(null);
-    }
-    return () => {
-      onRevokeOthersReady?.(null);
-    };
-  }, [otherSessions.length, handleRevokeOthers, onRevokeOthersReady]);
+  };
 
   if (!sessions.length) {
     return <p className="text-sm text-muted-foreground">{copy.empty}</p>;
   }
 
   return (
-    <ul className="-mx-4 divide-y border-y">
+    <ul className="space-y-4">
       {sessions.map((session) => {
         const isCurrent = session.token === currentSessionToken;
+        const isPending = pendingToken === session.token && isRevoking;
         return (
-          <li key={session.id} className="flex items-start gap-4 px-4 py-4">
+          <li key={session.id} className="flex items-start gap-3">
             <SessionDeviceIcon kind={session.device.kind} />
             <div className="min-w-0 flex-1 space-y-1">
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                 <p className="text-sm font-medium">{session.device.title}</p>
                 {isCurrent ? (
                   <Badge variant="secondary" className="font-normal">
@@ -118,13 +83,12 @@ export function AccountSessionsContent({
               ) : null}
               <p className="text-xs text-muted-foreground">
                 {copy.signedIn} {session.signedInLabel}
+                {" · "}
+                {copy.expires} {session.expiresLabel}
                 {session.ipLabel ? ` · ${copy.ip} ${session.ipLabel}` : null}
               </p>
-              <p className="text-xs text-muted-foreground">
-                {copy.expires} {session.expiresLabel}
-              </p>
               {sessions.length === 1 && isCurrent ? (
-                <p className="pt-1 text-sm text-muted-foreground">
+                <p className="text-sm text-muted-foreground">
                   {copy.onlyThisDevice}
                 </p>
               ) : null}
@@ -132,13 +96,13 @@ export function AccountSessionsContent({
             {!isCurrent ? (
               <Button
                 type="button"
-                variant="destructive"
+                variant="outline"
                 size="sm"
                 className="shrink-0"
-                disabled={pendingToken === session.token}
+                disabled={disabled || isPending}
                 onClick={() => handleRevoke(session.token)}
               >
-                {pendingToken === session.token ? copy.revoking : copy.revoke}
+                {isPending ? copy.revoking : copy.revoke}
               </Button>
             ) : null}
           </li>

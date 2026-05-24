@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   cacheComponents: true,
-  allowedDevOrigins: ["10.222.28.176"],
+  allowedDevOrigins: ["10.225.166.176",],
 };
 
 export default nextConfig;
