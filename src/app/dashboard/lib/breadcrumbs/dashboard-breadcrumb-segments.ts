@@ -8,13 +8,7 @@ export const segmentLabels: Record<string, string> = {
 export const labelClassName =
   "max-w-[9rem] truncate sm:max-w-[10rem] md:max-w-[12rem]";
 
-const HIDDEN_ALWAYS = new Set([
-  "users",
-  "organizations",
-  "profile",
-  "security",
-  "sessions",
-]);
+const HIDDEN_ALWAYS = new Set(["users", "organizations"]);
 const HIDDEN_ON_MOBILE = new Set(["manage"]);
 
 export function isSegmentHidden(

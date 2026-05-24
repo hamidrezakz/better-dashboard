@@ -25,3 +25,19 @@ export function isAccountSettingsSection(
 ): value is AccountSettingsSection {
   return value === "profile" || value === "security" || value === "sessions";
 }
+
+/** Deep-link support without `router.replace` (avoids Suspense flash behind dialogs). */
+export function writeAccountSectionToUrl(
+  pathname: string,
+  section: AccountSettingsSection | null,
+) {
+  const params = new URLSearchParams(window.location.search);
+  if (section) {
+    params.set("section", section);
+  } else {
+    params.delete("section");
+  }
+  const query = params.toString();
+  const next = query ? `${pathname}?${query}` : pathname;
+  window.history.replaceState(null, "", next);
+}

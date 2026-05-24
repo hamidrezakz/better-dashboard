@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useState } from "react";
+import { usePathname } from "next/navigation";
 import { ChevronRightIcon } from "lucide-react";
 import { AccountPasswordFormShell } from "@/app/dashboard/(user)/account/components/account-password-form-shell";
 import { AccountProfileFormShell } from "@/app/dashboard/(user)/account/components/account-profile-form-shell";
@@ -9,7 +9,7 @@ import type { AccountSessionDisplay } from "@/app/dashboard/(user)/account/compo
 import { AccountSessionsFormShell } from "@/app/dashboard/(user)/account/components/account-sessions-form-shell";
 import {
   accountListSettingsItems,
-  isAccountSettingsSection,
+  writeAccountSectionToUrl,
 } from "@/app/dashboard/(user)/account/lib/account-settings-items";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import type { AccountSettingsSection } from "@/app/dashboard/lib/dashboard-routes";
@@ -17,6 +17,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 
 type AccountSettingsHubProps = {
+  initialSection: AccountSettingsSection | null;
   profile: {
     name: string;
     email: string;
@@ -28,51 +29,29 @@ type AccountSettingsHubProps = {
 };
 
 export function AccountSettingsHub({
+  initialSection,
   profile,
   hasPasswordCredential,
   sessions,
   currentSessionToken,
 }: AccountSettingsHubProps) {
-  const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [openSection, setOpenSection] = useState<AccountSettingsSection | null>(
-    null,
+    initialSection,
   );
-
-  const clearSectionParam = useCallback(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (!params.has("section")) {
-      return;
-    }
-    params.delete("section");
-    const query = params.toString();
-    router.replace(query ? `${pathname}?${query}` : pathname, {
-      scroll: false,
-    });
-  }, [pathname, router, searchParams]);
 
   const closeSection = useCallback(() => {
     setOpenSection(null);
-    clearSectionParam();
-  }, [clearSectionParam]);
+    writeAccountSectionToUrl(pathname, null);
+  }, [pathname]);
 
   const openSectionPanel = useCallback(
     (section: AccountSettingsSection) => {
       setOpenSection(section);
-      const params = new URLSearchParams(searchParams.toString());
-      params.set("section", section);
-      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+      writeAccountSectionToUrl(pathname, section);
     },
-    [pathname, router, searchParams],
+    [pathname],
   );
-
-  useEffect(() => {
-    const section = searchParams.get("section");
-    if (isAccountSettingsSection(section)) {
-      setOpenSection(section);
-    }
-  }, [searchParams]);
 
   const previewImage = profile.image ?? "";
 

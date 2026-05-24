@@ -5,9 +5,6 @@ export const dashboardRouteSegments = {
   organizations: "organizations",
   notifications: "notifications",
   account: "account",
-  profile: "profile",
-  security: "security",
-  sessions: "sessions",
   manage: "manage",
   members: "members",
   teams: "teams",
@@ -42,14 +39,9 @@ export const dashboardRoutes = {
   userNotifications: () =>
     `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.notifications}`,
   account: () => `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.account}`,
+  /** Opens a panel on the account hub (dialog/sheet) — not a separate route. */
   accountSection: (section: AccountSettingsSection) =>
     `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.account}?section=${section}`,
-  accountProfile: () =>
-    `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.account}/${dashboardRouteSegments.profile}`,
-  accountSecurity: () =>
-    `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.account}/${dashboardRouteSegments.security}`,
-  accountSessions: () =>
-    `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.account}/${dashboardRouteSegments.sessions}`,
   organizationRoot: (organizationId: string) =>
     organizationPath(organizationId),
   organizationManageRoot: (organizationId: string) =>

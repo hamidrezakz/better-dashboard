@@ -53,7 +53,6 @@ export function AccountSessionsFormShell({
       }}
       title={accountCopy.sessions.title}
       description={accountCopy.sessions.description}
-      contentClassName="px-0"
       footer={
         hasOtherSessions ? (
           <DashboardFormShellFooterActions

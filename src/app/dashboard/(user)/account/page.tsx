@@ -1,7 +1,5 @@
-import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { AccountSettingsHub } from "@/app/dashboard/(user)/account/components/account-settings-hub";
-import { AccountHubFallback } from "@/app/dashboard/(user)/account/components/account-hub-fallback";
 import { getAccountProfile } from "@/app/dashboard/(user)/account/lib/get-account-profile";
 import { getAccountSessions } from "@/app/dashboard/(user)/account/lib/get-account-sessions";
 import { getSessionDeviceDisplay } from "@/app/dashboard/(user)/account/lib/format-session-device";
@@ -11,17 +9,19 @@ import {
   formatSessionSignedIn,
 } from "@/app/dashboard/(user)/account/lib/format-session-meta";
 import { getUserHasPasswordCredential } from "@/app/dashboard/(user)/account/lib/get-user-has-password-credential";
+import { isAccountSettingsSection } from "@/app/dashboard/(user)/account/lib/account-settings-items";
 import { requireAuthSession } from "@/lib/auth-session";
 
-export default function AccountPage() {
-  return (
-    <Suspense fallback={<AccountHubFallback />}>
-      <AccountSettingsHubContent />
-    </Suspense>
-  );
-}
+type AccountPageProps = {
+  searchParams: Promise<{ section?: string }>;
+};
 
-async function AccountSettingsHubContent() {
+export default async function AccountPage({ searchParams }: AccountPageProps) {
+  const { section: sectionParam } = await searchParams;
+  const initialSection = isAccountSettingsSection(sectionParam)
+    ? sectionParam
+    : null;
+
   const session = await requireAuthSession();
   const [profile, hasPasswordCredential, sessions] = await Promise.all([
     getAccountProfile(session.user.id),
@@ -34,27 +34,26 @@ async function AccountSettingsHubContent() {
   }
 
   return (
-    <Suspense fallback={<AccountHubFallback />}>
-      <AccountSettingsHub
-        profile={profile}
-        hasPasswordCredential={hasPasswordCredential}
-        currentSessionToken={session.session.token}
-        sessions={sessions.map((row) => {
-          const device = getSessionDeviceDisplay(row.userAgent);
-          const createdAt = row.createdAt.toISOString();
-          const expiresAt = row.expiresAt.toISOString();
-          const ip = formatSessionIpAddress(row.ipAddress);
+    <AccountSettingsHub
+      initialSection={initialSection}
+      profile={profile}
+      hasPasswordCredential={hasPasswordCredential}
+      currentSessionToken={session.session.token}
+      sessions={sessions.map((row) => {
+        const device = getSessionDeviceDisplay(row.userAgent);
+        const createdAt = row.createdAt.toISOString();
+        const expiresAt = row.expiresAt.toISOString();
+        const ip = formatSessionIpAddress(row.ipAddress);
 
-          return {
-            id: row.id,
-            token: row.token,
-            device,
-            signedInLabel: formatSessionSignedIn(createdAt),
-            expiresLabel: formatSessionExpires(expiresAt),
-            ipLabel: ip,
-          };
-        })}
-      />
-    </Suspense>
+        return {
+          id: row.id,
+          token: row.token,
+          device,
+          signedInLabel: formatSessionSignedIn(createdAt),
+          expiresLabel: formatSessionExpires(expiresAt),
+          ipLabel: ip,
+        };
+      })}
+    />
   );
 }
