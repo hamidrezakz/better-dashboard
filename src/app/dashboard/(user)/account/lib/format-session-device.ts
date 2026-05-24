@@ -41,14 +41,24 @@ export function getSessionDeviceDisplay(
   }
 
   const model = [device.vendor, device.model].filter(Boolean).join(" ").trim();
-  const subtitle =
-    model.length > 0
-      ? model
-      : device.type && device.type !== "console"
-        ? capitalize(device.type)
-        : null;
+  const subtitle = pickSessionDeviceSubtitle(model, device.type);
 
   return { kind, title, subtitle };
+}
+
+function pickSessionDeviceSubtitle(
+  model: string,
+  deviceType: string | undefined,
+): string | null {
+  if (model.length >= 3) {
+    return model;
+  }
+
+  if (deviceType && deviceType !== "console") {
+    return capitalize(deviceType);
+  }
+
+  return null;
 }
 
 function formatBrowserLabel(browser: {

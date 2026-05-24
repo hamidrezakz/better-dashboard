@@ -15,12 +15,8 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Item,
-  ItemActions,
-  ItemContent,
   ItemDescription,
   ItemGroup,
-  ItemMedia,
   ItemSeparator,
   ItemTitle,
 } from "@/components/ui/item";
@@ -83,46 +79,44 @@ export function AccountSessionsContent({
           return (
             <Fragment key={session.id}>
               {index > 0 ? <ItemSeparator /> : null}
-              <Item
+              <article
                 role="listitem"
-                variant="default"
-                className="items-start border-0 px-0 py-3"
+                className="flex w-full items-start gap-2.5 py-3"
               >
-                <ItemMedia variant="icon" className="mt-0.5">
-                  <SessionDeviceIcon kind={session.device.kind} />
-                </ItemMedia>
-                <ItemContent className="min-w-0 gap-2">
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                    <ItemTitle className="text-sm">
-                      {session.device.title}
-                    </ItemTitle>
-                    {isCurrent ? (
-                      <Badge variant="secondary" className="font-normal">
-                        {copy.currentDevice}
-                      </Badge>
-                    ) : null}
+                <SessionDeviceIcon kind={session.device.kind} />
+                <div className="min-w-0 flex-1 space-y-2">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 space-y-1">
+                      <ItemTitle className="text-sm">
+                        {session.device.title}
+                      </ItemTitle>
+                      {session.device.subtitle ? (
+                        <ItemDescription className="text-sm">
+                          {session.device.subtitle}
+                        </ItemDescription>
+                      ) : null}
+                    </div>
+                    <div className="flex shrink-0 items-center justify-end">
+                      {isCurrent ? (
+                        <Badge variant="secondary" className="font-normal">
+                          {copy.currentDevice}
+                        </Badge>
+                      ) : (
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="sm"
+                          disabled={disabled || isPending}
+                          onClick={() => handleRevoke(session.token)}
+                        >
+                          {isPending ? copy.revoking : copy.revoke}
+                        </Button>
+                      )}
+                    </div>
                   </div>
-                  {session.device.subtitle ? (
-                    <ItemDescription className="text-sm">
-                      {session.device.subtitle}
-                    </ItemDescription>
-                  ) : null}
                   <SessionMetaList session={session} />
-                </ItemContent>
-                {!isCurrent ? (
-                  <ItemActions className="self-start">
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="sm"
-                      disabled={disabled || isPending}
-                      onClick={() => handleRevoke(session.token)}
-                    >
-                      {isPending ? copy.revoking : copy.revoke}
-                    </Button>
-                  </ItemActions>
-                ) : null}
-              </Item>
+                </div>
+              </article>
             </Fragment>
           );
         })}
@@ -149,13 +143,13 @@ function SessionMetaList({ session }: { session: AccountSessionDisplay }) {
   }
 
   return (
-    <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1 text-xs">
+    <dl className="grid w-full grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-1 text-xs">
       {rows.map((row) => (
         <Fragment key={row.label}>
           <dt className="text-muted-foreground">{row.label}</dt>
           <dd
-            className="text-end text-foreground tabular-nums"
-            title={row.title}
+            className="min-w-0 truncate text-end text-foreground tabular-nums"
+            title={row.title ?? row.value}
           >
             {row.value}
           </dd>
@@ -166,7 +160,7 @@ function SessionMetaList({ session }: { session: AccountSessionDisplay }) {
 }
 
 function SessionDeviceIcon({ kind }: { kind: SessionDeviceDisplay["kind"] }) {
-  const className = "size-4 text-muted-foreground";
+  const className = "mt-0.5 size-4 shrink-0 text-muted-foreground";
 
   switch (kind) {
     case "mobile":
