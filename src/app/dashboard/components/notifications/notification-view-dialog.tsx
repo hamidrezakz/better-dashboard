@@ -6,10 +6,16 @@ import { markNotificationReadAction } from "@/app/action/dashboard/users/notific
 import type { NotificationViewItem } from "@/app/dashboard/lib/notifications/notification-view-types";
 import { buildNotificationSourceInline } from "@/app/dashboard/lib/notifications/notification-source-label";
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
-import { getNotificationTypeBadgeConfig } from "@/components/globals-badge/badge-config";
+import { NotificationTypeBadge } from "@/components/globals-badge/notification-type-badge";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { Button } from "@/components/ui/button";
-import { BellIcon, CheckCheckIcon, ClockIcon, LayersIcon } from "lucide-react";
+import {
+  BellIcon,
+  CheckCheckIcon,
+  ClockIcon,
+  LayersIcon,
+  TagIcon,
+} from "lucide-react";
 
 type NotificationViewDialogProps = {
   notification: NotificationViewItem | null;
@@ -94,6 +100,10 @@ export function NotificationViewDialog({
           </div>
 
           <div className="flex flex-col gap-1 text-[0.625rem] text-muted-foreground/90">
+            <p className="flex items-center gap-1.5">
+              <TagIcon className="size-3 shrink-0 opacity-70" />
+              <NotificationTypeBadge type={displayed.type} compact />
+            </p>
             {sourceInline ? (
               <p className="flex items-start gap-1.5">
                 <LayersIcon className="mt-px size-3 shrink-0 opacity-70" />

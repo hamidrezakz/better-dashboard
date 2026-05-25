@@ -1,5 +1,14 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
+import {
+  CheckIcon,
+  ClockIcon,
+  CopyIcon,
+  Link2Icon,
+  TimerIcon,
+  UserIcon,
+} from "lucide-react";
 import { resolveInvitationJoinScope } from "@/app/join/lib/invitation-scope";
 import {
   getInvitationContactLabel,
@@ -7,32 +16,71 @@ import {
 } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-form-utils";
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
-import { formatInvitationUsageLabel } from "@/lib/invitation-display-status";
-import { joinRoutes } from "@/app/join/lib/join-routes";
-import { CopyableUrlField } from "@/components/copyable-url-field";
-import { InvitationDisplayStatusBadge } from "@/components/globals-badge/invitation-display-status-badge";
-import { InvitationJoinScopeBadge } from "@/components/globals-badge/invitation-join-scope-badge";
 import {
-  DetailMetadataList,
-  DetailMetadataRow,
-} from "@/components/detail-metadata-list";
+  formatInvitationUsageLabel,
+  resolveInvitationDisplayStatus,
+} from "@/lib/invitation-display-status";
+import { badgeLabels } from "@/lib/badge-labels";
+import { joinRoutes } from "@/app/join/lib/join-routes";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 type InvitationViewDialogProps = {
   invitation: OrganizationInvitationItem | null;
   onClose: () => void;
 };
 
+const COPY_FEEDBACK_MS = 1000;
+
 export function InvitationViewDialog({
   invitation,
   onClose,
 }: InvitationViewDialogProps) {
+  const [copied, setCopied] = useState(false);
+
+  const joinUrl = invitation
+    ? joinRoutes.invitationAbsolute(invitation.id)
+    : null;
+
+  useEffect(() => {
+    if (!copied) {
+      return;
+    }
+    const timeoutId = window.setTimeout(
+      () => setCopied(false),
+      COPY_FEEDBACK_MS,
+    );
+    return () => window.clearTimeout(timeoutId);
+  }, [copied]);
+
+  const onCopy = useCallback(async () => {
+    if (!joinUrl) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(joinUrl);
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
+  }, [joinUrl]);
+
   const joinScope = invitation
     ? resolveInvitationJoinScope({
         organizationId: invitation.organizationId,
         teamId: invitation.teamId,
       })
     : "unknown";
+
+  const displayStatus = invitation
+    ? resolveInvitationDisplayStatus(invitation)
+    : null;
+
+  const destinationLabel =
+    joinScope === "unknown"
+      ? badgeLabels.invitationJoinScope.unknown
+      : badgeLabels.invitationJoinScope[joinScope];
 
   return (
     <DashboardFormShell
@@ -54,50 +102,80 @@ export function InvitationViewDialog({
     >
       {invitation ? (
         <div className="space-y-4">
-          <DetailMetadataList className="text-xs">
-            <DetailMetadataRow label="Type">
-              <span>{getInvitationContactLabel()}</span>
-            </DetailMetadataRow>
-            <DetailMetadataRow label="Destination">
-              <div className="flex flex-col items-end gap-1">
-                <InvitationJoinScopeBadge scope={joinScope} />
-                {invitation.teamName ? (
-                  <span className="text-[0.6875rem] text-muted-foreground">
-                    {invitation.teamName}
-                  </span>
-                ) : null}
-              </div>
-            </DetailMetadataRow>
-            <DetailMetadataRow label="Status">
-              <InvitationDisplayStatusBadge invitation={invitation} />
-            </DetailMetadataRow>
-            <DetailMetadataRow label="Expires">
-              <span className="text-muted-foreground tabular-nums">
-                {formatDate(invitation.expiresAt, dateTimeOptions)}
+          <p className="flex items-center gap-1.5 text-base font-semibold leading-snug">
+            <Link2Icon className="size-3.5 shrink-0 text-muted-foreground" />
+            {getInvitationContactLabel()}
+          </p>
+
+          <div className="flex flex-col gap-1 text-[0.625rem] text-muted-foreground/90">
+            <p className="flex items-start gap-1.5">
+              <Link2Icon className="mt-px size-3 shrink-0 opacity-70" />
+              <span>
+                {destinationLabel}
+                {invitation.teamName ? ` · ${invitation.teamName}` : null}
               </span>
-            </DetailMetadataRow>
-            <DetailMetadataRow label="Created">
-              <span className="text-muted-foreground tabular-nums">
-                {formatDate(invitation.createdAt, dateTimeOptions)}
+            </p>
+            {displayStatus ? (
+              <p className="flex items-center gap-1.5">
+                <TimerIcon className="size-3 shrink-0 opacity-70" />
+                <span>
+                  {badgeLabels.invitationDisplayStatus[displayStatus]}
+                </span>
+              </p>
+            ) : null}
+            <p className="flex items-center gap-1.5">
+              <ClockIcon className="size-3 shrink-0 opacity-70" />
+              <span className="tabular-nums">
+                Expires {formatDate(invitation.expiresAt, dateTimeOptions)}
               </span>
-            </DetailMetadataRow>
-            <DetailMetadataRow label="Usage">
+            </p>
+            <p className="flex items-center gap-1.5">
+              <ClockIcon className="size-3 shrink-0 opacity-70" />
+              <span className="tabular-nums">
+                Created {formatDate(invitation.createdAt, dateTimeOptions)}
+              </span>
+            </p>
+            <p className="flex items-center gap-1.5">
+              <UserIcon className="size-3 shrink-0 opacity-70" />
               <span>
                 {formatInvitationUsageLabel(
                   invitation.usedCount,
                   invitation.maxUses,
-                )}
+                )}{" "}
+                · {invitation.inviterName}
               </span>
-            </DetailMetadataRow>
-            <DetailMetadataRow label="Created by">
-              <span>{invitation.inviterName}</span>
-            </DetailMetadataRow>
-          </DetailMetadataList>
+            </p>
+          </div>
 
-          <CopyableUrlField
-            label="Join link"
-            url={joinRoutes.invitationAbsolute(invitation.id)}
-          />
+          {joinUrl ? (
+            <div className="space-y-1.5">
+              <p className="text-[0.625rem] text-muted-foreground">Join link</p>
+              <div className="flex items-center gap-2">
+                <Input
+                  readOnly
+                  value={joinUrl}
+                  dir="ltr"
+                  className="h-8 min-w-0 flex-1 font-mono text-[0.6875rem]"
+                  onFocus={(event) => event.currentTarget.select()}
+                  onClick={(event) => event.currentTarget.select()}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon-sm"
+                  className="shrink-0"
+                  onClick={onCopy}
+                  aria-label={copied ? "Copied" : "Copy link"}
+                >
+                  {copied ? (
+                    <CheckIcon className="text-primary" aria-hidden />
+                  ) : (
+                    <CopyIcon aria-hidden />
+                  )}
+                </Button>
+              </div>
+            </div>
+          ) : null}
         </div>
       ) : null}
     </DashboardFormShell>

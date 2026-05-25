@@ -170,19 +170,23 @@ export function InvitationsTable({
                           </p>
                           <p
                             className="mt-0.5 truncate text-[0.7rem] text-muted-foreground"
-                            title={`${formatInvitationUsageLabel(
+                            title={formatInvitationUsageLabel(
                               invitation.usedCount,
                               invitation.maxUses,
-                            )} · Created by: ${invitation.inviterName}`}
+                            )}
                           >
                             {formatInvitationUsageLabel(
                               invitation.usedCount,
                               invitation.maxUses,
                             )}
-                            {" · "}
-                            {`Created by: ${invitation.inviterName}`}
                           </p>
                           <div className="mt-1.5 space-y-1 lg:hidden">
+                            <div className="flex flex-wrap items-center gap-1.5">
+                              <InvitationJoinScopeBadge scope={joinScope} />
+                              <InvitationDisplayStatusBadge
+                                invitation={invitation}
+                              />
+                            </div>
                             {invitation.teamName ? (
                               <p
                                 className="truncate text-[0.7rem] text-muted-foreground"
@@ -191,12 +195,6 @@ export function InvitationsTable({
                                 {invitation.teamName}
                               </p>
                             ) : null}
-                            <div className="flex flex-wrap items-center gap-1.5">
-                              <InvitationJoinScopeBadge scope={joinScope} />
-                              <InvitationDisplayStatusBadge
-                                invitation={invitation}
-                              />
-                            </div>
                           </div>
                         </TableCell>
                         <TableCell className="hidden min-w-0 whitespace-normal lg:table-cell">

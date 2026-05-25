@@ -8,6 +8,7 @@ import {
   userNotificationsTablePath,
   type UserNotificationTableFilter,
 } from "@/app/dashboard/(user)/notifications/lib/user-notifications-table-params";
+import { buildNotificationSourceInline } from "@/app/dashboard/lib/notifications/notification-source-label";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { badgeLabels } from "@/lib/badge-labels";
 import type { NotificationType } from "@/generated/prisma/enums";
@@ -150,7 +151,12 @@ export function UserNotificationsTable({
                     const typeLabel = getNotificationTypeLabel(
                       notification.type,
                     );
-                    const sourceLabel = notification.sourceLabel ?? "—";
+                    const sourceLabel =
+                      buildNotificationSourceInline({
+                        organizationName: notification.organizationName ?? null,
+                        teamName: notification.teamName ?? null,
+                        createdByName: null,
+                      }) ?? "—";
                     const formattedDate = formatNotificationMetaDate(
                       notification,
                       filter,
