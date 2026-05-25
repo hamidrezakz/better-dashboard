@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/card";
 import { DashboardTableSegmentFilter } from "@/components/dashboard-table/dashboard-table-segment-filter";
 import { DashboardTableShell } from "@/components/dashboard-table/dashboard-table-shell";
+import { DashboardTableViewport } from "@/components/dashboard-table/dashboard-table-viewport";
 import {
   Table,
   TableBody,
@@ -128,69 +129,75 @@ export function MembersTable({
           totalCount={totalCount}
           onPageChange={(nextPage) => navigate({ page: nextPage })}
         >
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead className="hidden sm:table-cell">Email</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead className="hidden lg:table-cell">Joined</TableHead>
-                <TableHead className="w-12">
-                  <span className="sr-only">Actions</span>
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {members.length ? (
-                members.map((member) => (
-                  <TableRow key={member.id}>
-                    <TableCell>
-                      <UserProfileCell
-                        user={{
-                          name: member.name,
-                          email: member.email,
-                          image: member.image,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell className="hidden text-muted-foreground sm:table-cell">
-                      <span
-                        className="block max-w-md truncate"
-                        title={member.email}
-                      >
-                        {member.email}
-                      </span>
-                    </TableCell>
-                    <TableCell>
-                      <RoleBadge role={member.role} />
-                    </TableCell>
-                    <TableCell className="hidden lg:table-cell">
-                      {formatDate(member.joinedAt)}
-                    </TableCell>
-                    <TableCell>
-                      <MemberRowActionsMenu
-                        member={member}
-                        disabled={isPending}
-                        canRemove={member.userId !== actorUserId}
-                        onChangeRole={() => onChangeRole(member)}
-                        onManageTeams={() => onManageTeams(member)}
-                        onRemove={() => setRemoveTarget(member)}
-                      />
+          <DashboardTableViewport>
+            <Table className="table-fixed">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="min-w-0 whitespace-normal">
+                    Name
+                  </TableHead>
+                  <TableHead className="hidden min-w-0 whitespace-normal sm:table-cell">
+                    Email
+                  </TableHead>
+                  <TableHead className="w-24 whitespace-normal">Role</TableHead>
+                  <TableHead className="hidden whitespace-normal lg:table-cell">
+                    Joined
+                  </TableHead>
+                  <TableHead className="w-12 whitespace-normal">
+                    <span className="sr-only">Actions</span>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {members.length ? (
+                  members.map((member) => (
+                    <TableRow key={member.id}>
+                      <TableCell className="min-w-0 whitespace-normal">
+                        <UserProfileCell
+                          variant="inline"
+                          user={{
+                            name: member.name,
+                            email: member.email,
+                            image: member.image,
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell className="hidden min-w-0 whitespace-normal text-muted-foreground sm:table-cell">
+                        <span className="block truncate" title={member.email}>
+                          {member.email}
+                        </span>
+                      </TableCell>
+                      <TableCell className="whitespace-normal">
+                        <RoleBadge role={member.role} />
+                      </TableCell>
+                      <TableCell className="hidden whitespace-normal lg:table-cell">
+                        {formatDate(member.joinedAt)}
+                      </TableCell>
+                      <TableCell className="w-12 whitespace-normal">
+                        <MemberRowActionsMenu
+                          member={member}
+                          disabled={isPending}
+                          canRemove={member.userId !== actorUserId}
+                          onChangeRole={() => onChangeRole(member)}
+                          onManageTeams={() => onManageTeams(member)}
+                          onRemove={() => setRemoveTarget(member)}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={5}
+                      className="py-6 text-center text-muted-foreground"
+                    >
+                      No members yet.
                     </TableCell>
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={5}
-                    className="py-6 text-center text-muted-foreground"
-                  >
-                    No members yet.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+                )}
+              </TableBody>
+            </Table>
+          </DashboardTableViewport>
         </DashboardTableShell>
       </CardContent>
 

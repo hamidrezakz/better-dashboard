@@ -1,11 +1,13 @@
 "use client";
 
+import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 
 export type DashboardTableSegmentOption<T extends string> = {
   value: T;
   label: string;
+  icon?: LucideIcon;
 };
 
 type DashboardTableSegmentFilterProps<T extends string> = {
@@ -21,16 +23,21 @@ export function DashboardTableSegmentFilter<T extends string>({
 }: DashboardTableSegmentFilterProps<T>) {
   return (
     <ButtonGroup className="shrink-0">
-      {options.map((option) => (
-        <Button
-          key={option.value}
-          size="sm"
-          variant={value === option.value ? "default" : "outline"}
-          onClick={() => onValueChange(option.value)}
-        >
-          {option.label}
-        </Button>
-      ))}
+      {options.map((option) => {
+        const Icon = option.icon;
+
+        return (
+          <Button
+            key={option.value}
+            size="sm"
+            variant={value === option.value ? "default" : "outline"}
+            onClick={() => onValueChange(option.value)}
+          >
+            {Icon ? <Icon data-icon="inline-start" /> : null}
+            {option.label}
+          </Button>
+        );
+      })}
     </ButtonGroup>
   );
 }

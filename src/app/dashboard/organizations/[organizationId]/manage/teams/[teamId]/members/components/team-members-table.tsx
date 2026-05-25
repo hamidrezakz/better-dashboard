@@ -16,6 +16,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { DashboardTableShell } from "@/components/dashboard-table/dashboard-table-shell";
+import { DashboardTableViewport } from "@/components/dashboard-table/dashboard-table-viewport";
 import {
   Table,
   TableBody,
@@ -74,62 +75,68 @@ export function TeamMembersTable({
           totalCount={totalCount}
           onPageChange={navigate}
         >
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead className="hidden sm:table-cell">Email</TableHead>
-                <TableHead className="hidden md:table-cell">Joined</TableHead>
-                <TableHead className="w-12">
-                  <span className="sr-only">Actions</span>
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {members.length ? (
-                members.map((member) => (
-                  <TableRow key={member.id}>
-                    <TableCell>
-                      <UserProfileCell
-                        user={{
-                          name: member.name,
-                          email: member.email,
-                          image: member.image,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell className="hidden text-muted-foreground sm:table-cell">
-                      <span
-                        className="block max-w-md truncate"
-                        title={member.email}
-                      >
-                        {member.email}
-                      </span>
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell">
-                      {formatDate(member.joinedAt)}
-                    </TableCell>
-                    <TableCell>
-                      <TeamMemberRowActionsMenu
-                        organizationId={organizationId}
-                        teamId={teamId}
-                        member={member}
-                      />
+          <DashboardTableViewport>
+            <Table className="table-fixed">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="min-w-0 whitespace-normal">
+                    Name
+                  </TableHead>
+                  <TableHead className="hidden min-w-0 whitespace-normal sm:table-cell">
+                    Email
+                  </TableHead>
+                  <TableHead className="hidden whitespace-normal md:table-cell">
+                    Joined
+                  </TableHead>
+                  <TableHead className="w-12 whitespace-normal">
+                    <span className="sr-only">Actions</span>
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {members.length ? (
+                  members.map((member) => (
+                    <TableRow key={member.id}>
+                      <TableCell className="min-w-0 whitespace-normal">
+                        <UserProfileCell
+                          variant="inline"
+                          user={{
+                            name: member.name,
+                            email: member.email,
+                            image: member.image,
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell className="hidden min-w-0 whitespace-normal text-muted-foreground sm:table-cell">
+                        <span className="block truncate" title={member.email}>
+                          {member.email}
+                        </span>
+                      </TableCell>
+                      <TableCell className="hidden whitespace-normal md:table-cell">
+                        {formatDate(member.joinedAt)}
+                      </TableCell>
+                      <TableCell className="w-12 whitespace-normal">
+                        <TeamMemberRowActionsMenu
+                          organizationId={organizationId}
+                          teamId={teamId}
+                          member={member}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={4}
+                      className="py-6 text-center text-muted-foreground"
+                    >
+                      No team members yet.
                     </TableCell>
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={4}
-                    className="py-6 text-center text-muted-foreground"
-                  >
-                    No team members yet.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+                )}
+              </TableBody>
+            </Table>
+          </DashboardTableViewport>
         </DashboardTableShell>
       </CardContent>
     </Card>

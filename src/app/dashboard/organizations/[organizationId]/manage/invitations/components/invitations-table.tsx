@@ -1,11 +1,12 @@
 "use client";
 
 import { PlusIcon } from "lucide-react";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { deleteOrganizationInvitationAction } from "@/app/action/dashboard/organizations/manage/invitations/delete-organization-invitation-action";
 import { toast } from "sonner";
 import { InvitationRowActionsMenu } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/components/invitation-row-actions-menu";
+import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import { resolveInvitationJoinScope } from "@/app/join/lib/invitation-scope";
 import {
   getInvitationContactLabel,
@@ -16,9 +17,20 @@ import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { formatInvitationUsageLabel } from "@/lib/invitation-display-status";
 import { InvitationDisplayStatusBadge } from "@/components/globals-badge/invitation-display-status-badge";
 import { InvitationJoinScopeBadge } from "@/components/globals-badge/invitation-join-scope-badge";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DashboardTableShell } from "@/components/dashboard-table/dashboard-table-shell";
+import { DashboardTableViewport } from "@/components/dashboard-table/dashboard-table-viewport";
 import {
   Table,
   TableBody,
@@ -39,6 +51,28 @@ type InvitationsTableProps = {
   onCreate: () => void;
 };
 
+function InvitationDestinationCell({
+  invitation,
+  joinScope,
+}: {
+  invitation: OrganizationInvitationItem;
+  joinScope: ReturnType<typeof resolveInvitationJoinScope>;
+}) {
+  return (
+    <div className="flex min-w-0 flex-col items-start gap-1">
+      <InvitationJoinScopeBadge scope={joinScope} />
+      {invitation.teamName ? (
+        <span
+          className="block max-w-full truncate text-[0.7rem] text-muted-foreground"
+          title={invitation.teamName}
+        >
+          {invitation.teamName}
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
 export function InvitationsTable({
   organizationId,
   invitations,
@@ -51,12 +85,18 @@ export function InvitationsTable({
 }: InvitationsTableProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [deleteTarget, setDeleteTarget] =
+    useState<OrganizationInvitationItem | null>(null);
 
-  const handleDelete = (invitationId: string) => {
+  const handleDelete = () => {
+    if (!deleteTarget) {
+      return;
+    }
+
     startTransition(async () => {
       const result = await deleteOrganizationInvitationAction({
         organizationId,
-        invitationId,
+        invitationId: deleteTarget.id,
       });
 
       if (!result.success) {
@@ -64,6 +104,7 @@ export function InvitationsTable({
         return;
       }
 
+      setDeleteTarget(null);
       toast.success("Invitation deleted.");
       router.refresh();
     });
@@ -93,17 +134,25 @@ export function InvitationsTable({
             }
             countLabel="invitation"
           >
-            <div className="overflow-x-auto">
-              <Table>
+            <DashboardTableViewport>
+              <Table className="table-fixed">
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Invitation</TableHead>
-                    <TableHead>Destination</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="hidden lg:table-cell">
+                    <TableHead className="min-w-0 whitespace-normal">
+                      Invitation
+                    </TableHead>
+                    <TableHead className="hidden min-w-0 whitespace-normal lg:table-cell">
+                      Destination
+                    </TableHead>
+                    <TableHead className="hidden min-w-0 whitespace-normal lg:table-cell">
+                      Status
+                    </TableHead>
+                    <TableHead className="hidden whitespace-normal lg:table-cell">
                       Expires
                     </TableHead>
-                    <TableHead className="text-end">Actions</TableHead>
+                    <TableHead className="w-12 whitespace-normal">
+                      <span className="sr-only">Actions</span>
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -115,11 +164,17 @@ export function InvitationsTable({
 
                     return (
                       <TableRow key={invitation.id}>
-                        <TableCell>
-                          <p className="font-medium leading-none">
+                        <TableCell className="min-w-0 whitespace-normal">
+                          <p className="truncate font-medium leading-none">
                             {getInvitationContactLabel()}
                           </p>
-                          <p className="mt-0.5 max-w-xs truncate text-[0.7rem] text-muted-foreground sm:max-w-sm">
+                          <p
+                            className="mt-0.5 truncate text-[0.7rem] text-muted-foreground"
+                            title={`${formatInvitationUsageLabel(
+                              invitation.usedCount,
+                              invitation.maxUses,
+                            )} · Created by: ${invitation.inviterName}`}
+                          >
                             {formatInvitationUsageLabel(
                               invitation.usedCount,
                               invitation.maxUses,
@@ -127,21 +182,30 @@ export function InvitationsTable({
                             {" · "}
                             {`Created by: ${invitation.inviterName}`}
                           </p>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex flex-col items-start gap-1">
-                            <InvitationJoinScopeBadge scope={joinScope} />
+                          <div className="mt-1.5 space-y-1 lg:hidden">
                             {invitation.teamName ? (
-                              <span
-                                className="block max-w-40 truncate text-[0.7rem] text-muted-foreground"
+                              <p
+                                className="truncate text-[0.7rem] text-muted-foreground"
                                 title={invitation.teamName}
                               >
                                 {invitation.teamName}
-                              </span>
+                              </p>
                             ) : null}
+                            <div className="flex flex-wrap items-center gap-1.5">
+                              <InvitationJoinScopeBadge scope={joinScope} />
+                              <InvitationDisplayStatusBadge
+                                invitation={invitation}
+                              />
+                            </div>
                           </div>
                         </TableCell>
-                        <TableCell>
+                        <TableCell className="hidden min-w-0 whitespace-normal lg:table-cell">
+                          <InvitationDestinationCell
+                            invitation={invitation}
+                            joinScope={joinScope}
+                          />
+                        </TableCell>
+                        <TableCell className="hidden whitespace-normal lg:table-cell">
                           <InvitationDisplayStatusBadge
                             invitation={invitation}
                           />
@@ -149,13 +213,13 @@ export function InvitationsTable({
                         <TableCell className="hidden text-xs text-muted-foreground lg:table-cell">
                           {formatDate(invitation.expiresAt, dateTimeOptions)}
                         </TableCell>
-                        <TableCell className="text-end">
+                        <TableCell className="w-12 whitespace-normal">
                           <InvitationRowActionsMenu
                             invitation={invitation}
                             disabled={isPending}
                             onView={() => onView(invitation)}
                             onEdit={() => onEdit(invitation)}
-                            onDelete={() => handleDelete(invitation.id)}
+                            onDelete={() => setDeleteTarget(invitation)}
                           />
                         </TableCell>
                       </TableRow>
@@ -163,7 +227,7 @@ export function InvitationsTable({
                   })}
                 </TableBody>
               </Table>
-            </div>
+            </DashboardTableViewport>
           </DashboardTableShell>
         ) : (
           <p className="py-8 text-center text-xs text-muted-foreground">
@@ -171,6 +235,36 @@ export function InvitationsTable({
           </p>
         )}
       </CardContent>
+
+      <AlertDialog
+        open={Boolean(deleteTarget)}
+        onOpenChange={(open) => {
+          if (!open) {
+            setDeleteTarget(null);
+          }
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {dashboardNavLabels.invitationManage.deleteTitle}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {dashboardNavLabels.invitationManage.deleteDescription}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              variant="destructive"
+              disabled={isPending}
+              onClick={handleDelete}
+            >
+              {dashboardNavLabels.invitationManage.deleteConfirm}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Card>
   );
 }

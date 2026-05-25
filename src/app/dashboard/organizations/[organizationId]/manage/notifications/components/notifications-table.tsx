@@ -11,6 +11,7 @@ import { UserProfileCell } from "@/components/user-profile/user-profile-cell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DashboardTableShell } from "@/components/dashboard-table/dashboard-table-shell";
+import { DashboardTableViewport } from "@/components/dashboard-table/dashboard-table-viewport";
 import {
   Table,
   TableBody,
@@ -65,36 +66,50 @@ export function NotificationsTable({
             }
             countLabel="notification"
           >
-            <div className="overflow-x-auto">
-              <Table>
+            <DashboardTableViewport>
+              <Table className="table-fixed">
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Title</TableHead>
-                    <TableHead>Audience</TableHead>
-                    <TableHead className="hidden md:table-cell">
+                    <TableHead className="min-w-0 whitespace-normal">
+                      Title
+                    </TableHead>
+                    <TableHead className="whitespace-normal">
+                      Audience
+                    </TableHead>
+                    <TableHead className="hidden min-w-0 whitespace-normal md:table-cell">
                       Recipient
                     </TableHead>
-                    <TableHead className="hidden lg:table-cell">Sent</TableHead>
-                    <TableHead className="text-end">Actions</TableHead>
+                    <TableHead className="hidden whitespace-normal lg:table-cell">
+                      Sent
+                    </TableHead>
+                    <TableHead className="w-12 whitespace-normal">
+                      <span className="sr-only">Actions</span>
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {notifications.map((notification) => (
                     <TableRow key={notification.id}>
-                      <TableCell>
-                        <p className="max-w-xs truncate font-medium leading-none sm:max-w-sm">
+                      <TableCell className="min-w-0 whitespace-normal">
+                        <p
+                          className="truncate font-medium leading-none"
+                          title={notification.title}
+                        >
                           {notification.title}
                         </p>
                         {notification.body ? (
-                          <p className="mt-0.5 max-w-xs truncate text-[0.7rem] text-muted-foreground sm:max-w-sm">
+                          <p
+                            className="mt-0.5 truncate text-[0.7rem] text-muted-foreground"
+                            title={notification.body}
+                          >
                             {notification.body}
                           </p>
                         ) : null}
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="whitespace-normal">
                         <VisibilityBadge visibility={notification.audience} />
                       </TableCell>
-                      <TableCell className="hidden md:table-cell">
+                      <TableCell className="hidden min-w-0 whitespace-normal md:table-cell">
                         {notification.userName ? (
                           <UserProfileCell
                             variant="compact"
@@ -105,7 +120,7 @@ export function NotificationsTable({
                           />
                         ) : notification.teamName ? (
                           <span
-                            className="block max-w-40 truncate text-xs"
+                            className="block truncate text-xs"
                             title={notification.teamName}
                           >
                             {notification.teamName}
@@ -119,7 +134,7 @@ export function NotificationsTable({
                       <TableCell className="hidden text-xs text-muted-foreground lg:table-cell">
                         {formatDate(notification.createdAt, dateTimeOptions)}
                       </TableCell>
-                      <TableCell className="text-end">
+                      <TableCell className="w-12 whitespace-normal">
                         <NotificationRowActionsMenu
                           organizationId={organizationId}
                           notificationId={notification.id}
@@ -131,7 +146,7 @@ export function NotificationsTable({
                   ))}
                 </TableBody>
               </Table>
-            </div>
+            </DashboardTableViewport>
           </DashboardTableShell>
         ) : (
           <p className="py-8 text-center text-xs text-muted-foreground">

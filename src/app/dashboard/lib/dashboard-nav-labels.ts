@@ -40,6 +40,12 @@ export const dashboardNavLabels = {
     removeFromOrganization: "Remove from organization",
     removeFromTeam: "Remove from team",
   },
+  invitationManage: {
+    deleteTitle: "Delete invitation",
+    deleteDescription:
+      "This invitation link will stop working immediately. This cannot be undone.",
+    deleteConfirm: "Delete invitation",
+  },
   breadcrumbSegments: {
     dashboard: "Dashboard",
     users: "Users",

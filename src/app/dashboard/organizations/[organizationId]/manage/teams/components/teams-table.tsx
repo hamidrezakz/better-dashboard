@@ -14,6 +14,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { DashboardTableViewport } from "@/components/dashboard-table/dashboard-table-viewport";
+import { TeamRowActionsMenu } from "@/app/dashboard/organizations/[organizationId]/manage/teams/components/team-row-actions-menu";
 import {
   Table,
   TableBody,
@@ -53,45 +55,65 @@ export function TeamsTable({
       </CardHeader>
 
       <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Team name</TableHead>
-              <TableHead>Members</TableHead>
-              <TableHead className="hidden sm:table-cell">Created</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {teams.length ? (
-              teams.map((team) => (
-                <TableRow
-                  key={team.id}
-                  className="cursor-pointer"
-                  onClick={() => openTeam(team.id)}
-                >
-                  <TableCell className="font-medium">
-                    <span className="block max-w-48 truncate" title={team.name}>
-                      {team.name}
-                    </span>
-                  </TableCell>
-                  <TableCell>{team.memberCount}</TableCell>
-                  <TableCell className="hidden sm:table-cell">
-                    {formatDate(team.createdAt)}
+        <DashboardTableViewport>
+          <Table className="table-fixed">
+            <TableHeader>
+              <TableRow>
+                <TableHead className="min-w-0 whitespace-normal">
+                  Team name
+                </TableHead>
+                <TableHead className="whitespace-normal">Members</TableHead>
+                <TableHead className="hidden whitespace-normal sm:table-cell">
+                  Created
+                </TableHead>
+                <TableHead className="w-12 whitespace-normal">
+                  <span className="sr-only">Actions</span>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {teams.length ? (
+                teams.map((team) => (
+                  <TableRow
+                    key={team.id}
+                    className="cursor-pointer"
+                    onClick={() => openTeam(team.id)}
+                  >
+                    <TableCell className="min-w-0 whitespace-normal font-medium">
+                      <span className="block truncate" title={team.name}>
+                        {team.name}
+                      </span>
+                    </TableCell>
+                    <TableCell className="whitespace-normal">
+                      {team.memberCount}
+                    </TableCell>
+                    <TableCell className="hidden whitespace-normal sm:table-cell">
+                      {formatDate(team.createdAt)}
+                    </TableCell>
+                    <TableCell
+                      className="w-12 whitespace-normal"
+                      onClick={(event) => event.stopPropagation()}
+                    >
+                      <TeamRowActionsMenu
+                        teamName={team.name}
+                        onView={() => openTeam(team.id)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={4}
+                    className="py-6 text-center text-muted-foreground"
+                  >
+                    No teams yet.
                   </TableCell>
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={3}
-                  className="py-6 text-center text-muted-foreground"
-                >
-                  No teams yet.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              )}
+            </TableBody>
+          </Table>
+        </DashboardTableViewport>
       </CardContent>
     </Card>
   );
