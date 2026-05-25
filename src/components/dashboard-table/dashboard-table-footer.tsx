@@ -17,10 +17,10 @@ export type DashboardTableFooterProps = {
   page: number;
   totalPages: number;
   onPageChange: (page: number) => void;
-  /** Item range on the current page (start of footer) */
-  range?: ReactNode;
-  /** Total count label (end of footer) */
-  total?: ReactNode;
+  /** Item range summary on the start side, e.g. `1–20 of 150` */
+  summary?: ReactNode;
+  /** Page size control on the end side */
+  pageSizeControl?: ReactNode;
   className?: string;
 };
 
@@ -28,13 +28,13 @@ export function DashboardTableFooter({
   page,
   totalPages,
   onPageChange,
-  range,
-  total,
+  summary,
+  pageSizeControl,
   className,
 }: DashboardTableFooterProps) {
   const showPagination = totalPages > 1;
 
-  if (!showPagination && !range && !total) {
+  if (!summary && !pageSizeControl && !showPagination) {
     return null;
   }
 
@@ -44,13 +44,15 @@ export function DashboardTableFooter({
   return (
     <div
       className={cn(
-        "flex w-full items-center justify-between gap-2 text-xs text-muted-foreground tabular-nums",
+        "flex w-full flex-wrap items-center justify-between gap-x-2 gap-y-2 text-xs text-muted-foreground tabular-nums",
         className,
       )}
     >
-      {range ? <div className="shrink-0 me-1">{range}</div> : null}
+      {summary ? (
+        <div className="shrink-0 max-sm:order-1">{summary}</div>
+      ) : null}
       {showPagination ? (
-        <Pagination className="w-auto shrink-0">
+        <Pagination className="w-auto shrink-0 max-sm:order-3 max-sm:basis-full max-sm:justify-center">
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
@@ -90,7 +92,11 @@ export function DashboardTableFooter({
           </PaginationContent>
         </Pagination>
       ) : null}
-      {total ? <div className="shrink-0">{total}</div> : null}
+      {pageSizeControl ? (
+        <div className="shrink-0 max-sm:order-2 max-sm:ms-auto">
+          {pageSizeControl}
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -54,7 +54,7 @@ export function getInvitationContactLabel() {
   return INVITATION_CONTACT_LABEL;
 }
 
-export const INVITATIONS_PAGE_SIZE = 10;
+export const INVITATIONS_DEFAULT_PAGE_SIZE = 10;
 
 export { buildDashboardTablePageNumbers as buildInvitationPageNumbers } from "@/lib/dashboard-table-pagination";
 

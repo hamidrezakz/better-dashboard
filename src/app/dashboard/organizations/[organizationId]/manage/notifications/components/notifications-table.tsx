@@ -61,6 +61,15 @@ export function NotificationsTable({
               router.push(
                 organizationNotificationsTablePath(organizationId, {
                   page: nextPage,
+                  pageSize,
+                }),
+              )
+            }
+            onPageSizeChange={(nextPageSize) =>
+              router.push(
+                organizationNotificationsTablePath(organizationId, {
+                  page: 1,
+                  pageSize: nextPageSize,
                 }),
               )
             }

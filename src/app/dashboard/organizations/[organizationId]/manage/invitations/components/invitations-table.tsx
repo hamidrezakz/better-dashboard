@@ -129,6 +129,15 @@ export function InvitationsTable({
               router.push(
                 organizationInvitationsTablePath(organizationId, {
                   page: nextPage,
+                  pageSize,
+                }),
+              )
+            }
+            onPageSizeChange={(nextPageSize) =>
+              router.push(
+                organizationInvitationsTablePath(organizationId, {
+                  page: 1,
+                  pageSize: nextPageSize,
                 }),
               )
             }

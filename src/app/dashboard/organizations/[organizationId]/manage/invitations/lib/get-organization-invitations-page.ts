@@ -2,13 +2,14 @@ import { cacheLife, cacheTag } from "next/cache";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import { organizationInvitationsWhere } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/organization-invitation-access";
 import {
-  INVITATIONS_PAGE_SIZE,
+  INVITATIONS_DEFAULT_PAGE_SIZE,
   type OrganizationInvitationItem,
 } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-form-utils";
 import { prisma } from "@/lib/prisma";
 import {
   clampDashboardTablePage,
   parseDashboardTablePage,
+  parseDashboardTablePageSize,
 } from "@/lib/dashboard-table-search-params";
 
 export type OrganizationInvitationsPageQuery = {
@@ -21,7 +22,9 @@ export function parseOrganizationInvitationsPageQuery(
 ): OrganizationInvitationsPageQuery {
   return {
     page: parseDashboardTablePage(searchParams),
-    pageSize: INVITATIONS_PAGE_SIZE,
+    pageSize: parseDashboardTablePageSize(searchParams, {
+      defaultPageSize: INVITATIONS_DEFAULT_PAGE_SIZE,
+    }),
   };
 }
 

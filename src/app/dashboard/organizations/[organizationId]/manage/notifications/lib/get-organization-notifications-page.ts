@@ -1,13 +1,14 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import {
-  NOTIFICATIONS_PAGE_SIZE,
+  NOTIFICATIONS_DEFAULT_PAGE_SIZE,
   type OrganizationNotificationItem,
 } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/lib/notification-form-utils";
 import { prisma } from "@/lib/prisma";
 import {
   clampDashboardTablePage,
   parseDashboardTablePage,
+  parseDashboardTablePageSize,
 } from "@/lib/dashboard-table-search-params";
 
 export type OrganizationNotificationsPageQuery = {
@@ -20,7 +21,9 @@ export function parseOrganizationNotificationsPageQuery(
 ): OrganizationNotificationsPageQuery {
   return {
     page: parseDashboardTablePage(searchParams),
-    pageSize: NOTIFICATIONS_PAGE_SIZE,
+    pageSize: parseDashboardTablePageSize(searchParams, {
+      defaultPageSize: NOTIFICATIONS_DEFAULT_PAGE_SIZE,
+    }),
   };
 }
 

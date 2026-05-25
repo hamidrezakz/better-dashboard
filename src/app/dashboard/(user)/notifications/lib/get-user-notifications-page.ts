@@ -8,7 +8,7 @@ import type { NotificationViewItem } from "@/app/dashboard/lib/notifications/not
 import { buildNotificationSourceInline } from "@/app/dashboard/lib/notifications/notification-source-label";
 import {
   parseUserNotificationTableFilter,
-  USER_NOTIFICATIONS_PAGE_SIZE,
+  USER_NOTIFICATIONS_DEFAULT_PAGE_SIZE,
   type UserNotificationTableFilter,
 } from "@/app/dashboard/(user)/notifications/lib/user-notifications-table-params";
 import { prisma } from "@/lib/prisma";
@@ -16,6 +16,7 @@ import {
   clampDashboardTablePage,
   parseDashboardTableFilter,
   parseDashboardTablePage,
+  parseDashboardTablePageSize,
 } from "@/lib/dashboard-table-search-params";
 
 export type UserNotificationsPageQuery = {
@@ -29,7 +30,9 @@ export function parseUserNotificationsPageQuery(
 ): UserNotificationsPageQuery {
   return {
     page: parseDashboardTablePage(searchParams),
-    pageSize: USER_NOTIFICATIONS_PAGE_SIZE,
+    pageSize: parseDashboardTablePageSize(searchParams, {
+      defaultPageSize: USER_NOTIFICATIONS_DEFAULT_PAGE_SIZE,
+    }),
     filter: parseUserNotificationTableFilter(
       parseDashboardTableFilter(searchParams),
     ),

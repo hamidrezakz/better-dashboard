@@ -1,6 +1,16 @@
+import {
+  DASHBOARD_TABLE_PAGE_SIZES,
+  type ParseDashboardTablePageSizeOptions,
+} from "@/lib/dashboard-table-page-size";
+
 export type DashboardTableSearchParamsInput = {
   page?: number;
+  pageSize?: number;
   filter?: string;
+};
+
+export type BuildDashboardTableSearchParamsOptions = {
+  defaultPageSize?: number;
 };
 
 function firstSearchParamValue(
@@ -29,6 +39,26 @@ export function parseDashboardTablePage(
   return parsed;
 }
 
+export function parseDashboardTablePageSize(
+  searchParams: Record<string, string | string[] | undefined>,
+  options: ParseDashboardTablePageSizeOptions,
+): number {
+  const allowedSizes = options.allowedSizes ?? DASHBOARD_TABLE_PAGE_SIZES;
+  const allowedSet = new Set(allowedSizes);
+  const raw = firstSearchParamValue(searchParams.pageSize);
+
+  if (!raw) {
+    return options.defaultPageSize;
+  }
+
+  const parsed = Number.parseInt(raw, 10);
+  if (!Number.isFinite(parsed) || !allowedSet.has(parsed)) {
+    return options.defaultPageSize;
+  }
+
+  return parsed;
+}
+
 export function parseDashboardTableFilter(
   searchParams: Record<string, string | string[] | undefined>,
 ): string | undefined {
@@ -47,11 +77,20 @@ export function clampDashboardTablePage(
 
 export function buildDashboardTableSearchParams(
   input: DashboardTableSearchParamsInput,
+  options: BuildDashboardTableSearchParamsOptions = {},
 ): string {
   const params = new URLSearchParams();
 
   if (input.page !== undefined && input.page > 1) {
     params.set("page", String(input.page));
+  }
+
+  const defaultPageSize = options.defaultPageSize;
+  if (
+    input.pageSize !== undefined &&
+    (defaultPageSize === undefined || input.pageSize !== defaultPageSize)
+  ) {
+    params.set("pageSize", String(input.pageSize));
   }
 
   const filter = input.filter?.trim();
@@ -66,6 +105,7 @@ export function buildDashboardTableSearchParams(
 export function dashboardTablePath(
   pathname: string,
   input: DashboardTableSearchParamsInput = {},
+  options: BuildDashboardTableSearchParamsOptions = {},
 ): string {
-  return `${pathname}${buildDashboardTableSearchParams(input)}`;
+  return `${pathname}${buildDashboardTableSearchParams(input, options)}`;
 }

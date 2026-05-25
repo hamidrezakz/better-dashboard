@@ -75,11 +75,13 @@ export function UserNotificationsTable({
 
   const navigate = (input: {
     page?: number;
+    pageSize?: number;
     filter?: UserNotificationTableFilter;
   }) => {
     router.push(
       userNotificationsTablePath({
         page: input.page,
+        pageSize: input.pageSize ?? pageSize,
         filter: input.filter ?? filter,
       }),
     );
@@ -129,6 +131,9 @@ export function UserNotificationsTable({
             pageSize={pageSize}
             totalCount={totalCount}
             onPageChange={(nextPage) => navigate({ page: nextPage })}
+            onPageSizeChange={(nextPageSize) =>
+              navigate({ page: 1, pageSize: nextPageSize })
+            }
             countLabel="notification"
           >
             <DashboardTableViewport>

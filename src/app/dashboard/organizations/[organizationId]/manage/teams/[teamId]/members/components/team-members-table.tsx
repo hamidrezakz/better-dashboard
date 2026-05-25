@@ -48,10 +48,11 @@ export function TeamMembersTable({
 }: TeamMembersTableProps) {
   const router = useRouter();
 
-  const navigate = (nextPage: number) => {
+  const navigate = (input: { page?: number; pageSize?: number }) => {
     router.push(
       organizationTeamMembersTablePath(organizationId, teamId, {
-        page: nextPage,
+        page: input.page,
+        pageSize: input.pageSize ?? pageSize,
       }),
     );
   };
@@ -73,7 +74,11 @@ export function TeamMembersTable({
           page={page}
           pageSize={pageSize}
           totalCount={totalCount}
-          onPageChange={navigate}
+          onPageChange={(nextPage) => navigate({ page: nextPage })}
+          onPageSizeChange={(nextPageSize) =>
+            navigate({ page: 1, pageSize: nextPageSize })
+          }
+          countLabel="member"
         >
           <DashboardTableViewport>
             <Table className="table-fixed">

@@ -1,7 +1,7 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import {
-  MEMBERS_PAGE_SIZE,
+  MEMBERS_DEFAULT_PAGE_SIZE,
   parseMemberTableFilter,
   type MemberTableFilter,
 } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/members-table-params";
@@ -12,6 +12,7 @@ import {
   clampDashboardTablePage,
   parseDashboardTableFilter,
   parseDashboardTablePage,
+  parseDashboardTablePageSize,
 } from "@/lib/dashboard-table-search-params";
 
 export type OrganizationMemberTeamItem = {
@@ -66,7 +67,9 @@ export function parseOrganizationMembersPageQuery(
 ): OrganizationMembersPageQuery {
   return {
     page: parseDashboardTablePage(searchParams),
-    pageSize: MEMBERS_PAGE_SIZE,
+    pageSize: parseDashboardTablePageSize(searchParams, {
+      defaultPageSize: MEMBERS_DEFAULT_PAGE_SIZE,
+    }),
     filter: parseMemberTableFilter(parseDashboardTableFilter(searchParams)),
   };
 }

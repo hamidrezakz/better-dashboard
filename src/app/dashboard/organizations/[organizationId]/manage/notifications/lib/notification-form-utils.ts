@@ -4,7 +4,7 @@ import type {
   NotificationType,
 } from "@/generated/prisma/enums";
 
-export const NOTIFICATIONS_PAGE_SIZE = 10;
+export const NOTIFICATIONS_DEFAULT_PAGE_SIZE = 10;
 
 export type OrganizationNotificationItem = {
   id: string;

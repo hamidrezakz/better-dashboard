@@ -4,7 +4,7 @@ import {
   type DashboardTableSearchParamsInput,
 } from "@/lib/dashboard-table-search-params";
 
-export const USER_NOTIFICATIONS_PAGE_SIZE = 15;
+export const USER_NOTIFICATIONS_DEFAULT_PAGE_SIZE = 20;
 
 export type UserNotificationTableFilter = "unread" | "read";
 
@@ -41,8 +41,13 @@ export function userNotificationsTablePath(
   const filter =
     input.filter && input.filter !== "unread" ? input.filter : undefined;
 
-  return dashboardTablePath(dashboardRoutes.userNotifications(), {
-    page: input.page,
-    filter,
-  });
+  return dashboardTablePath(
+    dashboardRoutes.userNotifications(),
+    {
+      page: input.page,
+      pageSize: input.pageSize,
+      filter,
+    },
+    { defaultPageSize: USER_NOTIFICATIONS_DEFAULT_PAGE_SIZE },
+  );
 }

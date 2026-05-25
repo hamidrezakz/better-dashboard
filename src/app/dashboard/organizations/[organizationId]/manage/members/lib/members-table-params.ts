@@ -4,7 +4,7 @@ import {
   type DashboardTableSearchParamsInput,
 } from "@/lib/dashboard-table-search-params";
 
-export const MEMBERS_PAGE_SIZE = 25;
+export const MEMBERS_DEFAULT_PAGE_SIZE = 20;
 
 export type MemberTableFilter = "all" | "managers" | "members";
 
@@ -31,7 +31,7 @@ export const memberFilterLabels: Record<MemberTableFilter, string> = {
 
 export function organizationMembersTablePath(
   organizationId: string,
-  input: Pick<DashboardTableSearchParamsInput, "page"> & {
+  input: Pick<DashboardTableSearchParamsInput, "page" | "pageSize"> & {
     filter?: MemberTableFilter;
   } = {},
 ): string {
@@ -42,7 +42,9 @@ export function organizationMembersTablePath(
     dashboardRoutes.organizationMembers(organizationId),
     {
       page: input.page,
+      pageSize: input.pageSize,
       filter,
     },
+    { defaultPageSize: MEMBERS_DEFAULT_PAGE_SIZE },
   );
 }

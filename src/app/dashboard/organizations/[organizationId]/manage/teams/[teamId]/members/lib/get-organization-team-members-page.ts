@@ -1,11 +1,12 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import { getOrganizationTeamInOrg } from "@/app/dashboard/organizations/[organizationId]/manage/lib/organization-team-access";
-import { TEAM_MEMBERS_PAGE_SIZE } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/lib/team-members-table-params";
+import { TEAM_MEMBERS_DEFAULT_PAGE_SIZE } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/lib/team-members-table-params";
 import { prisma } from "@/lib/prisma";
 import {
   clampDashboardTablePage,
   parseDashboardTablePage,
+  parseDashboardTablePageSize,
 } from "@/lib/dashboard-table-search-params";
 
 export type OrganizationTeamMemberItem = {
@@ -33,7 +34,9 @@ export function parseOrganizationTeamMembersPageQuery(
 ): OrganizationTeamMembersPageQuery {
   return {
     page: parseDashboardTablePage(searchParams),
-    pageSize: TEAM_MEMBERS_PAGE_SIZE,
+    pageSize: parseDashboardTablePageSize(searchParams, {
+      defaultPageSize: TEAM_MEMBERS_DEFAULT_PAGE_SIZE,
+    }),
   };
 }
 

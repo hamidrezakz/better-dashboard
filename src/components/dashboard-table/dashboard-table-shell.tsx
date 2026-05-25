@@ -2,6 +2,8 @@
 
 import type { ReactNode } from "react";
 import { DashboardTableFooter } from "@/components/dashboard-table/dashboard-table-footer";
+import { DashboardTablePageSizeSelect } from "@/components/dashboard-table/dashboard-table-page-size-select";
+import { DASHBOARD_TABLE_PAGE_SIZES } from "@/lib/dashboard-table-page-size";
 import {
   formatDashboardTableNumber,
   getDashboardTableItemRange,
@@ -13,7 +15,9 @@ export type DashboardTableShellProps = {
   pageSize: number;
   totalCount: number;
   onPageChange: (page: number) => void;
-  /** Noun after the total, e.g. `item`, `invitation`, `notification` */
+  onPageSizeChange: (pageSize: number) => void;
+  pageSizeOptions?: readonly number[];
+  /** Noun for screen readers, e.g. `notification` */
   countLabel?: string;
   children: ReactNode;
   className?: string;
@@ -24,10 +28,16 @@ export function DashboardTableShell({
   pageSize,
   totalCount,
   onPageChange,
+  onPageSizeChange,
+  pageSizeOptions = DASHBOARD_TABLE_PAGE_SIZES,
   countLabel = "item",
   children,
   className,
 }: DashboardTableShellProps) {
+  if (totalCount <= 0) {
+    return <div className={cn("space-y-6", className)}>{children}</div>;
+  }
+
   const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
   const safePage = Math.min(page, totalPages);
   const { start, end } = getDashboardTableItemRange(
@@ -36,19 +46,22 @@ export function DashboardTableShell({
     totalCount,
   );
 
-  const range =
-    totalCount > 0 ? (
-      <span>
-        {formatDashboardTableNumber(start)}–{formatDashboardTableNumber(end)}
-      </span>
-    ) : undefined;
+  const summary = (
+    <span
+      aria-label={`${formatDashboardTableNumber(start)} to ${formatDashboardTableNumber(end)} of ${formatDashboardTableNumber(totalCount)} ${countLabel}${totalCount === 1 ? "" : "s"}`}
+    >
+      {formatDashboardTableNumber(start)}–{formatDashboardTableNumber(end)} of{" "}
+      {formatDashboardTableNumber(totalCount)}
+    </span>
+  );
 
-  const total =
-    totalCount > 0 ? (
-      <span>
-        {formatDashboardTableNumber(totalCount)} {countLabel}
-      </span>
-    ) : undefined;
+  const pageSizeControl = (
+    <DashboardTablePageSizeSelect
+      value={pageSize}
+      options={pageSizeOptions}
+      onValueChange={onPageSizeChange}
+    />
+  );
 
   return (
     <div className={cn("space-y-6", className)}>
@@ -58,8 +71,8 @@ export function DashboardTableShell({
         page={safePage}
         totalPages={totalPages}
         onPageChange={onPageChange}
-        range={range}
-        total={total}
+        summary={summary}
+        pageSizeControl={pageSizeControl}
       />
     </div>
   );

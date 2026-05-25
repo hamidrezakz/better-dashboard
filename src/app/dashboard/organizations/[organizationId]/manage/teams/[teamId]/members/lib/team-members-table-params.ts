@@ -4,7 +4,7 @@ import {
   type DashboardTableSearchParamsInput,
 } from "@/lib/dashboard-table-search-params";
 
-export const TEAM_MEMBERS_PAGE_SIZE = 10;
+export const TEAM_MEMBERS_DEFAULT_PAGE_SIZE = 10;
 
 export type OrganizationTeamMembersPageQuery = {
   page: number;
@@ -22,7 +22,9 @@ export function organizationTeamMembersTablePath(
     return base;
   }
 
-  const query = buildDashboardTableSearchParams(input);
+  const query = buildDashboardTableSearchParams(input, {
+    defaultPageSize: TEAM_MEMBERS_DEFAULT_PAGE_SIZE,
+  });
 
-  return query ? `${base}?${query}` : base;
+  return query ? `${base}${query}` : base;
 }
