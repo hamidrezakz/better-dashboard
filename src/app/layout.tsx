@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s · Better Dashboard",
   },
   description:
-    "Reusable Better Auth organization dashboard template for Next.js.",
+    "Mobile-first Better Auth organization dashboard template for Next.js—responsive sidebar, forms, and layout.",
 };
 
 export default function RootLayout({

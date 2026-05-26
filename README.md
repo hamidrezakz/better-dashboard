@@ -1,6 +1,6 @@
 # Better Dashboard
 
-Reusable **Next.js 16** template: **Better Auth** (organizations + teams), **Prisma 7**, and a modular dashboard you can fork or trim.
+Reusable **Next.js 16** template: **Better Auth** (organizations + teams), **Prisma 7**, and a **mobile-first** modular dashboard—sheet sidebar, touch-friendly forms, responsive chrome—built to feel great on phones. Fork or trim as needed.
 
 **Human overview:** [docs/README.md](./docs/README.md) — what it is, goals, stack, folder layout.  
 **AI / agents:** [AGENTS.md](./AGENTS.md) → `.cursor/rules/*.mdc` → [docs/agents/](./docs/agents/).

@@ -24,7 +24,7 @@ alwaysApply: true
 
 ## Project
 
-Next.js 16+ (`cacheComponents`), Prisma 7+, Better Auth v1 (org plugin), shadcn/Base UI — reusable auth + org/team dashboard template (**action-first**). Better Auth `auth` schema only in core; no product Prisma domains in dashboard core.
+Next.js 16+ (`cacheComponents`), Prisma 7+, Better Auth v1 (org plugin), shadcn/Base UI — reusable, **mobile-first** auth + org/team dashboard template (**action-first**). Better Auth `auth` schema only in core; no product Prisma domains in dashboard core.
 
 ## Layer 2 → deep doc
 

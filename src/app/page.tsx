@@ -10,7 +10,8 @@ export default function Home() {
           Better Dashboard
         </h1>
         <p className="text-sm text-muted-foreground">
-          Reusable auth and organization dashboard template. Sign in to open the
+          Mobile-first auth and organization dashboard template—responsive
+          sidebar, forms, and chrome built for phones. Sign in to open the
           dashboard or extend routes under{" "}
           <code className="text-xs">src/app/dashboard</code>.
         </p>

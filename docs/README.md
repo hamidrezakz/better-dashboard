@@ -4,7 +4,7 @@ Minimal guide for humans. For AI agents, use [AGENTS.md](../AGENTS.md) and [docs
 
 ## What this is
 
-**Better Dashboard** is a reusable Next.js starter: sign-in, organizations, teams, members, invitations, and a full dashboard UI. You can fork it, trim features you do not need, or later inject optional slices via CLI.
+**Better Dashboard** is a reusable, **mobile-first** Next.js starter: sign-in, organizations, teams, members, invitations, and a full dashboard UI tuned for phones and tablets—not just desktop. You can fork it, trim features you do not need, or later inject optional slices via CLI.
 
 The database layer is limited to **Better Auth’s `auth` schema** in core — no separate product domain models in the template. Add your own Prisma models in the app that consumes this template.
 
@@ -16,6 +16,7 @@ The database layer is limited to **Better Auth’s `auth` schema** in core — n
 | Stay fork-friendly                         | Each feature is a removable route + action subtree                                           |
 | Modern Next.js patterns                    | App Router, Server Components, **action-first** (`app/action/` mirrors routes), tagged cache |
 | Consistent UI                              | shadcn/ui on **Base UI**, preset **base-mira** by default, logical Tailwind (RTL-ready)      |
+| Great on mobile                            | Sheet sidebar, mobile form shells (sheet/dialog), compact breadcrumbs, touch-friendly layout |
 
 ## Stack
 
@@ -57,7 +58,7 @@ docs/
 - Email/password auth, sessions, account settings
 - Organizations with manage area: members, teams, invitations, notifications
 - User-scoped notifications and profile
-- Sidebar, breadcrumbs, org switcher, responsive layout
+- **Mobile-first** sidebar (sheet on small screens), breadcrumbs, org switcher, responsive layout and form shells
 - Dev seed script (`pnpm run seed:dev`)
 
 ## What’s not included
