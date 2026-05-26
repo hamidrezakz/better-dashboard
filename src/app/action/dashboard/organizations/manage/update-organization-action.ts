@@ -14,7 +14,7 @@ import {
 } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
 import { getOrganizationManageActionErrorMessage } from "@/app/action/dashboard/organizations/manage/shared/organization-manage-action-error";
 import { auth } from "@/lib/auth";
-import { requireAuthSession } from "@/lib/auth/session";
+import { requireAuthSession } from "@/lib/session";
 
 type UpdateOrganizationInput = {
   organizationId: string;

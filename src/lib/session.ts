@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { authRoutes } from "@/app/(auth)/lib/auth-routes";
 import { auth } from "@/lib/auth";
-import { buildAuthRouteWithRedirect } from "@/lib/auth/redirect";
+import { buildAuthRouteWithRedirect } from "@/lib/redirect";
 
 export type AppSession = Awaited<ReturnType<typeof auth.api.getSession>>;
 export type AuthenticatedAppSession = NonNullable<AppSession>;

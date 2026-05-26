@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { authRoutes } from "@/app/(auth)/lib/auth-routes";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import { auth } from "@/lib/auth";
-import { getSessionCached } from "@/lib/auth/session";
+import { getSessionCached } from "@/lib/session";
 
 export async function logoutAction() {
   const userId = (await getSessionCached())?.user.id ?? null;

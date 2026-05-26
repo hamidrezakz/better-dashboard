@@ -6,7 +6,7 @@ import type { AuthRoutePath } from "@/app/(auth)/lib/auth-routes";
 import {
   buildAuthRouteWithRedirect,
   normalizeAuthRedirectTarget,
-} from "@/lib/auth/redirect";
+} from "@/lib/redirect";
 
 type AuthCrossLinkProps = {
   target: AuthRoutePath;

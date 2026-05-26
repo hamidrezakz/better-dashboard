@@ -26,7 +26,7 @@ import {
 } from "@/app/dashboard/lib/dashboard-access";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
-import { requireAuthSession } from "@/lib/auth/session";
+import { requireAuthSession } from "@/lib/session";
 
 type OrganizationPageProps = {
   params: Promise<{

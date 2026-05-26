@@ -16,7 +16,7 @@ import {
   invalidateOrganizationSummaryCache,
 } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
 import type { MembershipRole } from "@/generated/prisma/enums";
-import { requireAuthSession } from "@/lib/auth/session";
+import { requireAuthSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 
 type UpdateOrganizationMemberRoleInput = {

@@ -3,7 +3,7 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
-import { normalizeAuthRedirectTarget } from "@/lib/auth/redirect";
+import { normalizeAuthRedirectTarget } from "@/lib/redirect";
 import { getAuthActionErrorMessage } from "@/app/action/auth/shared/auth-action-error-message";
 import { type AuthFormState } from "@/app/action/auth/shared/auth-form-state";
 
@@ -60,8 +60,7 @@ export async function signInWithEmailAction(
     return {
       formError: getAuthActionErrorMessage({
         error,
-        fallback:
-          "Sign-in failed. Check your credentials and try again.",
+        fallback: "Sign-in failed. Check your credentials and try again.",
       }),
       values: { email },
     };

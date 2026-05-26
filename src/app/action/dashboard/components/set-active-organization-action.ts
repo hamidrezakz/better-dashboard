@@ -2,7 +2,7 @@
 
 import { updateTag } from "next/cache";
 import { headers } from "next/headers";
-import { requireAuthSession } from "@/lib/auth/session";
+import { requireAuthSession } from "@/lib/session";
 import { auth } from "@/lib/auth";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";

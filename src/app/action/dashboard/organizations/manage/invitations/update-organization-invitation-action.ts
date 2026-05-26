@@ -10,7 +10,7 @@ import {
   resolveInvitationMaxUsesForSave,
   resolveInvitationPersistence,
 } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-mutation";
-import { requireAuthSession } from "@/lib/auth/session";
+import { requireAuthSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 
 type UpdateOrganizationInvitationInput = InvitationMutationInput & {
@@ -37,7 +37,8 @@ export async function updateOrganizationInvitationAction(
   if (!canManage) {
     return {
       success: false,
-      error: "You don't have permission to manage invitations for this organization.",
+      error:
+        "You don't have permission to manage invitations for this organization.",
     };
   }
 

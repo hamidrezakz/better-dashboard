@@ -16,7 +16,7 @@ import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-sh
 import { getUserProfilePageData } from "@/app/dashboard/(user)/lib/get-user-profile-page";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
-import { requireAuthSession } from "@/lib/auth/session";
+import { requireAuthSession } from "@/lib/session";
 
 export default function UserDashboardHomePage() {
   return (

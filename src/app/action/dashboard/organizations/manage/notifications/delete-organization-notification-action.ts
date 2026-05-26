@@ -3,7 +3,7 @@
 import { updateTag } from "next/cache";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import { canManageOrganization } from "@/app/dashboard/lib/dashboard-access";
-import { requireAuthSession } from "@/lib/auth/session";
+import { requireAuthSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 
 type DeleteOrganizationNotificationInput = {
@@ -30,7 +30,8 @@ export async function deleteOrganizationNotificationAction(
   if (!canManage) {
     return {
       success: false,
-      error: "You don't have permission to delete notifications for this organization.",
+      error:
+        "You don't have permission to delete notifications for this organization.",
     };
   }
 

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { JoinInvitationCard } from "@/app/join/[invitationId]/components/join-invitation-card";
 import { getInvitationJoinPreview } from "@/app/join/lib/get-invitation-join-preview";
-import { getSessionCached } from "@/lib/auth/session";
+import { getSessionCached } from "@/lib/session";
 import { CardLoadingFallback } from "@/components/loading-fallback";
 import { Card, CardContent } from "@/components/ui/card";
 

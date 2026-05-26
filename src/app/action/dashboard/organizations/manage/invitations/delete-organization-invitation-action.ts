@@ -4,7 +4,7 @@ import { updateTag } from "next/cache";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import { canManageOrganization } from "@/app/dashboard/lib/dashboard-access";
 import { organizationInvitationByIdWhere } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/organization-invitation-access";
-import { requireAuthSession } from "@/lib/auth/session";
+import { requireAuthSession } from "@/lib/session";
 import { prisma } from "@/lib/prisma";
 
 type DeleteOrganizationInvitationInput = {
@@ -31,7 +31,8 @@ export async function deleteOrganizationInvitationAction(
   if (!canManage) {
     return {
       success: false,
-      error: "You don't have permission to manage invitations for this organization.",
+      error:
+        "You don't have permission to manage invitations for this organization.",
     };
   }
 
