@@ -8,70 +8,63 @@ export async function getUserProfilePageData(userId: string) {
   cacheLife("minutes");
   cacheTag(dashboardCacheTags.userProfileById(userId));
 
-  const [user, memberships, teamMemberships, directUnreadCount] =
-    await Promise.all([
-      prisma.user.findUnique({
-        where: {
-          id: userId,
-        },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          image: true,
-          createdAt: true,
-        },
-      }),
-      prisma.member.findMany({
-        where: {
-          userId,
-        },
-        include: {
-          organization: {
-            select: {
-              id: true,
-              name: true,
-              logo: true,
-            },
+  const [user, memberships, teamMemberships] = await Promise.all([
+    prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        image: true,
+        createdAt: true,
+      },
+    }),
+    prisma.member.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        organization: {
+          select: {
+            id: true,
+            name: true,
+            logo: true,
           },
         },
-        orderBy: {
-          createdAt: "desc",
-        },
-      }),
-      prisma.teamMember.findMany({
-        where: {
-          userId,
-        },
-        select: {
-          createdAt: true,
-          team: {
-            select: {
-              id: true,
-              name: true,
-              organization: {
-                select: {
-                  id: true,
-                  name: true,
-                  logo: true,
-                },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    }),
+    prisma.teamMember.findMany({
+      where: {
+        userId,
+      },
+      select: {
+        createdAt: true,
+        team: {
+          select: {
+            id: true,
+            name: true,
+            organization: {
+              select: {
+                id: true,
+                name: true,
+                logo: true,
               },
             },
           },
         },
-        orderBy: {
-          team: {
-            name: "asc",
-          },
+      },
+      orderBy: {
+        team: {
+          name: "asc",
         },
-      }),
-      prisma.notification.count({
-        where: {
-          userId,
-          readAt: null,
-        },
-      }),
-    ]);
+      },
+    }),
+  ]);
 
   if (!user) {
     return null;
@@ -97,7 +90,6 @@ export async function getUserProfilePageData(userId: string) {
     organizationCount: organizationIds.size,
     teamMemberships: teamMembershipList,
     teamCount: teamMembershipList.length,
-    directUnreadCount,
   };
 }
 

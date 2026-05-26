@@ -60,7 +60,6 @@ export const dashboardNavLabels = {
     manageTeam: "Manage team",
     members: "Members",
     teams: "Teams",
-    unreadNotifications: "Unread",
     joined: "Member since",
     created: "Created",
     teamInOrganization: "Team in",

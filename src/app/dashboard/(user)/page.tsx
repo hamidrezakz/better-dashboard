@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { BellIcon, Building2Icon, SettingsIcon, UsersIcon } from "lucide-react";
+import { Building2Icon, SettingsIcon, UsersIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { getUserInitials } from "@/lib/user-profile/user-display";
@@ -32,8 +32,7 @@ function UserProfileHomeFallback() {
   return (
     <>
       <DashboardPageTitleFallback />
-      <StatGrid columns={3}>
-        <StatCardFallback />
+      <StatGrid columns={2}>
         <StatCardFallback />
         <StatCardFallback />
       </StatGrid>
@@ -81,7 +80,7 @@ async function UserProfileHomeContent() {
         }
       />
 
-      <StatGrid columns={3}>
+      <StatGrid columns={2}>
         <StatCard
           label={labels.organizations}
           value={data.organizationCount}
@@ -91,15 +90,6 @@ async function UserProfileHomeContent() {
           label={labels.teams}
           value={data.teamCount}
           icon={UsersIcon}
-        />
-        <StatCard
-          label={labels.unreadNotifications}
-          value={data.directUnreadCount}
-          icon={BellIcon}
-          action={{
-            href: dashboardRoutes.userNotifications(),
-            label: "View notifications",
-          }}
         />
       </StatGrid>
 
