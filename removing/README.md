@@ -1,5 +1,7 @@
 # Removing dashboard features
 
+Recommended after your first local run — see [docs/getting-started.md](../docs/getting-started.md).
+
 Optional slices can be deleted from a fork. Each guide is one file, named after the feature. Work through a guide top to bottom, then run `pnpm run build`.
 
 | Feature                    | Guide                                                            |

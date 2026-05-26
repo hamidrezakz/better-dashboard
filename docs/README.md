@@ -69,11 +69,11 @@ docs/
 
 ## Trimming features
 
-Forking without teams, invitations, or other slices? See [removing/README.md](../removing/README.md) at the repo root (one guide per feature).
+Forking without teams, invitations, or other slices? See [removing/README.md](../removing/README.md) at the repo root (one guide per feature). Do this early — [getting-started § Trim features](./getting-started.md#6-trim-features-you-do-not-need).
 
 ## Next steps
 
-- **Run locally:** [README.md](../README.md) setup section
+- **Run locally:** [getting-started.md](./getting-started.md)
 - **Change UI primitives:** `pnpm dlx shadcn@latest add …` (preset `base-mira` in `components.json`)
 - **Regenerate auth schema:** `pnpm run auth:generate`
 - **Coding conventions:** [README.md § Conventions](../README.md#conventions)

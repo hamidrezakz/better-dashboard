@@ -2,7 +2,8 @@
 
 Reusable **Next.js 16** template: **Better Auth** (organizations + teams), **Prisma 7**, and a **mobile-first** modular dashboard—sheet sidebar, touch-friendly forms, responsive chrome—built to feel great on phones. Fork or trim as needed.
 
-**Human overview:** [docs/README.md](./docs/README.md) — what it is, goals, stack, folder layout.  
+**Getting started:** [docs/getting-started.md](./docs/getting-started.md) — clone, env, database, run, trim features.  
+**Overview:** [docs/README.md](./docs/README.md) — goals, stack, folder layout.  
 **AI / agents:** [AGENTS.md](./AGENTS.md) → `.cursor/rules/*.mdc` → [docs/agents/](./docs/agents/).
 
 ## Stack
@@ -14,26 +15,9 @@ Reusable **Next.js 16** template: **Better Auth** (organizations + teams), **Pri
 | **Prisma 7**    | PostgreSQL, `auth` schema from Better Auth                                                                   |
 | **UI**          | **shadcn/ui** on **Base UI**, default style **`base-mira`** (`components.json`), logical Tailwind, RTL-ready |
 
-## Setup
-
-```bash
-pnpm install
-cp .env.example .env   # then set DATABASE_URL, BETTER_AUTH_SECRET, BETTER_AUTH_URL, …
-pnpm exec prisma generate
-pnpm exec prisma db push
-pnpm dev
-```
-
-Optional:
-
-- `pnpm run seed:dev` — sample orgs, teams, users
-- `pnpm run auth:generate` — regenerate `prisma/better-auth.prisma` from `src/lib/auth.ts`
-
-Open [http://localhost:3000](http://localhost:3000).
-
 ## Removing features
 
-Fork without teams, invitations, or other slices? See **[removing/README.md](./removing/README.md)** — one guide per feature (`teams.md`, `members.md`, …).
+Fork without teams, invitations, or other slices? See **[removing/README.md](./removing/README.md)** — one guide per feature (`teams.md`, `members.md`, …). Do this early; see [getting-started § Trim features](./docs/getting-started.md#6-trim-features-you-do-not-need).
 
 ## Conventions
 
@@ -43,3 +27,5 @@ Fork without teams, invitations, or other slices? See **[removing/README.md](./r
 - **Placement & reuse:** [architecture.md § Placement](./docs/agents/architecture.md#placement)
 - **Locale:** English by default; `lang` / `dir` from [src/lib/app-locale.ts](./src/lib/app-locale.ts)
 - **UI:** compose `src/components/ui/*`; don’t hand-edit generated shadcn files — use the shadcn CLI
+
+More: [getting-started § Next steps](./docs/getting-started.md#9-next-steps).
