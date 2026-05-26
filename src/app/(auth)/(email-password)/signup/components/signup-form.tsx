@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { MailIcon, UserIcon } from "lucide-react";
 import { signUpWithEmailAction } from "@/app/action/auth/sign-up-with-email-action";
 import { AUTH_FORM_INITIAL_STATE } from "@/app/action/auth/shared/auth-form-state";
@@ -28,6 +28,20 @@ export function SignUpForm({ redirectTo }: SignUpFormProps) {
     signUpWithEmailAction,
     AUTH_FORM_INITIAL_STATE,
   );
+  const [name, setName] = useState(state.values?.name ?? "");
+  const [email, setEmail] = useState(state.values?.email ?? "");
+
+  useEffect(() => {
+    if (state.values?.name !== undefined) {
+      setName(state.values.name);
+    }
+  }, [state.values?.name]);
+
+  useEffect(() => {
+    if (state.values?.email !== undefined) {
+      setEmail(state.values.email);
+    }
+  }, [state.values?.email]);
 
   return (
     <form action={formAction} className="space-y-4" noValidate>
@@ -46,7 +60,8 @@ export function SignUpForm({ redirectTo }: SignUpFormProps) {
               name="name"
               placeholder="e.g. Jane Doe"
               autoComplete="name"
-              defaultValue={state.values?.name ?? ""}
+              value={name}
+              onChange={(event) => setName(event.target.value)}
               aria-invalid={Boolean(state.fieldErrors?.name)}
               required
             />
@@ -68,7 +83,8 @@ export function SignUpForm({ redirectTo }: SignUpFormProps) {
               type="email"
               placeholder="example@email.com"
               autoComplete="email"
-              defaultValue={state.values?.email ?? ""}
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
               aria-invalid={Boolean(state.fieldErrors?.email)}
               required
             />

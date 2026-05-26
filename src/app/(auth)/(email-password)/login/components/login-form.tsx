@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { MailIcon } from "lucide-react";
 import { signInWithEmailAction } from "@/app/action/auth/sign-in-with-email-action";
 import { AUTH_FORM_INITIAL_STATE } from "@/app/action/auth/shared/auth-form-state";
@@ -28,6 +28,13 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
     signInWithEmailAction,
     AUTH_FORM_INITIAL_STATE,
   );
+  const [email, setEmail] = useState(state.values?.email ?? "");
+
+  useEffect(() => {
+    if (state.values?.email !== undefined) {
+      setEmail(state.values.email);
+    }
+  }, [state.values?.email]);
 
   return (
     <form action={formAction} className="space-y-4" noValidate>
@@ -47,7 +54,8 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
               type="email"
               placeholder="example@email.com"
               autoComplete="email"
-              defaultValue={state.values?.email ?? ""}
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
               aria-invalid={Boolean(state.fieldErrors?.email)}
               required
             />
