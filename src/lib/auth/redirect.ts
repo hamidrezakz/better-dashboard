@@ -1,3 +1,5 @@
+import type { AuthRoutePath } from "@/app/(auth)/lib/auth-routes";
+
 const DEFAULT_AUTH_REDIRECT_PATH = "/dashboard";
 
 export function normalizeAuthRedirectTarget(
@@ -17,7 +19,7 @@ export function normalizeAuthRedirectTarget(
 }
 
 export function buildAuthRouteWithRedirect(
-  route: "/login" | "/signup",
+  route: AuthRoutePath,
   redirectTo: string,
 ) {
   const normalizedRedirect = normalizeAuthRedirectTarget(redirectTo);

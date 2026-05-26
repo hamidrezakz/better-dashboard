@@ -11,49 +11,59 @@ import {
   DashboardTableCardFallback,
 } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
 import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-shell";
-import { getUserProfilePageData } from "@/app/dashboard/(user)/lib/get-user-profile-page";
+import {
+  getUserProfilePageData,
+  type UserProfilePageData,
+} from "@/app/dashboard/(user)/lib/get-user-profile-page";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { requireAuthSession } from "@/lib/auth/session";
 
 export default function UserDashboardHomePage() {
   return (
     <DashboardPageShell>
-      <Suspense fallback={<DashboardPageTitleFallback />}>
-        <UserProfileHeader />
-      </Suspense>
-
-      <div className="grid gap-4 md:grid-cols-3">
-        <Suspense fallback={<DashboardStatCardFallback />}>
-          <UserProfileOrganizationStat />
-        </Suspense>
-        <Suspense fallback={<DashboardStatCardFallback />}>
-          <UserProfileTeamStat />
-        </Suspense>
-        <Suspense fallback={<DashboardStatCardFallback />}>
-          <UserProfileNotificationsStat />
-        </Suspense>
-      </div>
-
-      <Suspense fallback={<DashboardTableCardFallback />}>
-        <UserProfileMembershipsCard />
+      <Suspense fallback={<UserProfileHomeFallback />}>
+        <UserProfileHomeContent />
       </Suspense>
     </DashboardPageShell>
   );
 }
 
-async function resolveCurrentUserId() {
-  const session = await requireAuthSession();
-  return session.user.id;
+function UserProfileHomeFallback() {
+  return (
+    <>
+      <DashboardPageTitleFallback />
+      <div className="grid gap-4 md:grid-cols-3">
+        <DashboardStatCardFallback />
+        <DashboardStatCardFallback />
+        <DashboardStatCardFallback />
+      </div>
+      <DashboardTableCardFallback />
+    </>
+  );
 }
 
-async function UserProfileHeader() {
-  const userId = await resolveCurrentUserId();
+async function UserProfileHomeContent() {
+  const userId = (await requireAuthSession()).user.id;
   const data = await getUserProfilePageData(userId);
 
   if (!data) {
     notFound();
   }
 
+  return (
+    <>
+      <UserProfileHeader data={data} />
+      <div className="grid gap-4 md:grid-cols-3">
+        <UserProfileOrganizationStat data={data} />
+        <UserProfileTeamStat data={data} />
+        <UserProfileNotificationsStat data={data} />
+      </div>
+      <UserProfileMembershipsCard data={data} />
+    </>
+  );
+}
+
+function UserProfileHeader({ data }: { data: UserProfilePageData }) {
   return (
     <div>
       <h1 className="text-base font-semibold">{data.user.name}</h1>
@@ -61,14 +71,7 @@ async function UserProfileHeader() {
   );
 }
 
-async function UserProfileOrganizationStat() {
-  const userId = await resolveCurrentUserId();
-  const data = await getUserProfilePageData(userId);
-
-  if (!data) {
-    notFound();
-  }
-
+function UserProfileOrganizationStat({ data }: { data: UserProfilePageData }) {
   return (
     <Card size="sm">
       <CardHeader>
@@ -84,14 +87,7 @@ async function UserProfileOrganizationStat() {
   );
 }
 
-async function UserProfileTeamStat() {
-  const userId = await resolveCurrentUserId();
-  const data = await getUserProfilePageData(userId);
-
-  if (!data) {
-    notFound();
-  }
-
+function UserProfileTeamStat({ data }: { data: UserProfilePageData }) {
   return (
     <Card size="sm">
       <CardHeader>
@@ -107,14 +103,7 @@ async function UserProfileTeamStat() {
   );
 }
 
-async function UserProfileNotificationsStat() {
-  const userId = await resolveCurrentUserId();
-  const data = await getUserProfilePageData(userId);
-
-  if (!data) {
-    notFound();
-  }
-
+function UserProfileNotificationsStat({ data }: { data: UserProfilePageData }) {
   return (
     <Card size="sm">
       <CardHeader>
@@ -138,14 +127,7 @@ async function UserProfileNotificationsStat() {
   );
 }
 
-async function UserProfileMembershipsCard() {
-  const userId = await resolveCurrentUserId();
-  const data = await getUserProfilePageData(userId);
-
-  if (!data) {
-    notFound();
-  }
-
+function UserProfileMembershipsCard({ data }: { data: UserProfilePageData }) {
   if (!data.memberships.length) {
     return null;
   }

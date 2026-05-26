@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import { authRoutes } from "@/app/(auth)/lib/auth-routes";
 import { AuthCrossLink } from "@/app/(auth)/components/auth-cross-link";
 import { buildAuthRouteWithRedirect } from "@/lib/auth/redirect";
 
@@ -24,11 +25,19 @@ export default function SignUpLayout({ children }: SignUpLayoutProps) {
             fallback={
               <Link
                 className="font-medium text-primary"
-                href={buildAuthRouteWithRedirect("/login", "/dashboard")}>
+                href={buildAuthRouteWithRedirect(
+                  authRoutes.login(),
+                  "/dashboard",
+                )}
+              >
                 Sign in
               </Link>
-            }>
-            <AuthCrossLink className="font-medium text-primary" target="/login">
+            }
+          >
+            <AuthCrossLink
+              className="font-medium text-primary"
+              target={authRoutes.login()}
+            >
               Sign in
             </AuthCrossLink>
           </Suspense>

@@ -9,6 +9,7 @@ import {
   getOrganizationMemberById,
 } from "@/app/dashboard/organizations/[organizationId]/manage/lib/organization-member-guards";
 import { invalidateOrganizationManageCache } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
+import { invalidateUserDashboardCache } from "@/app/action/dashboard/users/account/shared/invalidate-user-dashboard-cache";
 import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
@@ -83,6 +84,7 @@ export async function removeOrganizationMemberAction(
   ]);
 
   invalidateOrganizationManageCache(input.organizationId);
+  invalidateUserDashboardCache(member.userId);
 
   return { success: true };
 }

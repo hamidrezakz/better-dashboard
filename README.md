@@ -18,7 +18,7 @@ Reusable **Next.js 16** template: **Better Auth** (organizations + teams), **Pri
 
 ```bash
 pnpm install
-# configure .env (DATABASE_URL, BETTER_AUTH_SECRET, BETTER_AUTH_URL, …)
+cp .env.example .env   # then set DATABASE_URL, BETTER_AUTH_SECRET, BETTER_AUTH_URL, …
 pnpm exec prisma generate
 pnpm exec prisma db push
 pnpm dev

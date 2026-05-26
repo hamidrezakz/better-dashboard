@@ -61,3 +61,7 @@ export async function getUserProfilePageData(userId: string) {
     directUnreadCount,
   };
 }
+
+export type UserProfilePageData = NonNullable<
+  Awaited<ReturnType<typeof getUserProfilePageData>>
+>;

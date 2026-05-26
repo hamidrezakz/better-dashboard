@@ -1,3 +1,4 @@
+import { authRoutes } from "@/app/(auth)/lib/auth-routes";
 import { buildAuthRouteWithRedirect } from "@/lib/auth/redirect";
 import { toAbsolutePublicUrl } from "@/lib/public-url";
 
@@ -20,7 +21,7 @@ export function joinAuthRedirectTarget(invitationId: string) {
 
 export function joinLoginPath(invitationId: string) {
   return buildAuthRouteWithRedirect(
-    "/login",
+    authRoutes.login(),
     joinAuthRedirectTarget(invitationId),
   );
 }

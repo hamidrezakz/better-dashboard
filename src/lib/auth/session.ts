@@ -1,6 +1,7 @@
 import { cache } from "react";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { authRoutes } from "@/app/(auth)/lib/auth-routes";
 import { auth } from "@/lib/auth";
 import { buildAuthRouteWithRedirect } from "@/lib/auth/redirect";
 
@@ -24,7 +25,7 @@ export const requireAuthSession = cache(
     const session = await getSessionCached();
 
     if (!session?.user) {
-      redirect(buildAuthRouteWithRedirect("/login", redirectTo));
+      redirect(buildAuthRouteWithRedirect(authRoutes.login(), redirectTo));
     }
 
     return session;

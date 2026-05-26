@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { authRoutes } from "@/app/(auth)/lib/auth-routes";
 import { acceptInvitationAction } from "@/app/action/join/accept-invitation-action";
 import { buildAuthRouteWithRedirect } from "@/lib/auth/redirect";
 import {
@@ -33,7 +34,7 @@ export function JoinInvitationPanel({
 
   const loginPath = joinLoginPath(invitationId);
   const signupPath = buildAuthRouteWithRedirect(
-    "/signup",
+    authRoutes.signup(),
     joinAuthRedirectTarget(invitationId),
   );
 

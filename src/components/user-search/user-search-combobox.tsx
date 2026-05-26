@@ -2,10 +2,7 @@
 
 import { useEffect, useRef, useState, useTransition } from "react";
 import { XIcon } from "lucide-react";
-import {
-  searchUsersAction,
-  type UserSearchOption,
-} from "@/app/action/dashboard/users/search-users-action";
+import type { UserSearchOption } from "@/app/action/dashboard/users/search-users-action";
 import { Button } from "@/components/ui/button";
 import {
   Combobox,
@@ -21,19 +18,12 @@ import { cn } from "@/lib/utils";
 const MIN_QUERY_LENGTH = 2;
 const SEARCH_DEBOUNCE_MS = 300;
 
-type SearchUsersFn = (
-  query: string,
-) => Promise<Awaited<ReturnType<typeof searchUsersAction>>["users"]>;
-
-async function defaultSearchUsers(query: string) {
-  const result = await searchUsersAction({ query });
-  return result.users;
-}
+type SearchUsersFn = (query: string) => Promise<UserSearchOption[]>;
 
 type UserSearchComboboxProps = {
   value: UserSearchOption | null;
   onValueChange: (value: UserSearchOption | null) => void;
-  searchUsers?: SearchUsersFn;
+  searchUsers: SearchUsersFn;
   disabled?: boolean;
   placeholder?: string;
   className?: string;
@@ -42,7 +32,7 @@ type UserSearchComboboxProps = {
 export function UserSearchCombobox({
   value,
   onValueChange,
-  searchUsers = defaultSearchUsers,
+  searchUsers,
   disabled,
   placeholder = "Search by name or email…",
   className,

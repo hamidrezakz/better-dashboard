@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { authRoutes } from "@/app/(auth)/lib/auth-routes";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 
 export default function Home() {
@@ -16,7 +17,7 @@ export default function Home() {
       </div>
       <div className="flex flex-wrap items-center justify-center gap-3">
         <Link
-          href="/login"
+          href={authRoutes.login()}
           className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground hover:bg-primary/90"
         >
           Sign in

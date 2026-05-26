@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import type { AuthRoutePath } from "@/app/(auth)/lib/auth-routes";
 import {
   buildAuthRouteWithRedirect,
   normalizeAuthRedirectTarget,
 } from "@/lib/auth/redirect";
 
 type AuthCrossLinkProps = {
-  target: "/login" | "/signup";
+  target: AuthRoutePath;
   children: React.ReactNode;
   className?: string;
 };

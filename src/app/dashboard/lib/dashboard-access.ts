@@ -2,13 +2,14 @@ import { cache } from "react";
 import { notFound, redirect } from "next/navigation";
 import type { MembershipRole } from "@/generated/prisma/enums";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
+import { env } from "@/env";
 import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
 const ORG_MANAGER_ROLES = new Set<MembershipRole>(["OWNER", "ADMIN"]);
 
 const dashboardSuperAdminIds = (() => {
-  const raw = process.env.DASHBOARD_SUPER_ADMIN_IDS;
+  const raw = env.DASHBOARD_SUPER_ADMIN_IDS;
 
   if (!raw) {
     return new Set<string>();
