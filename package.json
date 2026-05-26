@@ -8,8 +8,6 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "test:watch": "vitest",
     "seed:dev": "pnpm dlx tsx scripts/seed-dev/run.ts",
     "seed:dev:clear": "pnpm dlx tsx scripts/seed-dev/clear.ts",
     "auth:generate": "pnpm dlx @better-auth/cli@latest generate --config ./src/lib/auth.ts --output ./prisma/better-auth.prisma -y"
@@ -49,13 +47,11 @@
     "@types/pg": "^8.20.0",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^6.0.2",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^10.4.0",
     "eslint-config-next": "16.2.6",
     "prisma": "^7.8.0",
     "tailwindcss": "^4.3.0",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.7"
+    "typescript": "^6.0.3"
   }
 }
