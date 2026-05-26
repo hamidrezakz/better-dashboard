@@ -7,7 +7,7 @@ import {
   invalidateOrganizationTeamProfileCache,
   invalidateUserProfileCache,
 } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
-import { requireAuthSession } from "@/lib/session";
+import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
 type SetOrganizationMemberTeamsInput = {

@@ -1,8 +1,8 @@
 "use server";
 
 import { headers } from "next/headers";
-import { auth } from "@/lib/auth";
-import { requireAuthSession } from "@/lib/session";
+import { auth } from "@/lib/auth/auth";
+import { requireAuthSession } from "@/lib/auth/session";
 import { getAccountActionErrorMessage } from "@/app/action/dashboard/users/account/shared/account-action-error-message";
 
 type RevokeSessionInput = {

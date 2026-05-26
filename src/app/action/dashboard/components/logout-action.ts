@@ -5,8 +5,8 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { authRoutes } from "@/app/(auth)/lib/auth-routes";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
-import { auth } from "@/lib/auth";
-import { getSessionCached } from "@/lib/session";
+import { auth } from "@/lib/auth/auth";
+import { getSessionCached } from "@/lib/auth/session";
 
 export async function logoutAction() {
   const userId = (await getSessionCached())?.user.id ?? null;

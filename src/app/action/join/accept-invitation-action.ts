@@ -8,8 +8,8 @@ import { getActiveOrganizationLandingPath } from "@/app/dashboard/lib/sidebar/da
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { joinRoutes } from "@/app/join/lib/join-routes";
-import { requireAuthSession } from "@/lib/session";
-import { auth } from "@/lib/auth";
+import { requireAuthSession } from "@/lib/auth/session";
+import { auth } from "@/lib/auth/auth";
 import {
   invitationIsConsumable,
   invitationIsExhausted,

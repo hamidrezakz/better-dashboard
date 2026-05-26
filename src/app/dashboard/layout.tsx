@@ -7,7 +7,7 @@ import {
   DashboardPageFallback,
 } from "@/app/dashboard/dashboard-layout-fallback";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { requireAuthSession } from "@/lib/session";
+import { requireAuthSession } from "@/lib/auth/session";
 import { getDashboardSidebarConfig } from "@/app/dashboard/lib/sidebar/get-sidebar-config";
 
 type DashboardLayoutProps = {

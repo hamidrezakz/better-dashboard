@@ -2,8 +2,8 @@
 
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth";
-import { normalizeAuthRedirectTarget } from "@/lib/redirect";
+import { auth } from "@/lib/auth/auth";
+import { normalizeAuthRedirectTarget } from "@/lib/auth/redirect";
 import { getAuthActionErrorMessage } from "@/app/action/auth/shared/auth-action-error-message";
 import { type AuthFormState } from "@/app/action/auth/shared/auth-form-state";
 

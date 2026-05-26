@@ -3,7 +3,7 @@
 import { updateTag } from "next/cache";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import { canManageOrganization } from "@/app/dashboard/lib/dashboard-access";
-import { requireAuthSession } from "@/lib/session";
+import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
 type DeleteOrganizationNotificationInput = {

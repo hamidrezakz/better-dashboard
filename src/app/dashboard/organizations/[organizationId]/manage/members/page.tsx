@@ -3,7 +3,7 @@ import {
   isDashboardSuperAdmin,
   getUserOrganizationRole,
 } from "@/app/dashboard/lib/dashboard-access";
-import { requireAuthSession } from "@/lib/session";
+import { requireAuthSession } from "@/lib/auth/session";
 import { DashboardTableCardFallback } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
 import { MemberManagementPanel } from "@/app/dashboard/organizations/[organizationId]/manage/members/components/member-management-panel";
 import {

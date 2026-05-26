@@ -14,7 +14,7 @@ import {
   invalidateOrganizationTeamsCache,
 } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
 import { invalidateUserDashboardCache } from "@/app/action/dashboard/users/account/shared/invalidate-user-dashboard-cache";
-import { requireAuthSession } from "@/lib/session";
+import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
 type RemoveOrganizationMemberInput = {
