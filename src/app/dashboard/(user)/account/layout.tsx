@@ -8,7 +8,7 @@ type AccountLayoutProps = {
 export default function AccountLayout({ children }: AccountLayoutProps) {
   return (
     <DashboardPageShell>
-      <h1 className="w-full max-w-xl text-base font-semibold">
+      <h1 className="w-full max-w-xl text-sm font-medium">
         {accountCopy.hub.title}
       </h1>
       {children}
