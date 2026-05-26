@@ -7,7 +7,7 @@ import {
   UsersIcon,
 } from "lucide-react";
 import { RoleBadge } from "@/components/badge/role-badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { OrganizationAvatar } from "@/components/organization/organization-avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -22,7 +22,6 @@ import type { UserProfilePageData } from "@/app/dashboard/(user)/lib/get-user-pr
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import type { MembershipRole } from "@/generated/prisma/enums";
-import { getUserInitials } from "@/lib/user-profile/user-display";
 import { cn } from "@/lib/utils";
 
 type UserProfileWorkspacesPanelProps = {
@@ -34,6 +33,7 @@ type TeamMembership = UserProfilePageData["teamMemberships"][number];
 type WorkspaceEntry = {
   organizationId: string;
   organizationName: string;
+  organizationLogo: string | null;
   membershipRole: MembershipRole | null;
   teams: TeamMembership[];
 };
@@ -59,6 +59,7 @@ function buildWorkspaceEntries(data: UserProfilePageData): WorkspaceEntry[] {
   const entries: WorkspaceEntry[] = data.memberships.map((membership) => ({
     organizationId: membership.organization.id,
     organizationName: membership.organization.name,
+    organizationLogo: membership.organization.logo,
     membershipRole: membership.role,
     teams: teamsByOrganizationId.get(membership.organization.id) ?? [],
   }));
@@ -89,6 +90,7 @@ function buildWorkspaceEntries(data: UserProfilePageData): WorkspaceEntry[] {
     entries.push({
       organizationId,
       organizationName,
+      organizationLogo: teams[0]?.organizationLogo ?? null,
       membershipRole: null,
       teams,
     });
@@ -107,11 +109,11 @@ function WorkspaceOrganizationHeader({
   const isOrganizationMember = entry.membershipRole != null;
   const titleBlock = (
     <>
-      <Avatar className="size-10 shrink-0">
-        <AvatarFallback className="bg-primary/10 text-sm font-medium text-primary">
-          {getUserInitials(entry.organizationName)}
-        </AvatarFallback>
-      </Avatar>
+      <OrganizationAvatar
+        name={entry.organizationName}
+        logo={entry.organizationLogo}
+        className="size-10 shrink-0"
+      />
       <div className="min-w-0 flex-1">
         <CardTitle className="truncate text-base leading-tight">
           {entry.organizationName}

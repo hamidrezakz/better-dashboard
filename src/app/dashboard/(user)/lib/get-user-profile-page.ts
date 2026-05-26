@@ -18,6 +18,7 @@ export async function getUserProfilePageData(userId: string) {
           id: true,
           name: true,
           email: true,
+          image: true,
           createdAt: true,
         },
       }),
@@ -30,6 +31,7 @@ export async function getUserProfilePageData(userId: string) {
             select: {
               id: true,
               name: true,
+              logo: true,
             },
           },
         },
@@ -51,6 +53,7 @@ export async function getUserProfilePageData(userId: string) {
                 select: {
                   id: true,
                   name: true,
+                  logo: true,
                 },
               },
             },
@@ -79,6 +82,7 @@ export async function getUserProfilePageData(userId: string) {
     teamName: membership.team.name,
     organizationId: membership.team.organization.id,
     organizationName: membership.team.organization.name,
+    organizationLogo: membership.team.organization.logo,
     joinedAt: membership.createdAt?.toISOString() ?? null,
   }));
 

@@ -45,7 +45,6 @@ export const dashboardNavLabels = {
   },
   viewProfile: {
     homeEyebrow: "Overview",
-    homeTitle: "Welcome back",
     workspaces: "Your workspaces",
     openOrganization: "Open organization",
     teamAccessOnly: "Team access",

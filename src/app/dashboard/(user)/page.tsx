@@ -2,7 +2,9 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { BellIcon, Building2Icon, SettingsIcon, UsersIcon } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { getUserInitials } from "@/lib/user-profile/user-display";
 import { DashboardViewPageHeader } from "@/app/dashboard/(user)/components/view-profile/dashboard-view-page-header";
 import { UserProfileWorkspacesPanel } from "@/app/dashboard/(user)/components/view-profile/user-profile-workspaces-panel";
 import { StatCard, StatCardFallback, StatGrid } from "@/components/stat-card";
@@ -66,10 +68,15 @@ async function UserProfileHomeContent() {
           </Button>
         }
         title={
-          <span className="inline-flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
-            <span>{labels.homeTitle}</span>
-            <span>{data.user.name}</span>
-            <span aria-hidden>👋</span>
+          <span className="inline-flex flex-wrap items-center gap-x-3 gap-y-1">
+            <Avatar className="size-10 sm:size-12">
+              <AvatarImage src={data.user.image ?? ""} alt={data.user.name} />
+              <AvatarFallback>{getUserInitials(data.user.name)}</AvatarFallback>
+            </Avatar>
+            <span className="inline-flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
+              <span>{data.user.name}</span>
+              <span aria-hidden>👋</span>
+            </span>
           </span>
         }
       />

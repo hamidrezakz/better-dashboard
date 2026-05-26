@@ -37,12 +37,24 @@ export function invalidateOrganizationManageCache(organizationId: string) {
 export async function invalidateOrganizationSidebarCaches(
   organizationId: string,
 ) {
-  const members = await prisma.member.findMany({
-    where: { organizationId },
-    select: { userId: true },
-  });
+  const [members, teamMembers] = await Promise.all([
+    prisma.member.findMany({
+      where: { organizationId },
+      select: { userId: true },
+    }),
+    prisma.teamMember.findMany({
+      where: { team: { organizationId } },
+      select: { userId: true },
+    }),
+  ]);
 
-  for (const member of members) {
-    updateTag(dashboardCacheTags.sidebarConfigByUser(member.userId));
+  const userIds = new Set([
+    ...members.map((member) => member.userId),
+    ...teamMembers.map((member) => member.userId),
+  ]);
+
+  for (const userId of userIds) {
+    updateTag(dashboardCacheTags.sidebarConfigByUser(userId));
+    updateTag(dashboardCacheTags.userProfileById(userId));
   }
 }
