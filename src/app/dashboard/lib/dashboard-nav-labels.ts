@@ -44,7 +44,6 @@ export const dashboardNavLabels = {
     removeFromTeam: "Remove from team",
   },
   viewProfile: {
-    homeEyebrow: "Overview",
     workspaces: "Your workspaces",
     openOrganization: "Open organization",
     teamAccessOnly: "Team access",

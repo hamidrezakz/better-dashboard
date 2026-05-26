@@ -54,8 +54,7 @@ async function UserProfileHomeContent() {
   return (
     <>
       <DashboardViewPageHeader
-        eyebrow={labels.homeEyebrow}
-        eyebrowActions={
+        actions={
           <Button
             variant="outline"
             size="sm"
@@ -67,14 +66,16 @@ async function UserProfileHomeContent() {
           </Button>
         }
         title={
-          <span className="inline-flex flex-wrap items-center gap-x-3 gap-y-1">
-            <Avatar className="size-10 sm:size-12">
+          <span className="flex w-full min-w-0 items-center gap-x-3">
+            <Avatar className="size-10 shrink-0 sm:size-12">
               <AvatarImage src={data.user.image ?? ""} alt={data.user.name} />
               <AvatarFallback>{getUserInitials(data.user.name)}</AvatarFallback>
             </Avatar>
-            <span className="inline-flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
-              <span>{data.user.name}</span>
-              <span aria-hidden>👋</span>
+            <span className="flex min-w-0 flex-1 items-baseline gap-x-1.5 overflow-hidden">
+              <span className="truncate">{data.user.name}</span>
+              <span className="shrink-0" aria-hidden>
+                👋
+              </span>
             </span>
           </span>
         }

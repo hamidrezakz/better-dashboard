@@ -30,9 +30,14 @@ export function DashboardViewPageHeader({
           ) : null}
         </div>
       ) : null}
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div className="min-w-0 space-y-1">
-          <h1 className="text-xl font-semibold tracking-tight text-balance sm:text-2xl">
+      <div
+        className={cn(
+          "flex flex-row justify-between gap-3",
+          description || meta ? "items-start" : "items-center",
+        )}
+      >
+        <div className="min-w-0 flex-1 space-y-1">
+          <h1 className="min-w-0 text-xl font-semibold tracking-tight sm:text-2xl">
             {title}
           </h1>
           {description ? (
@@ -47,9 +52,7 @@ export function DashboardViewPageHeader({
           ) : null}
         </div>
         {actions ? (
-          <div className="flex shrink-0 flex-wrap items-center gap-2 sm:pt-0.5">
-            {actions}
-          </div>
+          <div className="flex shrink-0 items-center gap-2">{actions}</div>
         ) : null}
       </div>
     </header>
