@@ -2,7 +2,6 @@ import {
   BellIcon,
   Building2Icon,
   CircleUserRoundIcon,
-  CreditCardIcon,
   CrownIcon,
   Link2Icon,
   ShieldAlertIcon,
@@ -108,30 +107,15 @@ const notificationTypeConfig: Record<NotificationType, LabeledBadgeConfig> = {
     "default",
     <BellIcon data-icon="inline-start" />,
   ),
-  INVITATION: item(
-    badgeLabels.notificationType.INVITATION,
-    "secondary",
-    <CircleUserRoundIcon data-icon="inline-start" />,
-  ),
   ORGANIZATION: item(
     badgeLabels.notificationType.ORGANIZATION,
     "secondary",
     <Building2Icon data-icon="inline-start" />,
   ),
-  TEAM: item(
-    badgeLabels.notificationType.TEAM,
-    "secondary",
-    <UsersIcon data-icon="inline-start" />,
-  ),
   SECURITY: item(
     badgeLabels.notificationType.SECURITY,
     "destructive",
     <ShieldAlertIcon data-icon="inline-start" />,
-  ),
-  BILLING: item(
-    badgeLabels.notificationType.BILLING,
-    "outline",
-    <CreditCardIcon data-icon="inline-start" />,
   ),
   CUSTOM: item(
     badgeLabels.notificationType.CUSTOM,
@@ -204,14 +188,6 @@ export function getInvitationJoinScopeBadgeConfig(
     scope,
     invitationJoinScopeConfig,
     <Link2Icon data-icon="inline-start" />,
-  );
-}
-
-export function getRequestStatusBadgeConfig(status: string) {
-  return resolveConfig(
-    status,
-    notificationTypeConfig,
-    <BellIcon data-icon="inline-start" />,
   );
 }
 

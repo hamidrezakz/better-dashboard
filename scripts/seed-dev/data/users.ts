@@ -76,7 +76,6 @@ export function buildSeedUsers(): Prisma.UserCreateManyInput[] {
       emailVerified: i % 4 !== 0,
       createdAt: new Date(now.getTime() - (FAKE_USER_COUNT - i) * 86_400_000),
       updatedAt: now,
-      metadata: { seed: true, index: i },
     });
   }
 

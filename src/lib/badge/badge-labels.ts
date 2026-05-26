@@ -26,11 +26,8 @@ const membershipRoleLabels: Record<MembershipRole, string> = {
 
 const notificationTypeLabels: Record<NotificationType, string> = {
   SYSTEM: "System",
-  INVITATION: "Invitation",
   ORGANIZATION: "Organization",
-  TEAM: "Team",
   SECURITY: "Security",
-  BILLING: "Billing",
   CUSTOM: "Custom",
 };
 

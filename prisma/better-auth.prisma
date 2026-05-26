@@ -12,11 +12,8 @@ enum MembershipRole {
 
 enum NotificationType {
   SYSTEM
-  INVITATION
   ORGANIZATION
-  TEAM
   SECURITY
-  BILLING
   CUSTOM
 
   @@schema("auth")
@@ -41,7 +38,6 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  metadata    Json?
   sessions    Session[]
   accounts    Account[]
   teammembers TeamMember[]
@@ -67,7 +63,6 @@ model Session {
   userAgent            String?
   userId               String
   user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  impersonatedBy       String?
   activeOrganizationId String?
   activeTeamId         String?
 
@@ -117,7 +112,7 @@ model Organization {
   slug        String
   logo        String?
   createdAt   DateTime
-  metadata    Json?
+  metadata    String?
   teams       Team[]
   members     Member[]
   invitations Invitation[]
@@ -167,7 +162,6 @@ model Member {
   userId         String
   user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   role           MembershipRole @default(MEMBER)
-  metadata       Json?
   createdAt      DateTime
 
   @@index([organizationId])

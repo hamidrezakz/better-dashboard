@@ -13,9 +13,7 @@ import {
 
 const TYPES: NotificationType[] = [
   NotificationType.SYSTEM,
-  NotificationType.INVITATION,
   NotificationType.ORGANIZATION,
-  NotificationType.TEAM,
   NotificationType.SECURITY,
   NotificationType.CUSTOM,
 ];

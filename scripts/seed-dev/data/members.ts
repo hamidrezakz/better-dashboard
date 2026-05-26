@@ -44,7 +44,6 @@ export function buildSeedMembers(): Prisma.MemberCreateManyInput[] {
       userId: fakeUserId(i),
       role,
       createdAt: new Date(createdAt.getTime() + (i + 2) * 3_600_000),
-      metadata: inAlpha ? { cohort: "alpha" } : { cohort: "beta" },
     });
   }
 

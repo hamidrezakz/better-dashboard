@@ -20,11 +20,8 @@ export type MembershipRole = (typeof MembershipRole)[keyof typeof MembershipRole
 
 export const NotificationType = {
   SYSTEM: 'SYSTEM',
-  INVITATION: 'INVITATION',
   ORGANIZATION: 'ORGANIZATION',
-  TEAM: 'TEAM',
   SECURITY: 'SECURITY',
-  BILLING: 'BILLING',
   CUSTOM: 'CUSTOM'
 } as const
 

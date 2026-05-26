@@ -10,6 +10,6 @@ export function buildSeedOrganizations(): Prisma.OrganizationCreateManyInput[] {
     slug: org.slug,
     logo: null,
     createdAt: new Date(base.getTime() + index * 7 * 86_400_000),
-    metadata: { seed: true, label: org.slug },
+    metadata: JSON.stringify({ seed: true, label: org.slug }),
   }));
 }

@@ -6,11 +6,8 @@ import { badgeLabels } from "@/lib/badge/badge-labels";
 
 export const NOTIFICATION_TYPE_OPTIONS = [
   "SYSTEM",
-  "INVITATION",
   "ORGANIZATION",
-  "TEAM",
   "SECURITY",
-  "BILLING",
   "CUSTOM",
 ] as const satisfies readonly NotificationType[];
 
