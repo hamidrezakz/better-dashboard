@@ -1,6 +1,6 @@
 "use client";
 
-import { formatDashboardTableNumber } from "@/lib/dashboard-table-pagination";
+import { formatDataTableNumber } from "@/lib/data-table/pagination";
 import {
   Select,
   SelectContent,
@@ -9,19 +9,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export type DashboardTablePageSizeSelectProps = {
+export type DataTablePageSizeSelectProps = {
   value: number;
   options: readonly number[];
   onValueChange: (pageSize: number) => void;
   disabled?: boolean;
 };
 
-export function DashboardTablePageSizeSelect({
+export function DataTablePageSizeSelect({
   value,
   options,
   onValueChange,
   disabled,
-}: DashboardTablePageSizeSelectProps) {
+}: DataTablePageSizeSelectProps) {
   const valueString = String(value);
 
   return (
@@ -43,12 +43,12 @@ export function DashboardTablePageSizeSelect({
         className="h-6 min-w-14 px-2"
         aria-label="Rows per page"
       >
-        <SelectValue>{formatDashboardTableNumber(value)}</SelectValue>
+        <SelectValue>{formatDataTableNumber(value)}</SelectValue>
       </SelectTrigger>
       <SelectContent align="end">
         {options.map((size) => (
           <SelectItem key={size} value={String(size)}>
-            {formatDashboardTableNumber(size)}
+            {formatDataTableNumber(size)}
           </SelectItem>
         ))}
       </SelectContent>

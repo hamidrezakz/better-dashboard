@@ -5,7 +5,7 @@ import {
   parseEntitiesQuery,
 } from "@/app/dashboard/lib/breadcrumbs/breadcrumb-entity";
 import { resolveEntityLabels } from "@/app/dashboard/lib/breadcrumbs/resolve-breadcrumb-labels";
-import { getSessionCached } from "@/lib/auth-session";
+import { getSessionCached } from "@/lib/auth/session";
 
 export async function GET(request: Request) {
   const session = await getSessionCached();

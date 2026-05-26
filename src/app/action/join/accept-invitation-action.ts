@@ -8,13 +8,13 @@ import { getActiveOrganizationLandingPath } from "@/app/dashboard/lib/sidebar/da
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { joinRoutes } from "@/app/join/lib/join-routes";
-import { requireAuthSession } from "@/lib/auth-session";
+import { requireAuthSession } from "@/lib/auth/session";
 import { auth } from "@/lib/auth";
 import {
   invitationIsConsumable,
   invitationIsExhausted,
   invitationIsExpired,
-} from "@/lib/invitation-display-status";
+} from "@/lib/badge/invitation-display-status";
 import { prisma } from "@/lib/prisma";
 
 type AcceptInvitationResult =

@@ -14,9 +14,9 @@ import {
 } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-form-utils";
 import { organizationInvitationsTablePath } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitations-table-params";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
-import { formatInvitationUsageLabel } from "@/lib/invitation-display-status";
-import { InvitationDisplayStatusBadge } from "@/components/globals-badge/invitation-display-status-badge";
-import { InvitationJoinScopeBadge } from "@/components/globals-badge/invitation-join-scope-badge";
+import { formatInvitationUsageLabel } from "@/lib/badge/invitation-display-status";
+import { InvitationDisplayStatusBadge } from "@/components/badge/invitation-display-status-badge";
+import { InvitationJoinScopeBadge } from "@/components/badge/invitation-join-scope-badge";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,8 +29,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DashboardTableShell } from "@/components/dashboard-table/dashboard-table-shell";
-import { DashboardTableViewport } from "@/components/dashboard-table/dashboard-table-viewport";
+import { DataTableShell } from "@/components/data-table/data-table-shell";
+import { DataTableViewport } from "@/components/data-table/data-table-viewport";
 import {
   Table,
   TableBody,
@@ -121,7 +121,7 @@ export function InvitationsTable({
       </CardHeader>
       <CardContent>
         {totalCount > 0 ? (
-          <DashboardTableShell
+          <DataTableShell
             page={page}
             pageSize={pageSize}
             totalCount={totalCount}
@@ -143,7 +143,7 @@ export function InvitationsTable({
             }
             countLabel="invitation"
           >
-            <DashboardTableViewport>
+            <DataTableViewport>
               <Table className="table-fixed">
                 <TableHeader>
                   <TableRow>
@@ -234,8 +234,8 @@ export function InvitationsTable({
                   })}
                 </TableBody>
               </Table>
-            </DashboardTableViewport>
-          </DashboardTableShell>
+            </DataTableViewport>
+          </DataTableShell>
         ) : (
           <p className="py-8 text-center text-xs text-muted-foreground">
             No invitations yet.

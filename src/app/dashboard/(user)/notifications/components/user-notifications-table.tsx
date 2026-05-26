@@ -10,7 +10,7 @@ import {
 } from "@/app/dashboard/(user)/notifications/lib/user-notifications-table-params";
 import { buildNotificationSourceInline } from "@/app/dashboard/lib/notifications/notification-source-label";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
-import { badgeLabels } from "@/lib/badge-labels";
+import { badgeLabels } from "@/lib/badge/badge-labels";
 import type { NotificationType } from "@/generated/prisma/enums";
 import {
   Card,
@@ -19,10 +19,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DashboardTableSegmentFilter } from "@/components/dashboard-table/dashboard-table-segment-filter";
-import { DashboardTableShell } from "@/components/dashboard-table/dashboard-table-shell";
+import { DataTableSegmentFilter } from "@/components/data-table/data-table-segment-filter";
+import { DataTableShell } from "@/components/data-table/data-table-shell";
 import { UserNotificationRowActionsMenu } from "@/app/dashboard/(user)/notifications/components/user-notification-row-actions-menu";
-import { DashboardTableViewport } from "@/components/dashboard-table/dashboard-table-viewport";
+import { DataTableViewport } from "@/components/data-table/data-table-viewport";
 import {
   Table,
   TableBody,
@@ -116,7 +116,7 @@ export function UserNotificationsTable({
       <CardHeader>
         <CardTitle>Notifications</CardTitle>
         <CardAction>
-          <DashboardTableSegmentFilter
+          <DataTableSegmentFilter
             value={filter}
             options={notificationFilterOptions}
             onValueChange={(next) => navigate({ page: 1, filter: next })}
@@ -126,7 +126,7 @@ export function UserNotificationsTable({
 
       <CardContent className="space-y-4">
         {totalCount > 0 ? (
-          <DashboardTableShell
+          <DataTableShell
             page={page}
             pageSize={pageSize}
             totalCount={totalCount}
@@ -136,7 +136,7 @@ export function UserNotificationsTable({
             }
             countLabel="notification"
           >
-            <DashboardTableViewport>
+            <DataTableViewport>
               <Table className="table-fixed">
                 <TableHeader>
                   <TableRow>
@@ -161,12 +161,12 @@ export function UserNotificationsTable({
                         organizationName: notification.organizationName ?? null,
                         teamName: notification.teamName ?? null,
                         createdByName: null,
-                      }) ?? "—";
+                      }) ?? "â€”";
                     const formattedDate = formatNotificationMetaDate(
                       notification,
                       filter,
                     );
-                    const metaLine = `${typeLabel} · ${sourceLabel} · ${formattedDate}`;
+                    const metaLine = `${typeLabel} Â· ${sourceLabel} Â· ${formattedDate}`;
 
                     return (
                       <TableRow
@@ -197,9 +197,9 @@ export function UserNotificationsTable({
                           </p>
                           <p
                             className="mt-1 hidden truncate text-[0.7rem] text-muted-foreground lg:block"
-                            title={`${typeLabel} · ${sourceLabel}`}
+                            title={`${typeLabel} Â· ${sourceLabel}`}
                           >
-                            {typeLabel} · {sourceLabel}
+                            {typeLabel} Â· {sourceLabel}
                           </p>
                         </TableCell>
                         <TableCell className="hidden text-xs text-muted-foreground lg:table-cell">
@@ -219,8 +219,8 @@ export function UserNotificationsTable({
                   })}
                 </TableBody>
               </Table>
-            </DashboardTableViewport>
-          </DashboardTableShell>
+            </DataTableViewport>
+          </DataTableShell>
         ) : (
           <p className="py-8 text-center text-xs text-muted-foreground">
             {emptyMessage}

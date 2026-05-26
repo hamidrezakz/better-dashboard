@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { BellIcon, Building2Icon, UsersIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { RoleBadge } from "@/components/globals-badge/role-badge";
+import { RoleBadge } from "@/components/badge/role-badge";
 import {
   DashboardPageTitleFallback,
   DashboardStatCardFallback,
@@ -13,7 +13,7 @@ import {
 import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-shell";
 import { getUserProfilePageData } from "@/app/dashboard/(user)/lib/get-user-profile-page";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
-import { requireAuthSession } from "@/lib/auth-session";
+import { requireAuthSession } from "@/lib/auth/session";
 
 export default function UserDashboardHomePage() {
   return (

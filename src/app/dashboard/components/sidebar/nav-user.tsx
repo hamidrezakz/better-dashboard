@@ -30,7 +30,7 @@ import {
   UserCircleIcon,
 } from "lucide-react";
 import { useTheme } from "next-themes";
-import { getUserInitials } from "@/lib/user-display";
+import { getUserInitials } from "@/lib/user-profile/user-display";
 
 type DashboardNavUserProps = {
   user: DashboardSidebarConfig["user"];

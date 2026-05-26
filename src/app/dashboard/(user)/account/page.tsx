@@ -4,7 +4,7 @@ import { mapAccountSessionsForDisplay } from "@/app/dashboard/(user)/account/lib
 import { getAccountProfile } from "@/app/dashboard/(user)/account/lib/get-account-profile";
 import { getAccountSessions } from "@/app/dashboard/(user)/account/lib/get-account-sessions";
 import { getUserHasPasswordCredential } from "@/app/dashboard/(user)/account/lib/get-user-has-password-credential";
-import { requireAuthSession } from "@/lib/auth-session";
+import { requireAuthSession } from "@/lib/auth/session";
 
 export default async function AccountPage() {
   const session = await requireAuthSession();

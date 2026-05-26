@@ -2,28 +2,28 @@
 
 > **Context:** Rule `.cursor/rules/dashboard.mdc` on `src/app/dashboard/**` and dashboard APIs. Canonical detail here.
 
-Copyable org/team dashboard slice — fork, trim route trees, or CLI scaffold. Placement rules: [architecture.md § Placement](./architecture.md#placement).
+Copyable org/team dashboard slice â€” fork, trim route trees, or CLI scaffold. Placement rules: [architecture.md Â§ Placement](./architecture.md#placement).
 
 ## Segment SSOT (`dashboard/lib/`)
 
 | File                      | Role                                    |
 | ------------------------- | --------------------------------------- |
-| `dashboard-routes.ts`     | All dashboard URLs — no hardcoded paths |
+| `dashboard-routes.ts`     | All dashboard URLs â€” no hardcoded paths |
 | `dashboard-nav-labels.ts` | Sidebar, breadcrumbs, manage tabs (just global things)       |
 | `cache-tags.ts`           | Tag builders for reads/writes           |
 | `dashboard-access.ts`     | Access guards                           |
 
-Badge enum copy: `src/lib/badge-labels.ts` (not route nav).
+Badge enum copy: `src/lib/badge/badge-labels.ts` (not route nav).
 
 ## Segment `components/`
 
-Shared chrome and shells — hoist here when **two or more** dashboard areas need the same UI:
+Shared chrome and shells â€” hoist here when **two or more** dashboard areas need the same UI:
 
 | Area                   | Path                                                                                              |
 | ---------------------- | ------------------------------------------------------------------------------------------------- |
 | Form shell             | `components/form-shell/` (`DashboardFormShell`, footer actions)                                   |
 | Page shell             | `components/dashboard-page-shell/`                                                                |
-| Sidebar                | `components/sidebar/` (+ `dashboard-sidebar-close-on-navigate.tsx` — not `components/ui/sidebar`) |
+| Sidebar                | `components/sidebar/` (+ `dashboard-sidebar-close-on-navigate.tsx` â€” not `components/ui/sidebar`) |
 | Breadcrumbs            | `components/breadcrumbs/`                                                                         |
 | Notifications (chrome) | `components/notifications/`                                                                       |
 
@@ -35,10 +35,10 @@ Route-scoped notification pages: `(user)/notifications`, `organizations/.../mana
 
 ## Navigation flow
 
-1. **Links** — `dashboardRoutes` (and other segment `*-routes.ts`).
-2. **Sidebar** — session + DB → `getDashboardSidebarConfig` → items.
-3. **Breadcrumbs** — URL + `dashboardNavLabels.breadcrumbSegments`; dynamic IDs via resolver when allowed.
-4. **Org manage tabs** — labels from `dashboardNavLabels.manageTabs`, hrefs from `dashboardRoutes`.
+1. **Links** â€” `dashboardRoutes` (and other segment `*-routes.ts`).
+2. **Sidebar** â€” session + DB â†’ `getDashboardSidebarConfig` â†’ items.
+3. **Breadcrumbs** â€” URL + `dashboardNavLabels.breadcrumbSegments`; dynamic IDs via resolver when allowed.
+4. **Org manage tabs** â€” labels from `dashboardNavLabels.manageTabs`, hrefs from `dashboardRoutes`.
 
 Do not duplicate nav/tab/breadcrumb strings in components.
 
@@ -53,13 +53,13 @@ Long DB-backed cell text (email, title, body, names):
 - **`title={fullValue}`** when truncation hides meaning.
 - Badges, counts, dates, action menus: leave as-is unless they overflow.
 
-Reuse `DashboardTableShell` from `src/components/dashboard-table/` for paginated lists.
+Reuse `DataTableShell` from `src/components/data-table/` for paginated lists.
 
 ## Forms & feedback
 
-**Toasts:** `toast.success` / `toast.error` from `sonner` at the call site — no wrapper module. `<Toaster />` in root layout.
+**Toasts:** `toast.success` / `toast.error` from `sonner` at the call site â€” no wrapper module. `<Toaster />` in root layout.
 
-**Field validation:** errors after blur or submit attempt; `aria-invalid` / `aria-describedby`. Server errors → toast unless dialog stays open with inline copy.
+**Field validation:** errors after blur or submit attempt; `aria-invalid` / `aria-describedby`. Server errors â†’ toast unless dialog stays open with inline copy.
 
 **Form shell footers:** `DashboardFormShellFooterActions` in `components/form-shell/`. DOM order: **Cancel** (outline) then **primary**; mobile uses `flex-col-reverse` so primary is on top. `variant="destructive"` only for destructive actions, not Cancel.
 
@@ -67,7 +67,7 @@ Reuse `DashboardTableShell` from `src/components/dashboard-table/` for paginated
 
 - English in template; no i18n runtime unless requested.
 - Chrome copy in `dashboard-nav-labels.ts` only. (just global dashboard labels that really needed to be. not one placeables...)
-- Other language: edit copy files + `src/lib/app-locale.ts` — [ui-design.md](./ui-design.md).
+- Other language: edit copy files + `src/lib/app-locale.ts` â€” [ui-design.md](./ui-design.md).
 
 ## Mobile breadcrumbs
 

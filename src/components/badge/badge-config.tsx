@@ -15,31 +15,31 @@ import type { InvitationJoinScope } from "@/app/join/lib/invitation-scope";
 import {
   resolveInvitationDisplayStatus,
   type InvitationDisplayInput,
-} from "@/lib/invitation-display-status";
-import type { InvitationDisplayStatusKey } from "@/lib/badge-labels";
+} from "@/lib/badge/invitation-display-status";
+import type { InvitationDisplayStatusKey } from "@/lib/badge/badge-labels";
 import type {
   MembershipRole,
   NotificationAudience,
   NotificationType,
 } from "@/generated/prisma/enums";
 import {
-  type GlobalBadgeConfig,
-  type GlobalBadgeVariant,
-} from "@/components/globals-badge/global-badge";
-import { badgeLabels } from "@/lib/badge-labels";
+  type LabeledBadgeConfig,
+  type LabeledBadgeVariant,
+} from "@/components/badge/labeled-badge";
+import { badgeLabels } from "@/lib/badge/badge-labels";
 import type { ReactElement } from "react";
 
 function item(
   label: string,
-  variant: GlobalBadgeVariant,
+  variant: LabeledBadgeVariant,
   icon: ReactElement,
-): GlobalBadgeConfig {
+): LabeledBadgeConfig {
   return { label, variant, icon };
 }
 
 const invitationDisplayStatusConfig: Record<
   InvitationDisplayStatusKey,
-  GlobalBadgeConfig
+  LabeledBadgeConfig
 > = {
   active_link: item(
     badgeLabels.invitationDisplayStatus.active_link,
@@ -60,7 +60,7 @@ const invitationDisplayStatusConfig: Record<
 
 const invitationJoinScopeConfig: Record<
   InvitationJoinScope,
-  GlobalBadgeConfig
+  LabeledBadgeConfig
 > = {
   organization: item(
     badgeLabels.invitationJoinScope.organization,
@@ -84,7 +84,7 @@ const invitationJoinScopeConfig: Record<
   ),
 };
 
-const membershipRoleConfig: Record<MembershipRole, GlobalBadgeConfig> = {
+const membershipRoleConfig: Record<MembershipRole, LabeledBadgeConfig> = {
   OWNER: item(
     badgeLabels.membershipRole.OWNER,
     "default",
@@ -102,7 +102,7 @@ const membershipRoleConfig: Record<MembershipRole, GlobalBadgeConfig> = {
   ),
 };
 
-const notificationTypeConfig: Record<NotificationType, GlobalBadgeConfig> = {
+const notificationTypeConfig: Record<NotificationType, LabeledBadgeConfig> = {
   SYSTEM: item(
     badgeLabels.notificationType.SYSTEM,
     "default",
@@ -142,7 +142,7 @@ const notificationTypeConfig: Record<NotificationType, GlobalBadgeConfig> = {
 
 const notificationAudienceConfig: Record<
   NotificationAudience,
-  GlobalBadgeConfig
+  LabeledBadgeConfig
 > = {
   USER_DIRECT: item(
     badgeLabels.notificationAudience.USER_DIRECT,
@@ -173,9 +173,9 @@ const notificationAudienceConfig: Record<
 
 function resolveConfig<T extends string>(
   value: string,
-  config: Record<T, GlobalBadgeConfig>,
+  config: Record<T, LabeledBadgeConfig>,
   fallbackIcon: ReactElement,
-): GlobalBadgeConfig {
+): LabeledBadgeConfig {
   const normalizedValue = value.trim();
   const matched = config[normalizedValue as T];
 

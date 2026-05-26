@@ -5,7 +5,7 @@ import { joinCacheTags } from "@/app/join/lib/cache-tags";
 import {
   invitationIsExhausted,
   invitationIsExpired,
-} from "@/lib/invitation-display-status";
+} from "@/lib/badge/invitation-display-status";
 import { prisma } from "@/lib/prisma";
 
 export type InvitationJoinPreview =

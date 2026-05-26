@@ -6,7 +6,7 @@ import { markNotificationReadAction } from "@/app/action/dashboard/users/notific
 import type { NotificationViewItem } from "@/app/dashboard/lib/notifications/notification-view-types";
 import { buildNotificationSourceInline } from "@/app/dashboard/lib/notifications/notification-source-label";
 import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
-import { NotificationTypeBadge } from "@/components/globals-badge/notification-type-badge";
+import { NotificationTypeBadge } from "@/components/badge/notification-type-badge";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { Button } from "@/components/ui/button";
 import {

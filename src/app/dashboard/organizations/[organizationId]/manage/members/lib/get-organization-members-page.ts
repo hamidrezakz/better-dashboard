@@ -9,11 +9,11 @@ import type { MembershipRole } from "@/generated/prisma/enums";
 import type { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 import {
-  clampDashboardTablePage,
-  parseDashboardTableFilter,
-  parseDashboardTablePage,
-  parseDashboardTablePageSize,
-} from "@/lib/dashboard-table-search-params";
+  clampDataTablePage,
+  parseDataTableFilter,
+  parseDataTablePage,
+  parseDataTablePageSize,
+} from "@/lib/data-table/search-params";
 
 export type OrganizationMemberTeamItem = {
   id: string;
@@ -66,11 +66,11 @@ export function parseOrganizationMembersPageQuery(
   searchParams: Record<string, string | string[] | undefined>,
 ): OrganizationMembersPageQuery {
   return {
-    page: parseDashboardTablePage(searchParams),
-    pageSize: parseDashboardTablePageSize(searchParams, {
+    page: parseDataTablePage(searchParams),
+    pageSize: parseDataTablePageSize(searchParams, {
       defaultPageSize: MEMBERS_DEFAULT_PAGE_SIZE,
     }),
-    filter: parseMemberTableFilter(parseDashboardTableFilter(searchParams)),
+    filter: parseMemberTableFilter(parseDataTableFilter(searchParams)),
   };
 }
 
@@ -81,7 +81,7 @@ async function loadOrganizationMembersPage(
   const where = buildMembersWhere(organizationId, query.filter);
 
   const totalCount = await prisma.member.count({ where });
-  const page = clampDashboardTablePage(query.page, totalCount, query.pageSize);
+  const page = clampDataTablePage(query.page, totalCount, query.pageSize);
   const skip = (page - 1) * query.pageSize;
 
   const members = await prisma.member.findMany({

@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { LoginForm } from "@/app/(auth)/(email-password)/login/components/login-form";
-import { normalizeAuthRedirectTarget } from "@/lib/auth-redirect";
+import { normalizeAuthRedirectTarget } from "@/lib/auth/redirect";
 
 type LoginPageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;

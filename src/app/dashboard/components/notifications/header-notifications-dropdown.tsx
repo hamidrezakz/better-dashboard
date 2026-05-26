@@ -11,7 +11,7 @@ import type { NotificationViewItem } from "@/app/dashboard/lib/notifications/not
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { buildNotificationSourceInline } from "@/app/dashboard/lib/notifications/notification-source-label";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
-import { NotificationTypeBadge } from "@/components/globals-badge/notification-type-badge";
+import { NotificationTypeBadge } from "@/components/badge/notification-type-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {

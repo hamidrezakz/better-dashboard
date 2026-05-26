@@ -2,7 +2,7 @@ import { cache } from "react";
 import { notFound, redirect } from "next/navigation";
 import type { MembershipRole } from "@/generated/prisma/enums";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
-import { requireAuthSession } from "@/lib/auth-session";
+import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
 const ORG_MANAGER_ROLES = new Set<MembershipRole>(["OWNER", "ADMIN"]);

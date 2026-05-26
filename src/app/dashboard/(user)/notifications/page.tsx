@@ -7,7 +7,7 @@ import {
   getUserNotificationsPage,
   parseUserNotificationsPageQuery,
 } from "@/app/dashboard/(user)/notifications/lib/get-user-notifications-page";
-import { requireAuthSession } from "@/lib/auth-session";
+import { requireAuthSession } from "@/lib/auth/session";
 
 type UserNotificationsPageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;

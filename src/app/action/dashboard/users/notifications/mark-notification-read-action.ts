@@ -6,7 +6,7 @@ import {
   buildNotificationVisibilityWhere,
   getUserNotificationScope,
 } from "@/app/dashboard/lib/notifications/notification-visibility";
-import { requireAuthSession } from "@/lib/auth-session";
+import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
 type MarkNotificationReadInput = {

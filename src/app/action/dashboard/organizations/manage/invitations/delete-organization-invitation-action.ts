@@ -4,7 +4,7 @@ import { updateTag } from "next/cache";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import { canManageOrganization } from "@/app/dashboard/lib/dashboard-access";
 import { organizationInvitationByIdWhere } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/organization-invitation-access";
-import { requireAuthSession } from "@/lib/auth-session";
+import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
 type DeleteOrganizationInvitationInput = {

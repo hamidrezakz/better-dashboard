@@ -19,8 +19,8 @@ import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import {
   formatInvitationUsageLabel,
   resolveInvitationDisplayStatus,
-} from "@/lib/invitation-display-status";
-import { badgeLabels } from "@/lib/badge-labels";
+} from "@/lib/badge/invitation-display-status";
+import { badgeLabels } from "@/lib/badge/badge-labels";
 import { joinRoutes } from "@/app/join/lib/join-routes";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

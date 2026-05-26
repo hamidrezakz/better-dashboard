@@ -11,7 +11,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { getUserInitials } from "@/lib/user-display";
+import { getUserInitials } from "@/lib/user-profile/user-display";
 
 type AccountProfileFormFieldsProps = {
   formId: string;

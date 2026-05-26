@@ -1,15 +1,15 @@
 import {
-  DASHBOARD_TABLE_PAGE_SIZES,
-  type ParseDashboardTablePageSizeOptions,
-} from "@/lib/dashboard-table-page-size";
+  DATA_TABLE_PAGE_SIZES,
+  type ParseDataTablePageSizeOptions,
+} from "@/lib/data-table/page-size";
 
-export type DashboardTableSearchParamsInput = {
+export type DataTableSearchParamsInput = {
   page?: number;
   pageSize?: number;
   filter?: string;
 };
 
-export type BuildDashboardTableSearchParamsOptions = {
+export type BuildDataTableSearchParamsOptions = {
   defaultPageSize?: number;
 };
 
@@ -22,7 +22,7 @@ function firstSearchParamValue(
   return Array.isArray(value) ? value[0] : value;
 }
 
-export function parseDashboardTablePage(
+export function parseDataTablePage(
   searchParams: Record<string, string | string[] | undefined>,
   defaultPage = 1,
 ): number {
@@ -39,11 +39,11 @@ export function parseDashboardTablePage(
   return parsed;
 }
 
-export function parseDashboardTablePageSize(
+export function parseDataTablePageSize(
   searchParams: Record<string, string | string[] | undefined>,
-  options: ParseDashboardTablePageSizeOptions,
+  options: ParseDataTablePageSizeOptions,
 ): number {
-  const allowedSizes = options.allowedSizes ?? DASHBOARD_TABLE_PAGE_SIZES;
+  const allowedSizes = options.allowedSizes ?? DATA_TABLE_PAGE_SIZES;
   const allowedSet = new Set(allowedSizes);
   const raw = firstSearchParamValue(searchParams.pageSize);
 
@@ -59,14 +59,14 @@ export function parseDashboardTablePageSize(
   return parsed;
 }
 
-export function parseDashboardTableFilter(
+export function parseDataTableFilter(
   searchParams: Record<string, string | string[] | undefined>,
 ): string | undefined {
   const raw = firstSearchParamValue(searchParams.filter)?.trim();
   return raw || undefined;
 }
 
-export function clampDashboardTablePage(
+export function clampDataTablePage(
   page: number,
   totalCount: number,
   pageSize: number,
@@ -75,9 +75,9 @@ export function clampDashboardTablePage(
   return Math.min(Math.max(1, page), totalPages);
 }
 
-export function buildDashboardTableSearchParams(
-  input: DashboardTableSearchParamsInput,
-  options: BuildDashboardTableSearchParamsOptions = {},
+export function buildDataTableSearchParams(
+  input: DataTableSearchParamsInput,
+  options: BuildDataTableSearchParamsOptions = {},
 ): string {
   const params = new URLSearchParams();
 
@@ -102,10 +102,10 @@ export function buildDashboardTableSearchParams(
   return serialized ? `?${serialized}` : "";
 }
 
-export function dashboardTablePath(
+export function dataTablePath(
   pathname: string,
-  input: DashboardTableSearchParamsInput = {},
-  options: BuildDashboardTableSearchParamsOptions = {},
+  input: DataTableSearchParamsInput = {},
+  options: BuildDataTableSearchParamsOptions = {},
 ): string {
-  return `${pathname}${buildDashboardTableSearchParams(input, options)}`;
+  return `${pathname}${buildDataTableSearchParams(input, options)}`;
 }

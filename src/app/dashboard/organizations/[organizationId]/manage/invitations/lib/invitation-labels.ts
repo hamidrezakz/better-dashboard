@@ -1,5 +1,5 @@
 import type { InvitationJoinScope } from "@/app/join/lib/invitation-scope";
-import { badgeLabels } from "@/lib/badge-labels";
+import { badgeLabels } from "@/lib/badge/badge-labels";
 
 export const invitationJoinScopeToggleLabels: Record<
   Exclude<InvitationJoinScope, "unknown">,

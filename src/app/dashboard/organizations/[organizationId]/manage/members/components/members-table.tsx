@@ -29,9 +29,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DashboardTableSegmentFilter } from "@/components/dashboard-table/dashboard-table-segment-filter";
-import { DashboardTableShell } from "@/components/dashboard-table/dashboard-table-shell";
-import { DashboardTableViewport } from "@/components/dashboard-table/dashboard-table-viewport";
+import { DataTableSegmentFilter } from "@/components/data-table/data-table-segment-filter";
+import { DataTableShell } from "@/components/data-table/data-table-shell";
+import { DataTableViewport } from "@/components/data-table/data-table-viewport";
 import {
   Table,
   TableBody,
@@ -40,7 +40,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { RoleBadge } from "@/components/globals-badge/role-badge";
+import { RoleBadge } from "@/components/badge/role-badge";
 import { UserProfileCell } from "@/components/user-profile/user-profile-cell";
 
 type MembersTableProps = {
@@ -119,7 +119,7 @@ export function MembersTable({
       <CardHeader>
         <CardTitle>Members</CardTitle>
         <CardAction>
-          <DashboardTableSegmentFilter
+          <DataTableSegmentFilter
             value={filter}
             options={memberFilterOptions}
             onValueChange={(next) => navigate({ page: 1, filter: next })}
@@ -128,7 +128,7 @@ export function MembersTable({
       </CardHeader>
 
       <CardContent>
-        <DashboardTableShell
+        <DataTableShell
           page={page}
           pageSize={pageSize}
           totalCount={totalCount}
@@ -138,7 +138,7 @@ export function MembersTable({
           }
           countLabel="member"
         >
-          <DashboardTableViewport>
+          <DataTableViewport>
             <Table className="table-fixed">
               <TableHeader>
                 <TableRow>
@@ -206,8 +206,8 @@ export function MembersTable({
                 )}
               </TableBody>
             </Table>
-          </DashboardTableViewport>
-        </DashboardTableShell>
+          </DataTableViewport>
+        </DataTableShell>
       </CardContent>
 
       <AlertDialog

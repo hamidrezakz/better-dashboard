@@ -8,7 +8,7 @@ import { accountListSettingsItems } from "@/app/dashboard/(user)/account/lib/acc
 import type { AccountPanel } from "@/app/dashboard/(user)/account/lib/account-panel";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getUserInitials } from "@/lib/user-display";
+import { getUserInitials } from "@/lib/user-profile/user-display";
 import { cn } from "@/lib/utils";
 
 type AccountSettingsHubProps = {

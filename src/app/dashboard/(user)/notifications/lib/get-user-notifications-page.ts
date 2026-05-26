@@ -13,11 +13,11 @@ import {
 } from "@/app/dashboard/(user)/notifications/lib/user-notifications-table-params";
 import { prisma } from "@/lib/prisma";
 import {
-  clampDashboardTablePage,
-  parseDashboardTableFilter,
-  parseDashboardTablePage,
-  parseDashboardTablePageSize,
-} from "@/lib/dashboard-table-search-params";
+  clampDataTablePage,
+  parseDataTableFilter,
+  parseDataTablePage,
+  parseDataTablePageSize,
+} from "@/lib/data-table/search-params";
 
 export type UserNotificationsPageQuery = {
   page: number;
@@ -29,12 +29,12 @@ export function parseUserNotificationsPageQuery(
   searchParams: Record<string, string | string[] | undefined>,
 ): UserNotificationsPageQuery {
   return {
-    page: parseDashboardTablePage(searchParams),
-    pageSize: parseDashboardTablePageSize(searchParams, {
+    page: parseDataTablePage(searchParams),
+    pageSize: parseDataTablePageSize(searchParams, {
       defaultPageSize: USER_NOTIFICATIONS_DEFAULT_PAGE_SIZE,
     }),
     filter: parseUserNotificationTableFilter(
-      parseDashboardTableFilter(searchParams),
+      parseDataTableFilter(searchParams),
     ),
   };
 }
@@ -83,7 +83,7 @@ export async function getUserNotificationsPage(
   const where = buildListWhere(scope, userId, query.filter);
 
   const totalCount = await prisma.notification.count({ where });
-  const page = clampDashboardTablePage(query.page, totalCount, query.pageSize);
+  const page = clampDataTablePage(query.page, totalCount, query.pageSize);
   const skip = (page - 1) * query.pageSize;
 
   const notifications = await prisma.notification.findMany({

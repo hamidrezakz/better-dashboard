@@ -65,4 +65,4 @@ export function isNotificationFormValid(form: NotificationFormState) {
   return true;
 }
 
-export { buildDashboardTablePageNumbers as buildPageNumbers } from "@/lib/dashboard-table-pagination";
+export { buildDataTablePageNumbers as buildPageNumbers } from "@/lib/data-table/pagination";

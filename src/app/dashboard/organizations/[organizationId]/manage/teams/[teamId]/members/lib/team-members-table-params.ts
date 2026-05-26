@@ -1,8 +1,8 @@
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import {
-  buildDashboardTableSearchParams,
-  type DashboardTableSearchParamsInput,
-} from "@/lib/dashboard-table-search-params";
+  buildDataTableSearchParams,
+  type DataTableSearchParamsInput,
+} from "@/lib/data-table/search-params";
 
 export const TEAM_MEMBERS_DEFAULT_PAGE_SIZE = 10;
 
@@ -14,7 +14,7 @@ export type OrganizationTeamMembersPageQuery = {
 export function organizationTeamMembersTablePath(
   organizationId: string,
   teamId: string,
-  input?: DashboardTableSearchParamsInput,
+  input?: DataTableSearchParamsInput,
 ) {
   const base = dashboardRoutes.organizationTeam(organizationId, teamId);
 
@@ -22,7 +22,7 @@ export function organizationTeamMembersTablePath(
     return base;
   }
 
-  const query = buildDashboardTableSearchParams(input, {
+  const query = buildDataTableSearchParams(input, {
     defaultPageSize: TEAM_MEMBERS_DEFAULT_PAGE_SIZE,
   });
 

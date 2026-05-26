@@ -1,4 +1,4 @@
-import { buildAuthRouteWithRedirect } from "@/lib/auth-redirect";
+import { buildAuthRouteWithRedirect } from "@/lib/auth/redirect";
 import { toAbsolutePublicUrl } from "@/lib/public-url";
 
 function encodeRouteSegment(value: string) {

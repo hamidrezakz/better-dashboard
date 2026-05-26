@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { buildDashboardTablePageNumbers } from "@/lib/dashboard-table-pagination";
+import { buildDataTablePageNumbers } from "@/lib/data-table/pagination";
 import { cn } from "@/lib/utils";
 import {
   Pagination,
@@ -13,7 +13,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-export type DashboardTableFooterProps = {
+export type DataTableFooterProps = {
   page: number;
   totalPages: number;
   onPageChange: (page: number) => void;
@@ -24,14 +24,14 @@ export type DashboardTableFooterProps = {
   className?: string;
 };
 
-export function DashboardTableFooter({
+export function DataTableFooter({
   page,
   totalPages,
   onPageChange,
   summary,
   pageSizeControl,
   className,
-}: DashboardTableFooterProps) {
+}: DataTableFooterProps) {
   const showPagination = totalPages > 1;
 
   if (!summary && !pageSizeControl && !showPagination) {
@@ -63,22 +63,21 @@ export function DashboardTableFooter({
               />
             </PaginationItem>
 
-            {buildDashboardTablePageNumbers(page, totalPages).map(
-              (num, index) =>
-                num === "..." ? (
-                  <PaginationItem key={`ellipsis-${index}`}>
-                    <PaginationEllipsis />
-                  </PaginationItem>
-                ) : (
-                  <PaginationItem key={num}>
-                    <PaginationLink
-                      isActive={num === page}
-                      onClick={() => onPageChange(num)}
-                    >
-                      {num}
-                    </PaginationLink>
-                  </PaginationItem>
-                ),
+            {buildDataTablePageNumbers(page, totalPages).map((num, index) =>
+              num === "..." ? (
+                <PaginationItem key={`ellipsis-${index}`}>
+                  <PaginationEllipsis />
+                </PaginationItem>
+              ) : (
+                <PaginationItem key={num}>
+                  <PaginationLink
+                    isActive={num === page}
+                    onClick={() => onPageChange(num)}
+                  >
+                    {num}
+                  </PaginationLink>
+                </PaginationItem>
+              ),
             )}
 
             <PaginationItem>

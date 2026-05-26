@@ -1,11 +1,11 @@
 import type { InvitationJoinScope } from "@/app/join/lib/invitation-scope";
-import { getInvitationJoinScopeBadgeConfig } from "@/components/globals-badge/badge-config";
-import { GlobalBadge } from "@/components/globals-badge/global-badge";
+import { getInvitationJoinScopeBadgeConfig } from "@/components/badge/badge-config";
+import { LabeledBadge } from "@/components/badge/labeled-badge";
 
 export function InvitationJoinScopeBadge({
   scope,
 }: {
   scope: InvitationJoinScope | string;
 }) {
-  return <GlobalBadge {...getInvitationJoinScopeBadgeConfig(scope)} />;
+  return <LabeledBadge {...getInvitationJoinScopeBadgeConfig(scope)} />;
 }

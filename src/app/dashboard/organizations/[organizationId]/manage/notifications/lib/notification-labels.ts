@@ -2,7 +2,7 @@ import type {
   NotificationAudience,
   NotificationType,
 } from "@/generated/prisma/enums";
-import { badgeLabels } from "@/lib/badge-labels";
+import { badgeLabels } from "@/lib/badge/badge-labels";
 
 export const NOTIFICATION_TYPE_OPTIONS = [
   "SYSTEM",

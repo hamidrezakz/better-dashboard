@@ -8,10 +8,10 @@ import {
 import type { OrganizationTeamMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/lib/get-organization-team-members-page";
 import { prisma } from "@/lib/prisma";
 import {
-  clampDashboardTablePage,
-  parseDashboardTablePage,
-  parseDashboardTablePageSize,
-} from "@/lib/dashboard-table-search-params";
+  clampDataTablePage,
+  parseDataTablePage,
+  parseDataTablePageSize,
+} from "@/lib/data-table/search-params";
 
 export type OrganizationTeamDetailPageResult = {
   team: {
@@ -32,8 +32,8 @@ export function parseOrganizationTeamDetailPageQuery(
   searchParams: Record<string, string | string[] | undefined>,
 ): OrganizationTeamMembersPageQuery {
   return {
-    page: parseDashboardTablePage(searchParams),
-    pageSize: parseDashboardTablePageSize(searchParams, {
+    page: parseDataTablePage(searchParams),
+    pageSize: parseDataTablePageSize(searchParams, {
       defaultPageSize: TEAM_MEMBERS_DEFAULT_PAGE_SIZE,
     }),
   };
@@ -62,7 +62,7 @@ async function loadOrganizationTeamDetailPage(input: {
     }),
   ]);
 
-  const page = clampDashboardTablePage(
+  const page = clampDataTablePage(
     input.query.page,
     totalCount,
     input.query.pageSize,

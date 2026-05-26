@@ -1,7 +1,7 @@
 "use server";
 
 import type { Prisma } from "@/generated/prisma/client";
-import { requireAuthSession } from "@/lib/auth-session";
+import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
 const MIN_QUERY_LENGTH = 2;

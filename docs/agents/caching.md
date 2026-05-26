@@ -25,7 +25,7 @@
 - **Don’t** use bare `revalidateTag(tag)` (single arg).
 - **Don’t** default to `revalidateTag` in actions when the user waits on updated UI.
 - **Don’t** revalidate on read-only actions.
-- Session: [implementation.md § Auth](./implementation.md#auth--session-srclibauth-sessionts).
+- Session: [implementation.md § Auth](./implementation.md#auth--session-srclibauthsessionts).
 
 ```ts
 cacheTag(dashboardCacheTags.organizationInvitationsById(orgId));

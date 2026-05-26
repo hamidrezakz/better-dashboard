@@ -15,7 +15,7 @@ The database layer is limited to **Better Auth’s `auth` schema** in core — n
 | Ship auth + multi-tenant dashboard quickly | Better Auth with the **organization** plugin (teams enabled)                                 |
 | Stay fork-friendly                         | Each feature is a removable route + action subtree                                           |
 | Modern Next.js patterns                    | App Router, Server Components, **action-first** (`app/action/` mirrors routes), tagged cache |
-| Consistent UI                              | shadcn/ui on **Base UI**, preset **base-mira** by default, logical Tailwind (RTL-ready)                 |
+| Consistent UI                              | shadcn/ui on **Base UI**, preset **base-mira** by default, logical Tailwind (RTL-ready)      |
 
 ## Stack
 
@@ -43,7 +43,7 @@ src/
     join/                # Invitation accept flow
   components/            # App-wide UI (outside shadcn ui/)
     ui/                  # shadcn primitives — regenerate via CLI, don’t hand-edit
-  lib/                   # auth, prisma, auth-session, locale, badges
+  lib/                   # prisma, utils; auth/, data-table/, badge/, …
 prisma/                  # Better Auth schema (+ your migrations when you extend)
 docs/
   README.md              # This file (humans)

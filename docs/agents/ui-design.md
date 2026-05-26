@@ -16,7 +16,7 @@ Placement (search upward, hoist): [architecture.md § Placement](./architecture.
 ## Copy
 
 - English in template; no i18n unless requested.
-- Dashboard chrome: `dashboard-nav-labels.ts`. Badge copy: `badge-labels.ts` (just for global things like statuses, roles, etc.)
+- Dashboard chrome: `dashboard-nav-labels.ts`. Badge copy: `lib/badge/badge-labels.ts` (statuses, roles, etc.)
 
 ## Later (humans)
 

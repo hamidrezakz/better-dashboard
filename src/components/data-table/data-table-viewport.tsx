@@ -1,17 +1,17 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-type DashboardTableViewportProps = {
+type DataTableViewportProps = {
   children: ReactNode;
   allowHorizontalScroll?: boolean;
   className?: string;
 };
 
-export function DashboardTableViewport({
+export function DataTableViewport({
   children,
   allowHorizontalScroll = false,
   className,
-}: DashboardTableViewportProps) {
+}: DataTableViewportProps) {
   return (
     <div
       className={cn(

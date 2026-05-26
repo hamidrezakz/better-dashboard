@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { Building2Icon, UsersIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { RoleBadge } from "@/components/globals-badge/role-badge";
+import { RoleBadge } from "@/components/badge/role-badge";
 import {
   DashboardPageTitleFallback,
   DashboardStatCardFallback,
@@ -14,7 +14,7 @@ import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-sh
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 import { isOrganizationManagerRole } from "@/app/dashboard/lib/dashboard-access";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
-import { requireAuthSession } from "@/lib/auth-session";
+import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
 type OrganizationPageProps = {

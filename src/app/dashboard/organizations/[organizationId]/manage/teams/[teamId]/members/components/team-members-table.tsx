@@ -15,8 +15,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DashboardTableShell } from "@/components/dashboard-table/dashboard-table-shell";
-import { DashboardTableViewport } from "@/components/dashboard-table/dashboard-table-viewport";
+import { DataTableShell } from "@/components/data-table/data-table-shell";
+import { DataTableViewport } from "@/components/data-table/data-table-viewport";
 import {
   Table,
   TableBody,
@@ -70,7 +70,7 @@ export function TeamMembersTable({
       </CardHeader>
 
       <CardContent>
-        <DashboardTableShell
+        <DataTableShell
           page={page}
           pageSize={pageSize}
           totalCount={totalCount}
@@ -80,7 +80,7 @@ export function TeamMembersTable({
           }
           countLabel="member"
         >
-          <DashboardTableViewport>
+          <DataTableViewport>
             <Table className="table-fixed">
               <TableHeader>
                 <TableRow>
@@ -141,8 +141,8 @@ export function TeamMembersTable({
                 )}
               </TableBody>
             </Table>
-          </DashboardTableViewport>
-        </DashboardTableShell>
+          </DataTableViewport>
+        </DataTableShell>
       </CardContent>
     </Card>
   );

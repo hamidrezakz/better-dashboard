@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { acceptInvitationAction } from "@/app/action/join/accept-invitation-action";
-import { buildAuthRouteWithRedirect } from "@/lib/auth-redirect";
+import { buildAuthRouteWithRedirect } from "@/lib/auth/redirect";
 import {
   joinAuthRedirectTarget,
   joinLoginPath,

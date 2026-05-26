@@ -3,7 +3,7 @@
 import { revalidateTag } from "next/cache";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { getSessionCached } from "@/lib/auth-session";
+import { getSessionCached } from "@/lib/auth/session";
 import { auth } from "@/lib/auth";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
 

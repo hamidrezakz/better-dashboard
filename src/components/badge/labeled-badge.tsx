@@ -1,19 +1,19 @@
 import { Badge } from "@/components/ui/badge";
 import type { ReactElement } from "react";
 
-export type GlobalBadgeVariant =
+export type LabeledBadgeVariant =
   | "default"
   | "secondary"
   | "destructive"
   | "outline";
 
-export type GlobalBadgeConfig = {
+export type LabeledBadgeConfig = {
   label: string;
-  variant: GlobalBadgeVariant;
+  variant: LabeledBadgeVariant;
   icon: ReactElement;
 };
 
-export function GlobalBadge({ label, variant, icon }: GlobalBadgeConfig) {
+export function LabeledBadge({ label, variant, icon }: LabeledBadgeConfig) {
   return (
     <Badge variant={variant}>
       {icon}

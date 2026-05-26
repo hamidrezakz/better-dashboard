@@ -1,8 +1,8 @@
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import {
-  dashboardTablePath,
-  type DashboardTableSearchParamsInput,
-} from "@/lib/dashboard-table-search-params";
+  dataTablePath,
+  type DataTableSearchParamsInput,
+} from "@/lib/data-table/search-params";
 
 export const USER_NOTIFICATIONS_DEFAULT_PAGE_SIZE = 20;
 
@@ -34,14 +34,14 @@ export const userNotificationFilterLabels: Record<
 };
 
 export function userNotificationsTablePath(
-  input: DashboardTableSearchParamsInput & {
+  input: DataTableSearchParamsInput & {
     filter?: UserNotificationTableFilter;
   } = {},
 ): string {
   const filter =
     input.filter && input.filter !== "unread" ? input.filter : undefined;
 
-  return dashboardTablePath(
+  return dataTablePath(
     dashboardRoutes.userNotifications(),
     {
       page: input.page,

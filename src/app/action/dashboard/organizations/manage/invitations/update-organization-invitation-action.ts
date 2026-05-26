@@ -10,7 +10,7 @@ import {
   resolveInvitationMaxUsesForSave,
   resolveInvitationPersistence,
 } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-mutation";
-import { requireAuthSession } from "@/lib/auth-session";
+import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
 type UpdateOrganizationInvitationInput = InvitationMutationInput & {

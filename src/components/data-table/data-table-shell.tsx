@@ -1,16 +1,16 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { DashboardTableFooter } from "@/components/dashboard-table/dashboard-table-footer";
-import { DashboardTablePageSizeSelect } from "@/components/dashboard-table/dashboard-table-page-size-select";
-import { DASHBOARD_TABLE_PAGE_SIZES } from "@/lib/dashboard-table-page-size";
+import { DataTableFooter } from "@/components/data-table/data-table-footer";
+import { DataTablePageSizeSelect } from "@/components/data-table/data-table-page-size-select";
+import { DATA_TABLE_PAGE_SIZES } from "@/lib/data-table/page-size";
 import {
-  formatDashboardTableNumber,
-  getDashboardTableItemRange,
-} from "@/lib/dashboard-table-pagination";
+  formatDataTableNumber,
+  getDataTableItemRange,
+} from "@/lib/data-table/pagination";
 import { cn } from "@/lib/utils";
 
-export type DashboardTableShellProps = {
+export type DataTableShellProps = {
   page: number;
   pageSize: number;
   totalCount: number;
@@ -23,40 +23,36 @@ export type DashboardTableShellProps = {
   className?: string;
 };
 
-export function DashboardTableShell({
+export function DataTableShell({
   page,
   pageSize,
   totalCount,
   onPageChange,
   onPageSizeChange,
-  pageSizeOptions = DASHBOARD_TABLE_PAGE_SIZES,
+  pageSizeOptions = DATA_TABLE_PAGE_SIZES,
   countLabel = "item",
   children,
   className,
-}: DashboardTableShellProps) {
+}: DataTableShellProps) {
   if (totalCount <= 0) {
     return <div className={cn("space-y-6", className)}>{children}</div>;
   }
 
   const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
   const safePage = Math.min(page, totalPages);
-  const { start, end } = getDashboardTableItemRange(
-    safePage,
-    pageSize,
-    totalCount,
-  );
+  const { start, end } = getDataTableItemRange(safePage, pageSize, totalCount);
 
   const summary = (
     <span
-      aria-label={`${formatDashboardTableNumber(start)} to ${formatDashboardTableNumber(end)} of ${formatDashboardTableNumber(totalCount)} ${countLabel}${totalCount === 1 ? "" : "s"}`}
+      aria-label={`${formatDataTableNumber(start)} to ${formatDataTableNumber(end)} of ${formatDataTableNumber(totalCount)} ${countLabel}${totalCount === 1 ? "" : "s"}`}
     >
-      {formatDashboardTableNumber(start)}–{formatDashboardTableNumber(end)} of{" "}
-      {formatDashboardTableNumber(totalCount)}
+      {formatDataTableNumber(start)}–{formatDataTableNumber(end)} of{" "}
+      {formatDataTableNumber(totalCount)}
     </span>
   );
 
   const pageSizeControl = (
-    <DashboardTablePageSizeSelect
+    <DataTablePageSizeSelect
       value={pageSize}
       options={pageSizeOptions}
       onValueChange={onPageSizeChange}
@@ -67,7 +63,7 @@ export function DashboardTableShell({
     <div className={cn("space-y-6", className)}>
       {children}
 
-      <DashboardTableFooter
+      <DataTableFooter
         page={safePage}
         totalPages={totalPages}
         onPageChange={onPageChange}

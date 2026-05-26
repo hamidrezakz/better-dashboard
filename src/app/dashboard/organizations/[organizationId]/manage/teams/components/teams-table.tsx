@@ -14,7 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DashboardTableViewport } from "@/components/dashboard-table/dashboard-table-viewport";
+import { DataTableViewport } from "@/components/data-table/data-table-viewport";
 import { TeamRowActionsMenu } from "@/app/dashboard/organizations/[organizationId]/manage/teams/components/team-row-actions-menu";
 import {
   Table,
@@ -55,7 +55,7 @@ export function TeamsTable({
       </CardHeader>
 
       <CardContent>
-        <DashboardTableViewport>
+        <DataTableViewport>
           <Table className="table-fixed">
             <TableHeader>
               <TableRow>
@@ -113,7 +113,7 @@ export function TeamsTable({
               )}
             </TableBody>
           </Table>
-        </DashboardTableViewport>
+        </DataTableViewport>
       </CardContent>
     </Card>
   );

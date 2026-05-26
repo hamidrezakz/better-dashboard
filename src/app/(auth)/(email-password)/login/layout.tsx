@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { AuthCrossLink } from "@/app/(auth)/components/auth-cross-link";
-import { buildAuthRouteWithRedirect } from "@/lib/auth-redirect";
+import { buildAuthRouteWithRedirect } from "@/lib/auth/redirect";
 
 type LoginLayoutProps = {
   children: React.ReactNode;

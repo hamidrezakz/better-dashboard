@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { SignUpForm } from "@/app/(auth)/(email-password)/signup/components/signup-form";
-import { normalizeAuthRedirectTarget } from "@/lib/auth-redirect";
+import { normalizeAuthRedirectTarget } from "@/lib/auth/redirect";
 
 type SignUpPageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;

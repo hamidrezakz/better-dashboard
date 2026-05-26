@@ -1,7 +1,7 @@
-import { getRoleBadgeConfig } from "@/components/globals-badge/badge-config";
-import { GlobalBadge } from "@/components/globals-badge/global-badge";
+import { getRoleBadgeConfig } from "@/components/badge/badge-config";
+import { LabeledBadge } from "@/components/badge/labeled-badge";
 import type { MembershipRole } from "@/generated/prisma/enums";
 
 export function RoleBadge({ role }: { role: MembershipRole | string }) {
-  return <GlobalBadge {...getRoleBadgeConfig(role)} />;
+  return <LabeledBadge {...getRoleBadgeConfig(role)} />;
 }

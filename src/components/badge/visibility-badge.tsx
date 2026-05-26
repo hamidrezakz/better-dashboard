@@ -1,5 +1,5 @@
-import { getVisibilityBadgeConfig } from "@/components/globals-badge/badge-config";
-import { GlobalBadge } from "@/components/globals-badge/global-badge";
+import { getVisibilityBadgeConfig } from "@/components/badge/badge-config";
+import { LabeledBadge } from "@/components/badge/labeled-badge";
 import type { NotificationAudience } from "@/generated/prisma/enums";
 
 export function VisibilityBadge({
@@ -7,5 +7,5 @@ export function VisibilityBadge({
 }: {
   visibility: NotificationAudience | string;
 }) {
-  return <GlobalBadge {...getVisibilityBadgeConfig(visibility)} />;
+  return <LabeledBadge {...getVisibilityBadgeConfig(visibility)} />;
 }

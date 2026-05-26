@@ -1,6 +1,6 @@
 # Implementation rules & patterns
 
-> **Context:** Rule `.cursor/rules/implementation.mdc` on actions, `auth-session.ts`, `page.tsx`, `layout.tsx`. Canonical detail here.
+> **Context:** Rule `.cursor/rules/implementation.mdc` on actions, `lib/auth/session.ts`, `page.tsx`, `layout.tsx`. Canonical detail here.
 
 ## Server-first
 
@@ -41,7 +41,7 @@ export default function Page() {
 }
 ```
 
-## Auth / session (`src/lib/auth-session.ts`)
+## Auth / session (`src/lib/auth/session.ts`)
 
 Session uses React `cache()` — **one `getSession` per request**. Never `use cache` / `cacheTag` / `revalidateTag` on session.
 

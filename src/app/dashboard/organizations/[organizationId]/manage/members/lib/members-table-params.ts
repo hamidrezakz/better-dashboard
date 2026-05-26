@@ -1,8 +1,8 @@
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import {
-  dashboardTablePath,
-  type DashboardTableSearchParamsInput,
-} from "@/lib/dashboard-table-search-params";
+  dataTablePath,
+  type DataTableSearchParamsInput,
+} from "@/lib/data-table/search-params";
 
 export const MEMBERS_DEFAULT_PAGE_SIZE = 20;
 
@@ -31,14 +31,14 @@ export const memberFilterLabels: Record<MemberTableFilter, string> = {
 
 export function organizationMembersTablePath(
   organizationId: string,
-  input: Pick<DashboardTableSearchParamsInput, "page" | "pageSize"> & {
+  input: Pick<DataTableSearchParamsInput, "page" | "pageSize"> & {
     filter?: MemberTableFilter;
   } = {},
 ): string {
   const filter =
     input.filter && input.filter !== "all" ? input.filter : undefined;
 
-  return dashboardTablePath(
+  return dataTablePath(
     dashboardRoutes.organizationMembers(organizationId),
     {
       page: input.page,

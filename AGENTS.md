@@ -44,7 +44,7 @@ Human overview: [docs/README.md](docs/README.md). Agent index: [docs/agents/READ
 - **Placement:** search upward; inline by default — [architecture.md § Placement](docs/agents/architecture.md#placement).
 - **Mutations:** `src/app/action/<segment>/` mirrors `app/<segment>/` — one file per mutation — [implementation.md](docs/agents/implementation.md).
 - **Routes, tags, nav copy:** `*-routes.ts`, `cache-tags.ts`, `dashboard-nav-labels.ts` — [architecture.md](docs/agents/architecture.md), [dashboard.md](docs/agents/dashboard.md).
-- **Session:** `auth-session.ts` only; never cache session — [implementation.md § Auth](docs/agents/implementation.md#auth--session-srclibauth-sessionts).
+- **Session:** `lib/auth/session.ts` only; never cache session — [implementation.md § Auth](docs/agents/implementation.md#auth--session-srclibauthsessionts).
 - **Same-user writes:** `updateTag` in the mutating action — [caching.md](docs/agents/caching.md).
 - **UI:** logical Tailwind; do not hand-edit `src/components/ui/*` — [ui-design.md](docs/agents/ui-design.md).
 - **Done:** [implementation.md § Definition of done](docs/agents/implementation.md#definition-of-done).

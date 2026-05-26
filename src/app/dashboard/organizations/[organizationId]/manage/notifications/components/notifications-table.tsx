@@ -6,12 +6,12 @@ import { NotificationRowActionsMenu } from "@/app/dashboard/organizations/[organ
 import { type OrganizationNotificationItem } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/lib/notification-form-utils";
 import { organizationNotificationsTablePath } from "@/app/dashboard/organizations/[organizationId]/manage/notifications/lib/notifications-table-params";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
-import { VisibilityBadge } from "@/components/globals-badge/visibility-badge";
+import { VisibilityBadge } from "@/components/badge/visibility-badge";
 import { UserProfileCell } from "@/components/user-profile/user-profile-cell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DashboardTableShell } from "@/components/dashboard-table/dashboard-table-shell";
-import { DashboardTableViewport } from "@/components/dashboard-table/dashboard-table-viewport";
+import { DataTableShell } from "@/components/data-table/data-table-shell";
+import { DataTableViewport } from "@/components/data-table/data-table-viewport";
 import {
   Table,
   TableBody,
@@ -53,7 +53,7 @@ export function NotificationsTable({
       </CardHeader>
       <CardContent>
         {totalCount > 0 ? (
-          <DashboardTableShell
+          <DataTableShell
             page={page}
             pageSize={pageSize}
             totalCount={totalCount}
@@ -75,7 +75,7 @@ export function NotificationsTable({
             }
             countLabel="notification"
           >
-            <DashboardTableViewport>
+            <DataTableViewport>
               <Table className="table-fixed">
                 <TableHeader>
                   <TableRow>
@@ -155,8 +155,8 @@ export function NotificationsTable({
                   ))}
                 </TableBody>
               </Table>
-            </DashboardTableViewport>
-          </DashboardTableShell>
+            </DataTableViewport>
+          </DataTableShell>
         ) : (
           <p className="py-8 text-center text-xs text-muted-foreground">
             No notifications yet.

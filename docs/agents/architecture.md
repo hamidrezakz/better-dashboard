@@ -24,19 +24,19 @@ Dashboard navigation and copy: [dashboard.md](./dashboard.md). UI primitives: [u
 2. Parent route `components/` (e.g. `organizations/.../manage/components/` when only that subtree shares it)
 3. Segment `src/app/<segment>/components/` (e.g. `dashboard/components/form-shell/`)
 4. App `src/components/` (outside `ui/`)
-5. Compose `src/components/ui/*` (shadcn — do not hand-edit)
+5. Compose `src/components/ui/*` (shadcn â€” do not hand-edit)
 6. Only then add new code at the **lowest** tier that fits reuse
 
 ### Scope table
 
-| Scope        | Location                                | Examples                                         |
-| ------------ | --------------------------------------- | ------------------------------------------------ |
-| Sub-feature  | beside route                            | columns, row menus, feature form fields          |
-| Parent route | `…/<route>/components/`                 | combobox shared within `manage/` only            |
-| Segment      | `src/app/<segment>/lib/`, `components/` | `dashboard-routes`, `DashboardFormShell`         |
-| App          | `src/lib/`, `src/components/`           | `auth-session.ts`, `DashboardTableShell`, badges |
+| Scope        | Location                                | Examples                                      |
+| ------------ | --------------------------------------- | --------------------------------------------- |
+| Sub-feature  | beside route                            | columns, row menus, feature form fields       |
+| Parent route | `â€¦/<route>/components/`               | combobox shared within `manage/` only         |
+| Segment      | `src/app/<segment>/lib/`, `components/` | `dashboard-routes`, `DashboardFormShell`      |
+| App          | `src/lib/`, `src/components/`           | `auth/session.ts`, `DataTableShell`, `badge/` |
 
-**Dependencies:** sub-feature → segment `lib/` → `src/lib` \| `src/components`. No imports from sibling features (e.g. `members/` must not import `teams/` internals). Cross-feature only via segment contracts (`*-routes.ts`, `cache-tags.ts`, access helpers).
+**Dependencies:** sub-feature â†’ segment `lib/` â†’ `src/lib` \| `src/components`. No imports from sibling features (e.g. `members/` must not import `teams/` internals). Cross-feature only via segment contracts (`*-routes.ts`, `cache-tags.ts`, access helpers).
 
 ### Decision flow
 
@@ -55,18 +55,31 @@ flowchart TD
 
 ### Repo examples
 
-| Pattern             | Location                                                                       |
-| ------------------- | ------------------------------------------------------------------------------ |
-| Segment shell       | `dashboard/components/form-shell/` (`DashboardFormShell`)                      |
-| App-wide table      | `src/components/dashboard-table/` (`DashboardTableShell`)                      |
-| Manage subtree only | `organizations/.../manage/components/` (`OrganizationMembersMultiCombobox`)    |
-| Stay local          | `account/components/account-profile-form-fields.tsx`, `*-row-actions-menu.tsx` |
+| Pattern             | Location                                                                            |
+| ------------------- | ----------------------------------------------------------------------------------- |
+| Segment shell       | `dashboard/components/form-shell/` (`DashboardFormShell`)                           |
+| App-wide table      | `components/data-table/` + `lib/data-table/` (`DataTableShell`, pagination helpers) |
+| Manage subtree only | `organizations/.../manage/components/` (`OrganizationMembersMultiCombobox`)         |
+| Stay local          | `account/components/account-profile-form-fields.tsx`, `*-row-actions-menu.tsx`      |
+
+### App `lib/` mirrors `components/`
+
+When app-wide UI lives in `src/components/<feature>/`, shared helpers go in **`src/lib/<feature>/`** with the same folder name (not flat `lib/<feature>-*.ts`).
+
+| `components/`   | `lib/`          | Examples                                          |
+| --------------- | --------------- | ------------------------------------------------- |
+| `data-table/`   | `data-table/`   | `pagination.ts`, `search-params.ts`               |
+| `badge/`        | `badge/`        | `badge-labels.ts`, `invitation-display-status.ts` |
+| `user-profile/` | `user-profile/` | `user-display.ts`                                 |
+| —               | `auth/`         | `index.ts`, `session.ts`, `redirect.ts`           |
+
+Infrastructure without a component folder stays at `lib/` root (`prisma.ts`, `utils.ts`, `format-date.ts`, …).
 
 ## Layout tree
 
 ```
 src/
-  lib/                    # auth, prisma, auth-session
+  lib/                    # prisma, utils; feature folders mirror components/
   components/             # app-wide UI (not ui/)
   app/
     action/<segment>/     # mirrors app/<segment>/; one mutation per file
@@ -74,25 +87,25 @@ src/
     dashboard/
       lib/                # *-routes.ts, cache-tags.ts
       components/
-      …
+      â€¦
     join/
     (auth)/
 ```
 
-**Action-first:** writes in `action/` (e.g. `action/dashboard/organizations/manage/members/` ↔ `dashboard/organizations/[organizationId]/manage/members/`). No mutation Route Handlers — `api/` is auth + read-only fetches only.
+**Action-first:** writes in `action/` (e.g. `action/dashboard/organizations/manage/members/` â†” `dashboard/organizations/[organizationId]/manage/members/`). No mutation Route Handlers â€” `api/` is auth + read-only fetches only.
 
 ## SSOT files
 
-| Kind               | Where                                                           |
-| ------------------ | --------------------------------------------------------------- |
-| URLs               | `*-routes.ts` per segment — no hardcoded paths in pages/actions |
-| Cache tags         | `cache-tags.ts` per segment                                     |
-| Dashboard nav copy | `dashboard-nav-labels.ts` — [dashboard.md](./dashboard.md)      |
-| Badge copy         | `src/lib/badge-labels.ts`                                       |
+| Kind               | Where                                                             |
+| ------------------ | ----------------------------------------------------------------- |
+| URLs               | `*-routes.ts` per segment â€” no hardcoded paths in pages/actions |
+| Cache tags         | `cache-tags.ts` per segment                                       |
+| Dashboard nav copy | `dashboard-nav-labels.ts` â€” [dashboard.md](./dashboard.md)      |
+| Badge copy         | `src/lib/badge/badge-labels.ts`                                   |
 
 ## Do not over-extract {#do-not-over-extract}
 
-**Inline** one-offs and ~10–20 line snippets. **No** thin wrappers that only re-export or rename (`toast`, lodash, shadcn).
+**Inline** one-offs and ~10â€“20 line snippets. **No** thin wrappers that only re-export or rename (`toast`, lodash, shadcn).
 
 **Extract** when the same non-trivial UI or logic appears in **two or more** call sites, or the segment needs true SSOT (`*-routes.ts`, `cache-tags.ts`, `dashboard-nav-labels.ts`).
 

@@ -7,10 +7,10 @@ import {
 } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-form-utils";
 import { prisma } from "@/lib/prisma";
 import {
-  clampDashboardTablePage,
-  parseDashboardTablePage,
-  parseDashboardTablePageSize,
-} from "@/lib/dashboard-table-search-params";
+  clampDataTablePage,
+  parseDataTablePage,
+  parseDataTablePageSize,
+} from "@/lib/data-table/search-params";
 
 export type OrganizationInvitationsPageQuery = {
   page: number;
@@ -21,8 +21,8 @@ export function parseOrganizationInvitationsPageQuery(
   searchParams: Record<string, string | string[] | undefined>,
 ): OrganizationInvitationsPageQuery {
   return {
-    page: parseDashboardTablePage(searchParams),
-    pageSize: parseDashboardTablePageSize(searchParams, {
+    page: parseDataTablePage(searchParams),
+    pageSize: parseDataTablePageSize(searchParams, {
       defaultPageSize: INVITATIONS_DEFAULT_PAGE_SIZE,
     }),
   };
@@ -56,7 +56,7 @@ export async function getOrganizationInvitationsPage(
     prisma.invitation.count({ where: invitationWhere }),
   ]);
 
-  const page = clampDashboardTablePage(query.page, totalCount, query.pageSize);
+  const page = clampDataTablePage(query.page, totalCount, query.pageSize);
   const skip = (page - 1) * query.pageSize;
 
   const invitations = await prisma.invitation.findMany({

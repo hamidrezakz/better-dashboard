@@ -1,10 +1,10 @@
 const numberFormat = new Intl.NumberFormat("en-US");
 
-export function formatDashboardTableNumber(value: number) {
+export function formatDataTableNumber(value: number) {
   return numberFormat.format(value);
 }
 
-export function getDashboardTableItemRange(
+export function getDataTableItemRange(
   page: number,
   pageSize: number,
   totalCount: number,
@@ -18,7 +18,7 @@ export function getDashboardTableItemRange(
   return { start, end };
 }
 
-export function buildDashboardTablePageNumbers(
+export function buildDataTablePageNumbers(
   current: number,
   total: number,
 ): (number | "...")[] {

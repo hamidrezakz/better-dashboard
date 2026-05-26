@@ -1,5 +1,5 @@
-import { getNotificationTypeBadgeConfig } from "@/components/globals-badge/badge-config";
-import { GlobalBadge } from "@/components/globals-badge/global-badge";
+import { getNotificationTypeBadgeConfig } from "@/components/badge/badge-config";
+import { LabeledBadge } from "@/components/badge/labeled-badge";
 import { Badge } from "@/components/ui/badge";
 import type { NotificationType } from "@/generated/prisma/enums";
 
@@ -13,7 +13,7 @@ export function NotificationTypeBadge({
   const config = getNotificationTypeBadgeConfig(type);
 
   if (!compact) {
-    return <GlobalBadge {...config} />;
+    return <LabeledBadge {...config} />;
   }
 
   return (

@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import {
   buildAuthRouteWithRedirect,
   normalizeAuthRedirectTarget,
-} from "@/lib/auth-redirect";
+} from "@/lib/auth/redirect";
 
 type AuthCrossLinkProps = {
   target: "/login" | "/signup";
