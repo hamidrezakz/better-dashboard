@@ -3,13 +3,6 @@
 import "dotenv/config";
 import path from "node:path";
 import { defineConfig } from "prisma/config";
-import { serverSchema } from "./src/env.schema";
-
-const parsed = serverSchema.safeParse(process.env);
-
-if (!parsed.success) {
-  throw new Error("Invalid environment variables for Prisma");
-}
 
 export default defineConfig({
   schema: path.join(process.cwd(), "prisma"),
@@ -17,6 +10,6 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: parsed.data.DATABASE_URL,
+    url: process.env["DATABASE_URL"],
   },
 });
