@@ -3,11 +3,20 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { BellIcon, Building2Icon, UsersIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import { RoleBadge } from "@/components/badge/role-badge";
+import { DashboardViewNavList } from "@/app/dashboard/(user)/components/view-profile/dashboard-view-nav-list";
+import { DashboardViewPageHeader } from "@/app/dashboard/(user)/components/view-profile/dashboard-view-page-header";
+import { DashboardViewSection } from "@/app/dashboard/(user)/components/view-profile/dashboard-view-section";
+import { StatCard, StatCardFallback, StatGrid } from "@/components/stat-card";
 import {
   DashboardPageTitleFallback,
-  DashboardStatCardFallback,
   DashboardTableCardFallback,
 } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
 import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-shell";
@@ -15,12 +24,13 @@ import {
   getUserProfilePageData,
   type UserProfilePageData,
 } from "@/app/dashboard/(user)/lib/get-user-profile-page";
+import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { requireAuthSession } from "@/lib/auth/session";
 
 export default function UserDashboardHomePage() {
   return (
-    <DashboardPageShell>
+    <DashboardPageShell className="gap-8">
       <Suspense fallback={<UserProfileHomeFallback />}>
         <UserProfileHomeContent />
       </Suspense>
@@ -32,12 +42,15 @@ function UserProfileHomeFallback() {
   return (
     <>
       <DashboardPageTitleFallback />
-      <div className="grid gap-4 md:grid-cols-3">
-        <DashboardStatCardFallback />
-        <DashboardStatCardFallback />
-        <DashboardStatCardFallback />
+      <StatGrid columns={3}>
+        <StatCardFallback />
+        <StatCardFallback />
+        <StatCardFallback />
+      </StatGrid>
+      <div className="grid gap-8 lg:grid-cols-2">
+        <DashboardTableCardFallback />
+        <DashboardTableCardFallback />
       </div>
-      <DashboardTableCardFallback />
     </>
   );
 }
@@ -50,124 +63,137 @@ async function UserProfileHomeContent() {
     notFound();
   }
 
+  const labels = dashboardNavLabels.viewProfile;
+
   return (
     <>
-      <UserProfileHeader data={data} />
-      <div className="grid gap-4 md:grid-cols-3">
-        <UserProfileOrganizationStat data={data} />
-        <UserProfileTeamStat data={data} />
-        <UserProfileNotificationsStat data={data} />
+      <DashboardViewPageHeader
+        eyebrow={labels.homeEyebrow}
+        title={labels.homeTitle}
+        description={labels.homeDescription}
+        meta={
+          <>
+            <span className="font-medium text-foreground">
+              {data.user.name}
+            </span>
+            <span aria-hidden>·</span>
+            <span className="truncate">{data.user.email}</span>
+          </>
+        }
+        actions={
+          <Button
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            render={<Link href={dashboardRoutes.account()} />}
+          >
+            Account settings
+          </Button>
+        }
+      />
+
+      <StatGrid columns={3}>
+        <StatCard
+          label={labels.organizations}
+          value={data.organizationCount}
+          icon={Building2Icon}
+        />
+        <StatCard
+          label={labels.teams}
+          value={data.teamCount}
+          icon={UsersIcon}
+        />
+        <StatCard
+          label={labels.unreadNotifications}
+          value={data.directUnreadCount}
+          icon={BellIcon}
+          action={{
+            href: dashboardRoutes.userNotifications(),
+            label: "View notifications",
+          }}
+        />
+      </StatGrid>
+
+      <div className="grid gap-8 lg:grid-cols-2">
+        <UserProfileOrganizationsSection data={data} />
+        <UserProfileTeamsSection data={data} />
       </div>
-      <UserProfileMembershipsCard data={data} />
     </>
   );
 }
 
-function UserProfileHeader({ data }: { data: UserProfilePageData }) {
+function UserProfileOrganizationsSection({
+  data,
+}: {
+  data: UserProfilePageData;
+}) {
+  const labels = dashboardNavLabels.viewProfile;
+
   return (
-    <div>
-      <h1 className="text-base font-semibold">{data.user.name}</h1>
-    </div>
+    <DashboardViewSection
+      title={labels.organizations}
+      description={labels.organizationsDescription}
+    >
+      {data.memberships.length ? (
+        <DashboardViewNavList
+          icon={Building2Icon}
+          items={data.memberships.map((membership) => ({
+            id: membership.id,
+            href: dashboardRoutes.organizationRoot(membership.organization.id),
+            title: membership.organization.name,
+            description: labels.openOrganization,
+            trailing: <RoleBadge role={membership.role} />,
+          }))}
+        />
+      ) : (
+        <Empty className="rounded-lg border border-dashed bg-muted/30">
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <Building2Icon />
+            </EmptyMedia>
+            <EmptyTitle>{labels.noOrganizations}</EmptyTitle>
+            <EmptyDescription>
+              {labels.noOrganizationsDescription}
+            </EmptyDescription>
+          </EmptyHeader>
+        </Empty>
+      )}
+    </DashboardViewSection>
   );
 }
 
-function UserProfileOrganizationStat({ data }: { data: UserProfilePageData }) {
-  return (
-    <Card size="sm">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-          <Building2Icon className="size-4" />
-          Organizations
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-2xl font-semibold">{data.organizationCount}</p>
-      </CardContent>
-    </Card>
-  );
-}
-
-function UserProfileTeamStat({ data }: { data: UserProfilePageData }) {
-  return (
-    <Card size="sm">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-          <UsersIcon className="size-4" />
-          Teams
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-2xl font-semibold">{data.teamCount}</p>
-      </CardContent>
-    </Card>
-  );
-}
-
-function UserProfileNotificationsStat({ data }: { data: UserProfilePageData }) {
-  return (
-    <Card size="sm">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-          <BellIcon className="size-4" />
-          Unread notifications
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex items-end justify-between gap-2">
-        <p className="text-2xl font-semibold">{data.directUnreadCount}</p>
-        <Button
-          size="sm"
-          variant="ghost"
-          nativeButton={false}
-          render={<Link href={dashboardRoutes.userNotifications()} />}
-        >
-          View
-        </Button>
-      </CardContent>
-    </Card>
-  );
-}
-
-function UserProfileMembershipsCard({ data }: { data: UserProfilePageData }) {
-  if (!data.memberships.length) {
-    return null;
-  }
+function UserProfileTeamsSection({ data }: { data: UserProfilePageData }) {
+  const labels = dashboardNavLabels.viewProfile;
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Organizations</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="divide-y">
-          {data.memberships.map((membership) => (
-            <div
-              key={membership.id}
-              className="flex flex-wrap items-center justify-between gap-2 py-2.5 first:pt-0 last:pb-0"
-            >
-              <div className="flex items-center gap-2">
-                <span className="font-medium">
-                  {membership.organization.name}
-                </span>
-                <RoleBadge role={membership.role} />
-              </div>
-              <Button
-                size="sm"
-                variant="ghost"
-                nativeButton={false}
-                render={
-                  <Link
-                    href={dashboardRoutes.organizationRoot(
-                      membership.organization.id,
-                    )}
-                  />
-                }
-              >
-                View
-              </Button>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+    <DashboardViewSection
+      title={labels.yourTeams}
+      description={labels.yourTeamsDescription}
+    >
+      {data.teamMemberships.length ? (
+        <DashboardViewNavList
+          icon={UsersIcon}
+          items={data.teamMemberships.map((membership) => ({
+            id: `${membership.organizationId}:${membership.teamId}`,
+            href: dashboardRoutes.organizationTeamProfile(
+              membership.organizationId,
+              membership.teamId,
+            ),
+            title: membership.teamName,
+            description: membership.organizationName,
+          }))}
+        />
+      ) : (
+        <Empty className="rounded-lg border border-dashed bg-muted/30">
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <UsersIcon />
+            </EmptyMedia>
+            <EmptyTitle>{labels.noTeams}</EmptyTitle>
+            <EmptyDescription>{labels.noTeamsDescription}</EmptyDescription>
+          </EmptyHeader>
+        </Empty>
+      )}
+    </DashboardViewSection>
   );
 }

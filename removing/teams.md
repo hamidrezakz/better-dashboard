@@ -6,21 +6,26 @@ Checklist for forks that do not need Better Auth teams. Work top to bottom.
 
 Delete:
 
+- `src/app/dashboard/organizations/[organizationId]/teams/` (member-facing team profile view)
 - `src/app/dashboard/organizations/[organizationId]/manage/teams/`
 - `src/app/action/dashboard/organizations/manage/teams/`
 
-Includes `teams/lib/organization-team-access.ts` and all `teams/components/*`, `teams/[teamId]/*`.
+Includes `organizations/[organizationId]/lib/get-organization-team-in-org.ts` when manage is removed, all `manage/teams/components/*`, `manage/teams/[teamId]/*`.
 
 ## 2. Segment registry and SSOT
 
-| File                                                                                           | Change                                                                                                                                                                               |
-| ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `src/app/dashboard/lib/dashboard-slices.ts`                                                    | Remove the `teams` entry                                                                                                                                                             |
-| `src/app/dashboard/lib/dashboard-routes.ts`                                                    | Remove `teams` from `dashboardRouteSegments` (if unused), `organizationManageTabPathSuffix` union, and `organizationTeams` / `organizationTeam` / `organizationTeamMembers` builders |
-| `src/app/dashboard/lib/cache-tags.ts`                                                          | Remove `organizationTeamsById`                                                                                                                                                       |
-| `src/app/dashboard/lib/dashboard-nav-labels.ts`                                                | Remove team-related labels (`manageTabs.teams`, sidebar team strings, etc.)                                                                                                          |
-| `src/app/dashboard/lib/breadcrumbs/breadcrumb-entity.ts`                                       | Remove `teams` segment mapping                                                                                                                                                       |
-| `src/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache.ts` | Remove `invalidateOrganizationTeamsCache` and its use inside `invalidateOrganizationManageCache`                                                                                     |
+| File                                                                                           | Change                                                                                                                         |
+| ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `src/app/dashboard/lib/dashboard-slices.ts`                                                    | Remove the `teams` entry                                                                                                       |
+| `src/app/dashboard/lib/dashboard-routes.ts`                                                    | Remove `organizationTeamProfile` and manage team builders (`organizationTeams`, `organizationTeam`, `organizationTeamMembers`) |
+| `src/app/dashboard/lib/cache-tags.ts`                                                          | Remove `organizationTeamsById` and `organizationTeamProfileById`                                                               |
+| `src/app/dashboard/lib/dashboard-nav-labels.ts`                                                | Remove `viewProfile.*` team copy, `manageTabs.teams`, and other team strings                                                   |
+| `src/app/dashboard/lib/dashboard-access.ts`                                                    | Remove `canAccessOrganizationTeamView` / `requireOrganizationTeamViewAccess`                                                   |
+| `src/app/dashboard/(user)/page.tsx` and `get-user-profile-page.ts`                             | Remove teams card and `teamMemberships`                                                                                        |
+| `src/app/dashboard/organizations/[organizationId]/page.tsx`                                    | Remove team count stat, viewer teams card, manage-teams link                                                                   |
+| `invalidate-organization-manage-cache.ts`                                                      | Remove `invalidateOrganizationTeamProfileCache` / `invalidateUserProfileCache` if only used for teams                          |
+| `src/app/dashboard/lib/breadcrumbs/breadcrumb-entity.ts`                                       | Remove `teams` segment mapping                                                                                                 |
+| `src/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache.ts` | Remove `invalidateOrganizationTeamsCache` and its use inside `invalidateOrganizationManageCache`                               |
 
 ## 3. Members coupling (`TEAMS_SLICE`)
 
@@ -51,7 +56,7 @@ See [invitations.md](./invitations.md) (teams section).
 ## 6. Other references
 
 - `src/app/action/dashboard/users/search-users-action.ts`: remove team-scoped user search if present
-- Org summary / home pages: remove team counts or links
+- Org summary / home pages: remove team counts, viewer teams card, and user-dashboard teams list
 - `src/components/badge/`: keep or trim invitation join-scope badge variants
 
 ## 7. Verify

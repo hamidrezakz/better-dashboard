@@ -1,16 +1,23 @@
 "use client";
 
+import {
+  CalendarIcon,
+  PercentIcon,
+  UsersIcon,
+  UsersRoundIcon,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { deleteOrganizationTeamAction } from "@/app/action/dashboard/organizations/manage/teams/delete-organization-team-action";
+import { StatCard, StatGrid } from "@/components/stat-card";
 import {
   TeamFormShell,
   type TeamFormShellTarget,
 } from "@/app/dashboard/organizations/[organizationId]/manage/teams/components/team-form-shell";
 import { AddTeamMembersFormShell } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/components/add-team-members-form-shell";
 import { TeamMembersTable } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/components/team-members-table";
-import { TeamDetailStats } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/components/team-detail-stats";
 import { TeamManageHeader } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/components/team-manage-header";
+import { formatDate } from "@/lib/format-date";
 import type { OrganizationTeamDetailPageResult } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/get-organization-team-detail-page";
 import type { OrganizationTeamItem } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/team-form-utils";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
@@ -32,6 +39,49 @@ type TeamDetailPanelProps = {
   organizationId: string;
   data: OrganizationTeamDetailPageResult;
 };
+
+function TeamDetailStatsGrid({
+  memberCount,
+  organizationMemberCount,
+  createdAt,
+  updatedAt,
+}: {
+  memberCount: number;
+  organizationMemberCount: number;
+  createdAt: string;
+  updatedAt: string;
+}) {
+  const coveragePercent =
+    organizationMemberCount > 0
+      ? Math.round((memberCount / organizationMemberCount) * 100)
+      : 0;
+
+  return (
+    <StatGrid columns={4}>
+      <StatCard
+        label="Team members"
+        value={memberCount}
+        icon={UsersRoundIcon}
+      />
+      <StatCard
+        label="Organization members"
+        value={organizationMemberCount}
+        icon={UsersIcon}
+      />
+      <StatCard
+        label="Org coverage"
+        value={`${coveragePercent}%`}
+        icon={PercentIcon}
+      />
+      <StatCard
+        label="Created"
+        value={formatDate(createdAt)}
+        icon={CalendarIcon}
+        hint={`Updated ${formatDate(updatedAt)}`}
+      />
+    </StatGrid>
+  );
+}
 
 function teamToItem(
   team: OrganizationTeamDetailPageResult["team"],
@@ -109,7 +159,7 @@ export function TeamDetailPanel({
         }
       />
 
-      <TeamDetailStats
+      <TeamDetailStatsGrid
         memberCount={data.team.memberCount}
         organizationMemberCount={data.organizationMemberCount}
         createdAt={data.team.createdAt}

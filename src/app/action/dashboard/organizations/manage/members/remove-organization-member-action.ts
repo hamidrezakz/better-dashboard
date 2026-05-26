@@ -73,19 +73,9 @@ export async function removeOrganizationMemberAction(
     }
   }
 
-  await prisma.$transaction([
-    prisma.teamMember.deleteMany({
-      where: {
-        userId: member.userId,
-        team: {
-          organizationId: input.organizationId,
-        },
-      },
-    }),
-    prisma.member.delete({
-      where: { id: input.memberId },
-    }),
-  ]);
+  await prisma.member.delete({
+    where: { id: input.memberId },
+  });
 
   invalidateOrganizationMembersCache(input.organizationId);
   invalidateOrganizationTeamsCache(input.organizationId);

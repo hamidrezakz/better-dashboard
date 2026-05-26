@@ -99,6 +99,50 @@ export async function canManageOrganization(input: {
   return isOrganizationManagerRole(role);
 }
 
+async function isOrganizationTeamMember(input: {
+  userId: string;
+  organizationId: string;
+  teamId: string;
+}) {
+  const membership = await prisma.teamMember.findFirst({
+    where: {
+      userId: input.userId,
+      teamId: input.teamId,
+      team: {
+        organizationId: input.organizationId,
+      },
+    },
+    select: { id: true },
+  });
+
+  return membership != null;
+}
+
+export async function canAccessOrganizationTeamView(input: {
+  viewerUserId: string;
+  organizationId: string;
+  teamId: string;
+}) {
+  if (isDashboardSuperAdmin(input.viewerUserId)) {
+    return true;
+  }
+
+  if (
+    await canAccessOrganization({
+      viewerUserId: input.viewerUserId,
+      organizationId: input.organizationId,
+    })
+  ) {
+    return true;
+  }
+
+  return isOrganizationTeamMember({
+    userId: input.viewerUserId,
+    organizationId: input.organizationId,
+    teamId: input.teamId,
+  });
+}
+
 /**
 
  * Ensures the route user exists. Call from a future `users/[userId]/layout.tsx` only.
@@ -137,7 +181,7 @@ export const requireUserProfileAccess = cache(async (targetUserId: string) => {
 
  * Viewer may view this organization (member or dashboard super-admin).
 
- * **Layout only:** `src/app/dashboard/organizations/[organizationId]/layout.tsx`.
+ * **Page/layout:** org profile page and `manage/layout.tsx`.
 
  */
 
@@ -163,7 +207,7 @@ export const requireOrganizationAccess = cache(
 
  * **Layout only:** `organizations/[organizationId]/manage/layout.tsx`.
 
- * Parent org layout must already call {@link requireOrganizationAccess}.
+ * Call {@link requireOrganizationAccess} before this in `manage/layout.tsx`.
 
  */
 
@@ -183,6 +227,34 @@ export const requireOrganizationManageAccess = cache(
       }))
     ) {
       redirect(dashboardRoutes.organizationRoot(organizationId));
+    }
+  },
+);
+
+/**
+
+ * Viewer may view a team profile (team member, org member, or super-admin).
+
+ * **Layout only:** `organizations/[organizationId]/teams/[teamId]/layout.tsx`.
+
+ */
+
+export const requireOrganizationTeamViewAccess = cache(
+  async (organizationId: string, teamId: string) => {
+    if (!organizationId || !teamId) {
+      notFound();
+    }
+
+    const session = await requireAuthSession();
+
+    if (
+      !(await canAccessOrganizationTeamView({
+        viewerUserId: session.user.id,
+        organizationId,
+        teamId,
+      }))
+    ) {
+      redirect(dashboardRoutes.home());
     }
   },
 );

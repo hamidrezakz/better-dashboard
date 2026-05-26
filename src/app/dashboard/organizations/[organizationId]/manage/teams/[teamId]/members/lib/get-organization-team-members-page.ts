@@ -1,6 +1,6 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
-import { getOrganizationTeamInOrg } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/organization-team-access";
+import { getOrganizationTeamInOrg } from "@/app/dashboard/organizations/[organizationId]/lib/get-organization-team-in-org";
 import { TEAM_MEMBERS_DEFAULT_PAGE_SIZE } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/members/lib/team-members-table-params";
 import { prisma } from "@/lib/prisma";
 import {

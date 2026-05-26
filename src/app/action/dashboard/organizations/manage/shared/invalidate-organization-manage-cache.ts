@@ -13,6 +13,19 @@ export function invalidateOrganizationSummaryCache(organizationId: string) {
   updateTag(dashboardCacheTags.organizationSummaryById(organizationId));
 }
 
+export function invalidateOrganizationTeamProfileCache(
+  organizationId: string,
+  teamId: string,
+) {
+  updateTag(
+    dashboardCacheTags.organizationTeamProfileById(organizationId, teamId),
+  );
+}
+
+export function invalidateUserProfileCache(userId: string) {
+  updateTag(dashboardCacheTags.userProfileById(userId));
+}
+
 /** Invalidates members, teams, and org summary — use when a change affects multiple manage slices. */
 export function invalidateOrganizationManageCache(organizationId: string) {
   invalidateOrganizationMembersCache(organizationId);

@@ -40,6 +40,38 @@ export const dashboardNavLabels = {
     removeFromOrganization: "Remove from organization",
     removeFromTeam: "Remove from team",
   },
+  viewProfile: {
+    homeEyebrow: "Overview",
+    homeTitle: "Welcome back",
+    homeDescription: "Your organizations and teams in one place.",
+    organizations: "Organizations",
+    organizationsDescription: "Organizations you belong to.",
+    yourTeams: "Teams",
+    yourTeamsDescription: "Teams you can open across all organizations.",
+    yourTeamsInOrganization: "Your teams",
+    yourTeamsInOrganizationDescription:
+      "Teams you belong to in this organization.",
+    noOrganizations: "No organizations yet",
+    noOrganizationsDescription:
+      "When you join an organization, it will show up here.",
+    noTeams: "No teams yet",
+    noTeamsDescription: "When you are added to a team, it will show up here.",
+    noTeamsInOrganization: "No teams in this organization",
+    noTeamsInOrganizationDescription:
+      "Team memberships you have in this organization appear here.",
+    openOrganization: "Open organization",
+    openTeam: "Open team",
+    manageOrganization: "Manage organization",
+    manageTeams: "Manage teams",
+    manageTeam: "Manage team",
+    members: "Members",
+    teams: "Teams",
+    unreadNotifications: "Unread",
+    joined: "Member since",
+    organizationSlug: "Slug",
+    created: "Created",
+    teamInOrganization: "Team in",
+  },
   invitationManage: {
     deleteTitle: "Delete invitation",
     deleteDescription:

@@ -39,6 +39,12 @@ export const dashboardRoutes = {
   account: () => `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.account}`,
   organizationRoot: (organizationId: string) =>
     organizationPath(organizationId),
+  organizationTeamProfile: (organizationId: string, teamId: string) =>
+    organizationPath(
+      organizationId,
+      dashboardRouteSegments.teams,
+      encodeRouteSegment(teamId),
+    ),
   organizationManageRoot: (organizationId: string) =>
     organizationPath(organizationId, dashboardRouteSegments.manage),
   organizationMembers: (organizationId: string) =>

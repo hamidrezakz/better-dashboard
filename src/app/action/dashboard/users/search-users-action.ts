@@ -2,7 +2,7 @@
 
 import type { Prisma } from "@/generated/prisma/client";
 import { canManageOrganization } from "@/app/dashboard/lib/dashboard-access";
-import { getOrganizationTeamInOrg } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/organization-team-access";
+import { getOrganizationTeamInOrg } from "@/app/dashboard/organizations/[organizationId]/lib/get-organization-team-in-org";
 import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 

@@ -223,7 +223,7 @@ export function MembersTable({
             <AlertDialogTitle>Remove from organization</AlertDialogTitle>
             <AlertDialogDescription>
               {removeTarget
-                ? `${removeTarget.name} will lose access to this organization and its teams. This cannot be undone.`
+                ? `${removeTarget.name} will lose organization membership and management access. Team memberships in this organization are kept unless removed separately.`
                 : null}
             </AlertDialogDescription>
           </AlertDialogHeader>

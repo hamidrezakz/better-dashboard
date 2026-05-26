@@ -1,10 +1,11 @@
 "use server";
 
 import { canManageOrganization } from "@/app/dashboard/lib/dashboard-access";
-import { getOrganizationTeamInOrg } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/organization-team-access";
+import { getOrganizationTeamInOrg } from "@/app/dashboard/organizations/[organizationId]/lib/get-organization-team-in-org";
 import { validateTeamName } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/team-form-utils";
 import {
   invalidateOrganizationSummaryCache,
+  invalidateOrganizationTeamProfileCache,
   invalidateOrganizationTeamsCache,
 } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
 import { requireAuthSession } from "@/lib/auth/session";
@@ -64,6 +65,7 @@ export async function updateOrganizationTeamAction(
 
   invalidateOrganizationTeamsCache(input.organizationId);
   invalidateOrganizationSummaryCache(input.organizationId);
+  invalidateOrganizationTeamProfileCache(input.organizationId, input.teamId);
 
   return { success: true };
 }

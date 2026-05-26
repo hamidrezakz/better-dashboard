@@ -2,7 +2,11 @@
 
 import { canManageOrganization } from "@/app/dashboard/lib/dashboard-access";
 import { getOrganizationMemberById } from "@/app/dashboard/organizations/[organizationId]/manage/lib/organization-member-guards";
-import { invalidateOrganizationManageCache } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
+import {
+  invalidateOrganizationManageCache,
+  invalidateOrganizationTeamProfileCache,
+  invalidateUserProfileCache,
+} from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
 import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
@@ -114,6 +118,11 @@ export async function setOrganizationMemberTeamsAction(
   }
 
   invalidateOrganizationManageCache(input.organizationId);
+  invalidateUserProfileCache(member.userId);
+
+  for (const teamId of [...toAdd, ...toRemove]) {
+    invalidateOrganizationTeamProfileCache(input.organizationId, teamId);
+  }
 
   return { success: true };
 }

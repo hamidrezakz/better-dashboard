@@ -7,6 +7,8 @@ export const dashboardCacheTags = {
     `dashboard:organization-members:${organizationId}`,
   organizationTeamsById: (organizationId: string) =>
     `dashboard:organization-teams:${organizationId}`,
+  organizationTeamProfileById: (organizationId: string, teamId: string) =>
+    `dashboard:organization-team-profile:${organizationId}:${teamId}`,
   organizationInvitationsById: (organizationId: string) =>
     `dashboard:organization-invitations:${organizationId}`,
   organizationNotificationsById: (organizationId: string) =>

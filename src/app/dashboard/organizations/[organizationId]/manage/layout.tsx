@@ -2,7 +2,10 @@ import { Suspense } from "react";
 import { LoadingFallback } from "@/components/loading-fallback";
 import { DashboardPageTitleFallback } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
 import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-shell";
-import { requireOrganizationManageAccess } from "@/app/dashboard/lib/dashboard-access";
+import {
+  requireOrganizationAccess,
+  requireOrganizationManageAccess,
+} from "@/app/dashboard/lib/dashboard-access";
 import { ManageTabsNav } from "@/app/dashboard/organizations/[organizationId]/manage/components/manage-tabs-nav";
 import { OrganizationManageHeader } from "@/app/dashboard/organizations/[organizationId]/manage/components/organization-manage-header";
 
@@ -18,6 +21,7 @@ export default async function OrganizationManageLayout({
   params,
 }: OrganizationManageLayoutProps) {
   const { organizationId } = await params;
+  await requireOrganizationAccess(organizationId);
   await requireOrganizationManageAccess(organizationId);
 
   return (

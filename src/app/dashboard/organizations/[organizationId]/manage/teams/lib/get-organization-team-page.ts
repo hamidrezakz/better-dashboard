@@ -1,6 +1,6 @@
 import { cacheLife, cacheTag } from "next/cache";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
-import { getOrganizationTeamInOrg } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/organization-team-access";
+import { getOrganizationTeamInOrg } from "@/app/dashboard/organizations/[organizationId]/lib/get-organization-team-in-org";
 
 export type OrganizationTeamPageResult = {
   id: string;
