@@ -22,6 +22,13 @@ export const dashboardNavLabels = {
     invitations: "Invitations",
     notifications: "Notifications",
   },
+  organizationManage: {
+    editOrganization: "Edit organization",
+    organizationName: "Organization name",
+    organizationLogo: "Logo URL",
+    organizationLogoHint: "Optional. Leave empty to remove the logo.",
+    saveOrganization: "Save changes",
+  },
   teamManage: {
     allTeams: "All teams",
     manageMembers: "Manage members",

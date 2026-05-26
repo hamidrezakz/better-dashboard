@@ -1,18 +1,15 @@
-import Link from "next/link";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { Building2Icon, SettingsIcon, UsersIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Building2Icon, UsersIcon } from "lucide-react";
 import {
   Empty,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
-import { RoleBadge } from "@/components/badge/role-badge";
 import { DashboardViewNavList } from "@/app/dashboard/(user)/components/view-profile/dashboard-view-nav-list";
-import { DashboardViewPageHeader } from "@/app/dashboard/(user)/components/view-profile/dashboard-view-page-header";
 import { DashboardViewSection } from "@/app/dashboard/(user)/components/view-profile/dashboard-view-section";
+import { OrganizationProfileHeaderPanel } from "@/app/dashboard/organizations/[organizationId]/components/organization-profile-header-panel";
 import { StatCard, StatCardFallback, StatGrid } from "@/components/stat-card";
 import {
   DashboardPageTitleFallback,
@@ -84,37 +81,16 @@ async function OrganizationPageHeader({ params }: OrganizationPageProps) {
   const canManage = isOrganizationManagerRole(data.viewerMembership?.role);
 
   return (
-    <DashboardViewPageHeader
-      eyebrow={labels.organizations}
-      title={
-        <span className="inline-flex flex-wrap items-center gap-2">
-          {data.viewerMembership ? (
-            <RoleBadge role={data.viewerMembership.role} />
-          ) : null}
-          <span>{data.organization.name}</span>
-          <Building2Icon
-            className="size-5 shrink-0 text-muted-foreground"
-            aria-hidden
-          />
-        </span>
-      }
-      actions={
-        canManage ? (
-          <Button
-            size="sm"
-            nativeButton={false}
-            render={
-              <Link
-                href={dashboardRoutes.organizationMembers(data.organization.id)}
-              />
-            }
-          >
-            <SettingsIcon className="size-4" aria-hidden />
-            {labels.manageOrganization}
-          </Button>
-        ) : undefined
-      }
-    />
+    <header className="space-y-1.5">
+      <p className="text-xs font-medium text-muted-foreground">
+        {labels.organizations}
+      </p>
+      <OrganizationProfileHeaderPanel
+        organization={data.organization}
+        viewerRole={data.viewerMembership?.role ?? null}
+        canManage={canManage}
+      />
+    </header>
   );
 }
 

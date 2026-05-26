@@ -30,6 +30,7 @@ export async function getDashboardSidebarConfig(
     id: membership.organization.id,
     name: membership.organization.name,
     slug: membership.organization.slug,
+    logo: membership.organization.logo,
   }));
 
   const activeOrganizationId =

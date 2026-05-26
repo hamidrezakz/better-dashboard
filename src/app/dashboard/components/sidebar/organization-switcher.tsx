@@ -18,6 +18,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { type SidebarOrganizationItem } from "@/app/dashboard/lib/sidebar/sidebar-types";
+import { OrganizationAvatar } from "@/components/organization/organization-avatar";
 import { Building2Icon, ChevronsUpDownIcon } from "lucide-react";
 
 type OrganizationSwitcherProps = {
@@ -92,9 +93,12 @@ export function OrganizationSwitcher({
               />
             }
           >
-            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-              <Building2Icon className="size-4" />
-            </div>
+            <OrganizationAvatar
+              name={activeOrganization.name}
+              logo={activeOrganization.logo}
+              className="size-8 rounded-lg after:rounded-lg [&_[data-slot=avatar-image]]:rounded-lg [&_[data-slot=avatar-fallback]]:rounded-lg"
+              fallbackClassName="bg-sidebar-primary text-sidebar-primary-foreground"
+            />
             <div className="grid flex-1 text-start text-sm leading-tight">
               <span className="truncate font-medium">
                 {activeOrganization.name}
@@ -122,9 +126,12 @@ export function OrganizationSwitcher({
                   disabled={isPending}
                   className="gap-2 p-2"
                 >
-                  <div className="flex size-6 items-center justify-center rounded-md border">
-                    <Building2Icon className="size-3.5" />
-                  </div>
+                  <OrganizationAvatar
+                    name={organization.name}
+                    logo={organization.logo}
+                    size="sm"
+                    className="size-6 rounded-md after:rounded-md [&_[data-slot=avatar-image]]:rounded-md [&_[data-slot=avatar-fallback]]:rounded-md"
+                  />
                   <span>{organization.name}</span>
                 </DropdownMenuItem>
               ))}

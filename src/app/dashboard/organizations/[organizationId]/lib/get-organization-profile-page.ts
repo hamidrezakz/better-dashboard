@@ -17,6 +17,7 @@ export async function getOrganizationProfileBase(organizationId: string) {
         id: true,
         name: true,
         slug: true,
+        logo: true,
         createdAt: true,
       },
     }),

@@ -28,6 +28,7 @@ export type SidebarOrganizationItem = {
   id: string;
   name: string;
   slug: string;
+  logo: string | null;
 };
 
 export type DashboardSidebarConfig = {

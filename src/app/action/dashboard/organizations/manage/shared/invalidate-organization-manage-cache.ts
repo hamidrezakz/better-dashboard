@@ -1,5 +1,6 @@
 import { updateTag } from "next/cache";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
+import { prisma } from "@/lib/prisma";
 
 export function invalidateOrganizationMembersCache(organizationId: string) {
   updateTag(dashboardCacheTags.organizationMembersById(organizationId));
@@ -31,4 +32,17 @@ export function invalidateOrganizationManageCache(organizationId: string) {
   invalidateOrganizationMembersCache(organizationId);
   invalidateOrganizationTeamsCache(organizationId);
   invalidateOrganizationSummaryCache(organizationId);
+}
+
+export async function invalidateOrganizationSidebarCaches(
+  organizationId: string,
+) {
+  const members = await prisma.member.findMany({
+    where: { organizationId },
+    select: { userId: true },
+  });
+
+  for (const member of members) {
+    updateTag(dashboardCacheTags.sidebarConfigByUser(member.userId));
+  }
 }

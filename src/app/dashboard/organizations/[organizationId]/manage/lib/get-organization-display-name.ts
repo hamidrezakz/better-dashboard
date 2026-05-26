@@ -1,21 +1,7 @@
-import { cacheLife, cacheTag } from "next/cache";
-import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
-import { prisma } from "@/lib/prisma";
+import { getOrganizationBranding } from "@/app/dashboard/organizations/[organizationId]/manage/lib/get-organization-branding";
 
 export async function getOrganizationDisplayName(organizationId: string) {
-  "use cache";
-
-  cacheLife("minutes");
-  cacheTag(dashboardCacheTags.organizationSummaryById(organizationId));
-
-  const organization = await prisma.organization.findUnique({
-    where: {
-      id: organizationId,
-    },
-    select: {
-      name: true,
-    },
-  });
+  const organization = await getOrganizationBranding(organizationId);
 
   return organization?.name ?? null;
 }
