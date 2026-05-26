@@ -10,7 +10,6 @@ export const auth = betterAuth({
     env.BETTER_AUTH_URL,
     env.NEXT_PUBLIC_BETTER_AUTH_URL,
     "http://localhost:3000",
-    "http://10.61.34.32:3000",
   ].filter(Boolean) as string[],
   database: prismaAdapter(prisma, {
     provider: "postgresql",

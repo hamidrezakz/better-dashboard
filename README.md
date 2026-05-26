@@ -31,6 +31,10 @@ Optional:
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Removing features
+
+Fork without teams, invitations, or other slices? See **[removing/README.md](./removing/README.md)** — one guide per feature (`teams.md`, `members.md`, …).
+
 ## Conventions
 
 - **Action-first:** `src/app/action/<segment>/` mirrors routes (one file per mutation); `app/api/` = Better Auth + read-only GET only

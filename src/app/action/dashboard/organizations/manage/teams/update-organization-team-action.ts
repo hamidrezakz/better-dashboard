@@ -1,9 +1,12 @@
 "use server";
 
 import { canManageOrganization } from "@/app/dashboard/lib/dashboard-access";
-import { getOrganizationTeamInOrg } from "@/app/dashboard/organizations/[organizationId]/manage/lib/organization-team-access";
+import { getOrganizationTeamInOrg } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/organization-team-access";
 import { validateTeamName } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/team-form-utils";
-import { invalidateOrganizationManageCache } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
+import {
+  invalidateOrganizationSummaryCache,
+  invalidateOrganizationTeamsCache,
+} from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
 import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
@@ -59,7 +62,8 @@ export async function updateOrganizationTeamAction(
     },
   });
 
-  invalidateOrganizationManageCache(input.organizationId);
+  invalidateOrganizationTeamsCache(input.organizationId);
+  invalidateOrganizationSummaryCache(input.organizationId);
 
   return { success: true };
 }

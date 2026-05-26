@@ -6,12 +6,12 @@ Copyable org/team dashboard slice â€” fork, trim route trees, or CLI scaffo
 
 ## Segment SSOT (`dashboard/lib/`)
 
-| File                      | Role                                    |
-| ------------------------- | --------------------------------------- |
-| `dashboard-routes.ts`     | All dashboard URLs â€” no hardcoded paths |
-| `dashboard-nav-labels.ts` | Sidebar, breadcrumbs, manage tabs (just global things)       |
-| `cache-tags.ts`           | Tag builders for reads/writes           |
-| `dashboard-access.ts`     | Access guards                           |
+| File                      | Role                                                   |
+| ------------------------- | ------------------------------------------------------ |
+| `dashboard-routes.ts`     | All dashboard URLs â€” no hardcoded paths              |
+| `dashboard-nav-labels.ts` | Sidebar, breadcrumbs, manage tabs (just global things) |
+| `cache-tags.ts`           | Tag builders for reads/writes                          |
+| `dashboard-access.ts`     | Access guards                                          |
 
 Badge enum copy: `src/lib/badge/badge-labels.ts` (not route nav).
 
@@ -19,13 +19,13 @@ Badge enum copy: `src/lib/badge/badge-labels.ts` (not route nav).
 
 Shared chrome and shells â€” hoist here when **two or more** dashboard areas need the same UI:
 
-| Area                   | Path                                                                                              |
-| ---------------------- | ------------------------------------------------------------------------------------------------- |
-| Form shell             | `components/form-shell/` (`DashboardFormShell`, footer actions)                                   |
-| Page shell             | `components/dashboard-page-shell/`                                                                |
+| Area                   | Path                                                                                                |
+| ---------------------- | --------------------------------------------------------------------------------------------------- |
+| Form shell             | `components/form-shell/` (`DashboardFormShell`, footer actions)                                     |
+| Page shell             | `components/dashboard-page-shell/`                                                                  |
 | Sidebar                | `components/sidebar/` (+ `dashboard-sidebar-close-on-navigate.tsx` â€” not `components/ui/sidebar`) |
-| Breadcrumbs            | `components/breadcrumbs/`                                                                         |
-| Notifications (chrome) | `components/notifications/`                                                                       |
+| Breadcrumbs            | `components/breadcrumbs/`                                                                           |
+| Notifications (chrome) | `components/notifications/`                                                                         |
 
 **Middle tier:** `organizations/[organizationId]/manage/components/` when shared only within org-manage (e.g. `OrganizationMembersMultiCombobox`).
 
@@ -75,7 +75,7 @@ Last two segments visible after hidden ones. `users` / `organizations` always hi
 
 ## Fork / CLI
 
-Keep `dashboard/lib` + `action/dashboard/...` as one tree. Trim: delete route subtree, matching actions, and unused keys in `dashboard-nav-labels` / `lib/sidebar/dashboard-items.ts`. Product-only routes belong in the consuming app.
+Keep `dashboard/lib` + `action/dashboard/...` as one tree. Trim: delete route subtree, matching actions, remove the slice from `dashboard-slices.ts`, and clean unused keys in `dashboard-nav-labels` / `cache-tags.ts`. Trim guides live at the repo root: [removing/](../../removing/README.md) (one file per feature). Product-only routes belong in the consuming app.
 
 ## New dashboard route checklist
 

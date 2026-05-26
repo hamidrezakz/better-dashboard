@@ -66,6 +66,10 @@ docs/
 - i18n runtime (English copy in `lib/` files; locale hook is `src/lib/app-locale.ts`)
 - Hosted deploy config (bring your own)
 
+## Trimming features
+
+Forking without teams, invitations, or other slices? See [removing/README.md](../removing/README.md) at the repo root (one guide per feature).
+
 ## Next steps
 
 - **Run locally:** [README.md](../README.md) setup section

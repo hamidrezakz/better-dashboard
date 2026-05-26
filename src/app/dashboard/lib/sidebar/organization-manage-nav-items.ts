@@ -1,46 +1,18 @@
-import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import {
-  dashboardRoutes,
-  organizationManageTabPathSuffix,
-} from "@/app/dashboard/lib/dashboard-routes";
+  organizationManageSlices,
+  type OrganizationManageSliceKey,
+} from "@/app/dashboard/lib/dashboard-slices";
 
-export type OrganizationManageTabKey =
-  | "members"
-  | "teams"
-  | "invitations"
-  | "notifications";
+export type OrganizationManageTabKey = OrganizationManageSliceKey;
 
-export const organizationManageNavItems: ReadonlyArray<{
-  key: OrganizationManageTabKey;
-  label: string;
-  pathSuffix: string;
-  href: (organizationId: string) => string;
-}> = [
-  {
-    key: "members",
-    label: dashboardNavLabels.manageTabs.members,
-    pathSuffix: organizationManageTabPathSuffix("members"),
-    href: dashboardRoutes.organizationMembers,
-  },
-  {
-    key: "teams",
-    label: dashboardNavLabels.manageTabs.teams,
-    pathSuffix: organizationManageTabPathSuffix("teams"),
-    href: dashboardRoutes.organizationTeams,
-  },
-  {
-    key: "invitations",
-    label: dashboardNavLabels.manageTabs.invitations,
-    pathSuffix: organizationManageTabPathSuffix("invitations"),
-    href: dashboardRoutes.organizationInvitations,
-  },
-  {
-    key: "notifications",
-    label: dashboardNavLabels.manageTabs.notifications,
-    pathSuffix: organizationManageTabPathSuffix("notifications"),
-    href: dashboardRoutes.organizationNotifications,
-  },
-] as const;
+export const organizationManageNavItems = organizationManageSlices.map(
+  (slice) => ({
+    key: slice.key,
+    label: slice.label,
+    pathSuffix: slice.pathSuffix,
+    href: slice.href,
+  }),
+);
 
 export function getActiveOrganizationManageTab(
   pathname: string,

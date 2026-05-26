@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getOrganizationTeamInOrg } from "@/app/dashboard/organizations/[organizationId]/manage/lib/organization-team-access";
+import { getOrganizationTeamInOrg } from "@/app/dashboard/organizations/[organizationId]/manage/teams/lib/organization-team-access";
 
 type OrganizationTeamLayoutProps = {
   children: React.ReactNode;

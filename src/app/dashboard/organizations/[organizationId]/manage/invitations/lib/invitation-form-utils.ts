@@ -1,5 +1,6 @@
 import type { InvitationJoinScope } from "@/app/join/lib/invitation-scope";
 import { resolveInvitationJoinScope } from "@/app/join/lib/invitation-scope";
+import { TEAM_INVITATION_JOIN_SCOPES } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-join-scope-options";
 
 export const TEAM_NONE_VALUE = "__none__";
 
@@ -101,7 +102,9 @@ export function isInvitationFormValid(form: InvitationFormState) {
 }
 
 export function joinScopeRequiresTeam(joinScope: InvitationJoinScope) {
-  return joinScope === "team" || joinScope === "organization_and_team";
+  return (
+    TEAM_INVITATION_JOIN_SCOPES as readonly InvitationJoinScope[]
+  ).includes(joinScope);
 }
 
 export function joinScopeIncludesOrganization(joinScope: InvitationJoinScope) {

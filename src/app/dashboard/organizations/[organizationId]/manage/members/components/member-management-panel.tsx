@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { MemberRoleFormShell } from "@/app/dashboard/organizations/[organizationId]/manage/members/components/member-role-form-shell";
+// TEAMS_SLICE: remove MemberTeamsFormShell and teamsMember state when trimming teams
 import { MemberTeamsFormShell } from "@/app/dashboard/organizations/[organizationId]/manage/members/components/member-teams-form-shell";
 import { MembersTable } from "@/app/dashboard/organizations/[organizationId]/manage/members/components/members-table";
 import type { OrganizationMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/get-organization-members-page";

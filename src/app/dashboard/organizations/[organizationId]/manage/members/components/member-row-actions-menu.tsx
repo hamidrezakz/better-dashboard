@@ -46,6 +46,7 @@ export function MemberRowActionsMenu({
           <ShieldIcon />
           {dashboardNavLabels.memberManage.changeRole}
         </DropdownMenuItem>
+        {/* TEAMS_SLICE: remove this menu item when trimming teams */}
         <DropdownMenuItem disabled={disabled} onClick={onManageTeams}>
           <UsersIcon />
           {dashboardNavLabels.memberManage.manageTeams}
