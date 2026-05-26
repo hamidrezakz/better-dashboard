@@ -1,11 +1,9 @@
-import { env } from "@/env";
-
 function trimTrailingSlashes(value: string) {
   return value.replace(/\/+$/, "");
 }
 
 export function getPublicOrigin() {
-  const raw = env.NEXT_PUBLIC_URL?.trim();
+  const raw = process.env.NEXT_PUBLIC_URL?.trim();
   if (!raw) {
     return "";
   }
