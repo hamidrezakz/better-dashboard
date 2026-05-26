@@ -1,12 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import {
-  Building2Icon,
-  CalendarIcon,
-  SettingsIcon,
-  UsersIcon,
-} from "lucide-react";
+import { CalendarIcon, SettingsIcon, UsersIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DashboardViewPageHeader } from "@/app/dashboard/(user)/components/view-profile/dashboard-view-page-header";
 import { StatCard, StatCardFallback, StatGrid } from "@/components/stat-card";
@@ -76,7 +71,6 @@ async function OrganizationTeamProfileHeader({
     <DashboardViewPageHeader
       eyebrow={labels.teams}
       title={data.team.name}
-      description={`${labels.teamInOrganization} ${data.organization.name}`}
       meta={
         <>
           <span>
@@ -115,21 +109,7 @@ async function OrganizationTeamProfileHeader({
             <SettingsIcon className="size-4" aria-hidden />
             {labels.manageTeam}
           </Button>
-        ) : (
-          <Button
-            variant="outline"
-            size="sm"
-            nativeButton={false}
-            render={
-              <Link
-                href={dashboardRoutes.organizationRoot(data.organization.id)}
-              />
-            }
-          >
-            <Building2Icon className="size-4" aria-hidden />
-            {labels.openOrganization}
-          </Button>
-        )
+        ) : undefined
       }
     />
   );

@@ -75,7 +75,6 @@ export function NotificationViewDialog({
         }
       }}
       title="Notification details"
-      description=" "
       footer={
         <div className="flex w-full justify-end">
           <Button type="button" variant="outline" onClick={onClose}>

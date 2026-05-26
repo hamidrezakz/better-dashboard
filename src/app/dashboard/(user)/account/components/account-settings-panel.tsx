@@ -126,7 +126,7 @@ export function AccountSettingsPanel({
     });
   };
 
-  const { title, description, footer, children } = resolvePanelContent({
+  const { title, footer, children } = resolvePanelContent({
     section,
     isPending,
     hasPasswordCredential,
@@ -155,7 +155,6 @@ export function AccountSettingsPanel({
         }
       }}
       title={title}
-      description={description}
       footer={footer}
     >
       {children}
@@ -206,7 +205,6 @@ function resolvePanelContent({
     case "profile":
       return {
         title: accountCopy.profile.title,
-        description: accountCopy.profile.description,
         footer: (
           <DashboardFormShellFooterActions
             cancel={{
@@ -243,9 +241,6 @@ function resolvePanelContent({
     case "security":
       return {
         title: accountCopy.security.title,
-        description: hasPasswordCredential
-          ? accountCopy.security.description
-          : accountCopy.security.unavailable,
         footer: hasPasswordCredential ? (
           <DashboardFormShellFooterActions
             cancel={{
@@ -282,12 +277,15 @@ function resolvePanelContent({
               state={passwordState}
             />
           </form>
-        ) : null,
+        ) : (
+          <p className="text-sm text-muted-foreground">
+            {accountCopy.security.unavailable}
+          </p>
+        ),
       };
     case "sessions":
       return {
         title: accountCopy.sessions.title,
-        description: accountCopy.sessions.description,
         footer: hasOtherSessions ? (
           <DashboardFormShellFooterActions
             cancel={{
@@ -321,7 +319,6 @@ function resolvePanelContent({
     default:
       return {
         title: "",
-        description: "",
         footer: null,
         children: null,
       };

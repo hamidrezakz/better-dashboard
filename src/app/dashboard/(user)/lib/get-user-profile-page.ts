@@ -82,10 +82,15 @@ export async function getUserProfilePageData(userId: string) {
     joinedAt: membership.createdAt?.toISOString() ?? null,
   }));
 
+  const organizationIds = new Set([
+    ...memberships.map((membership) => membership.organization.id),
+    ...teamMembershipList.map((membership) => membership.organizationId),
+  ]);
+
   return {
     user,
     memberships,
-    organizationCount: memberships.length,
+    organizationCount: organizationIds.size,
     teamMemberships: teamMembershipList,
     teamCount: teamMembershipList.length,
     directUnreadCount,

@@ -5,7 +5,6 @@ import { Building2Icon, SettingsIcon, UsersIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Empty,
-  EmptyDescription,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
@@ -31,7 +30,6 @@ import {
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
 import { requireAuthSession } from "@/lib/auth/session";
-import { formatDate } from "@/lib/format-date";
 
 type OrganizationPageProps = {
   params: Promise<{
@@ -88,25 +86,17 @@ async function OrganizationPageHeader({ params }: OrganizationPageProps) {
   return (
     <DashboardViewPageHeader
       eyebrow={labels.organizations}
-      title={data.organization.name}
-      description={labels.organizationsDescription}
-      meta={
-        <>
+      title={
+        <span className="inline-flex flex-wrap items-center gap-2">
           {data.viewerMembership ? (
             <RoleBadge role={data.viewerMembership.role} />
           ) : null}
-          <span>
-            {labels.organizationSlug}{" "}
-            <span className="font-mono text-foreground">
-              {data.organization.slug}
-            </span>
-          </span>
-          <span aria-hidden>·</span>
-          <span>
-            {labels.created}{" "}
-            {formatDate(data.organization.createdAt.toISOString())}
-          </span>
-        </>
+          <span>{data.organization.name}</span>
+          <Building2Icon
+            className="size-5 shrink-0 text-muted-foreground"
+            aria-hidden
+          />
+        </span>
       }
       actions={
         canManage ? (
@@ -177,10 +167,7 @@ async function OrganizationViewerTeamsCard({ params }: OrganizationPageProps) {
   const labels = dashboardNavLabels.viewProfile;
 
   return (
-    <DashboardViewSection
-      title={labels.yourTeamsInOrganization}
-      description={labels.yourTeamsInOrganizationDescription}
-    >
+    <DashboardViewSection title={labels.yourTeamsInOrganization}>
       {data.viewerTeams.length ? (
         <OrganizationViewerTeamsList
           organizationId={data.organization.id}
@@ -193,9 +180,6 @@ async function OrganizationViewerTeamsCard({ params }: OrganizationPageProps) {
               <UsersIcon />
             </EmptyMedia>
             <EmptyTitle>{labels.noTeamsInOrganization}</EmptyTitle>
-            <EmptyDescription>
-              {labels.noTeamsInOrganizationDescription}
-            </EmptyDescription>
           </EmptyHeader>
         </Empty>
       )}
@@ -222,7 +206,6 @@ function OrganizationViewerTeamsList({
           team.teamId,
         ),
         title: team.teamName,
-        description: labels.openTeam,
       }))}
     />
   );

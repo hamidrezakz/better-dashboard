@@ -9,7 +9,7 @@ export type DashboardFormShellProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
-  description: string;
+  description?: string;
   footer: ReactNode;
   children: ReactNode;
   contentClassName?: string;

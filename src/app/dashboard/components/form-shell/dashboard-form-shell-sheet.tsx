@@ -19,7 +19,7 @@ export type DashboardFormShellSheetProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
-  description: string;
+  description?: string;
   footer: ReactNode;
   children: ReactNode;
 };
@@ -40,7 +40,9 @@ export function DashboardFormShellSheet({
       >
         <SheetHeader className="shrink-0 border-b p-4 pe-14 text-start">
           <SheetTitle>{title}</SheetTitle>
-          <SheetDescription>{description}</SheetDescription>
+          {description ? (
+            <SheetDescription>{description}</SheetDescription>
+          ) : null}
         </SheetHeader>
         <div className="min-h-0 flex-1 overflow-y-auto p-4">{children}</div>
         <SheetFooter

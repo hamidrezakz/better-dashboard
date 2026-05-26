@@ -6,7 +6,6 @@ import { AccountSettingsPanel } from "@/app/dashboard/(user)/account/components/
 import type { AccountSessionDisplay } from "@/app/dashboard/(user)/account/components/account-sessions-content";
 import { accountListSettingsItems } from "@/app/dashboard/(user)/account/lib/account-settings-items";
 import type { AccountPanel } from "@/app/dashboard/(user)/account/lib/account-panel";
-import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getUserInitials } from "@/lib/user-profile/user-display";
 import { cn } from "@/lib/utils";
@@ -50,9 +49,6 @@ export function AccountSettingsHub({
             <p className="truncate text-sm text-muted-foreground">
               {profile.email}
             </p>
-            <p className="pt-0.5 text-xs text-muted-foreground">
-              {dashboardNavLabels.accountSettings.editProfile}
-            </p>
           </div>
           <ChevronRightIcon className="size-4 shrink-0 text-muted-foreground" />
         </button>
@@ -67,9 +63,6 @@ export function AccountSettingsHub({
             >
               <div className="min-w-0 flex-1 text-start">
                 <p className="text-sm font-medium">{item.label}</p>
-                <p className="text-sm text-muted-foreground">
-                  {item.description}
-                </p>
               </div>
               <ChevronRightIcon className="size-4 shrink-0 text-muted-foreground" />
             </button>

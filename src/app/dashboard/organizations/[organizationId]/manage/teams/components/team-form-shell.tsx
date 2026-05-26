@@ -44,9 +44,6 @@ export function TeamFormShell({
   const title = isEdit
     ? dashboardNavLabels.teamManage.editTeam
     : dashboardNavLabels.teamManage.addTeam;
-  const description = isEdit
-    ? "Update the team name."
-    : "Create a team for this organization.";
 
   const handleSubmit = () => {
     if (!form || !target || !attemptSubmit()) {
@@ -86,7 +83,6 @@ export function TeamFormShell({
         }
       }}
       title={title}
-      description={description}
       footer={
         <DashboardFormShellFooterActions
           cancel={{

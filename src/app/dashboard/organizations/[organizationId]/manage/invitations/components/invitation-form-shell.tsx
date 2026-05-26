@@ -38,9 +38,6 @@ export function InvitationFormShell({
 
   const open = Boolean(target);
   const title = isEdit ? "Edit invitation" : "Create invitation";
-  const description = isEdit
-    ? "Update invitation details."
-    : "Share a link for members to join the organization.";
 
   const handleSubmit = () => {
     if (!form || !target) {
@@ -106,7 +103,6 @@ export function InvitationFormShell({
         }
       }}
       title={title}
-      description={description}
       footer={
         <DashboardFormShellFooterActions
           cancel={{

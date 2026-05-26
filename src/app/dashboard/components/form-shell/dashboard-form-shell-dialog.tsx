@@ -19,7 +19,7 @@ export type DashboardFormShellDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
-  description: string;
+  description?: string;
   footer: ReactNode;
   children: ReactNode;
   contentClassName?: string;
@@ -44,7 +44,9 @@ export function DashboardFormShellDialog({
       >
         <DialogHeader className="shrink-0 border-b p-4 pe-12 text-start">
           <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
+          {description ? (
+            <DialogDescription>{description}</DialogDescription>
+          ) : null}
         </DialogHeader>
         <div className="min-h-0 flex-1 overflow-y-auto p-4">{children}</div>
         <DialogFooter className={dashboardFormShellFooterSurfaceClassName}>

@@ -91,11 +91,6 @@ export function MemberRoleFormShell({
         }
       }}
       title={dashboardNavLabels.memberManage.changeRole}
-      description={
-        member
-          ? `Update the organization role for ${member.name}.`
-          : "Update member role."
-      }
       footer={
         <DashboardFormShellFooterActions
           cancel={{

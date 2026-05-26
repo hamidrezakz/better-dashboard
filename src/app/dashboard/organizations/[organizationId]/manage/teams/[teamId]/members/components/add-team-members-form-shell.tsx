@@ -75,7 +75,6 @@ export function AddTeamMembersFormShell({
         }
       }}
       title={dashboardNavLabels.teamManage.addMembers}
-      description="Search and select organization members to add to this team."
       footer={
         <DashboardFormShellFooterActions
           cancel={{

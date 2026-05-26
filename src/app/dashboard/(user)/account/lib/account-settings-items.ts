@@ -4,16 +4,13 @@ import type { AccountListPanel } from "@/app/dashboard/(user)/account/lib/accoun
 export const accountListSettingsItems: ReadonlyArray<{
   key: AccountListPanel;
   label: string;
-  description: string;
 }> = [
   {
     key: "security",
     label: dashboardNavLabels.accountSettings.security,
-    description: dashboardNavLabels.accountSettings.securityDescription,
   },
   {
     key: "sessions",
     label: dashboardNavLabels.accountSettings.sessions,
-    description: dashboardNavLabels.accountSettings.sessionsDescription,
   },
 ] as const;

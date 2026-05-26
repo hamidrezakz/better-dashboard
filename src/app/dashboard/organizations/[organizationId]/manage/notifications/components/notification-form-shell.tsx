@@ -72,7 +72,6 @@ export function NotificationFormShell({
         }
       }}
       title="New notification"
-      description="Send a notification to organization members."
       footer={
         <DashboardFormShellFooterActions
           cancel={{

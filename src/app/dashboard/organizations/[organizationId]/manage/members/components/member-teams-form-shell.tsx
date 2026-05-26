@@ -79,11 +79,6 @@ export function MemberTeamsFormShell({
         }
       }}
       title={dashboardNavLabels.memberManage.manageTeams}
-      description={
-        member
-          ? `Choose which teams ${member.name} belongs to.`
-          : "Manage team memberships."
-      }
       footer={
         <DashboardFormShellFooterActions
           cancel={{

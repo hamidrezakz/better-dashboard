@@ -91,7 +91,6 @@ export function InvitationViewDialog({
         }
       }}
       title="Invitation details"
-      description=" "
       footer={
         <div className="flex w-full justify-end">
           <Button type="button" variant="outline" onClick={onClose}>
