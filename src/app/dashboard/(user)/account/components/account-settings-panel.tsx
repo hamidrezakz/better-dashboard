@@ -17,8 +17,8 @@ import type { AccountSessionDisplay } from "@/app/dashboard/(user)/account/compo
 import { AccountSessionsContent } from "@/app/dashboard/(user)/account/components/account-sessions-content";
 import { accountCopy } from "@/app/dashboard/(user)/account/lib/account-copy";
 import type { AccountPanel } from "@/app/dashboard/(user)/account/lib/account-panel";
-import { FormShell } from "@/components/form-shell/form-shell";
-import { FormShellFooterActions } from "@/components/form-shell/form-shell-footer-actions";
+import { ResponsiveFormOverlay } from "@/components/responsive-form-overlay/responsive-form-overlay";
+import { ResponsiveFormOverlayFooterActions } from "@/components/responsive-form-overlay/responsive-form-overlay-footer-actions";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 
@@ -147,7 +147,7 @@ export function AccountSettingsPanel({
   });
 
   return (
-    <FormShell
+    <ResponsiveFormOverlay
       open={open}
       onOpenChange={(nextOpen) => {
         if (!nextOpen) {
@@ -158,7 +158,7 @@ export function AccountSettingsPanel({
       footer={footer}
     >
       {children}
-    </FormShell>
+    </ResponsiveFormOverlay>
   );
 }
 
@@ -206,7 +206,7 @@ function resolvePanelContent({
       return {
         title: accountCopy.profile.title,
         footer: (
-          <FormShellFooterActions
+          <ResponsiveFormOverlayFooterActions
             cancel={{
               label: "Cancel",
               onClick: onClose,
@@ -242,7 +242,7 @@ function resolvePanelContent({
       return {
         title: accountCopy.security.title,
         footer: hasPasswordCredential ? (
-          <FormShellFooterActions
+          <ResponsiveFormOverlayFooterActions
             cancel={{
               label: "Cancel",
               onClick: onClose,
@@ -287,7 +287,7 @@ function resolvePanelContent({
       return {
         title: accountCopy.sessions.title,
         footer: hasOtherSessions ? (
-          <FormShellFooterActions
+          <ResponsiveFormOverlayFooterActions
             cancel={{
               label: "Close",
               onClick: onClose,

@@ -1,11 +1,11 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { FormShellDialog } from "@/components/form-shell/form-shell-dialog";
-import { FormShellSheet } from "@/components/form-shell/form-shell-sheet";
+import { ResponsiveFormOverlayDialog } from "@/components/responsive-form-overlay/responsive-form-overlay-dialog";
+import { ResponsiveFormOverlaySheet } from "@/components/responsive-form-overlay/responsive-form-overlay-sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-export type FormShellProps = {
+export type ResponsiveFormOverlayProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -15,7 +15,7 @@ export type FormShellProps = {
   contentClassName?: string;
 };
 
-export function FormShell({
+export function ResponsiveFormOverlay({
   open,
   onOpenChange,
   title,
@@ -23,12 +23,12 @@ export function FormShell({
   footer,
   children,
   contentClassName,
-}: FormShellProps) {
+}: ResponsiveFormOverlayProps) {
   const isMobile = useIsMobile();
 
   if (isMobile) {
     return (
-      <FormShellSheet
+      <ResponsiveFormOverlaySheet
         open={open}
         onOpenChange={onOpenChange}
         title={title}
@@ -36,12 +36,12 @@ export function FormShell({
         footer={footer}
       >
         {children}
-      </FormShellSheet>
+      </ResponsiveFormOverlaySheet>
     );
   }
 
   return (
-    <FormShellDialog
+    <ResponsiveFormOverlayDialog
       open={open}
       onOpenChange={onOpenChange}
       title={title}
@@ -50,6 +50,6 @@ export function FormShell({
       contentClassName={contentClassName}
     >
       {children}
-    </FormShellDialog>
+    </ResponsiveFormOverlayDialog>
   );
 }

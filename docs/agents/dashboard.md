@@ -19,13 +19,13 @@ Badge enum copy: `src/lib/badge/badge-labels.ts` (not route nav).
 
 Shared chrome and shells â€” hoist here when **two or more** dashboard areas need the same UI:
 
-| Area                   | Path                                                                                                |
-| ---------------------- | --------------------------------------------------------------------------------------------------- |
-| Form shell             | `src/components/form-shell/` (`FormShell`, footer actions)                                          |
-| Page shell             | `components/dashboard-page-shell/`                                                                  |
-| Sidebar                | `components/sidebar/` (+ `dashboard-sidebar-close-on-navigate.tsx` â€” not `components/ui/sidebar`) |
-| Breadcrumbs            | `components/breadcrumbs/`                                                                           |
-| Notifications (chrome) | `components/notifications/`                                                                         |
+| Area                    | Path                                                                                                |
+| ----------------------- | --------------------------------------------------------------------------------------------------- |
+| Responsive form overlay | `src/components/responsive-form-overlay/` (`ResponsiveFormOverlay`, footer actions)                 |
+| Page shell              | `components/dashboard-page-shell/`                                                                  |
+| Sidebar                 | `components/sidebar/` (+ `dashboard-sidebar-close-on-navigate.tsx` â€” not `components/ui/sidebar`) |
+| Breadcrumbs             | `components/breadcrumbs/`                                                                           |
+| Notifications (chrome)  | `components/notifications/`                                                                         |
 
 **Middle tier:** `organizations/[organizationId]/manage/components/` when shared only within org-manage (e.g. `OrganizationMembersMultiCombobox`).
 
@@ -61,7 +61,7 @@ Reuse `DataTableShell` from `src/components/data-table/` for paginated lists.
 
 **Field validation:** errors after blur or submit attempt; `aria-invalid` / `aria-describedby`. Server errors â†’ toast unless dialog stays open with inline copy.
 
-**Form shell footers:** `FormShellFooterActions` in `src/components/form-shell/`. DOM order: **Cancel** (outline) then **primary**; mobile uses `flex-col-reverse` so primary is on top. `variant="destructive"` only for destructive actions, not Cancel.
+**Responsive form overlay footers:** `ResponsiveFormOverlayFooterActions` in `src/components/responsive-form-overlay/`. DOM order: **Cancel** (outline) then **primary**; mobile uses `flex-col-reverse` so primary is on top. `variant="destructive"` only for destructive actions, not Cancel.
 
 ## Copy & locale
 

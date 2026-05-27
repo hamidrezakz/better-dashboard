@@ -2,9 +2,9 @@
 
 import type { ReactNode } from "react";
 import {
-  FormShellFooter,
-  formShellFooterSurfaceClassName,
-} from "@/components/form-shell/form-shell-footer";
+  ResponsiveFormOverlayFooter,
+  responsiveFormOverlayFooterSurfaceClassName,
+} from "@/components/responsive-form-overlay/responsive-form-overlay-footer";
 import {
   Sheet,
   SheetContent,
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
-export type FormShellSheetProps = {
+export type ResponsiveFormOverlaySheetProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -24,14 +24,14 @@ export type FormShellSheetProps = {
   children: ReactNode;
 };
 
-export function FormShellSheet({
+export function ResponsiveFormOverlaySheet({
   open,
   onOpenChange,
   title,
   description,
   footer,
   children,
-}: FormShellSheetProps) {
+}: ResponsiveFormOverlaySheetProps) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange} modal="trap-focus">
       <SheetContent
@@ -47,11 +47,11 @@ export function FormShellSheet({
         <div className="min-h-0 flex-1 overflow-y-auto p-4">{children}</div>
         <SheetFooter
           className={cn(
-            formShellFooterSurfaceClassName,
+            responsiveFormOverlayFooterSurfaceClassName,
             "pb-[max(1rem,env(safe-area-inset-bottom,0px))]",
           )}
         >
-          <FormShellFooter>{footer}</FormShellFooter>
+          <ResponsiveFormOverlayFooter>{footer}</ResponsiveFormOverlayFooter>
         </SheetFooter>
       </SheetContent>
     </Sheet>

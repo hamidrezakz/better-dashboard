@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { markNotificationReadAction } from "@/app/action/dashboard/users/notifications/mark-notification-read-action";
 import type { NotificationViewItem } from "@/app/dashboard/lib/notifications/notification-view-types";
 import { buildNotificationSourceInline } from "@/app/dashboard/lib/notifications/notification-source-label";
-import { FormShell } from "@/components/form-shell/form-shell";
+import { ResponsiveFormOverlay } from "@/components/responsive-form-overlay/responsive-form-overlay";
 import { NotificationTypeBadge } from "@/components/badge/notification-type-badge";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import { Button } from "@/components/ui/button";
@@ -67,7 +67,7 @@ export function NotificationViewDialog({
     : null;
 
   return (
-    <FormShell
+    <ResponsiveFormOverlay
       open={Boolean(notification)}
       onOpenChange={(open) => {
         if (!open) {
@@ -124,6 +124,6 @@ export function NotificationViewDialog({
           </div>
         </div>
       ) : null}
-    </FormShell>
+    </ResponsiveFormOverlay>
   );
 }

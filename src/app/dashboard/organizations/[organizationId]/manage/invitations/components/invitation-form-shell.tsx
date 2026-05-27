@@ -4,8 +4,8 @@ import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createOrganizationInvitationAction } from "@/app/action/dashboard/organizations/manage/invitations/create-organization-invitation-action";
 import { updateOrganizationInvitationAction } from "@/app/action/dashboard/organizations/manage/invitations/update-organization-invitation-action";
-import { FormShell } from "@/components/form-shell/form-shell";
-import { FormShellFooterActions } from "@/components/form-shell/form-shell-footer-actions";
+import { ResponsiveFormOverlay } from "@/components/responsive-form-overlay/responsive-form-overlay";
+import { ResponsiveFormOverlayFooterActions } from "@/components/responsive-form-overlay/responsive-form-overlay-footer-actions";
 import {
   InvitationForm,
   useInvitationForm,
@@ -95,7 +95,7 @@ export function InvitationFormShell({
       : "Create";
 
   return (
-    <FormShell
+    <ResponsiveFormOverlay
       open={open}
       onOpenChange={(nextOpen) => {
         if (!nextOpen) {
@@ -104,7 +104,7 @@ export function InvitationFormShell({
       }}
       title={title}
       footer={
-        <FormShellFooterActions
+        <ResponsiveFormOverlayFooterActions
           cancel={{
             label: "Cancel",
             onClick: onClose,
@@ -126,6 +126,6 @@ export function InvitationFormShell({
           onChange={onChange}
         />
       ) : null}
-    </FormShell>
+    </ResponsiveFormOverlay>
   );
 }

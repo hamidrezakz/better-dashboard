@@ -3,8 +3,8 @@
 import { useId, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { updateOrganizationAction } from "@/app/action/dashboard/organizations/manage/update-organization-action";
-import { FormShell } from "@/components/form-shell/form-shell";
-import { FormShellFooterActions } from "@/components/form-shell/form-shell-footer-actions";
+import { ResponsiveFormOverlay } from "@/components/responsive-form-overlay/responsive-form-overlay";
+import { ResponsiveFormOverlayFooterActions } from "@/components/responsive-form-overlay/responsive-form-overlay-footer-actions";
 import {
   OrganizationForm,
   useOrganizationForm,
@@ -64,7 +64,7 @@ export function OrganizationFormShell({
   };
 
   return (
-    <FormShell
+    <ResponsiveFormOverlay
       open={open}
       onOpenChange={(nextOpen) => {
         if (!nextOpen) {
@@ -73,7 +73,7 @@ export function OrganizationFormShell({
       }}
       title={labels.editOrganization}
       footer={
-        <FormShellFooterActions
+        <ResponsiveFormOverlayFooterActions
           cancel={{
             label: "Cancel",
             onClick: onClose,
@@ -101,6 +101,6 @@ export function OrganizationFormShell({
           logoErrorId={logoErrorId}
         />
       ) : null}
-    </FormShell>
+    </ResponsiveFormOverlay>
   );
 }

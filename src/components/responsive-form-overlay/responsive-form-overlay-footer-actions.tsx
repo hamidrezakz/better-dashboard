@@ -8,15 +8,15 @@ type FooterActionProps = {
   disabled?: boolean;
 };
 
-type FormShellFooterActionsProps = {
+type ResponsiveFormOverlayFooterActionsProps = {
   cancel: FooterActionProps;
   primary: FooterActionProps;
 };
 
-export function FormShellFooterActions({
+export function ResponsiveFormOverlayFooterActions({
   cancel,
   primary,
-}: FormShellFooterActionsProps) {
+}: ResponsiveFormOverlayFooterActionsProps) {
   return (
     <>
       <Button

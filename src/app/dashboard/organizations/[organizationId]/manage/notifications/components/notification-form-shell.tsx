@@ -3,8 +3,8 @@
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createOrganizationNotificationAction } from "@/app/action/dashboard/organizations/manage/notifications/create-organization-notification-action";
-import { FormShell } from "@/components/form-shell/form-shell";
-import { FormShellFooterActions } from "@/components/form-shell/form-shell-footer-actions";
+import { ResponsiveFormOverlay } from "@/components/responsive-form-overlay/responsive-form-overlay";
+import { ResponsiveFormOverlayFooterActions } from "@/components/responsive-form-overlay/responsive-form-overlay-footer-actions";
 import {
   NotificationForm,
   useNotificationForm,
@@ -64,7 +64,7 @@ export function NotificationFormShell({
   };
 
   return (
-    <FormShell
+    <ResponsiveFormOverlay
       open={open}
       onOpenChange={(nextOpen) => {
         if (!nextOpen) {
@@ -73,7 +73,7 @@ export function NotificationFormShell({
       }}
       title="New notification"
       footer={
-        <FormShellFooterActions
+        <ResponsiveFormOverlayFooterActions
           cancel={{
             label: "Cancel",
             onClick: onClose,
@@ -96,6 +96,6 @@ export function NotificationFormShell({
           onChange={onChange}
         />
       ) : null}
-    </FormShell>
+    </ResponsiveFormOverlay>
   );
 }

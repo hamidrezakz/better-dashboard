@@ -2,9 +2,9 @@
 
 import type { ReactNode } from "react";
 import {
-  FormShellFooter,
-  formShellFooterSurfaceClassName,
-} from "@/components/form-shell/form-shell-footer";
+  ResponsiveFormOverlayFooter,
+  responsiveFormOverlayFooterSurfaceClassName,
+} from "@/components/responsive-form-overlay/responsive-form-overlay-footer";
 import {
   Dialog,
   DialogContent,
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
-export type FormShellDialogProps = {
+export type ResponsiveFormOverlayDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -25,7 +25,7 @@ export type FormShellDialogProps = {
   contentClassName?: string;
 };
 
-export function FormShellDialog({
+export function ResponsiveFormOverlayDialog({
   open,
   onOpenChange,
   title,
@@ -33,7 +33,7 @@ export function FormShellDialog({
   footer,
   children,
   contentClassName,
-}: FormShellDialogProps) {
+}: ResponsiveFormOverlayDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -49,8 +49,8 @@ export function FormShellDialog({
           ) : null}
         </DialogHeader>
         <div className="min-h-0 flex-1 overflow-y-auto p-4">{children}</div>
-        <DialogFooter className={formShellFooterSurfaceClassName}>
-          <FormShellFooter>{footer}</FormShellFooter>
+        <DialogFooter className={responsiveFormOverlayFooterSurfaceClassName}>
+          <ResponsiveFormOverlayFooter>{footer}</ResponsiveFormOverlayFooter>
         </DialogFooter>
       </DialogContent>
     </Dialog>

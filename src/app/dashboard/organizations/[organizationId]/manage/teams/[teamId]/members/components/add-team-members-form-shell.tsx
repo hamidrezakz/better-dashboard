@@ -3,8 +3,8 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { addOrganizationTeamMembersAction } from "@/app/action/dashboard/organizations/manage/teams/add-organization-team-members-action";
-import { FormShell } from "@/components/form-shell/form-shell";
-import { FormShellFooterActions } from "@/components/form-shell/form-shell-footer-actions";
+import { ResponsiveFormOverlay } from "@/components/responsive-form-overlay/responsive-form-overlay";
+import { ResponsiveFormOverlayFooterActions } from "@/components/responsive-form-overlay/responsive-form-overlay-footer-actions";
 import { OrganizationMembersMultiCombobox } from "@/app/dashboard/organizations/[organizationId]/manage/components/organization-members-multi-combobox";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import { toast } from "sonner";
@@ -67,7 +67,7 @@ export function AddTeamMembersFormShell({
   };
 
   return (
-    <FormShell
+    <ResponsiveFormOverlay
       open={open}
       onOpenChange={(nextOpen) => {
         if (!nextOpen) {
@@ -76,7 +76,7 @@ export function AddTeamMembersFormShell({
       }}
       title={dashboardNavLabels.teamManage.addMembers}
       footer={
-        <FormShellFooterActions
+        <ResponsiveFormOverlayFooterActions
           cancel={{
             label: "Cancel",
             onClick: handleClose,
@@ -100,6 +100,6 @@ export function AddTeamMembersFormShell({
           disabled={isPending}
         />
       </div>
-    </FormShell>
+    </ResponsiveFormOverlay>
   );
 }

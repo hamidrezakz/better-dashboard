@@ -4,8 +4,8 @@ import { useId, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createOrganizationTeamAction } from "@/app/action/dashboard/organizations/manage/teams/create-organization-team-action";
 import { updateOrganizationTeamAction } from "@/app/action/dashboard/organizations/manage/teams/update-organization-team-action";
-import { FormShell } from "@/components/form-shell/form-shell";
-import { FormShellFooterActions } from "@/components/form-shell/form-shell-footer-actions";
+import { ResponsiveFormOverlay } from "@/components/responsive-form-overlay/responsive-form-overlay";
+import { ResponsiveFormOverlayFooterActions } from "@/components/responsive-form-overlay/responsive-form-overlay-footer-actions";
 import {
   TeamForm,
   useTeamForm,
@@ -75,7 +75,7 @@ export function TeamFormShell({
   };
 
   return (
-    <FormShell
+    <ResponsiveFormOverlay
       open={open}
       onOpenChange={(nextOpen) => {
         if (!nextOpen) {
@@ -84,7 +84,7 @@ export function TeamFormShell({
       }}
       title={title}
       footer={
-        <FormShellFooterActions
+        <ResponsiveFormOverlayFooterActions
           cancel={{
             label: "Cancel",
             onClick: onClose,
@@ -109,6 +109,6 @@ export function TeamFormShell({
           nameErrorId={nameErrorId}
         />
       ) : null}
-    </FormShell>
+    </ResponsiveFormOverlay>
   );
 }

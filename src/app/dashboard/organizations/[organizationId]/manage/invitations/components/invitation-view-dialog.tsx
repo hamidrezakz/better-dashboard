@@ -14,7 +14,7 @@ import {
   getInvitationContactLabel,
   type OrganizationInvitationItem,
 } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-form-utils";
-import { FormShell } from "@/components/form-shell/form-shell";
+import { ResponsiveFormOverlay } from "@/components/responsive-form-overlay/responsive-form-overlay";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import {
   formatInvitationUsageLabel,
@@ -83,7 +83,7 @@ export function InvitationViewDialog({
       : badgeLabels.invitationJoinScope[joinScope];
 
   return (
-    <FormShell
+    <ResponsiveFormOverlay
       open={Boolean(invitation)}
       onOpenChange={(open) => {
         if (!open) {
@@ -177,6 +177,6 @@ export function InvitationViewDialog({
           ) : null}
         </div>
       ) : null}
-    </FormShell>
+    </ResponsiveFormOverlay>
   );
 }
