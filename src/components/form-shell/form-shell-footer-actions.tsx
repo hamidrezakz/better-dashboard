@@ -8,15 +8,15 @@ type FooterActionProps = {
   disabled?: boolean;
 };
 
-type DashboardFormShellFooterActionsProps = {
+type FormShellFooterActionsProps = {
   cancel: FooterActionProps;
   primary: FooterActionProps;
 };
 
-export function DashboardFormShellFooterActions({
+export function FormShellFooterActions({
   cancel,
   primary,
-}: DashboardFormShellFooterActionsProps) {
+}: FormShellFooterActionsProps) {
   return (
     <>
       <Button

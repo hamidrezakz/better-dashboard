@@ -4,8 +4,8 @@ import { useId, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createOrganizationTeamAction } from "@/app/action/dashboard/organizations/manage/teams/create-organization-team-action";
 import { updateOrganizationTeamAction } from "@/app/action/dashboard/organizations/manage/teams/update-organization-team-action";
-import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
-import { DashboardFormShellFooterActions } from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions";
+import { FormShell } from "@/components/form-shell/form-shell";
+import { FormShellFooterActions } from "@/components/form-shell/form-shell-footer-actions";
 import {
   TeamForm,
   useTeamForm,
@@ -75,7 +75,7 @@ export function TeamFormShell({
   };
 
   return (
-    <DashboardFormShell
+    <FormShell
       open={open}
       onOpenChange={(nextOpen) => {
         if (!nextOpen) {
@@ -84,7 +84,7 @@ export function TeamFormShell({
       }}
       title={title}
       footer={
-        <DashboardFormShellFooterActions
+        <FormShellFooterActions
           cancel={{
             label: "Cancel",
             onClick: onClose,
@@ -109,6 +109,6 @@ export function TeamFormShell({
           nameErrorId={nameErrorId}
         />
       ) : null}
-    </DashboardFormShell>
+    </FormShell>
   );
 }

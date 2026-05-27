@@ -3,8 +3,8 @@
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { setOrganizationMemberTeamsAction } from "@/app/action/dashboard/organizations/manage/members/set-organization-member-teams-action";
-import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
-import { DashboardFormShellFooterActions } from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions";
+import { FormShell } from "@/components/form-shell/form-shell";
+import { FormShellFooterActions } from "@/components/form-shell/form-shell-footer-actions";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import { toast } from "sonner";
 import type { OrganizationMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/get-organization-members-page";
@@ -71,7 +71,7 @@ export function MemberTeamsFormShell({
   };
 
   return (
-    <DashboardFormShell
+    <FormShell
       open={open}
       onOpenChange={(nextOpen) => {
         if (!nextOpen) {
@@ -80,7 +80,7 @@ export function MemberTeamsFormShell({
       }}
       title={dashboardNavLabels.memberManage.manageTeams}
       footer={
-        <DashboardFormShellFooterActions
+        <FormShellFooterActions
           cancel={{
             label: "Cancel",
             onClick: onClose,
@@ -132,6 +132,6 @@ export function MemberTeamsFormShell({
           )}
         </div>
       ) : null}
-    </DashboardFormShell>
+    </FormShell>
   );
 }

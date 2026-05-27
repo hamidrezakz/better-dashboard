@@ -2,9 +2,9 @@
 
 import type { ReactNode } from "react";
 import {
-  DashboardFormShellFooter,
-  dashboardFormShellFooterSurfaceClassName,
-} from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer";
+  FormShellFooter,
+  formShellFooterSurfaceClassName,
+} from "@/components/form-shell/form-shell-footer";
 import {
   Sheet,
   SheetContent,
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
-export type DashboardFormShellSheetProps = {
+export type FormShellSheetProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -24,14 +24,14 @@ export type DashboardFormShellSheetProps = {
   children: ReactNode;
 };
 
-export function DashboardFormShellSheet({
+export function FormShellSheet({
   open,
   onOpenChange,
   title,
   description,
   footer,
   children,
-}: DashboardFormShellSheetProps) {
+}: FormShellSheetProps) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange} modal="trap-focus">
       <SheetContent
@@ -47,11 +47,11 @@ export function DashboardFormShellSheet({
         <div className="min-h-0 flex-1 overflow-y-auto p-4">{children}</div>
         <SheetFooter
           className={cn(
-            dashboardFormShellFooterSurfaceClassName,
+            formShellFooterSurfaceClassName,
             "pb-[max(1rem,env(safe-area-inset-bottom,0px))]",
           )}
         >
-          <DashboardFormShellFooter>{footer}</DashboardFormShellFooter>
+          <FormShellFooter>{footer}</FormShellFooter>
         </SheetFooter>
       </SheetContent>
     </Sheet>

@@ -1,11 +1,11 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { DashboardFormShellDialog } from "@/app/dashboard/components/form-shell/dashboard-form-shell-dialog";
-import { DashboardFormShellSheet } from "@/app/dashboard/components/form-shell/dashboard-form-shell-sheet";
+import { FormShellDialog } from "@/components/form-shell/form-shell-dialog";
+import { FormShellSheet } from "@/components/form-shell/form-shell-sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-export type DashboardFormShellProps = {
+export type FormShellProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -15,7 +15,7 @@ export type DashboardFormShellProps = {
   contentClassName?: string;
 };
 
-export function DashboardFormShell({
+export function FormShell({
   open,
   onOpenChange,
   title,
@@ -23,12 +23,12 @@ export function DashboardFormShell({
   footer,
   children,
   contentClassName,
-}: DashboardFormShellProps) {
+}: FormShellProps) {
   const isMobile = useIsMobile();
 
   if (isMobile) {
     return (
-      <DashboardFormShellSheet
+      <FormShellSheet
         open={open}
         onOpenChange={onOpenChange}
         title={title}
@@ -36,12 +36,12 @@ export function DashboardFormShell({
         footer={footer}
       >
         {children}
-      </DashboardFormShellSheet>
+      </FormShellSheet>
     );
   }
 
   return (
-    <DashboardFormShellDialog
+    <FormShellDialog
       open={open}
       onOpenChange={onOpenChange}
       title={title}
@@ -50,6 +50,6 @@ export function DashboardFormShell({
       contentClassName={contentClassName}
     >
       {children}
-    </DashboardFormShellDialog>
+    </FormShellDialog>
   );
 }

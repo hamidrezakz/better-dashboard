@@ -21,7 +21,7 @@ Shared chrome and shells â€” hoist here when **two or more** dashboard area
 
 | Area                   | Path                                                                                                |
 | ---------------------- | --------------------------------------------------------------------------------------------------- |
-| Form shell             | `components/form-shell/` (`DashboardFormShell`, footer actions)                                     |
+| Form shell             | `src/components/form-shell/` (`FormShell`, footer actions)                                          |
 | Page shell             | `components/dashboard-page-shell/`                                                                  |
 | Sidebar                | `components/sidebar/` (+ `dashboard-sidebar-close-on-navigate.tsx` â€” not `components/ui/sidebar`) |
 | Breadcrumbs            | `components/breadcrumbs/`                                                                           |
@@ -61,7 +61,7 @@ Reuse `DataTableShell` from `src/components/data-table/` for paginated lists.
 
 **Field validation:** errors after blur or submit attempt; `aria-invalid` / `aria-describedby`. Server errors â†’ toast unless dialog stays open with inline copy.
 
-**Form shell footers:** `DashboardFormShellFooterActions` in `components/form-shell/`. DOM order: **Cancel** (outline) then **primary**; mobile uses `flex-col-reverse` so primary is on top. `variant="destructive"` only for destructive actions, not Cancel.
+**Form shell footers:** `FormShellFooterActions` in `src/components/form-shell/`. DOM order: **Cancel** (outline) then **primary**; mobile uses `flex-col-reverse` so primary is on top. `variant="destructive"` only for destructive actions, not Cancel.
 
 ## Copy & locale
 

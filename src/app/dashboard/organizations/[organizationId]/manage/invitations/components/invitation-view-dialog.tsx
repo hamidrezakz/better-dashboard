@@ -14,7 +14,7 @@ import {
   getInvitationContactLabel,
   type OrganizationInvitationItem,
 } from "@/app/dashboard/organizations/[organizationId]/manage/invitations/lib/invitation-form-utils";
-import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
+import { FormShell } from "@/components/form-shell/form-shell";
 import { dateTimeOptions, formatDate } from "@/lib/format-date";
 import {
   formatInvitationUsageLabel,
@@ -83,7 +83,7 @@ export function InvitationViewDialog({
       : badgeLabels.invitationJoinScope[joinScope];
 
   return (
-    <DashboardFormShell
+    <FormShell
       open={Boolean(invitation)}
       onOpenChange={(open) => {
         if (!open) {
@@ -177,6 +177,6 @@ export function InvitationViewDialog({
           ) : null}
         </div>
       ) : null}
-    </DashboardFormShell>
+    </FormShell>
   );
 }

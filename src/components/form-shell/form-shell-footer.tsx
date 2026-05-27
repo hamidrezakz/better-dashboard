@@ -3,18 +3,15 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-export const dashboardFormShellFooterSurfaceClassName =
+export const formShellFooterSurfaceClassName =
   "mt-0 shrink-0 flex-col gap-0 p-4 sm:flex-col";
 
-export type DashboardFormShellFooterProps = {
+export type FormShellFooterProps = {
   children: ReactNode;
   className?: string;
 };
 
-export function DashboardFormShellFooter({
-  children,
-  className,
-}: DashboardFormShellFooterProps) {
+export function FormShellFooter({ children, className }: FormShellFooterProps) {
   return (
     <div
       className={cn(

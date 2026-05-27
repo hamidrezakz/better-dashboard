@@ -2,9 +2,9 @@
 
 import type { ReactNode } from "react";
 import {
-  DashboardFormShellFooter,
-  dashboardFormShellFooterSurfaceClassName,
-} from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer";
+  FormShellFooter,
+  formShellFooterSurfaceClassName,
+} from "@/components/form-shell/form-shell-footer";
 import {
   Dialog,
   DialogContent,
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
-export type DashboardFormShellDialogProps = {
+export type FormShellDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
@@ -25,7 +25,7 @@ export type DashboardFormShellDialogProps = {
   contentClassName?: string;
 };
 
-export function DashboardFormShellDialog({
+export function FormShellDialog({
   open,
   onOpenChange,
   title,
@@ -33,7 +33,7 @@ export function DashboardFormShellDialog({
   footer,
   children,
   contentClassName,
-}: DashboardFormShellDialogProps) {
+}: FormShellDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -49,8 +49,8 @@ export function DashboardFormShellDialog({
           ) : null}
         </DialogHeader>
         <div className="min-h-0 flex-1 overflow-y-auto p-4">{children}</div>
-        <DialogFooter className={dashboardFormShellFooterSurfaceClassName}>
-          <DashboardFormShellFooter>{footer}</DashboardFormShellFooter>
+        <DialogFooter className={formShellFooterSurfaceClassName}>
+          <FormShellFooter>{footer}</FormShellFooter>
         </DialogFooter>
       </DialogContent>
     </Dialog>

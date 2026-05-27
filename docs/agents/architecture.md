@@ -29,12 +29,12 @@ Dashboard navigation and copy: [dashboard.md](./dashboard.md). UI primitives: [u
 
 ### Scope table
 
-| Scope        | Location                                | Examples                                      |
-| ------------ | --------------------------------------- | --------------------------------------------- |
-| Sub-feature  | beside route                            | columns, row menus, feature form fields       |
-| Parent route | `â€¦/<route>/components/`               | combobox shared within `manage/` only         |
-| Segment      | `src/app/<segment>/lib/`, `components/` | `dashboard-routes`, `DashboardFormShell`      |
-| App          | `src/lib/`, `src/components/`           | `auth/session.ts`, `DataTableShell`, `badge/` |
+| Scope        | Location                                | Examples                                                   |
+| ------------ | --------------------------------------- | ---------------------------------------------------------- |
+| Sub-feature  | beside route                            | columns, row menus, feature form fields                    |
+| Parent route | `â€¦/<route>/components/`               | combobox shared within `manage/` only                      |
+| Segment      | `src/app/<segment>/lib/`, `components/` | `dashboard-routes`, segment-only shells                    |
+| App          | `src/lib/`, `src/components/`           | `auth/session.ts`, `DataTableShell`, `FormShell`, `badge/` |
 
 **Dependencies:** sub-feature â†’ segment `lib/` â†’ `src/lib` \| `src/components`. No imports from sibling features (e.g. `members/` must not import `teams/` internals). Cross-feature only via segment contracts (`*-routes.ts`, `cache-tags.ts`, access helpers).
 
@@ -57,7 +57,7 @@ flowchart TD
 
 | Pattern             | Location                                                                            |
 | ------------------- | ----------------------------------------------------------------------------------- |
-| Segment shell       | `dashboard/components/form-shell/` (`DashboardFormShell`)                           |
+| App-wide form shell | `components/form-shell/` (`FormShell`, footer actions)                              |
 | App-wide table      | `components/data-table/` + `lib/data-table/` (`DataTableShell`, pagination helpers) |
 | Manage subtree only | `organizations/.../manage/components/` (`OrganizationMembersMultiCombobox`)         |
 | Stay local          | `account/components/account-profile-form-fields.tsx`, `*-row-actions-menu.tsx`      |

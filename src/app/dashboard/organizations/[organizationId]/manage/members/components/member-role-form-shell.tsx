@@ -3,8 +3,8 @@
 import { useEffect, useId, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { updateOrganizationMemberRoleAction } from "@/app/action/dashboard/organizations/manage/members/update-organization-member-role-action";
-import { DashboardFormShell } from "@/app/dashboard/components/form-shell/dashboard-form-shell";
-import { DashboardFormShellFooterActions } from "@/app/dashboard/components/form-shell/dashboard-form-shell-footer-actions";
+import { FormShell } from "@/components/form-shell/form-shell";
+import { FormShellFooterActions } from "@/components/form-shell/form-shell-footer-actions";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import { toast } from "sonner";
 import type { OrganizationMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/get-organization-members-page";
@@ -83,7 +83,7 @@ export function MemberRoleFormShell({
   };
 
   return (
-    <DashboardFormShell
+    <FormShell
       open={open}
       onOpenChange={(nextOpen) => {
         if (!nextOpen) {
@@ -92,7 +92,7 @@ export function MemberRoleFormShell({
       }}
       title={dashboardNavLabels.memberManage.changeRole}
       footer={
-        <DashboardFormShellFooterActions
+        <FormShellFooterActions
           cancel={{
             label: "Cancel",
             onClick: onClose,
@@ -129,6 +129,6 @@ export function MemberRoleFormShell({
           </Select>
         </div>
       ) : null}
-    </DashboardFormShell>
+    </FormShell>
   );
 }
