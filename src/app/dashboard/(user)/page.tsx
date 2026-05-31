@@ -10,7 +10,7 @@ import { UserProfileWorkspacesPanel } from "@/app/dashboard/(user)/components/vi
 import { StatCard, StatCardFallback, StatGrid } from "@/components/stat-card";
 import {
   DashboardPageTitleFallback,
-  DashboardTableCardFallback,
+  DashboardSectionCardFallback,
 } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
 import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-shell";
 import { getUserProfilePageData } from "@/app/dashboard/(user)/lib/get-user-profile-page";
@@ -36,7 +36,7 @@ function UserProfileHomeFallback() {
         <StatCardFallback />
         <StatCardFallback />
       </StatGrid>
-      <DashboardTableCardFallback />
+      <DashboardSectionCardFallback variant="cards" />
     </>
   );
 }

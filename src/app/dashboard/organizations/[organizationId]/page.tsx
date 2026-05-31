@@ -13,7 +13,7 @@ import { OrganizationProfileHeaderPanel } from "@/app/dashboard/organizations/[o
 import { StatCard, StatCardFallback, StatGrid } from "@/components/stat-card";
 import {
   DashboardPageTitleFallback,
-  DashboardTableCardFallback,
+  DashboardSectionCardFallback,
 } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
 import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-shell";
 import {
@@ -50,7 +50,7 @@ export default function OrganizationPage({ params }: OrganizationPageProps) {
         </Suspense>
       </StatGrid>
 
-      <Suspense fallback={<DashboardTableCardFallback />}>
+      <Suspense fallback={<DashboardSectionCardFallback variant="list" />}>
         <OrganizationViewerTeamsCard params={params} />
       </Suspense>
     </DashboardPageShell>

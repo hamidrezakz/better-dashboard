@@ -24,13 +24,7 @@ export default function JoinInvitationPage({
 }
 
 function JoinPageFallback() {
-  return (
-    <CardLoadingFallback
-      showHeader={false}
-      contentClassName="min-h-48"
-      label="Loading..."
-    />
-  );
+  return <CardLoadingFallback showHeader={false} contentClassName="min-h-48" />;
 }
 
 async function JoinInvitationPageContent({

@@ -1,4 +1,3 @@
-import { LoadingFallback } from "@/components/loading-fallback/loading-fallback";
 import {
   Card,
   CardContent,
@@ -10,22 +9,20 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
 type CardLoadingFallbackProps = {
-  label?: string;
   className?: string;
   contentClassName?: string;
-  loadingClassName?: string;
   showHeader?: boolean;
+  lines?: number;
 };
 
 export function CardLoadingFallback({
-  label,
   className,
   contentClassName,
-  loadingClassName,
   showHeader = true,
+  lines = 3,
 }: CardLoadingFallbackProps) {
   return (
-    <Card className={className}>
+    <Card className={className} aria-busy="true" aria-live="polite">
       {showHeader ? (
         <CardHeader>
           <CardTitle>
@@ -37,16 +34,17 @@ export function CardLoadingFallback({
         </CardHeader>
       ) : null}
       <CardContent
-        className={cn(
-          "flex min-h-40 flex-col p-0",
-          !showHeader && "pt-0",
-          contentClassName,
-        )}
+        className={cn("space-y-3", !showHeader && "pt-6", contentClassName)}
       >
-        <LoadingFallback
-          className={cn("min-h-0 flex-1 py-6", loadingClassName)}
-          label={label}
-        />
+        {Array.from({ length: lines }, (_, index) => (
+          <Skeleton
+            key={index}
+            className={cn(
+              "h-3.5 max-w-full rounded-sm",
+              index === 0 ? "w-full" : index === lines - 1 ? "w-2/3" : "w-4/5",
+            )}
+          />
+        ))}
       </CardContent>
     </Card>
   );

@@ -1,6 +1,8 @@
 import { Suspense } from "react";
-import { LoadingFallback } from "@/components/loading-fallback";
-import { DashboardPageTitleFallback } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
+import {
+  DashboardPageTitleFallback,
+  DashboardTableCardFallback,
+} from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
 import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-shell";
 import {
   requireOrganizationAccess,
@@ -32,9 +34,7 @@ export default async function OrganizationManageLayout({
 
       <ManageTabsNav organizationId={organizationId} />
 
-      <Suspense fallback={<LoadingFallback className="min-h-[12vh]" />}>
-        {children}
-      </Suspense>
+      <Suspense fallback={<DashboardTableCardFallback />}>{children}</Suspense>
     </DashboardPageShell>
   );
 }

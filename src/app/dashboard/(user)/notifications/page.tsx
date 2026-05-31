@@ -1,6 +1,8 @@
 import { Suspense } from "react";
-import { LoadingFallback } from "@/components/loading-fallback";
-import { DashboardTableCardFallback } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
+import {
+  DashboardPageTitleFallback,
+  DashboardTableCardFallback,
+} from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
 import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-shell";
 import { UserNotificationsPanel } from "@/app/dashboard/(user)/notifications/components/user-notifications-panel";
 import {
@@ -18,7 +20,7 @@ export default async function UserNotificationsPage({
 }: UserNotificationsPageProps) {
   return (
     <DashboardPageShell>
-      <Suspense fallback={<LoadingFallback className="min-h-[12vh]" />}>
+      <Suspense fallback={<DashboardPageTitleFallback />}>
         <UserNotificationsPageIntro />
       </Suspense>
 

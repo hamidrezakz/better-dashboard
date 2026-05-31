@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import { LoadingFallback } from "@/components/loading-fallback";
+import { DashboardTeamDetailFallback } from "@/app/dashboard/components/dashboard-page-shell/dashboard-page-fallbacks";
 import { TeamDetailPanel } from "@/app/dashboard/organizations/[organizationId]/manage/teams/[teamId]/components/team-detail-panel";
 import {
   getOrganizationTeamDetailPage,
@@ -19,7 +19,7 @@ export default function OrganizationTeamDetailPage(
   props: OrganizationTeamDetailPageProps,
 ) {
   return (
-    <Suspense fallback={<LoadingFallback className="min-h-[20vh]" />}>
+    <Suspense fallback={<DashboardTeamDetailFallback />}>
       <OrganizationTeamDetailPageContent {...props} />
     </Suspense>
   );
