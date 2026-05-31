@@ -17,6 +17,8 @@ Filename typo (`schima`) is intentional — keep stable links.
 | ----------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
 | PostgreSQL layout | Implicit / public                                                  | All models in schema `auth` (`@@schema("auth")`)                                     |
 | Primary keys      | `@id` only                                                         | `@id @default(cuid())` on every model                                                |
+| `User.role`       | `String?` (admin plugin)                                           | `UserRole` enum (`user`, `admin`) + ban fields (`banned`, `banReason`, `banExpires`) |
+| `Session`         | —                                                                  | `impersonatedBy` (admin plugin)                                                      |
 | `Member.role`     | `String` default `"member"`                                        | `MembershipRole` enum (`OWNER`, `ADMIN`, `MEMBER`)                                   |
 | `Invitation`      | Email invite: `email`, `role`, `status`, required `organizationId` | Shareable **link**: optional org/team, `maxUses` / `usedCount`, no email/role/status |
 | `Team`            | —                                                                  | `invitations`, `notifications` relations                                             |
@@ -42,7 +44,8 @@ Datasource: `schemas = ["auth"]` in [`schema.prisma`](./schema.prisma).
 
 | Enum                   | Replaces / purpose                                            |
 | ---------------------- | ------------------------------------------------------------- |
-| `MembershipRole`       | `Member.role` string                                          |
+| `UserRole`             | `User.role` for Better Auth admin plugin (`user` / `admin`)   |
+| `MembershipRole`       | `Member.role` string (org membership)                         |
 | `NotificationType`     | `SYSTEM`, `ORGANIZATION`, `SECURITY`, `CUSTOM`                |
 | `NotificationAudience` | `USER_DIRECT`, `ORG_ALL`, `ORG_ADMINS`, `ORG_MEMBERS`, `TEAM` |
 

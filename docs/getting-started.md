@@ -34,7 +34,8 @@ Edit `.env`:
 | `BETTER_AUTH_URL`             | Yes      | Server auth base URL (e.g. `http://localhost:3000`) |
 | `NEXT_PUBLIC_BETTER_AUTH_URL` | Yes      | Client auth base URL (same in local dev)            |
 | `NEXT_PUBLIC_URL`             | No       | Public site URL for absolute links                  |
-| `DASHBOARD_SUPER_ADMIN_IDS`   | No       | Comma-separated user IDs with super-admin access    |
+
+Platform admins use the Better Auth **admin** plugin: set `user.role` to `admin` in the database (dev seed promotes the owner user) or call `authClient.admin.setRole` / `auth.api.setRole`.
 
 ---
 

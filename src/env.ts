@@ -12,7 +12,6 @@ export type ServerEnv = {
   BETTER_AUTH_URL?: string;
   NEXT_PUBLIC_BETTER_AUTH_URL?: string;
   NEXT_PUBLIC_URL?: string;
-  DASHBOARD_SUPER_ADMIN_IDS?: string;
 };
 
 export const env: ServerEnv = {
@@ -21,5 +20,4 @@ export const env: ServerEnv = {
   BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
   NEXT_PUBLIC_BETTER_AUTH_URL: process.env.NEXT_PUBLIC_BETTER_AUTH_URL,
   NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
-  DASHBOARD_SUPER_ADMIN_IDS: process.env.DASHBOARD_SUPER_ADMIN_IDS,
 };

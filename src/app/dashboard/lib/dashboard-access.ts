@@ -2,33 +2,11 @@ import { cache } from "react";
 import { notFound, redirect } from "next/navigation";
 import type { MembershipRole } from "@/generated/prisma/enums";
 import { dashboardRoutes } from "@/app/dashboard/lib/dashboard-routes";
-import { env } from "@/env";
+import { isPlatformAdmin } from "@/lib/auth/user-role";
 import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
 const ORG_MANAGER_ROLES = new Set<MembershipRole>(["OWNER", "ADMIN"]);
-
-const dashboardSuperAdminIds = (() => {
-  const raw = env.DASHBOARD_SUPER_ADMIN_IDS;
-
-  if (!raw) {
-    return new Set<string>();
-  }
-
-  return new Set(
-    raw
-
-      .split(",")
-
-      .map((id) => id.trim())
-
-      .filter(Boolean),
-  );
-})();
-
-export function isDashboardSuperAdmin(userId: string) {
-  return dashboardSuperAdminIds.has(userId);
-}
 
 export function isOrganizationManagerRole(
   role: MembershipRole | null | undefined,
@@ -63,7 +41,7 @@ export async function canAccessUserProfile(input: {
 }) {
   return (
     input.viewerUserId === input.targetUserId ||
-    isDashboardSuperAdmin(input.viewerUserId)
+    (await isPlatformAdmin(input.viewerUserId))
   );
 }
 
@@ -72,7 +50,7 @@ export async function canAccessOrganization(input: {
 
   organizationId: string;
 }) {
-  if (isDashboardSuperAdmin(input.viewerUserId)) {
+  if (await isPlatformAdmin(input.viewerUserId)) {
     return true;
   }
 
@@ -86,7 +64,7 @@ export async function canManageOrganization(input: {
 
   organizationId: string;
 }) {
-  if (isDashboardSuperAdmin(input.viewerUserId)) {
+  if (await isPlatformAdmin(input.viewerUserId)) {
     return true;
   }
 
@@ -123,7 +101,7 @@ export async function canAccessOrganizationTeamView(input: {
   organizationId: string;
   teamId: string;
 }) {
-  if (isDashboardSuperAdmin(input.viewerUserId)) {
+  if (await isPlatformAdmin(input.viewerUserId)) {
     return true;
   }
 
@@ -179,7 +157,7 @@ export const requireUserProfileAccess = cache(async (targetUserId: string) => {
 
 /**
 
- * Viewer may view this organization (member or dashboard super-admin).
+ * Viewer may view this organization (member or platform admin).
 
  * **Page/layout:** org profile page and `manage/layout.tsx`.
 
@@ -233,7 +211,7 @@ export const requireOrganizationManageAccess = cache(
 
 /**
 
- * Viewer may view a team profile (team member, org member, or super-admin).
+ * Viewer may view a team profile (team member, org member, or platform admin).
 
  * **Layout only:** `organizations/[organizationId]/teams/[teamId]/layout.tsx`.
 

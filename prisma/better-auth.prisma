@@ -1,6 +1,15 @@
 /// Controls who can discover and join an organization or team.
 /// Used for configuring invitation links and membership requests.
 
+/// Platform-wide role (Better Auth admin plugin). Distinct from org `MembershipRole`.
+enum UserRole {
+  user
+  admin
+
+  @@map("user_role")
+  @@schema("auth")
+}
+
 enum MembershipRole {
   OWNER
   ADMIN
@@ -48,6 +57,11 @@ model User {
   notifications        Notification[] @relation("NotificationRecipient")
   notificationsCreated Notification[] @relation("NotificationCreatedBy")
 
+  role       UserRole  @default(user)
+  banned     Boolean   @default(false)
+  banReason  String?
+  banExpires DateTime?
+
   @@unique([email])
   @@map("user")
   @@schema("auth")
@@ -65,6 +79,8 @@ model Session {
   user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   activeOrganizationId String?
   activeTeamId         String?
+
+  impersonatedBy String?
 
   @@unique([token])
   @@index([userId])

@@ -1,4 +1,5 @@
 import type { MembershipRole } from "@/generated/prisma/enums";
+import { isPlatformAdmin } from "@/lib/auth/user-role";
 import { prisma } from "@/lib/prisma";
 
 export async function getOrganizationMemberById(input: {
@@ -42,6 +43,29 @@ export async function getActorOrganizationRole(input: {
   });
 
   return member?.role ?? null;
+}
+
+/** Effective org role for manage UI and member mutations (platform admin → OWNER). */
+export async function getActorOrganizationRoleForManage(input: {
+  actorUserId: string;
+  organizationId: string;
+}): Promise<MembershipRole | null> {
+  if (await isPlatformAdmin(input.actorUserId)) {
+    return "OWNER";
+  }
+
+  return getActorOrganizationRole(input);
+}
+
+export async function canActorRemoveMember(input: {
+  actorUserId: string;
+  memberUserId: string;
+}) {
+  if (input.actorUserId !== input.memberUserId) {
+    return true;
+  }
+
+  return isPlatformAdmin(input.actorUserId);
 }
 
 export function canActorAssignRole(input: {

@@ -1,10 +1,8 @@
 "use server";
 
+import { canManageOrganization } from "@/app/dashboard/lib/dashboard-access";
 import {
-  canManageOrganization,
-  isDashboardSuperAdmin,
-} from "@/app/dashboard/lib/dashboard-access";
-import {
+  canActorRemoveMember,
   countOrganizationOwners,
   getOrganizationMemberById,
 } from "@/app/dashboard/organizations/[organizationId]/manage/lib/organization-member-guards";
@@ -55,7 +53,12 @@ export async function removeOrganizationMemberAction(
     return { success: false, error: "Member not found." };
   }
 
-  if (member.userId === actorUserId && !isDashboardSuperAdmin(actorUserId)) {
+  if (
+    !(await canActorRemoveMember({
+      actorUserId,
+      memberUserId: member.userId,
+    }))
+  ) {
     return {
       success: false,
       error: "You cannot remove yourself from the organization.",

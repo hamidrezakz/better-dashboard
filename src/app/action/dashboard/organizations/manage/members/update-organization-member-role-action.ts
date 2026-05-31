@@ -1,14 +1,11 @@
 "use server";
 
-import {
-  canManageOrganization,
-  isDashboardSuperAdmin,
-} from "@/app/dashboard/lib/dashboard-access";
+import { canManageOrganization } from "@/app/dashboard/lib/dashboard-access";
 import {
   canActorAssignRole,
   canActorChangeMemberRole,
   countOrganizationOwners,
-  getActorOrganizationRole,
+  getActorOrganizationRoleForManage,
   getOrganizationMemberById,
 } from "@/app/dashboard/organizations/[organizationId]/manage/lib/organization-member-guards";
 import {
@@ -68,12 +65,10 @@ export async function updateOrganizationMemberRoleAction(
     return { success: true };
   }
 
-  const actorRole = isDashboardSuperAdmin(actorUserId)
-    ? "OWNER"
-    : await getActorOrganizationRole({
-        actorUserId,
-        organizationId: input.organizationId,
-      });
+  const actorRole = await getActorOrganizationRoleForManage({
+    actorUserId,
+    organizationId: input.organizationId,
+  });
 
   if (!actorRole) {
     return {

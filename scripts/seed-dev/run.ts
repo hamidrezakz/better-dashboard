@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { UserRole } from "@/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
 import { OWNER_USER_ID, USER_EMAIL_DOMAIN } from "./config";
 import { buildSeedInvitations } from "./data/invitations";
@@ -22,6 +23,11 @@ async function assertOwnerExists() {
   }
 
   console.log(`Owner: ${owner.email} (${owner.id})`);
+
+  await prisma.user.update({
+    where: { id: OWNER_USER_ID },
+    data: { role: UserRole.admin },
+  });
 }
 
 async function main() {
