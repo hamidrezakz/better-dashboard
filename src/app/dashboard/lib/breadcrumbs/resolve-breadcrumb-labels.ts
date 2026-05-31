@@ -5,8 +5,7 @@ import {
 } from "@/app/dashboard/lib/breadcrumbs/breadcrumb-entity";
 import {
   canAccessOrganization,
-  canAccessUserProfile,
-  canManageOrganization,
+  canAccessOrganizationTeamView,
 } from "@/app/dashboard/lib/dashboard-access";
 import { prisma } from "@/lib/prisma";
 
@@ -18,16 +17,6 @@ const fetchLabel: Record<
   EntityType,
   (viewerUserId: string, id: string) => Promise<string | null>
 > = {
-  user: async (viewerUserId, id) => {
-    if (!(await canAccessUserProfile({ viewerUserId, targetUserId: id }))) {
-      return null;
-    }
-    const user = await prisma.user.findUnique({
-      where: { id },
-      select: { name: true },
-    });
-    return user?.name?.trim() ?? null;
-  },
   organization: async (viewerUserId, id) => {
     if (!(await canAccessOrganization({ viewerUserId, organizationId: id }))) {
       return null;
@@ -52,9 +41,10 @@ const fetchLabel: Record<
     }
 
     if (
-      !(await canManageOrganization({
+      !(await canAccessOrganizationTeamView({
         viewerUserId,
         organizationId: team.organizationId,
+        teamId: id,
       }))
     ) {
       return null;

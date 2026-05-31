@@ -28,16 +28,6 @@ export async function getUserOrganizationRole(input: {
 
 /** Policy helpers for actions, breadcrumbs, and sidebar — not for page guards. */
 
-export async function canAccessUserProfile(input: {
-  viewerUserId: string;
-  targetUserId: string;
-}) {
-  return (
-    input.viewerUserId === input.targetUserId ||
-    (await isPlatformAdmin(input.viewerUserId))
-  );
-}
-
 export async function canAccessOrganization(input: {
   viewerUserId: string;
   organizationId: string;
