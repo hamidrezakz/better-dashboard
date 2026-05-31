@@ -14,29 +14,22 @@ export function isOrganizationManagerRole(
   return role != null && ORG_MANAGER_ROLES.has(role);
 }
 
-async function findMemberRole(userId: string, organizationId: string) {
+export async function getUserOrganizationRole(input: {
+  userId: string;
+  organizationId: string;
+}) {
   const membership = await prisma.member.findFirst({
-    where: { userId, organizationId },
-
+    where: { userId: input.userId, organizationId: input.organizationId },
     select: { role: true },
   });
 
   return membership?.role ?? null;
 }
 
-export async function getUserOrganizationRole(input: {
-  userId: string;
-
-  organizationId: string;
-}) {
-  return findMemberRole(input.userId, input.organizationId);
-}
-
 /** Policy helpers for actions, breadcrumbs, and sidebar — not for page guards. */
 
 export async function canAccessUserProfile(input: {
   viewerUserId: string;
-
   targetUserId: string;
 }) {
   return (
@@ -47,7 +40,6 @@ export async function canAccessUserProfile(input: {
 
 export async function canAccessOrganization(input: {
   viewerUserId: string;
-
   organizationId: string;
 }) {
   if (await isPlatformAdmin(input.viewerUserId)) {
@@ -55,24 +47,25 @@ export async function canAccessOrganization(input: {
   }
 
   return (
-    (await findMemberRole(input.viewerUserId, input.organizationId)) != null
+    (await getUserOrganizationRole({
+      userId: input.viewerUserId,
+      organizationId: input.organizationId,
+    })) != null
   );
 }
 
 export async function canManageOrganization(input: {
   viewerUserId: string;
-
   organizationId: string;
 }) {
   if (await isPlatformAdmin(input.viewerUserId)) {
     return true;
   }
 
-  const role = await findMemberRole(
-    input.viewerUserId,
-
-    input.organizationId,
-  );
+  const role = await getUserOrganizationRole({
+    userId: input.viewerUserId,
+    organizationId: input.organizationId,
+  });
 
   return isOrganizationManagerRole(role);
 }
@@ -122,47 +115,9 @@ export async function canAccessOrganizationTeamView(input: {
 }
 
 /**
-
- * Ensures the route user exists. Call from a future `users/[userId]/layout.tsx` only.
-
- */
-
-export const assertDashboardUserExists = cache(async (userId: string) => {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-
-    select: { id: true },
-  });
-
-  if (!user) {
-    notFound();
-  }
-});
-
-/** Layout only: future admin `users/[userId]/layout.tsx` */
-
-export const requireUserProfileAccess = cache(async (targetUserId: string) => {
-  const session = await requireAuthSession();
-
-  if (
-    !(await canAccessUserProfile({
-      viewerUserId: session.user.id,
-
-      targetUserId,
-    }))
-  ) {
-    redirect(dashboardRoutes.home());
-  }
-});
-
-/**
-
  * Viewer may view this organization (member or platform admin).
-
  * **Page/layout:** org profile page and `manage/layout.tsx`.
-
  */
-
 export const requireOrganizationAccess = cache(
   async (organizationId: string) => {
     const session = await requireAuthSession();
@@ -170,7 +125,6 @@ export const requireOrganizationAccess = cache(
     if (
       !(await canAccessOrganization({
         viewerUserId: session.user.id,
-
         organizationId,
       }))
     ) {
@@ -180,15 +134,10 @@ export const requireOrganizationAccess = cache(
 );
 
 /**
-
  * Viewer may manage members/teams/invitations for this organization.
-
  * **Layout only:** `organizations/[organizationId]/manage/layout.tsx`.
-
  * Call {@link requireOrganizationAccess} before this in `manage/layout.tsx`.
-
  */
-
 export const requireOrganizationManageAccess = cache(
   async (organizationId: string) => {
     if (!organizationId) {
@@ -200,7 +149,6 @@ export const requireOrganizationManageAccess = cache(
     if (
       !(await canManageOrganization({
         viewerUserId: session.user.id,
-
         organizationId,
       }))
     ) {
@@ -210,13 +158,9 @@ export const requireOrganizationManageAccess = cache(
 );
 
 /**
-
  * Viewer may view a team profile (team member, org member, or platform admin).
-
  * **Layout only:** `organizations/[organizationId]/teams/[teamId]/layout.tsx`.
-
  */
-
 export const requireOrganizationTeamViewAccess = cache(
   async (organizationId: string, teamId: string) => {
     if (!organizationId || !teamId) {

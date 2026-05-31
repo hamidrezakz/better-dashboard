@@ -1,4 +1,5 @@
 import type { MembershipRole } from "@/generated/prisma/enums";
+import { getUserOrganizationRole } from "@/app/dashboard/lib/dashboard-access";
 import { isPlatformAdmin } from "@/lib/auth/user-role";
 import { prisma } from "@/lib/prisma";
 
@@ -28,23 +29,6 @@ export async function countOrganizationOwners(organizationId: string) {
   });
 }
 
-export async function getActorOrganizationRole(input: {
-  actorUserId: string;
-  organizationId: string;
-}): Promise<MembershipRole | null> {
-  const member = await prisma.member.findFirst({
-    where: {
-      organizationId: input.organizationId,
-      userId: input.actorUserId,
-    },
-    select: {
-      role: true,
-    },
-  });
-
-  return member?.role ?? null;
-}
-
 /** Effective org role for manage UI and member mutations (platform admin → OWNER). */
 export async function getActorOrganizationRoleForManage(input: {
   actorUserId: string;
@@ -54,7 +38,10 @@ export async function getActorOrganizationRoleForManage(input: {
     return "OWNER";
   }
 
-  return getActorOrganizationRole(input);
+  return getUserOrganizationRole({
+    userId: input.actorUserId,
+    organizationId: input.organizationId,
+  });
 }
 
 export async function canActorRemoveMember(input: {
@@ -68,22 +55,12 @@ export async function canActorRemoveMember(input: {
   return isPlatformAdmin(input.actorUserId);
 }
 
-export function canActorAssignRole(input: {
+/** Whether the actor may change a member's role to `role` or modify a member with `role`. */
+export function canActorModifyMemberRole(input: {
   actorRole: MembershipRole;
-  nextRole: MembershipRole;
+  role: MembershipRole;
 }) {
-  if (input.nextRole === "OWNER") {
-    return input.actorRole === "OWNER";
-  }
-
-  return input.actorRole === "OWNER" || input.actorRole === "ADMIN";
-}
-
-export function canActorChangeMemberRole(input: {
-  actorRole: MembershipRole;
-  targetRole: MembershipRole;
-}) {
-  if (input.targetRole === "OWNER") {
+  if (input.role === "OWNER") {
     return input.actorRole === "OWNER";
   }
 

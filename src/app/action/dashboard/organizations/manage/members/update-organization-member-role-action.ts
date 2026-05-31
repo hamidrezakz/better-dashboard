@@ -2,8 +2,7 @@
 
 import { canManageOrganization } from "@/app/dashboard/lib/dashboard-access";
 import {
-  canActorAssignRole,
-  canActorChangeMemberRole,
+  canActorModifyMemberRole,
   countOrganizationOwners,
   getActorOrganizationRoleForManage,
   getOrganizationMemberById,
@@ -77,14 +76,14 @@ export async function updateOrganizationMemberRoleAction(
     };
   }
 
-  if (!canActorChangeMemberRole({ actorRole, targetRole: member.role })) {
+  if (!canActorModifyMemberRole({ actorRole, role: member.role })) {
     return {
       success: false,
       error: "You don't have permission to change this member's role.",
     };
   }
 
-  if (!canActorAssignRole({ actorRole, nextRole: input.role })) {
+  if (!canActorModifyMemberRole({ actorRole, role: input.role })) {
     return {
       success: false,
       error: "You don't have permission to assign this role.",
