@@ -2,13 +2,16 @@
 CREATE SCHEMA IF NOT EXISTS "auth";
 
 -- CreateEnum
-CREATE TYPE "auth"."membership_role" AS ENUM ('OWNER', 'ADMIN', 'MEMBER');
+CREATE TYPE "auth"."user_role" AS ENUM ('user', 'admin');
 
 -- CreateEnum
-CREATE TYPE "auth"."NotificationType" AS ENUM ('SYSTEM', 'ORGANIZATION', 'SECURITY', 'CUSTOM');
+CREATE TYPE "auth"."membership_role" AS ENUM ('owner', 'admin', 'member');
 
 -- CreateEnum
-CREATE TYPE "auth"."NotificationAudience" AS ENUM ('USER_DIRECT', 'ORG_ALL', 'ORG_ADMINS', 'ORG_MEMBERS', 'TEAM');
+CREATE TYPE "auth"."NotificationType" AS ENUM ('system', 'organization', 'security', 'custom');
+
+-- CreateEnum
+CREATE TYPE "auth"."NotificationAudience" AS ENUM ('user_direct', 'org_all', 'org_admins', 'org_members', 'team');
 
 -- CreateTable
 CREATE TABLE "auth"."user" (
@@ -19,6 +22,10 @@ CREATE TABLE "auth"."user" (
     "image" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "role" "auth"."user_role" NOT NULL DEFAULT 'user',
+    "banned" BOOLEAN NOT NULL DEFAULT false,
+    "banReason" TEXT,
+    "banExpires" TIMESTAMP(3),
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
@@ -35,6 +42,7 @@ CREATE TABLE "auth"."session" (
     "userId" TEXT NOT NULL,
     "activeOrganizationId" TEXT,
     "activeTeamId" TEXT,
+    "impersonatedBy" TEXT,
 
     CONSTRAINT "session_pkey" PRIMARY KEY ("id")
 );
@@ -108,7 +116,7 @@ CREATE TABLE "auth"."member" (
     "id" TEXT NOT NULL,
     "organizationId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "role" "auth"."membership_role" NOT NULL DEFAULT 'MEMBER',
+    "role" "auth"."membership_role" NOT NULL DEFAULT 'member',
     "createdAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "member_pkey" PRIMARY KEY ("id")

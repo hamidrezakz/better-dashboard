@@ -11,7 +11,7 @@ import {
   invalidateOrganizationMembersCache,
   invalidateOrganizationSummaryCache,
 } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
-import type { MembershipRole } from "@/generated/prisma/enums";
+import { MembershipRole } from "@/generated/prisma/enums";
 import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
@@ -26,7 +26,7 @@ type UpdateOrganizationMemberRoleResult = {
   error?: string;
 };
 
-const ALLOWED_ROLES: MembershipRole[] = ["OWNER", "ADMIN", "MEMBER"];
+const ALLOWED_ROLES = Object.values(MembershipRole) as MembershipRole[];
 
 export async function updateOrganizationMemberRoleAction(
   input: UpdateOrganizationMemberRoleInput,
@@ -90,7 +90,10 @@ export async function updateOrganizationMemberRoleAction(
     };
   }
 
-  if (member.role === "OWNER" && input.role !== "OWNER") {
+  if (
+    member.role === MembershipRole.owner &&
+    input.role !== MembershipRole.owner
+  ) {
     const ownerCount = await countOrganizationOwners(input.organizationId);
 
     if (ownerCount <= 1) {

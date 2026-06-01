@@ -18,7 +18,7 @@ export function buildSeedMembers(): Prisma.MemberCreateManyInput[] {
     id: "seed_member_owner_alpha",
     organizationId: alpha.id,
     userId: OWNER_USER_ID,
-    role: MembershipRole.OWNER,
+    role: MembershipRole.owner,
     createdAt,
   });
 
@@ -26,7 +26,7 @@ export function buildSeedMembers(): Prisma.MemberCreateManyInput[] {
     id: "seed_member_owner_beta",
     organizationId: beta.id,
     userId: OWNER_USER_ID,
-    role: MembershipRole.ADMIN,
+    role: MembershipRole.admin,
     createdAt: new Date(createdAt.getTime() + 86_400_000),
   });
 
@@ -35,8 +35,8 @@ export function buildSeedMembers(): Prisma.MemberCreateManyInput[] {
     const org = inAlpha ? alpha : beta;
     const role =
       i === 1 || i === ALPHA_FAKE_MEMBER_COUNT
-        ? MembershipRole.ADMIN
-        : MembershipRole.MEMBER;
+        ? MembershipRole.admin
+        : MembershipRole.member;
 
     rows.push({
       id: `seed_member_${String(i).padStart(3, "0")}`,

@@ -8,7 +8,7 @@ import { ResponsiveFormOverlayFooterActions } from "@/components/responsive-form
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
 import { toast } from "sonner";
 import type { OrganizationMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/get-organization-members-page";
-import type { MembershipRole } from "@/generated/prisma/enums";
+import { MembershipRole } from "@/generated/prisma/enums";
 import { FormLabel } from "@/components/form/form-label";
 import {
   Select,
@@ -27,15 +27,15 @@ type MemberRoleFormShellProps = {
 };
 
 function roleOptions(actorRole: MembershipRole | null): MembershipRole[] {
-  if (actorRole === "OWNER") {
-    return ["OWNER", "ADMIN", "MEMBER"];
+  if (actorRole === MembershipRole.owner) {
+    return [MembershipRole.owner, MembershipRole.admin, MembershipRole.member];
   }
 
-  if (actorRole === "ADMIN") {
-    return ["ADMIN", "MEMBER"];
+  if (actorRole === MembershipRole.admin) {
+    return [MembershipRole.admin, MembershipRole.member];
   }
 
-  return ["MEMBER"];
+  return [MembershipRole.member];
 }
 
 export function MemberRoleFormShell({
@@ -48,7 +48,7 @@ export function MemberRoleFormShell({
   const router = useRouter();
   const fieldId = useId();
   const [isPending, startTransition] = useTransition();
-  const [role, setRole] = useState<MembershipRole>("MEMBER");
+  const [role, setRole] = useState<MembershipRole>(MembershipRole.member);
 
   useEffect(() => {
     if (member) {

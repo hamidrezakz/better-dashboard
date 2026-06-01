@@ -19,7 +19,7 @@ Filename typo (`schima`) is intentional — keep stable links.
 | Primary keys      | `@id` only                                                         | `@id @default(cuid())` on every model                                                |
 | `User.role`       | `String?` (admin plugin)                                           | `UserRole` enum (`user`, `admin`) + ban fields (`banned`, `banReason`, `banExpires`) |
 | `Session`         | —                                                                  | `impersonatedBy` (admin plugin)                                                      |
-| `Member.role`     | `String` default `"member"`                                        | `MembershipRole` enum (`OWNER`, `ADMIN`, `MEMBER`)                                   |
+| `Member.role`     | `String` default `"member"`                                        | `MembershipRole` enum (`owner`, `admin`, `member`) — aligned with Better Auth        |
 | `Invitation`      | Email invite: `email`, `role`, `status`, required `organizationId` | Shareable **link**: optional org/team, `maxUses` / `usedCount`, no email/role/status |
 | `Team`            | —                                                                  | `invitations`, `notifications` relations                                             |
 | Notifications     | —                                                                  | `Notification` model + `NotificationType` / `NotificationAudience` enums             |
@@ -45,9 +45,9 @@ Datasource: `schemas = ["auth"]` in [`schema.prisma`](./schema.prisma).
 | Enum                   | Replaces / purpose                                            |
 | ---------------------- | ------------------------------------------------------------- |
 | `UserRole`             | `User.role` for Better Auth admin plugin (`user` / `admin`)   |
-| `MembershipRole`       | `Member.role` string (org membership)                         |
-| `NotificationType`     | `SYSTEM`, `ORGANIZATION`, `SECURITY`, `CUSTOM`                |
-| `NotificationAudience` | `USER_DIRECT`, `ORG_ALL`, `ORG_ADMINS`, `ORG_MEMBERS`, `TEAM` |
+| `MembershipRole`       | `Member.role` (`owner`, `admin`, `member`)                    |
+| `NotificationType`     | `system`, `organization`, `security`, `custom`                |
+| `NotificationAudience` | `user_direct`, `org_all`, `org_admins`, `org_members`, `team` |
 
 UI labels: [`src/lib/badge/badge-labels.ts`](../src/lib/badge/badge-labels.ts), [`src/components/badge/badge-config.tsx`](../src/components/badge/badge-config.tsx).
 

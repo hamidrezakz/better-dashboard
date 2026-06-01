@@ -3,6 +3,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { admin, organization } from "better-auth/plugins";
 import { env } from "@/env";
+import { UserRole } from "@/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
 
 export const auth = betterAuth({
@@ -20,8 +21,8 @@ export const auth = betterAuth({
   plugins: [
     nextCookies(),
     admin({
-      defaultRole: "user",
-      adminRoles: ["admin"],
+      defaultRole: UserRole.user,
+      adminRoles: [UserRole.admin],
     }),
     organization({
       teams: {

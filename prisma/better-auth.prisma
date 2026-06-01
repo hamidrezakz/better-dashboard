@@ -11,29 +11,29 @@ enum UserRole {
 }
 
 enum MembershipRole {
-  OWNER
-  ADMIN
-  MEMBER
+  owner
+  admin
+  member
 
   @@map("membership_role")
   @@schema("auth")
 }
 
 enum NotificationType {
-  SYSTEM
-  ORGANIZATION
-  SECURITY
-  CUSTOM
+  system
+  organization
+  security
+  custom
 
   @@schema("auth")
 }
 
 enum NotificationAudience {
-  USER_DIRECT
-  ORG_ALL
-  ORG_ADMINS
-  ORG_MEMBERS
-  TEAM
+  user_direct
+  org_all
+  org_admins
+  org_members
+  team
 
   @@schema("auth")
 }
@@ -177,7 +177,7 @@ model Member {
   organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   userId         String
   user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  role           MembershipRole @default(MEMBER)
+  role           MembershipRole @default(member)
   createdAt      DateTime
 
   @@index([organizationId])

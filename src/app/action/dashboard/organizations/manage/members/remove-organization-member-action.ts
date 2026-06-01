@@ -12,6 +12,7 @@ import {
   invalidateOrganizationTeamsCache,
 } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
 import { invalidateUserDashboardCache } from "@/app/action/dashboard/users/account/shared/invalidate-user-dashboard-cache";
+import { MembershipRole } from "@/generated/prisma/enums";
 import { requireAuthSession } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 
@@ -65,7 +66,7 @@ export async function removeOrganizationMemberAction(
     };
   }
 
-  if (member.role === "OWNER") {
+  if (member.role === MembershipRole.owner) {
     const ownerCount = await countOrganizationOwners(input.organizationId);
 
     if (ownerCount <= 1) {

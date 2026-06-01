@@ -5,7 +5,7 @@ import {
   type AdminUserTableFilter,
 } from "@/app/dashboard/admin/users/lib/admin-users-table-params";
 import { dashboardCacheTags } from "@/app/dashboard/lib/cache-tags";
-import type { UserRole } from "@/generated/prisma/enums";
+import { UserRole } from "@/generated/prisma/enums";
 import type { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 import {
@@ -51,9 +51,9 @@ function buildUsersWhere(
   const and: Prisma.UserWhereInput[] = [];
 
   if (filter === "admins") {
-    and.push({ role: "admin" });
+    and.push({ role: UserRole.admin });
   } else if (filter === "users") {
-    and.push({ role: "user" });
+    and.push({ role: UserRole.user });
   } else if (filter === "banned") {
     and.push({ banned: true });
   }

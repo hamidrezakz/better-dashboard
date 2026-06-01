@@ -16,7 +16,7 @@ import {
   type InvitationDisplayInput,
 } from "@/lib/badge/invitation-display-status";
 import type { InvitationDisplayStatusKey } from "@/lib/badge/badge-labels";
-import type {
+import {
   MembershipRole,
   NotificationAudience,
   NotificationType,
@@ -85,13 +85,13 @@ const invitationJoinScopeConfig: Record<
 };
 
 const platformRoleConfig: Record<UserRole, LabeledBadgeConfig> = {
-  user: item(
-    badgeLabels.platformRole.user,
+  [UserRole.user]: item(
+    badgeLabels.platformRole[UserRole.user],
     "outline",
     <UserIcon data-icon="inline-start" />,
   ),
-  admin: item(
-    badgeLabels.platformRole.admin,
+  [UserRole.admin]: item(
+    badgeLabels.platformRole[UserRole.admin],
     "default",
     <ShieldIcon data-icon="inline-start" />,
   ),
@@ -114,41 +114,41 @@ const userAccountStatusConfig: Record<
 };
 
 const membershipRoleConfig: Record<MembershipRole, LabeledBadgeConfig> = {
-  OWNER: item(
-    badgeLabels.membershipRole.OWNER,
+  [MembershipRole.owner]: item(
+    badgeLabels.membershipRole[MembershipRole.owner],
     "default",
     <CrownIcon data-icon="inline-start" />,
   ),
-  ADMIN: item(
-    badgeLabels.membershipRole.ADMIN,
+  [MembershipRole.admin]: item(
+    badgeLabels.membershipRole[MembershipRole.admin],
     "secondary",
     <ShieldIcon data-icon="inline-start" />,
   ),
-  MEMBER: item(
-    badgeLabels.membershipRole.MEMBER,
+  [MembershipRole.member]: item(
+    badgeLabels.membershipRole[MembershipRole.member],
     "outline",
     <UserIcon data-icon="inline-start" />,
   ),
 };
 
 const notificationTypeConfig: Record<NotificationType, LabeledBadgeConfig> = {
-  SYSTEM: item(
-    badgeLabels.notificationType.SYSTEM,
+  [NotificationType.system]: item(
+    badgeLabels.notificationType[NotificationType.system],
     "default",
     <BellIcon data-icon="inline-start" />,
   ),
-  ORGANIZATION: item(
-    badgeLabels.notificationType.ORGANIZATION,
+  [NotificationType.organization]: item(
+    badgeLabels.notificationType[NotificationType.organization],
     "secondary",
     <Building2Icon data-icon="inline-start" />,
   ),
-  SECURITY: item(
-    badgeLabels.notificationType.SECURITY,
+  [NotificationType.security]: item(
+    badgeLabels.notificationType[NotificationType.security],
     "destructive",
     <ShieldAlertIcon data-icon="inline-start" />,
   ),
-  CUSTOM: item(
-    badgeLabels.notificationType.CUSTOM,
+  [NotificationType.custom]: item(
+    badgeLabels.notificationType[NotificationType.custom],
     "outline",
     <BellIcon data-icon="inline-start" />,
   ),
@@ -158,28 +158,28 @@ const notificationAudienceConfig: Record<
   NotificationAudience,
   LabeledBadgeConfig
 > = {
-  USER_DIRECT: item(
-    badgeLabels.notificationAudience.USER_DIRECT,
+  [NotificationAudience.user_direct]: item(
+    badgeLabels.notificationAudience[NotificationAudience.user_direct],
     "default",
     <CircleUserRoundIcon data-icon="inline-start" />,
   ),
-  ORG_ALL: item(
-    badgeLabels.notificationAudience.ORG_ALL,
+  [NotificationAudience.org_all]: item(
+    badgeLabels.notificationAudience[NotificationAudience.org_all],
     "secondary",
     <Building2Icon data-icon="inline-start" />,
   ),
-  ORG_ADMINS: item(
-    badgeLabels.notificationAudience.ORG_ADMINS,
+  [NotificationAudience.org_admins]: item(
+    badgeLabels.notificationAudience[NotificationAudience.org_admins],
     "secondary",
     <ShieldIcon data-icon="inline-start" />,
   ),
-  ORG_MEMBERS: item(
-    badgeLabels.notificationAudience.ORG_MEMBERS,
+  [NotificationAudience.org_members]: item(
+    badgeLabels.notificationAudience[NotificationAudience.org_members],
     "secondary",
     <UsersIcon data-icon="inline-start" />,
   ),
-  TEAM: item(
-    badgeLabels.notificationAudience.TEAM,
+  [NotificationAudience.team]: item(
+    badgeLabels.notificationAudience[NotificationAudience.team],
     "outline",
     <UsersIcon data-icon="inline-start" />,
   ),

@@ -1,5 +1,5 @@
 /** Enum/badge display strings — not route navigation. See docs/agents/dashboard.md */
-import type {
+import {
   MembershipRole,
   NotificationAudience,
   NotificationType,
@@ -20,14 +20,14 @@ const invitationJoinScopeLabels = {
 } as const;
 
 const membershipRoleLabels: Record<MembershipRole, string> = {
-  OWNER: "Owner",
-  ADMIN: "Admin",
-  MEMBER: "Member",
+  [MembershipRole.owner]: "Owner",
+  [MembershipRole.admin]: "Admin",
+  [MembershipRole.member]: "Member",
 };
 
 const platformRoleLabels: Record<UserRole, string> = {
-  user: "User",
-  admin: "Platform admin",
+  [UserRole.user]: "User",
+  [UserRole.admin]: "Platform admin",
 };
 
 export const userAccountStatusLabels = {
@@ -36,18 +36,18 @@ export const userAccountStatusLabels = {
 } as const;
 
 const notificationTypeLabels: Record<NotificationType, string> = {
-  SYSTEM: "System",
-  ORGANIZATION: "Organization",
-  SECURITY: "Security",
-  CUSTOM: "Custom",
+  [NotificationType.system]: "System",
+  [NotificationType.organization]: "Organization",
+  [NotificationType.security]: "Security",
+  [NotificationType.custom]: "Custom",
 };
 
 const notificationAudienceLabels: Record<NotificationAudience, string> = {
-  USER_DIRECT: "User",
-  ORG_ALL: "All organization members",
-  ORG_ADMINS: "Organization admins",
-  ORG_MEMBERS: "Organization members",
-  TEAM: "Team members",
+  [NotificationAudience.user_direct]: "User",
+  [NotificationAudience.org_all]: "All organization members",
+  [NotificationAudience.org_admins]: "Organization admins",
+  [NotificationAudience.org_members]: "Organization members",
+  [NotificationAudience.team]: "Team members",
 };
 
 export const badgeLabels = {

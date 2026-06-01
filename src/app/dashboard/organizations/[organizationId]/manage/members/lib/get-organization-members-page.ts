@@ -5,7 +5,7 @@ import {
   parseMemberTableFilter,
   type MemberTableFilter,
 } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/members-table-params";
-import type { MembershipRole } from "@/generated/prisma/enums";
+import { MembershipRole } from "@/generated/prisma/enums";
 import type { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 import {
@@ -54,9 +54,11 @@ function buildMembersWhere(
   };
 
   if (filter === "managers") {
-    where.role = { in: ["OWNER", "ADMIN"] };
+    where.role = {
+      in: [MembershipRole.owner, MembershipRole.admin],
+    };
   } else if (filter === "members") {
-    where.role = "MEMBER";
+    where.role = MembershipRole.member;
   }
 
   return where;

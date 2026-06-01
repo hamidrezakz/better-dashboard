@@ -12,18 +12,18 @@ import {
 } from "../config";
 
 const TYPES: NotificationType[] = [
-  NotificationType.SYSTEM,
-  NotificationType.ORGANIZATION,
-  NotificationType.SECURITY,
-  NotificationType.CUSTOM,
+  NotificationType.system,
+  NotificationType.organization,
+  NotificationType.security,
+  NotificationType.custom,
 ];
 
 const AUDIENCES: NotificationAudience[] = [
-  NotificationAudience.USER_DIRECT,
-  NotificationAudience.ORG_ALL,
-  NotificationAudience.ORG_ADMINS,
-  NotificationAudience.ORG_MEMBERS,
-  NotificationAudience.TEAM,
+  NotificationAudience.user_direct,
+  NotificationAudience.org_all,
+  NotificationAudience.org_admins,
+  NotificationAudience.org_members,
+  NotificationAudience.team,
 ];
 
 const TITLES = [
@@ -43,7 +43,7 @@ export function buildSeedNotifications(): Prisma.NotificationCreateManyInput[] {
     const audience = AUDIENCES[i % AUDIENCES.length];
     const orgIndex = i % 2;
     const org = ORGANIZATIONS[orgIndex];
-    const isDirect = audience === NotificationAudience.USER_DIRECT;
+    const isDirect = audience === NotificationAudience.user_direct;
     const read = i % 4 === 0;
 
     rows.push({
@@ -57,11 +57,11 @@ export function buildSeedNotifications(): Prisma.NotificationCreateManyInput[] {
       createdById:
         i % 6 === 0 ? fakeUserId(1) : i % 3 === 0 ? OWNER_USER_ID : null,
       organizationId:
-        audience === NotificationAudience.USER_DIRECT && i % 2 === 0
+        audience === NotificationAudience.user_direct && i % 2 === 0
           ? null
           : org.id,
       teamId:
-        audience === NotificationAudience.TEAM
+        audience === NotificationAudience.team
           ? teamId(orgIndex, i % 3)
           : i % 9 === 0
             ? teamId(orgIndex, 0)

@@ -18,30 +18,30 @@ export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
 export const MembershipRole = {
-  OWNER: 'OWNER',
-  ADMIN: 'ADMIN',
-  MEMBER: 'MEMBER'
+  owner: 'owner',
+  admin: 'admin',
+  member: 'member'
 } as const
 
 export type MembershipRole = (typeof MembershipRole)[keyof typeof MembershipRole]
 
 
 export const NotificationType = {
-  SYSTEM: 'SYSTEM',
-  ORGANIZATION: 'ORGANIZATION',
-  SECURITY: 'SECURITY',
-  CUSTOM: 'CUSTOM'
+  system: 'system',
+  organization: 'organization',
+  security: 'security',
+  custom: 'custom'
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
 
 
 export const NotificationAudience = {
-  USER_DIRECT: 'USER_DIRECT',
-  ORG_ALL: 'ORG_ALL',
-  ORG_ADMINS: 'ORG_ADMINS',
-  ORG_MEMBERS: 'ORG_MEMBERS',
-  TEAM: 'TEAM'
+  user_direct: 'user_direct',
+  org_all: 'org_all',
+  org_admins: 'org_admins',
+  org_members: 'org_members',
+  team: 'team'
 } as const
 
 export type NotificationAudience = (typeof NotificationAudience)[keyof typeof NotificationAudience]

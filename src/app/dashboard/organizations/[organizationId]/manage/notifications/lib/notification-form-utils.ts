@@ -1,5 +1,5 @@
 import type { UserSearchOption } from "@/app/action/dashboard/users/search-users-action";
-import type {
+import {
   NotificationAudience,
   NotificationType,
 } from "@/generated/prisma/enums";
@@ -34,19 +34,19 @@ export function getDefaultNotificationFormState(): NotificationFormState {
   return {
     title: "",
     body: "",
-    type: "ORGANIZATION",
-    audience: "ORG_ALL",
+    type: NotificationType.organization,
+    audience: NotificationAudience.org_all,
     selectedUser: null,
     teamId: "",
   };
 }
 
 export function audienceNeedsUser(audience: NotificationAudience) {
-  return audience === "USER_DIRECT";
+  return audience === NotificationAudience.user_direct;
 }
 
 export function audienceNeedsTeam(audience: NotificationAudience) {
-  return audience === "TEAM";
+  return audience === NotificationAudience.team;
 }
 
 export function isNotificationFormValid(form: NotificationFormState) {

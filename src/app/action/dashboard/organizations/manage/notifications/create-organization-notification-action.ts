@@ -1,6 +1,6 @@
 "use server";
 
-import type {
+import {
   NotificationAudience,
   NotificationType,
 } from "@/generated/prisma/enums";
@@ -80,14 +80,14 @@ export async function createOrganizationNotificationAction(
     };
   }
 
-  if (input.audience === "USER_DIRECT" && !input.userId) {
+  if (input.audience === NotificationAudience.user_direct && !input.userId) {
     return {
       success: false,
       error: "Select a user for direct notifications.",
     };
   }
 
-  if (input.audience === "TEAM" && !input.teamId) {
+  if (input.audience === NotificationAudience.team && !input.teamId) {
     return {
       success: false,
       error: "Select a team for team notifications.",
@@ -127,7 +127,7 @@ export async function createOrganizationNotificationAction(
     }
   }
 
-  const notificationType: NotificationType = "ORGANIZATION";
+  const notificationType = NotificationType.organization;
 
   await prisma.notification.create({
     data: {
