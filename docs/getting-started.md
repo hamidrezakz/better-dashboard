@@ -98,7 +98,7 @@ If you remove teams, invitations, or notifications, delete or trim the matching 
 
 Do this **before** heavy customization so you delete less code.
 
-1. Decide which slices you do not need (teams, members, invitations, org/user notifications).
+1. Decide which slices you do not need (platform admin, teams, members, invitations, org/user notifications).
 2. Remove the tab from [`src/app/dashboard/lib/dashboard-slices.ts`](../src/app/dashboard/lib/dashboard-slices.ts).
 3. Follow the matching guide in [removing/README.md](../removing/README.md) top to bottom.
 4. Run `pnpm run build` after each guide.

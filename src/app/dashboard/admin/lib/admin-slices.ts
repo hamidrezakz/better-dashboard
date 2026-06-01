@@ -6,6 +6,7 @@ import {
 
 /**
  * Platform admin tabs registered for navigation and trim docs.
+ * To remove the admin slice: delete the admin route/action trees, then follow removing/admin.md at the repo root.
  */
 export const adminSlices = [
   {
