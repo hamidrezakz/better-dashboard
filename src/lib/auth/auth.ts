@@ -1,4 +1,4 @@
-import { betterAuth } from "better-auth";
+import { betterAuth } from "better-auth/minimal";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { admin, organization } from "better-auth/plugins";
@@ -15,11 +15,14 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
+  cookieCache: {
+    enabled: true,
+    maxAge: 5 * 60, // Cache duration in seconds
+  },
   emailAndPassword: {
     enabled: true,
   },
   plugins: [
-    nextCookies(),
     admin({
       defaultRole: UserRole.user,
       adminRoles: [UserRole.admin],
@@ -29,5 +32,6 @@ export const auth = betterAuth({
         enabled: true,
       },
     }),
+    nextCookies(),
   ],
 });
