@@ -1,6 +1,5 @@
 "use server";
 
-import { headers } from "next/headers";
 import { canManageOrganization } from "@/app/dashboard/lib/dashboard-access";
 import {
   normalizeOrganizationLogo,
@@ -12,9 +11,8 @@ import {
   invalidateOrganizationManageCache,
   invalidateOrganizationSidebarCaches,
 } from "@/app/action/dashboard/organizations/manage/shared/invalidate-organization-manage-cache";
-import { getOrganizationManageActionErrorMessage } from "@/app/action/dashboard/organizations/manage/shared/organization-manage-action-error";
-import { auth } from "@/lib/auth/auth";
 import { requireAuthSession } from "@/lib/auth/session";
+import { prisma } from "@/lib/prisma";
 
 type UpdateOrganizationInput = {
   organizationId: string;
@@ -59,25 +57,16 @@ export async function updateOrganizationAction(
   const name = normalizeOrganizationName(input.name);
   const logo = normalizeOrganizationLogo(input.logo);
 
-  try {
-    await auth.api.updateOrganization({
-      headers: await headers(),
-      body: {
-        organizationId: input.organizationId,
-        data: {
-          name,
-          logo: logo.length > 0 ? logo : "",
-        },
-      },
-    });
-  } catch (error) {
-    return {
-      success: false,
-      error: getOrganizationManageActionErrorMessage(
-        error,
-        "Could not update the organization.",
-      ),
-    };
+  const updated = await prisma.organization.updateMany({
+    where: { id: input.organizationId },
+    data: {
+      name,
+      logo: logo.length > 0 ? logo : null,
+    },
+  });
+
+  if (updated.count === 0) {
+    return { success: false, error: "Organization not found." };
   }
 
   invalidateOrganizationManageCache(input.organizationId);
