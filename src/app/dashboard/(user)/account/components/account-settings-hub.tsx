@@ -66,7 +66,7 @@ export function AccountSettingsHub({
             </p>
           </ItemContent>
           <ItemActions className="shrink-0 text-muted-foreground">
-            <ChevronRightIcon className="size-3.5" aria-hidden />
+            <ChevronRightIcon className="size-3.5 rtl:rotate-180" aria-hidden />
           </ItemActions>
         </Item>
 
@@ -87,7 +87,10 @@ export function AccountSettingsHub({
                 <ItemTitle className="text-sm">{item.label}</ItemTitle>
               </ItemContent>
               <ItemActions className="shrink-0 text-muted-foreground">
-                <ChevronRightIcon className="size-3.5" aria-hidden />
+                <ChevronRightIcon
+                  className="size-3.5 rtl:rotate-180"
+                  aria-hidden
+                />
               </ItemActions>
             </Item>
           </Fragment>

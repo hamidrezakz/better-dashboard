@@ -18,7 +18,7 @@ export function ResponsiveFormOverlayFooterActions({
   primary,
 }: ResponsiveFormOverlayFooterActionsProps) {
   return (
-    <>
+    <div className="flex flex-col-reverse sm:flex-row-reverse gap-2">
       <Button
         type="button"
         variant="outline"
@@ -34,6 +34,6 @@ export function ResponsiveFormOverlayFooterActions({
       >
         {primary.label}
       </Button>
-    </>
+    </div>
   );
 }
