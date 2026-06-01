@@ -60,7 +60,7 @@ export function TeamMembersTable({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Members</CardTitle>
+        <CardTitle>اعضا</CardTitle>
         <CardAction>
           <Button type="button" size="sm" onClick={onAddMembers}>
             <PlusIcon />
@@ -78,23 +78,23 @@ export function TeamMembersTable({
           onPageSizeChange={(nextPageSize) =>
             navigate({ page: 1, pageSize: nextPageSize })
           }
-          countLabel="member"
+          countLabel="عضو"
         >
           <DataTableViewport>
             <Table className="table-fixed">
               <TableHeader>
                 <TableRow>
                   <TableHead className="min-w-0 whitespace-normal">
-                    Name
+                    نام
                   </TableHead>
                   <TableHead className="hidden min-w-0 whitespace-normal sm:table-cell">
-                    Email
+                    ایمیل
                   </TableHead>
                   <TableHead className="hidden whitespace-normal md:table-cell">
-                    Joined
+                    تاریخ عضویت
                   </TableHead>
                   <TableHead className="w-12 whitespace-normal">
-                    <span className="sr-only">Actions</span>
+                    <span className="sr-only">عملیات</span>
                   </TableHead>
                 </TableRow>
               </TableHeader>
@@ -135,7 +135,7 @@ export function TeamMembersTable({
                       colSpan={4}
                       className="py-6 text-center text-muted-foreground"
                     >
-                      No team members yet.
+                      هنوز عضو تیمی نیست.
                     </TableCell>
                   </TableRow>
                 )}

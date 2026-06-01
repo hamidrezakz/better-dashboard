@@ -27,10 +27,10 @@ export async function signInWithEmailAction(
 
   if (!email || !password) {
     return {
-      formError: "Please enter your email and password.",
+      formError: "ایمیل و رمز عبور را وارد کنید.",
       fieldErrors: {
-        email: !email ? "Email is required." : undefined,
-        password: !password ? "Password is required." : undefined,
+        email: !email ? "ایمیل الزامی است." : undefined,
+        password: !password ? "رمز عبور الزامی است." : undefined,
       },
       values: { email },
     };
@@ -38,9 +38,9 @@ export async function signInWithEmailAction(
 
   if (!isValidEmail(email)) {
     return {
-      formError: "Please enter a valid email address.",
+      formError: "یک آدرس ایمیل معتبر وارد کنید.",
       fieldErrors: {
-        email: "Please enter a valid email address.",
+        email: "یک آدرس ایمیل معتبر وارد کنید.",
       },
       values: { email },
     };
@@ -60,7 +60,8 @@ export async function signInWithEmailAction(
     return {
       formError: getAuthActionErrorMessage({
         error,
-        fallback: "Sign-in failed. Check your credentials and try again.",
+        fallback:
+          "ورود ناموفق بود. اطلاعات را بررسی کنید و دوباره امتحان کنید.",
       }),
       values: { email },
     };

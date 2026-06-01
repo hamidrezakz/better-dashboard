@@ -10,8 +10,8 @@ type JoinErrorProps = {
 export default function JoinError({ error, reset }: JoinErrorProps) {
   return (
     <SegmentErrorFallback
-      title="Could not load invitation"
-      description="Something went wrong while loading this invitation. You can try again."
+      title="بارگذاری دعوت‌نامه ممکن نشد"
+      description="هنگام بارگذاری این دعوت‌نامه خطایی رخ داد. می‌توانید دوباره امتحان کنید."
       error={error}
       reset={reset}
     />

@@ -110,7 +110,7 @@ export function TeamForm({
   return (
     <div className="space-y-2">
       <FormLabel htmlFor={`${fieldId}-name`} required>
-        Team name
+        نام تیم
       </FormLabel>
       <Input
         id={`${fieldId}-name`}

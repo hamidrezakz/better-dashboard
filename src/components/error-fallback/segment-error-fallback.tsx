@@ -34,7 +34,7 @@ export function SegmentErrorFallback({
             <p className="text-sm text-muted-foreground">{error.message}</p>
           ) : null}
           <Button type="button" onClick={reset}>
-            Try again
+            تلاش دوباره
           </Button>
         </CardContent>
       </Card>

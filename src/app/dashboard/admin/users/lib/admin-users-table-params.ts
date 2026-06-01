@@ -25,10 +25,10 @@ export function parseAdminUserTableFilter(
 }
 
 export const adminUserFilterLabels: Record<AdminUserTableFilter, string> = {
-  all: "All",
-  admins: "Admins",
-  users: "Users",
-  banned: "Banned",
+  all: "همه",
+  admins: "مدیران پلتفرم",
+  users: "کاربران",
+  banned: "مسدودشده",
 };
 
 export function adminUsersTablePath(

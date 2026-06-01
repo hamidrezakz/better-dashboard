@@ -21,7 +21,7 @@ export async function updateProfileAction(
 
   if (!name) {
     return {
-      fieldErrors: { name: "Name is required." },
+      fieldErrors: { name: "نام الزامی است." },
       values: { name, image: imageRaw },
     };
   }
@@ -40,7 +40,7 @@ export async function updateProfileAction(
     return {
       formError: getAccountActionErrorMessage({
         error,
-        fallback: "We couldn't update your profile. Please try again.",
+        fallback: "پروفایل به‌روزرسانی نشد. لطفاً دوباره امتحان کنید.",
       }),
       values: { name, image: imageRaw },
     };

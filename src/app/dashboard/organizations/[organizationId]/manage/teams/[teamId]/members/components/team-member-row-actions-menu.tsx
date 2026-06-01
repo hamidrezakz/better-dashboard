@@ -49,12 +49,12 @@ export function TeamMemberRowActionsMenu({
       });
 
       if (!result.success) {
-        toast.error(result.error ?? "Could not remove the team member.");
+        toast.error(result.error ?? "حذف عضو تیم ممکن نشد.");
         return;
       }
 
       setConfirmOpen(false);
-      toast.success("Member removed from the team.");
+      toast.success("عضو از تیم حذف شد.");
       router.refresh();
     });
   };
@@ -64,7 +64,7 @@ export function TeamMemberRowActionsMenu({
       <DropdownMenu>
         <DropdownMenuTrigger
           render={<Button size="icon-sm" variant="ghost" />}
-          aria-label={`Actions for ${member.name}`}
+          aria-label={`عملیات ${member.name}`}
         >
           <MoreHorizontalIcon />
         </DropdownMenuTrigger>
@@ -82,20 +82,19 @@ export function TeamMemberRowActionsMenu({
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Remove from team</AlertDialogTitle>
+            <AlertDialogTitle>حذف از تیم</AlertDialogTitle>
             <AlertDialogDescription>
-              Remove {member.name} from this team? They will remain a member of
-              the organization.
+              {member.name} از این تیم حذف شود؟ همچنان عضو سازمان خواهد ماند.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isPending}>انصراف</AlertDialogCancel>
             <AlertDialogAction
               variant="destructive"
               disabled={isPending}
               onClick={handleRemove}
             >
-              Remove
+              حذف
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

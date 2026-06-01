@@ -29,7 +29,7 @@ export function PasswordInput({
       </InputGroupAddon>
       <InputGroupAddon align="inline-end">
         <InputGroupButton
-          aria-label={isVisible ? "Hide password" : "Show password"}
+          aria-label={isVisible ? "پنهان کردن رمز" : "نمایش رمز"}
           onClick={() => setIsVisible((previous) => !previous)}>
           {isVisible ? (
             <EyeOffIcon className="size-3.5" aria-hidden="true" />

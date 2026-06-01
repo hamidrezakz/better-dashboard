@@ -58,26 +58,22 @@ function TeamDetailStatsGrid({
 
   return (
     <StatGrid columns={4}>
+      <StatCard label="اعضای تیم" value={memberCount} icon={UsersRoundIcon} />
       <StatCard
-        label="Team members"
-        value={memberCount}
-        icon={UsersRoundIcon}
-      />
-      <StatCard
-        label="Organization members"
+        label="اعضای سازمان"
         value={organizationMemberCount}
         icon={UsersIcon}
       />
       <StatCard
-        label="Org coverage"
+        label="پوشش سازمان"
         value={`${coveragePercent}%`}
         icon={PercentIcon}
       />
       <StatCard
-        label="Created"
+        label="ایجاد"
         value={formatDate(createdAt)}
         icon={CalendarIcon}
-        hint={`Updated ${formatDate(updatedAt)}`}
+        hint={`به‌روزرسانی ${formatDate(updatedAt)}`}
       />
     </StatGrid>
   );
@@ -116,12 +112,12 @@ export function TeamDetailPanel({
       });
 
       if (!result.success) {
-        toast.error(result.error ?? "Could not delete the team.");
+        toast.error(result.error ?? "حذف تیم ممکن نشد.");
         setDeleteConfirmOpen(false);
         return;
       }
 
-      toast.success("Team deleted.");
+      toast.success("تیم حذف شد.");
       setDeleteConfirmOpen(false);
       router.push(dashboardRoutes.organizationTeams(organizationId));
       router.refresh();
@@ -193,20 +189,20 @@ export function TeamDetailPanel({
       <AlertDialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete team</AlertDialogTitle>
+            <AlertDialogTitle>حذف تیم</AlertDialogTitle>
             <AlertDialogDescription>
-              &ldquo;{data.team.name}&rdquo; will be permanently deleted. The
-              team must have no members. This cannot be undone.
+              «{data.team.name}» برای همیشه حذف خواهد شد. تیم باید بدون عضو
+              باشد. این کار قابل بازگشت نیست.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isPending}>انصراف</AlertDialogCancel>
             <AlertDialogAction
               variant="destructive"
               disabled={isPending}
               onClick={handleDelete}
             >
-              Delete team
+              حذف تیم
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

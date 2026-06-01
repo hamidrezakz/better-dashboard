@@ -8,7 +8,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
 type TeamRowActionsMenuProps = {
   teamName: string;
   onView: () => void;
@@ -22,7 +21,7 @@ export function TeamRowActionsMenu({
     <DropdownMenu>
       <DropdownMenuTrigger
         render={<Button size="icon-sm" variant="ghost" />}
-        aria-label={`Actions for ${teamName}`}
+        aria-label={`عملیات ${teamName}`}
         onClick={(event) => event.stopPropagation()}
       >
         <MoreHorizontalIcon />
@@ -35,7 +34,7 @@ export function TeamRowActionsMenu({
           }}
         >
           <EyeIcon />
-          View
+          مشاهده
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

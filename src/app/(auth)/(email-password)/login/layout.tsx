@@ -12,15 +12,15 @@ export default function LoginLayout({ children }: LoginLayoutProps) {
   return (
     <div className="flex flex-col gap-4">
       <div className="mb-6 flex flex-col gap-2 text-center">
-        <h1 className="text-2xl font-semibold">Sign in</h1>
+        <h1 className="text-2xl font-semibold">ورود</h1>
         <p className="text-sm text-muted-foreground">
-          Sign in with your email and password.
+          با ایمیل و رمز عبور وارد شوید.
         </p>
       </div>
       {children}
       <div className="px-2 text-center text-sm">
         <p className="text-muted-foreground">
-          Don&apos;t have an account?{" "}
+          حساب ندارید؟{" "}
           <Suspense
             fallback={
               <Link
@@ -30,7 +30,7 @@ export default function LoginLayout({ children }: LoginLayoutProps) {
                   "/dashboard",
                 )}
               >
-                Sign up
+                ثبت‌نام
               </Link>
             }
           >
@@ -38,7 +38,7 @@ export default function LoginLayout({ children }: LoginLayoutProps) {
               className="font-medium text-primary"
               target={authRoutes.signup()}
             >
-              Sign up
+              ثبت‌نام
             </AuthCrossLink>
           </Suspense>
         </p>

@@ -49,16 +49,16 @@ function DashboardNavUserThemeItem() {
   return (
     <div
       role="group"
-      aria-label="Dark theme"
+      aria-label="تم تیره"
       className="relative flex min-h-7 items-center justify-between gap-2 rounded-md px-2 py-1 text-xs/relaxed select-none [&_svg]:size-3.5 [&_svg]:shrink-0"
     >
       <MoonIcon className="pointer-events-none" />
-      <span className="flex-1">Dark theme</span>
+      <span className="flex-1">تم تیره</span>
       <Switch
         size="sm"
         checked={isDark}
         disabled={!mounted}
-        aria-label="Dark theme"
+        aria-label="تم تیره"
         onCheckedChange={(checked) => {
           setTheme(checked ? "dark" : "light");
         }}
@@ -138,7 +138,7 @@ export function DashboardNavUser({ user }: DashboardNavUserProps) {
               onClick={handleLogout}
             >
               <LogOutIcon />
-              {isPending ? "Signing out..." : "Sign out"}
+              {isPending ? "در حال خروج…" : "خروج"}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -1,4 +1,5 @@
 /** Enum/badge display strings — not route navigation. See docs/agents/dashboard.md */
+
 import {
   MembershipRole,
   NotificationAudience,
@@ -7,57 +8,80 @@ import {
 } from "@/generated/prisma/enums";
 
 const invitationDisplayStatusLabels = {
-  active_link: "Active",
-  expired: "Expired",
-  exhausted: "Capacity full",
+  active_link: "فعال",
+
+  expired: "منقضی‌شده",
+
+  exhausted: "ظرفیت تکمیل",
 } as const;
 
 const invitationJoinScopeLabels = {
-  organization: "Organization",
-  team: "Team",
-  organization_and_team: "Organization and team",
-  unknown: "Unknown",
+  organization: "سازمان",
+
+  team: "تیم",
+
+  organization_and_team: "سازمان و تیم",
+
+  unknown: "نامشخص",
 } as const;
 
 const membershipRoleLabels: Record<MembershipRole, string> = {
-  [MembershipRole.owner]: "Owner",
-  [MembershipRole.admin]: "Admin",
-  [MembershipRole.member]: "Member",
+  [MembershipRole.owner]: "مالک",
+
+  [MembershipRole.admin]: "مدیر",
+
+  [MembershipRole.member]: "عضو",
 };
 
 const platformRoleLabels: Record<UserRole, string> = {
-  [UserRole.user]: "User",
-  [UserRole.admin]: "Platform admin",
+  [UserRole.user]: "کاربر",
+
+  [UserRole.admin]: "مدیر پلتفرم",
 };
 
 export const userAccountStatusLabels = {
-  active: "Active",
-  banned: "Banned",
+  active: "فعال",
+
+  banned: "مسدود",
 } as const;
 
 const notificationTypeLabels: Record<NotificationType, string> = {
-  [NotificationType.system]: "System",
-  [NotificationType.organization]: "Organization",
-  [NotificationType.security]: "Security",
-  [NotificationType.custom]: "Custom",
+  [NotificationType.system]: "سیستم",
+
+  [NotificationType.organization]: "سازمان",
+
+  [NotificationType.security]: "امنیت",
+
+  [NotificationType.custom]: "سفارشی",
 };
 
 const notificationAudienceLabels: Record<NotificationAudience, string> = {
-  [NotificationAudience.user_direct]: "User",
-  [NotificationAudience.org_all]: "All organization members",
-  [NotificationAudience.org_admins]: "Organization admins",
-  [NotificationAudience.org_members]: "Organization members",
-  [NotificationAudience.team]: "Team members",
+  [NotificationAudience.user_direct]: "کاربر",
+
+  [NotificationAudience.org_all]: "همه اعضای سازمان",
+
+  [NotificationAudience.org_admins]: "مدیران سازمان",
+
+  [NotificationAudience.org_members]: "اعضای سازمان",
+
+  [NotificationAudience.team]: "اعضای تیم",
 };
 
 export const badgeLabels = {
-  fallback: "Unknown",
+  fallback: "نامشخص",
+
   invitationDisplayStatus: invitationDisplayStatusLabels,
+
   invitationJoinScope: invitationJoinScopeLabels,
+
   membershipRole: membershipRoleLabels,
+
   platformRole: platformRoleLabels,
+
   userAccountStatus: userAccountStatusLabels,
+
   notificationType: notificationTypeLabels,
+
   notificationAudience: notificationAudienceLabels,
 } as const;
 

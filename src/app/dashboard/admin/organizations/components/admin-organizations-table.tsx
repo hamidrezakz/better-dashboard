@@ -88,7 +88,7 @@ export function AdminOrganizationsTable({
         <CardAction className="w-full sm:w-auto">
           <DataTableSearchField
             query={q}
-            placeholder="Search by name or slug…"
+            placeholder="جستجو بر اساس نام یا شناسه…"
             buildPath={buildSearchPath}
           />
         </CardAction>
@@ -103,24 +103,24 @@ export function AdminOrganizationsTable({
           onPageSizeChange={(nextPageSize) =>
             navigate({ page: 1, pageSize: nextPageSize })
           }
-          countLabel="organization"
+          countLabel="سازمان"
         >
           <DataTableViewport>
             <Table className="table-fixed">
               <TableHeader>
                 <TableRow>
                   <TableHead className="min-w-0 whitespace-normal">
-                    Organization
+                    سازمان
                   </TableHead>
                   <TableHead className="hidden min-w-0 whitespace-normal sm:table-cell">
-                    Slug
+                    شناسه
                   </TableHead>
-                  <TableHead className="whitespace-normal">Members</TableHead>
+                  <TableHead className="whitespace-normal">اعضا</TableHead>
                   <TableHead className="hidden whitespace-normal sm:table-cell">
-                    Teams
+                    تیم‌ها
                   </TableHead>
                   <TableHead className="hidden whitespace-normal lg:table-cell">
-                    Created
+                    ایجاد
                   </TableHead>
                 </TableRow>
               </TableHeader>
@@ -175,7 +175,7 @@ export function AdminOrganizationsTable({
                       colSpan={5}
                       className="py-6 text-center text-muted-foreground"
                     >
-                      No organizations found.
+                      سازمانی یافت نشد.
                     </TableCell>
                   </TableRow>
                 )}

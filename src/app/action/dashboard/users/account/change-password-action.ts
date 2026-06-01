@@ -24,14 +24,14 @@ export async function changePasswordAction(
 
   if (!currentPassword || !newPassword || !confirmPassword) {
     return {
-      formError: "Please complete all password fields.",
+      formError: "همه فیلدهای رمز عبور را پر کنید.",
       fieldErrors: {
         currentPassword: !currentPassword
-          ? "Current password is required."
+          ? "رمز عبور فعلی الزامی است."
           : undefined,
-        newPassword: !newPassword ? "New password is required." : undefined,
+        newPassword: !newPassword ? "رمز عبور جدید الزامی است." : undefined,
         confirmPassword: !confirmPassword
-          ? "Please confirm your new password."
+          ? "تکرار رمز عبور جدید الزامی است."
           : undefined,
       },
     };
@@ -39,18 +39,18 @@ export async function changePasswordAction(
 
   if (newPassword.length < MIN_PASSWORD_LENGTH) {
     return {
-      formError: "New password must be at least 8 characters.",
+      formError: "رمز عبور جدید باید حداقل ۸ کاراکتر باشد.",
       fieldErrors: {
-        newPassword: "New password must be at least 8 characters.",
+        newPassword: "رمز عبور جدید باید حداقل ۸ کاراکتر باشد.",
       },
     };
   }
 
   if (newPassword !== confirmPassword) {
     return {
-      formError: "New passwords do not match.",
+      formError: "رمزهای عبور جدید یکسان نیستند.",
       fieldErrors: {
-        confirmPassword: "New passwords do not match.",
+        confirmPassword: "رمزهای عبور جدید یکسان نیستند.",
       },
     };
   }
@@ -68,7 +68,7 @@ export async function changePasswordAction(
     return {
       formError: getAccountActionErrorMessage({
         error,
-        fallback: "We couldn't change your password. Please try again.",
+        fallback: "تغییر رمز عبور ممکن نشد. لطفاً دوباره امتحان کنید.",
       }),
     };
   }

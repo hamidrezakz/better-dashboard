@@ -40,8 +40,7 @@ export async function removeOrganizationMemberAction(
   if (!canManage) {
     return {
       success: false,
-      error:
-        "You don't have permission to manage members for this organization.",
+      error: "مجوز مدیریت اعضای این سازمان را ندارید.",
     };
   }
 
@@ -51,7 +50,7 @@ export async function removeOrganizationMemberAction(
   });
 
   if (!member) {
-    return { success: false, error: "Member not found." };
+    return { success: false, error: "عضو یافت نشد." };
   }
 
   if (
@@ -62,7 +61,7 @@ export async function removeOrganizationMemberAction(
   ) {
     return {
       success: false,
-      error: "You cannot remove yourself from the organization.",
+      error: "نمی‌توانید خودتان را از سازمان حذف کنید.",
     };
   }
 
@@ -72,7 +71,7 @@ export async function removeOrganizationMemberAction(
     if (ownerCount <= 1) {
       return {
         success: false,
-        error: "Assign another owner before removing this member.",
+        error: "قبل از حذف این عضو، مالک دیگری تعیین کنید.",
       };
     }
   }

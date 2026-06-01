@@ -54,10 +54,10 @@ export function AccountSessionsContent({
       const result = await revokeSessionAction({ token });
       setPendingToken(null);
       if (!result.success) {
-        toast.error(result.error ?? "Could not revoke session.");
+        toast.error(result.error ?? "لغو نشست ممکن نشد.");
         return;
       }
-      toast.success("Session revoked.");
+      toast.success("نشست لغو شد.");
       router.refresh();
     });
   };

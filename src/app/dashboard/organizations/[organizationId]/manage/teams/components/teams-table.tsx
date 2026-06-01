@@ -45,7 +45,7 @@ export function TeamsTable({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Teams</CardTitle>
+        <CardTitle>تیم‌ها</CardTitle>
         <CardAction>
           <Button type="button" size="sm" onClick={onCreate}>
             <PlusIcon />
@@ -60,14 +60,14 @@ export function TeamsTable({
             <TableHeader>
               <TableRow>
                 <TableHead className="min-w-0 whitespace-normal">
-                  Team name
+                  نام تیم
                 </TableHead>
-                <TableHead className="whitespace-normal">Members</TableHead>
+                <TableHead className="whitespace-normal">اعضا</TableHead>
                 <TableHead className="hidden whitespace-normal sm:table-cell">
-                  Created
+                  ایجاد
                 </TableHead>
                 <TableHead className="w-12 whitespace-normal">
-                  <span className="sr-only">Actions</span>
+                  <span className="sr-only">عملیات</span>
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -107,7 +107,7 @@ export function TeamsTable({
                     colSpan={4}
                     className="py-6 text-center text-muted-foreground"
                   >
-                    No teams yet.
+                    هنوز تیمی نیست.
                   </TableCell>
                 </TableRow>
               )}

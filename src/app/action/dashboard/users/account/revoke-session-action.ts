@@ -21,7 +21,7 @@ export async function revokeSessionAction(
 
   const token = input.token.trim();
   if (!token) {
-    return { success: false, error: "Session token is required." };
+    return { success: false, error: "توکن نشست الزامی است." };
   }
 
   try {
@@ -34,7 +34,7 @@ export async function revokeSessionAction(
       success: false,
       error: getAccountActionErrorMessage({
         error,
-        fallback: "We couldn't sign out that session. Please try again.",
+        fallback: "خروج از آن نشست ممکن نشد. لطفاً دوباره امتحان کنید.",
       }),
     };
   }

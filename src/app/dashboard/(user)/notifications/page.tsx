@@ -32,7 +32,7 @@ export default async function UserNotificationsPage({
 }
 
 async function UserNotificationsPageIntro() {
-  return <h1 className="text-base font-semibold">Notifications</h1>;
+  return <h1 className="text-base font-semibold">اعلان‌ها</h1>;
 }
 
 async function UserNotificationsPagePanel({

@@ -60,7 +60,7 @@ export function DashboardAppSidebar({
   }));
 
   return (
-    <Sidebar side="left" {...props}>
+    <Sidebar side="right" {...props}>
       <SidebarHeader>
         <OrganizationSwitcher
           organizations={config.organizations}

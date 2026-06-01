@@ -53,11 +53,11 @@ export function NotificationFormShell({
       });
 
       if (!result.success) {
-        toast.error(result.error ?? "Could not send the notification.");
+        toast.error(result.error ?? "ارسال اعلان ممکن نشد.");
         return;
       }
 
-      toast.success("Notification sent.");
+      toast.success("اعلان ارسال شد.");
       onClose();
       router.refresh();
     });
@@ -71,16 +71,16 @@ export function NotificationFormShell({
           onClose();
         }
       }}
-      title="New notification"
+      title="اعلان جدید"
       footer={
         <ResponsiveFormOverlayFooterActions
           cancel={{
-            label: "Cancel",
+            label: "انصراف",
             onClick: onClose,
             disabled: isPending,
           }}
           primary={{
-            label: isPending ? "Sending..." : "Send notification",
+            label: isPending ? "در حال ارسال…" : "ارسال اعلان",
             onClick: handleSubmit,
             disabled: isPending || !canSubmit,
           }}

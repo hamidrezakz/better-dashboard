@@ -36,8 +36,7 @@ export async function createOrganizationInvitationAction(
   if (!canManage) {
     return {
       success: false,
-      error:
-        "You don't have permission to manage invitations for this organization.",
+      error: "مجوز مدیریت دعوت‌نامه‌های این سازمان را ندارید.",
     };
   }
 
@@ -56,14 +55,14 @@ export async function createOrganizationInvitationAction(
   if (!expiresAt) {
     return {
       success: false,
-      error: "Expiration date is not valid.",
+      error: "تاریخ انقضا معتبر نیست.",
     };
   }
 
   if (expiresAt.getTime() <= Date.now()) {
     return {
       success: false,
-      error: "Expiration date must be in the future.",
+      error: "تاریخ انقضا باید در آینده باشد.",
     };
   }
 
@@ -81,7 +80,7 @@ export async function createOrganizationInvitationAction(
     if (!team) {
       return {
         success: false,
-        error: "The selected team is not valid for this organization.",
+        error: "تیم انتخاب‌شده برای این سازمان معتبر نیست.",
       };
     }
   }
@@ -91,7 +90,7 @@ export async function createOrganizationInvitationAction(
   if (maxUses === -1) {
     return {
       success: false,
-      error: "Maximum uses must be greater than zero.",
+      error: "حداکثر استفاده باید بزرگ‌تر از صفر باشد.",
     };
   }
 

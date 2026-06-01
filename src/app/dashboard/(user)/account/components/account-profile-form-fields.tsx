@@ -54,7 +54,7 @@ export function AccountProfileFormFields({
 
       <FieldGroup>
         <Field>
-          <FieldLabel htmlFor={`${formId}-email`}>Email</FieldLabel>
+          <FieldLabel htmlFor={`${formId}-email`}>ایمیل</FieldLabel>
           <Input
             id={`${formId}-email`}
             type="email"
@@ -62,12 +62,10 @@ export function AccountProfileFormFields({
             disabled
             readOnly
           />
-          <FieldDescription>
-            Email cannot be changed from the dashboard.
-          </FieldDescription>
+          <FieldDescription>ایمیل از داشبورد قابل تغییر نیست.</FieldDescription>
         </Field>
         <Field data-invalid={Boolean(state.fieldErrors?.name)}>
-          <FieldLabel htmlFor={`${formId}-name`}>Display name</FieldLabel>
+          <FieldLabel htmlFor={`${formId}-name`}>نام نمایشی</FieldLabel>
           <Input
             id={`${formId}-name`}
             name="name"
@@ -79,7 +77,7 @@ export function AccountProfileFormFields({
           <FieldError errors={[{ message: state.fieldErrors?.name }]} />
         </Field>
         <Field data-invalid={Boolean(state.fieldErrors?.image)}>
-          <FieldLabel htmlFor={`${formId}-image`}>Photo URL</FieldLabel>
+          <FieldLabel htmlFor={`${formId}-image`}>آدرس تصویر</FieldLabel>
           <Input
             id={`${formId}-image`}
             name="image"
@@ -90,7 +88,7 @@ export function AccountProfileFormFields({
             aria-invalid={Boolean(state.fieldErrors?.image)}
           />
           <FieldDescription>
-            Optional. Leave empty to remove your photo.
+            اختیاری. برای حذف تصویر خالی بگذارید.
           </FieldDescription>
           <FieldError errors={[{ message: state.fieldErrors?.image }]} />
         </Field>

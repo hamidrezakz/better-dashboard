@@ -45,10 +45,10 @@ export function NotificationsTable({
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0">
-        <CardTitle>Notifications</CardTitle>
+        <CardTitle>اعلان‌ها</CardTitle>
         <Button size="sm" onClick={onCreate}>
           <PlusIcon data-icon="inline-start" />
-          New notification
+          اعلان جدید
         </Button>
       </CardHeader>
       <CardContent>
@@ -73,26 +73,26 @@ export function NotificationsTable({
                 }),
               )
             }
-            countLabel="notification"
+            countLabel="اعلان"
           >
             <DataTableViewport>
               <Table className="table-fixed">
                 <TableHeader>
                   <TableRow>
                     <TableHead className="min-w-0 whitespace-normal">
-                      Title
+                      عنوان
                     </TableHead>
                     <TableHead className="whitespace-normal">
-                      Audience
+                      مخاطب
                     </TableHead>
                     <TableHead className="hidden min-w-0 whitespace-normal md:table-cell">
-                      Recipient
+                      گیرنده
                     </TableHead>
                     <TableHead className="hidden whitespace-normal lg:table-cell">
-                      Sent
+                      ارسال
                     </TableHead>
                     <TableHead className="w-12 whitespace-normal">
-                      <span className="sr-only">Actions</span>
+                      <span className="sr-only">عملیات</span>
                     </TableHead>
                   </TableRow>
                 </TableHeader>
@@ -159,7 +159,7 @@ export function NotificationsTable({
           </DataTableShell>
         ) : (
           <p className="py-8 text-center text-xs text-muted-foreground">
-            No notifications yet.
+            هنوز اعلانی نیست.
           </p>
         )}
       </CardContent>

@@ -34,18 +34,18 @@ export function InvitationRowActionsMenu({
     <DropdownMenu>
       <DropdownMenuTrigger
         render={<Button size="icon-sm" variant="ghost" />}
-        aria-label="Invitation actions"
+        aria-label="عملیات دعوت‌نامه"
       >
         <MoreHorizontalIcon />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-40">
         <DropdownMenuItem onClick={onView}>
           <EyeIcon />
-          View
+          مشاهده
         </DropdownMenuItem>
         <DropdownMenuItem onClick={onEdit}>
           <PencilLineIcon />
-          Edit
+          ویرایش
         </DropdownMenuItem>
         <DropdownMenuItem
           variant="destructive"
@@ -53,7 +53,7 @@ export function InvitationRowActionsMenu({
           onClick={onDelete}
         >
           <Trash2Icon />
-          Delete invitation
+          حذف دعوت‌نامه
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

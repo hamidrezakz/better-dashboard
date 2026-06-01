@@ -1,27 +1,27 @@
 /** Account feature UI copy (not dashboard nav chrome). */
 export const accountCopy = {
   hub: {
-    title: "Account",
+    title: "حساب",
   },
   profile: {
-    title: "Profile",
+    title: "پروفایل",
   },
   security: {
-    title: "Password",
+    title: "رمز عبور",
     unavailable:
-      "This account does not sign in with email and password, so there is no password to change here.",
+      "این حساب با ایمیل و رمز عبور وارد نمی‌شود؛ رمز عبوری برای تغییر اینجا وجود ندارد.",
   },
   sessions: {
-    title: "Active sessions",
-    empty: "No active sessions were found.",
-    onlyThisDevice: "You are only signed in on this device.",
-    currentDevice: "This device",
-    revoke: "Revoke",
-    revoking: "Revoking…",
-    signOutOthers: "Sign out other sessions",
-    signingOutOthers: "Signing out…",
-    signedIn: "Signed in",
-    expires: "Session ends",
-    ip: "IP address",
+    title: "نشست‌های فعال",
+    empty: "نشست فعالی یافت نشد.",
+    onlyThisDevice: "فقط روی این دستگاه وارد شده‌اید.",
+    currentDevice: "این دستگاه",
+    revoke: "لغو",
+    revoking: "در حال لغو…",
+    signOutOthers: "خروج از سایر نشست‌ها",
+    signingOutOthers: "در حال خروج…",
+    signedIn: "ورود",
+    expires: "پایان نشست",
+    ip: "آدرس IP",
   },
 } as const;

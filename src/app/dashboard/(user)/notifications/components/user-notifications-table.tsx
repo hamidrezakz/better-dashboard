@@ -90,11 +90,11 @@ export function UserNotificationsTable({
   const emptyMessage =
     filter === "unread"
       ? isOwnInbox
-        ? "You have no unread notifications."
-        : "This user has no unread notifications."
+        ? "اعلان خوانده‌نشده‌ای ندارید."
+        : "این کاربر اعلان خوانده‌نشده‌ای ندارد."
       : isOwnInbox
-        ? "You have no read notifications."
-        : "This user has no read notifications.";
+        ? "اعلان خوانده‌شده‌ای ندارید."
+        : "این کاربر اعلان خوانده‌شده‌ای ندارد.";
 
   const notificationFilterOptions = [
     {
@@ -109,12 +109,12 @@ export function UserNotificationsTable({
     },
   ];
 
-  const dateColumnLabel = filter === "read" ? "Read" : "Sent";
+  const dateColumnLabel = filter === "read" ? "خوانده‌شده" : "ارسال";
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Notifications</CardTitle>
+        <CardTitle>اعلان‌ها</CardTitle>
         <CardAction>
           <DataTableSegmentFilter
             value={filter}
@@ -134,20 +134,20 @@ export function UserNotificationsTable({
             onPageSizeChange={(nextPageSize) =>
               navigate({ page: 1, pageSize: nextPageSize })
             }
-            countLabel="notification"
+            countLabel="اعلان"
           >
             <DataTableViewport>
               <Table className="table-fixed">
                 <TableHeader>
                   <TableRow>
                     <TableHead className="min-w-0 whitespace-normal">
-                      Title
+                      عنوان
                     </TableHead>
                     <TableHead className="hidden whitespace-normal lg:table-cell">
                       {dateColumnLabel}
                     </TableHead>
                     <TableHead className="w-12 whitespace-normal">
-                      <span className="sr-only">Actions</span>
+                      <span className="sr-only">عملیات</span>
                     </TableHead>
                   </TableRow>
                 </TableHeader>
@@ -161,12 +161,12 @@ export function UserNotificationsTable({
                         organizationName: notification.organizationName ?? null,
                         teamName: notification.teamName ?? null,
                         createdByName: null,
-                      }) ?? "â€”";
+                      }) ?? "\u2014";
                     const formattedDate = formatNotificationMetaDate(
                       notification,
                       filter,
                     );
-                    const metaLine = `${typeLabel} Â· ${sourceLabel} Â· ${formattedDate}`;
+                    const metaLine = `${typeLabel} · ${sourceLabel} · ${formattedDate}`;
 
                     return (
                       <TableRow
@@ -197,9 +197,9 @@ export function UserNotificationsTable({
                           </p>
                           <p
                             className="mt-1 hidden truncate text-[0.7rem] text-muted-foreground lg:block"
-                            title={`${typeLabel} Â· ${sourceLabel}`}
+                            title={`${typeLabel} · ${sourceLabel}`}
                           >
-                            {typeLabel} Â· {sourceLabel}
+                            {typeLabel} · {sourceLabel}
                           </p>
                         </TableCell>
                         <TableCell className="hidden text-xs text-muted-foreground lg:table-cell">

@@ -57,7 +57,7 @@ function NotificationList({
           <BellIcon className="size-4 text-muted-foreground" />
         </span>
         <p className="text-xs text-muted-foreground">
-          You have no unread notifications.
+          اعلان خوانده‌نشده‌ای ندارید.
         </p>
       </div>
     );
@@ -134,7 +134,7 @@ export function HeaderNotificationsDropdown({
               variant="ghost"
               size="icon-sm"
               className="relative"
-              aria-label="Notifications"
+              aria-label="اعلان‌ها"
             />
           }
         >
@@ -152,14 +152,14 @@ export function HeaderNotificationsDropdown({
         >
           <div className="flex shrink-0 items-center justify-between border-b px-2.5 py-2">
             <p className="text-xs font-medium text-foreground">
-              New notifications
+              اعلان‌های جدید
             </p>
             <Button
               variant="ghost"
               size="icon-sm"
               disabled={isPending || !unreadTotalCount}
               onClick={handleMarkAllRead}
-              aria-label="Mark all as read"
+              aria-label="علامت‌گذاری همه به‌عنوان خوانده‌شده"
             >
               <CheckCheckIcon />
             </Button>
@@ -176,7 +176,7 @@ export function HeaderNotificationsDropdown({
             nativeButton={false}
             render={<Link href={dashboardRoutes.userNotifications()} />}
           >
-            {hasMore ? "View all notifications" : "Notification center"}
+            {hasMore ? "مشاهده همه اعلان‌ها" : "مرکز اعلان‌ها"}
             <ChevronRightIcon className="size-3.5 opacity-60" />
           </Button>
         </DropdownMenuContent>

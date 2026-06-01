@@ -24,7 +24,7 @@ export function DashboardNavProjects({ projects }: DashboardNavProjectsProps) {
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Projects</SidebarGroupLabel>
+      <SidebarGroupLabel>پروژه‌ها</SidebarGroupLabel>
       <SidebarMenu>
         {projects.map((project) => (
           <SidebarMenuItem key={project.name}>

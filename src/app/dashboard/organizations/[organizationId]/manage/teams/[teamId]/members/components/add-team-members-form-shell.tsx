@@ -7,6 +7,7 @@ import { ResponsiveFormOverlay } from "@/components/responsive-form-overlay/resp
 import { ResponsiveFormOverlayFooterActions } from "@/components/responsive-form-overlay/responsive-form-overlay-footer-actions";
 import { OrganizationMembersMultiCombobox } from "@/app/dashboard/organizations/[organizationId]/manage/components/organization-members-multi-combobox";
 import { dashboardNavLabels } from "@/app/dashboard/lib/dashboard-nav-labels";
+import { formatDataTableNumber } from "@/lib/data-table/pagination";
 import { toast } from "sonner";
 import type { UserSearchOption } from "@/app/action/dashboard/users/search-users-action";
 import { FormLabel } from "@/components/form/form-label";
@@ -37,7 +38,7 @@ export function AddTeamMembersFormShell({
 
   const handleSubmit = () => {
     if (!selectedUsers.length) {
-      toast.error("Select at least one member to add.");
+      toast.error("حداقل یک عضو برای افزودن انتخاب کنید.");
       return;
     }
 
@@ -49,7 +50,7 @@ export function AddTeamMembersFormShell({
       });
 
       if (!result.success) {
-        toast.error(result.error ?? "Could not add team members.");
+        toast.error(result.error ?? "افزودن اعضای تیم ممکن نشد.");
         return;
       }
 
@@ -57,8 +58,8 @@ export function AddTeamMembersFormShell({
 
       toast.success(
         addedCount === 1
-          ? "1 member added to the team."
-          : `${addedCount} members added to the team.`,
+          ? "۱ عضو به تیم افزوده شد."
+          : `${formatDataTableNumber(addedCount)} عضو به تیم افزوده شد.`,
       );
       setSelectedUsers([]);
       onClose();
@@ -78,12 +79,12 @@ export function AddTeamMembersFormShell({
       footer={
         <ResponsiveFormOverlayFooterActions
           cancel={{
-            label: "Cancel",
+            label: "انصراف",
             onClick: handleClose,
             disabled: isPending,
           }}
           primary={{
-            label: "Add members",
+            label: "افزودن اعضا",
             onClick: handleSubmit,
             disabled: isPending || !selectedUsers.length,
           }}
@@ -91,7 +92,7 @@ export function AddTeamMembersFormShell({
       }
     >
       <div className="space-y-2">
-        <FormLabel required>Members</FormLabel>
+        <FormLabel required>اعضا</FormLabel>
         <OrganizationMembersMultiCombobox
           organizationId={organizationId}
           value={selectedUsers}

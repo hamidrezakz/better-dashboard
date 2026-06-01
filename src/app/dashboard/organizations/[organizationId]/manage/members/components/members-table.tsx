@@ -104,12 +104,12 @@ export function MembersTable({
       });
 
       if (!result.success) {
-        toast.error(result.error ?? "Could not remove the member.");
+        toast.error(result.error ?? "حذف عضو ممکن نشد.");
         return;
       }
 
       setRemoveTarget(null);
-      toast.success("Member removed from the organization.");
+      toast.success("عضو از سازمان حذف شد.");
       router.refresh();
     });
   };
@@ -117,7 +117,7 @@ export function MembersTable({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Members</CardTitle>
+        <CardTitle>اعضا</CardTitle>
         <CardAction>
           <DataTableSegmentFilter
             value={filter}
@@ -136,24 +136,24 @@ export function MembersTable({
           onPageSizeChange={(nextPageSize) =>
             navigate({ page: 1, pageSize: nextPageSize })
           }
-          countLabel="member"
+          countLabel="عضو"
         >
           <DataTableViewport>
             <Table className="table-fixed">
               <TableHeader>
                 <TableRow>
                   <TableHead className="min-w-0 whitespace-normal">
-                    Name
+                    نام
                   </TableHead>
                   <TableHead className="hidden min-w-0 whitespace-normal sm:table-cell">
-                    Email
+                    ایمیل
                   </TableHead>
-                  <TableHead className="w-24 whitespace-normal">Role</TableHead>
+                  <TableHead className="w-24 whitespace-normal">نقش</TableHead>
                   <TableHead className="hidden whitespace-normal lg:table-cell">
-                    Joined
+                    تاریخ عضویت
                   </TableHead>
                   <TableHead className="w-12 whitespace-normal">
-                    <span className="sr-only">Actions</span>
+                    <span className="sr-only">عملیات</span>
                   </TableHead>
                 </TableRow>
               </TableHeader>
@@ -200,7 +200,7 @@ export function MembersTable({
                       colSpan={5}
                       className="py-6 text-center text-muted-foreground"
                     >
-                      No members yet.
+                      هنوز عضوی نیست.
                     </TableCell>
                   </TableRow>
                 )}
@@ -220,21 +220,21 @@ export function MembersTable({
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Remove from organization</AlertDialogTitle>
+            <AlertDialogTitle>حذف از سازمان</AlertDialogTitle>
             <AlertDialogDescription>
               {removeTarget
-                ? `${removeTarget.name} will lose organization membership and management access. Team memberships in this organization are kept unless removed separately.`
+                ? `${removeTarget.name} عضویت و دسترسی مدیریتی سازمان را از دست می‌دهد. عضویت تیم‌ها در این سازمان مگر اینکه جداگانه حذف شود، حفظ می‌شود.`
                 : null}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isPending}>انصراف</AlertDialogCancel>
             <AlertDialogAction
               variant="destructive"
               disabled={isPending}
               onClick={handleRemove}
             >
-              Remove member
+              حذف عضو
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

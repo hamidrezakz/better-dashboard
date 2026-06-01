@@ -37,7 +37,7 @@ export async function removeOrganizationTeamMemberAction(
   if (!canManage) {
     return {
       success: false,
-      error: "You don't have permission to manage teams for this organization.",
+      error: "مجوز مدیریت تیم‌های این سازمان را ندارید.",
     };
   }
 
@@ -47,7 +47,7 @@ export async function removeOrganizationTeamMemberAction(
   });
 
   if (!team) {
-    return { success: false, error: "Team not found." };
+    return { success: false, error: "تیم یافت نشد." };
   }
 
   await prisma.teamMember.deleteMany({

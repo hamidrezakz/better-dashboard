@@ -49,7 +49,12 @@ export function ResponsiveFormOverlayDialog({
           ) : null}
         </DialogHeader>
         <div className="min-h-0 flex-1 overflow-y-auto p-4">{children}</div>
-        <DialogFooter className={responsiveFormOverlayFooterSurfaceClassName}>
+        <DialogFooter
+          className={cn(
+            responsiveFormOverlayFooterSurfaceClassName,
+            "ltr:sm:justify-end rtl:sm:justify-start",
+          )}
+        >
           <ResponsiveFormOverlayFooter>{footer}</ResponsiveFormOverlayFooter>
         </DialogFooter>
       </DialogContent>

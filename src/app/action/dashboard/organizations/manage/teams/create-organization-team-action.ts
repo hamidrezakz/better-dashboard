@@ -34,7 +34,7 @@ export async function createOrganizationTeamAction(
   if (!canManage) {
     return {
       success: false,
-      error: "You don't have permission to manage teams for this organization.",
+      error: "مجوز مدیریت تیم‌های این سازمان را ندارید.",
     };
   }
 

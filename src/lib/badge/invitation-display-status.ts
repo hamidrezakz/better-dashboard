@@ -48,8 +48,8 @@ export function formatInvitationUsageLabel(
   maxUses: number | null,
 ) {
   if (maxUses === null) {
-    return `${usedCount} uses`;
+    return `${usedCount} بار استفاده`;
   }
 
-  return `${usedCount} of ${maxUses}`;
+  return `${usedCount} از ${maxUses}`;
 }

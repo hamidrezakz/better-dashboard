@@ -42,13 +42,12 @@ export async function updateOrganizationMemberRoleAction(
   if (!canManage) {
     return {
       success: false,
-      error:
-        "You don't have permission to manage members for this organization.",
+      error: "مجوز مدیریت اعضای این سازمان را ندارید.",
     };
   }
 
   if (!ALLOWED_ROLES.includes(input.role)) {
-    return { success: false, error: "Role is not valid." };
+    return { success: false, error: "نقش معتبر نیست." };
   }
 
   const member = await getOrganizationMemberById({
@@ -57,7 +56,7 @@ export async function updateOrganizationMemberRoleAction(
   });
 
   if (!member) {
-    return { success: false, error: "Member not found." };
+    return { success: false, error: "عضو یافت نشد." };
   }
 
   if (member.role === input.role) {
@@ -72,21 +71,21 @@ export async function updateOrganizationMemberRoleAction(
   if (!actorRole) {
     return {
       success: false,
-      error: "You don't have permission to change member roles.",
+      error: "مجوز تغییر نقش اعضا را ندارید.",
     };
   }
 
   if (!canActorModifyMemberRole({ actorRole, role: member.role })) {
     return {
       success: false,
-      error: "You don't have permission to change this member's role.",
+      error: "مجوز تغییر نقش این عضو را ندارید.",
     };
   }
 
   if (!canActorModifyMemberRole({ actorRole, role: input.role })) {
     return {
       success: false,
-      error: "You don't have permission to assign this role.",
+      error: "مجوز اختصاص این نقش را ندارید.",
     };
   }
 
@@ -99,7 +98,7 @@ export async function updateOrganizationMemberRoleAction(
     if (ownerCount <= 1) {
       return {
         success: false,
-        error: "Assign another owner before changing this member's role.",
+        error: "قبل از تغییر نقش این عضو، مالک دیگری تعیین کنید.",
       };
     }
   }

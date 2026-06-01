@@ -36,7 +36,7 @@ export async function updateOrganizationTeamAction(
   if (!canManage) {
     return {
       success: false,
-      error: "You don't have permission to manage teams for this organization.",
+      error: "مجوز مدیریت تیم‌های این سازمان را ندارید.",
     };
   }
 
@@ -52,7 +52,7 @@ export async function updateOrganizationTeamAction(
   });
 
   if (!team) {
-    return { success: false, error: "Team not found." };
+    return { success: false, error: "تیم یافت نشد." };
   }
 
   await prisma.team.update({

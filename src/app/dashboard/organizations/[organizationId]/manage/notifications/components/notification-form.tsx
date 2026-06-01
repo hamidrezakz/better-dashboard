@@ -83,32 +83,32 @@ export function NotificationForm({
     <div className="space-y-4">
       <div className="space-y-2">
         <FormLabel htmlFor={`${fieldId}-title`} required>
-          Title
+          عنوان
         </FormLabel>
         <Input
           id={`${fieldId}-title`}
           value={form.title}
           disabled={disabled}
           onChange={(event) => onChange({ title: event.target.value })}
-          placeholder="Notification title"
+          placeholder="عنوان اعلان"
         />
       </div>
 
       <div className="space-y-2">
-        <FormLabel htmlFor={`${fieldId}-body`}>Body</FormLabel>
+        <FormLabel htmlFor={`${fieldId}-body`}>متن</FormLabel>
         <Textarea
           id={`${fieldId}-body`}
           value={form.body}
           disabled={disabled}
           onChange={(event) => onChange({ body: event.target.value })}
-          placeholder="Notification body (optional)"
+          placeholder="متن اعلان (اختیاری)"
           rows={3}
         />
       </div>
 
       <div className="space-y-2">
         <FormLabel htmlFor={`${fieldId}-audience`} required>
-          Audience
+          مخاطب
         </FormLabel>
         <Select
           value={form.audience}
@@ -143,7 +143,7 @@ export function NotificationForm({
       {showUser ? (
         <div className="space-y-2">
           <FormLabel htmlFor={`${fieldId}-user`} required>
-            User
+            کاربر
           </FormLabel>
           <UserSearchCombobox
             value={form.selectedUser}
@@ -159,7 +159,7 @@ export function NotificationForm({
       {showTeam ? (
         <div className="space-y-2">
           <FormLabel htmlFor={`${fieldId}-team`} required>
-            Team
+            تیم
           </FormLabel>
           <Select
             value={form.teamId}
@@ -167,9 +167,9 @@ export function NotificationForm({
             disabled={disabled}
           >
             <SelectTrigger id={`${fieldId}-team`} className="w-full">
-              <SelectValue placeholder="Select team">
+              <SelectValue placeholder="انتخاب تیم">
                 {form.teamId
-                  ? (teamNameById.get(form.teamId) ?? "Select team")
+                  ? (teamNameById.get(form.teamId) ?? "انتخاب تیم")
                   : undefined}
               </SelectValue>
             </SelectTrigger>

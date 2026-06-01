@@ -5,14 +5,7 @@ import { DirectionProvider } from "@/components/ui/direction";
 import { Toaster } from "@/components/ui/sonner";
 import { appLocale } from "@/lib/app-locale";
 import localFont from "next/font/local";
-import { Geist, Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
-
-const fontSans = Geist({
-  subsets: ["latin"],
-});
 
 const vazirmatn = localFont({
   src: "../../public/fonts/Vazirmatn-VariableFont_wght.ttf",
@@ -22,11 +15,11 @@ const vazirmatn = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: "Better Dashboard",
-    template: "%s · Better Dashboard",
+    default: "داشبورد بهتر",
+    template: "%s · داشبورد بهتر",
   },
   description:
-    "Mobile-first Better Auth organization dashboard template for Next.js—responsive sidebar, forms, and layout.",
+    "قالب داشبورد سازمانی موبایل‌اول با Better Auth برای Next.js — سایدبار، فرم‌ها و چیدمان واکنش‌گرا.",
 };
 
 export default function RootLayout({
@@ -38,13 +31,7 @@ export default function RootLayout({
     <html
       lang={appLocale.lang}
       dir={appLocale.dir}
-      className={cn(
-        "h-full",
-        "antialiased",
-        fontSans.className,
-        inter.variable,
-        "font-sans",
-      )}
+      className={cn("h-full", "antialiased", vazirmatn.variable, "font-sans")}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">

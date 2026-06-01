@@ -4,7 +4,7 @@ import { TEAM_INVITATION_JOIN_SCOPES } from "@/app/dashboard/organizations/[orga
 
 export const TEAM_NONE_VALUE = "__none__";
 
-export const INVITATION_CONTACT_LABEL = "Share link";
+export const INVITATION_CONTACT_LABEL = "لینک اشتراک‌گذاری";
 
 export type OrganizationInvitationItem = {
   id: string;

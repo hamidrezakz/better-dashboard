@@ -64,11 +64,11 @@ export function TeamFormShell({
             });
 
       if (!result.success) {
-        toast.error(result.error ?? "Could not save the team.");
+        toast.error(result.error ?? "ذخیره تیم ممکن نشد.");
         return;
       }
 
-      toast.success(isEdit ? "Team updated." : "Team created.");
+      toast.success(isEdit ? "تیم به‌روزرسانی شد." : "تیم ایجاد شد.");
       onClose();
       router.refresh();
     });
@@ -86,12 +86,12 @@ export function TeamFormShell({
       footer={
         <ResponsiveFormOverlayFooterActions
           cancel={{
-            label: "Cancel",
+            label: "انصراف",
             onClick: onClose,
             disabled: isPending,
           }}
           primary={{
-            label: isEdit ? "Save changes" : "Create team",
+            label: isEdit ? "ذخیره تغییرات" : "ایجاد تیم",
             onClick: handleSubmit,
             disabled: isPending || !canSubmit,
           }}

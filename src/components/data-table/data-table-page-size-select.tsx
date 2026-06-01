@@ -41,7 +41,7 @@ export function DataTablePageSizeSelect({
       <SelectTrigger
         size="sm"
         className="h-6 min-w-14 px-2"
-        aria-label="Rows per page"
+        aria-label="تعداد در هر صفحه"
       >
         <SelectValue>{formatDataTableNumber(value)}</SelectValue>
       </SelectTrigger>

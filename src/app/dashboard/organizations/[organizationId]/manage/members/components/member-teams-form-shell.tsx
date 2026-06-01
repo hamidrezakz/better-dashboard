@@ -60,11 +60,11 @@ export function MemberTeamsFormShell({
       });
 
       if (!result.success) {
-        toast.error(result.error ?? "Could not update team memberships.");
+        toast.error(result.error ?? "به‌روزرسانی عضویت تیم‌ها ممکن نشد.");
         return;
       }
 
-      toast.success("Team memberships updated.");
+      toast.success("عضویت تیم‌ها به‌روزرسانی شد.");
       onClose();
       router.refresh();
     });
@@ -82,12 +82,12 @@ export function MemberTeamsFormShell({
       footer={
         <ResponsiveFormOverlayFooterActions
           cancel={{
-            label: "Cancel",
+            label: "انصراف",
             onClick: onClose,
             disabled: isPending,
           }}
           primary={{
-            label: "Save teams",
+            label: "ذخیره تیم‌ها",
             onClick: handleSubmit,
             disabled: isPending || !member,
           }}
@@ -96,7 +96,7 @@ export function MemberTeamsFormShell({
     >
       {member ? (
         <div className="space-y-3">
-          <FormLabel>Teams</FormLabel>
+          <FormLabel>تیم‌ها</FormLabel>
           {teams.length ? (
             <ul className="space-y-2">
               {teams.map((team) => {
@@ -127,7 +127,7 @@ export function MemberTeamsFormShell({
             </ul>
           ) : (
             <p className="text-sm text-muted-foreground">
-              No teams in this organization yet.
+              هنوز تیمی در این سازمان نیست.
             </p>
           )}
         </div>

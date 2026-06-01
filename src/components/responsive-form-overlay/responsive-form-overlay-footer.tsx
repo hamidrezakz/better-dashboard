@@ -18,7 +18,7 @@ export function ResponsiveFormOverlayFooter({
   return (
     <div
       className={cn(
-        "flex w-full flex-col-reverse gap-2 sm:flex-row sm:justify-end **:data-[slot=button]:w-full sm:**:data-[slot=button]:w-auto",
+        "flex w-full flex-col-reverse gap-2 sm:flex-row ltr:sm:justify-end rtl:sm:flex-row-reverse rtl:sm:justify-start **:data-[slot=button]:w-full sm:**:data-[slot=button]:w-auto",
         className,
       )}
     >

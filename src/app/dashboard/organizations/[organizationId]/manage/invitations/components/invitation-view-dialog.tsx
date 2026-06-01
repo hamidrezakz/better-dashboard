@@ -90,11 +90,11 @@ export function InvitationViewDialog({
           onClose();
         }
       }}
-      title="Invitation details"
+      title="جزئیات دعوت‌نامه"
       footer={
         <div className="flex w-full justify-end">
           <Button type="button" variant="outline" onClick={onClose}>
-            Close
+            بستن
           </Button>
         </div>
       }
@@ -125,13 +125,13 @@ export function InvitationViewDialog({
             <p className="flex items-center gap-1.5">
               <ClockIcon className="size-3 shrink-0 opacity-70" />
               <span className="tabular-nums">
-                Expires {formatDate(invitation.expiresAt, dateTimeOptions)}
+                انقضا {formatDate(invitation.expiresAt, dateTimeOptions)}
               </span>
             </p>
             <p className="flex items-center gap-1.5">
               <ClockIcon className="size-3 shrink-0 opacity-70" />
               <span className="tabular-nums">
-                Created {formatDate(invitation.createdAt, dateTimeOptions)}
+                ایجاد {formatDate(invitation.createdAt, dateTimeOptions)}
               </span>
             </p>
             <p className="flex items-center gap-1.5">
@@ -148,7 +148,9 @@ export function InvitationViewDialog({
 
           {joinUrl ? (
             <div className="space-y-1.5">
-              <p className="text-[0.625rem] text-muted-foreground">Join link</p>
+              <p className="text-[0.625rem] text-muted-foreground">
+                لینک پیوستن
+              </p>
               <div className="flex items-center gap-2">
                 <Input
                   readOnly
@@ -164,7 +166,7 @@ export function InvitationViewDialog({
                   size="icon-sm"
                   className="shrink-0"
                   onClick={onCopy}
-                  aria-label={copied ? "Copied" : "Copy link"}
+                  aria-label={copied ? "کپی شد" : "کپی لینک"}
                 >
                   {copied ? (
                     <CheckIcon className="text-primary" aria-hidden />

@@ -22,11 +22,11 @@ export function validateTeamName(value: string): string | null {
   const name = normalizeTeamName(value);
 
   if (!name) {
-    return "Team name is required.";
+    return "نام تیم الزامی است.";
   }
 
   if (name.length > TEAM_NAME_MAX_LENGTH) {
-    return `Team name must be at most ${TEAM_NAME_MAX_LENGTH} characters.`;
+    return `نام تیم حداکثر ${TEAM_NAME_MAX_LENGTH} کاراکتر می‌تواند باشد.`;
   }
 
   return null;

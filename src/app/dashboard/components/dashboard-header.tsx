@@ -26,7 +26,7 @@ async function NotificationsContent({ userId }: { userId: string }) {
 
 function NotificationsFallback() {
   return (
-    <Button variant="ghost" size="icon-sm" aria-label="Notifications" disabled>
+    <Button variant="ghost" size="icon-sm" aria-label="اعلان‌ها" disabled>
       <BellIcon />
     </Button>
   );

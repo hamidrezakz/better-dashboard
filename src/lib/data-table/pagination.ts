@@ -1,7 +1,24 @@
-const numberFormat = new Intl.NumberFormat("en-US");
+const numberFormat = new Intl.NumberFormat("fa-IR");
 
 export function formatDataTableNumber(value: number) {
   return numberFormat.format(value);
+}
+
+export function formatDataTableRangeSummary(
+  start: number,
+  end: number,
+  total: number,
+) {
+  return `${formatDataTableNumber(start)}–${formatDataTableNumber(end)} از ${formatDataTableNumber(total)}`;
+}
+
+export function formatDataTableRangeAriaLabel(
+  start: number,
+  end: number,
+  total: number,
+  countLabel: string,
+) {
+  return `نمایش ${formatDataTableNumber(start)} تا ${formatDataTableNumber(end)} از ${formatDataTableNumber(total)} ${countLabel}`;
 }
 
 export function getDataTableItemRange(

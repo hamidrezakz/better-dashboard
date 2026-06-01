@@ -75,7 +75,7 @@ export function AccountSettingsPanel({
       setProfileState(nextState);
 
       if (nextState.success) {
-        toast.success("Your profile was updated.");
+        toast.success("پروفایل شما به‌روزرسانی شد.");
         onClose();
         router.refresh();
         return;
@@ -101,7 +101,7 @@ export function AccountSettingsPanel({
       setPasswordState(nextState);
 
       if (nextState.success) {
-        toast.success("Your password was updated.");
+        toast.success("رمز عبور شما به‌روزرسانی شد.");
         passwordFormRef.current?.reset();
         onClose();
         router.refresh();
@@ -118,10 +118,10 @@ export function AccountSettingsPanel({
     startTransition(async () => {
       const result = await revokeOtherSessionsAction();
       if (!result.success) {
-        toast.error(result.error ?? "Could not revoke other sessions.");
+        toast.error(result.error ?? "خروج از سایر نشست‌ها ممکن نشد.");
         return;
       }
-      toast.success("Other sessions were signed out.");
+      toast.success("از سایر نشست‌ها خارج شدید.");
       router.refresh();
     });
   };
@@ -208,12 +208,12 @@ function resolvePanelContent({
         footer: (
           <ResponsiveFormOverlayFooterActions
             cancel={{
-              label: "Cancel",
+              label: "انصراف",
               onClick: onClose,
               disabled: isPending,
             }}
             primary={{
-              label: isPending ? "Saving…" : "Save changes",
+              label: isPending ? "در حال ذخیره…" : "ذخیره تغییرات",
               onClick: handleProfileSubmit,
               disabled: isPending,
             }}
@@ -244,12 +244,12 @@ function resolvePanelContent({
         footer: hasPasswordCredential ? (
           <ResponsiveFormOverlayFooterActions
             cancel={{
-              label: "Cancel",
+              label: "انصراف",
               onClick: onClose,
               disabled: isPending,
             }}
             primary={{
-              label: isPending ? "Updating…" : "Update password",
+              label: isPending ? "در حال به‌روزرسانی…" : "به‌روزرسانی رمز عبور",
               onClick: handlePasswordSubmit,
               disabled: isPending,
             }}
@@ -257,7 +257,7 @@ function resolvePanelContent({
         ) : (
           <div className="flex w-full justify-end">
             <Button type="button" variant="outline" onClick={onClose}>
-              Close
+              بستن
             </Button>
           </div>
         ),
@@ -289,7 +289,7 @@ function resolvePanelContent({
         footer: hasOtherSessions ? (
           <ResponsiveFormOverlayFooterActions
             cancel={{
-              label: "Close",
+              label: "بستن",
               onClick: onClose,
               disabled: isPending,
             }}
@@ -304,7 +304,7 @@ function resolvePanelContent({
         ) : (
           <div className="flex w-full justify-end">
             <Button type="button" variant="outline" onClick={onClose}>
-              Close
+              بستن
             </Button>
           </div>
         ),

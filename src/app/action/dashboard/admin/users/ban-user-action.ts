@@ -27,12 +27,12 @@ export async function banUserAction(
   if (!(await isPlatformAdmin(actorUserId))) {
     return {
       success: false,
-      error: "You don't have permission to ban users.",
+      error: "مجوز مسدود کردن کاربران را ندارید.",
     };
   }
 
   if (input.userId === actorUserId) {
-    return { success: false, error: "You cannot ban your own account." };
+    return { success: false, error: "نمی‌توانید حساب خودتان را مسدود کنید." };
   }
 
   try {
@@ -43,7 +43,7 @@ export async function banUserAction(
       },
     });
   } catch {
-    return { success: false, error: "Could not ban the user." };
+    return { success: false, error: "مسدود کردن کاربر ممکن نشد." };
   }
 
   invalidateAdminUsersPageCache();

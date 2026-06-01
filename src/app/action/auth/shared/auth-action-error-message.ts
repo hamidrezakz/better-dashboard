@@ -28,7 +28,7 @@ export function getAuthActionErrorMessage({
     message.includes("rate limit") ||
     message.includes("429")
   ) {
-    return "Too many attempts. Please wait a minute and try again.";
+    return "تلاش‌های زیاد. یک دقیقه صبر کنید و دوباره امتحان کنید.";
   }
 
   if (
@@ -36,7 +36,7 @@ export function getAuthActionErrorMessage({
     message.includes("credential") ||
     message.includes("password")
   ) {
-    return "The email or password you entered is incorrect.";
+    return "ایمیل یا رمز عبور اشتباه است.";
   }
 
   if (
@@ -44,7 +44,7 @@ export function getAuthActionErrorMessage({
     message.includes("exist") ||
     message.includes("duplicate")
   ) {
-    return "An account with this email already exists.";
+    return "حسابی با این ایمیل از قبل وجود دارد.";
   }
 
   return fallback;

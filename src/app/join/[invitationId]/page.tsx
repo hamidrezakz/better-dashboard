@@ -44,7 +44,7 @@ async function JoinInvitationPageContent({
     return (
       <Card className="border-border/60 shadow-sm">
         <CardContent className="py-10 text-center text-sm text-muted-foreground">
-          Invitation not found.
+          دعوت‌نامه یافت نشد.
         </CardContent>
       </Card>
     );

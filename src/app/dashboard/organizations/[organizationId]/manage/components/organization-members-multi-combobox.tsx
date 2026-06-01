@@ -41,7 +41,7 @@ export function OrganizationMembersMultiCombobox({
   onValueChange,
   excludeUserIds = [],
   disabled,
-  placeholder = "Search organization members…",
+  placeholder = "جستجوی اعضای سازمان…",
   className,
 }: OrganizationMembersMultiComboboxProps) {
   const [inputValue, setInputValue] = useState("");
@@ -91,10 +91,10 @@ export function OrganizationMembersMultiCombobox({
 
   const emptyMessage =
     inputValue.trim().length < MIN_QUERY_LENGTH
-      ? "Enter at least 2 characters to search."
+      ? "حداقل ۲ کاراکتر برای جستجو وارد کنید."
       : isPending
-        ? "Searching…"
-        : "No members found.";
+        ? "در حال جستجو…"
+        : "عضوی یافت نشد.";
 
   const addUser = (user: UserSearchOption) => {
     if (selectedIds.has(user.id)) {
@@ -130,7 +130,7 @@ export function OrganizationMembersMultiCombobox({
                 variant="ghost"
                 size="icon-xs"
                 disabled={disabled}
-                aria-label={`Remove ${user.name}`}
+                aria-label={`حذف ${user.name}`}
                 onClick={() => removeUser(user.id)}
               >
                 <XIcon />

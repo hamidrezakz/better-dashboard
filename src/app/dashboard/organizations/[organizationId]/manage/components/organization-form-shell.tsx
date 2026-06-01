@@ -53,11 +53,11 @@ export function OrganizationFormShell({
       });
 
       if (!result.success) {
-        toast.error(result.error ?? "Could not update the organization.");
+        toast.error(result.error ?? "به‌روزرسانی سازمان ممکن نشد.");
         return;
       }
 
-      toast.success("Organization updated.");
+      toast.success("سازمان به‌روزرسانی شد.");
       onClose();
       router.refresh();
     });
@@ -75,7 +75,7 @@ export function OrganizationFormShell({
       footer={
         <ResponsiveFormOverlayFooterActions
           cancel={{
-            label: "Cancel",
+            label: "انصراف",
             onClick: onClose,
             disabled: isPending,
           }}

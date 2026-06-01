@@ -14,7 +14,7 @@ export function getSessionDeviceDisplay(
   if (!userAgent?.trim()) {
     return {
       kind: "unknown",
-      title: "Unknown device",
+      title: "دستگاه ناشناس",
       subtitle: null,
     };
   }
@@ -31,9 +31,9 @@ export function getSessionDeviceDisplay(
   const browserLabel = formatBrowserLabel(browser);
   const osLabel = os.name?.trim() || null;
 
-  let title = "Unknown device";
+  let title = "دستگاه ناشناس";
   if (browserLabel && osLabel) {
-    title = `${browserLabel} on ${osLabel}`;
+    title = `${browserLabel} در ${osLabel}`;
   } else if (browserLabel) {
     title = browserLabel;
   } else if (osLabel) {

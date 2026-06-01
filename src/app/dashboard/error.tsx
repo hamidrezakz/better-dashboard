@@ -10,8 +10,8 @@ type DashboardErrorProps = {
 export default function DashboardError({ error, reset }: DashboardErrorProps) {
   return (
     <SegmentErrorFallback
-      title="Something went wrong"
-      description="We could not load this dashboard page. You can try again."
+      title="خطایی رخ داد"
+      description="بارگذاری این صفحه داشبورد ممکن نشد. می‌توانید دوباره امتحان کنید."
       error={error}
       reset={reset}
     />

@@ -18,11 +18,11 @@ export function validateOrganizationName(value: string): string | null {
   const name = normalizeOrganizationName(value);
 
   if (!name) {
-    return "Organization name is required.";
+    return "نام سازمان الزامی است.";
   }
 
   if (name.length > ORGANIZATION_NAME_MAX_LENGTH) {
-    return `Organization name must be at most ${ORGANIZATION_NAME_MAX_LENGTH} characters.`;
+    return `نام سازمان حداکثر ${ORGANIZATION_NAME_MAX_LENGTH} کاراکتر می‌تواند باشد.`;
   }
 
   return null;
@@ -39,10 +39,10 @@ export function validateOrganizationLogo(value: string): string | null {
     const url = new URL(logo);
 
     if (url.protocol !== "http:" && url.protocol !== "https:") {
-      return "Logo must be an http or https URL.";
+      return "آدرس لوگو باید با http یا https باشد.";
     }
   } catch {
-    return "Logo must be a valid URL.";
+    return "آدرس لوگو معتبر نیست.";
   }
 
   return null;

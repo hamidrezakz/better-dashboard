@@ -74,11 +74,11 @@ export function NotificationViewDialog({
           onClose();
         }
       }}
-      title="Notification details"
+      title="جزئیات اعلان"
       footer={
         <div className="flex w-full justify-end">
           <Button type="button" variant="outline" onClick={onClose}>
-            Close
+            بستن
           </Button>
         </div>
       }
@@ -117,7 +117,7 @@ export function NotificationViewDialog({
               <p className="flex items-center gap-1.5">
                 <CheckCheckIcon className="size-3 shrink-0 opacity-70" />
                 <span>
-                  Read {formatDate(displayed.readAt, dateTimeOptions)}
+                  خوانده‌شده {formatDate(displayed.readAt, dateTimeOptions)}
                 </span>
               </p>
             ) : null}

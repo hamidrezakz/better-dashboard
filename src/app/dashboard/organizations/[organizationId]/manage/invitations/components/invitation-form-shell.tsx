@@ -37,7 +37,7 @@ export function InvitationFormShell({
   const { form, onChange, isEdit, canSubmit } = useInvitationForm(target);
 
   const open = Boolean(target);
-  const title = isEdit ? "Edit invitation" : "Create invitation";
+  const title = isEdit ? "ویرایش دعوت‌نامه" : "ایجاد دعوت‌نامه";
 
   const handleSubmit = () => {
     if (!form || !target) {
@@ -47,7 +47,7 @@ export function InvitationFormShell({
     const maxUses = parsePositiveNumberInput(form.maxUses);
 
     if (maxUses === -1) {
-      toast.error("Maximum uses must be a positive number.");
+      toast.error("حداکثر استفاده باید عدد مثبت باشد.");
       return;
     }
 
@@ -72,14 +72,14 @@ export function InvitationFormShell({
         toast.error(
           result.error ??
             (target.mode === "edit"
-              ? "Could not update the invitation."
-              : "Could not create the invitation."),
+              ? "به‌روزرسانی دعوت‌نامه ممکن نشد."
+              : "ایجاد دعوت‌نامه ممکن نشد."),
         );
         return;
       }
 
       toast.success(
-        target.mode === "edit" ? "Invitation updated." : "Invitation created.",
+        target.mode === "edit" ? "دعوت‌نامه به‌روزرسانی شد." : "دعوت‌نامه ایجاد شد.",
       );
       onClose();
       router.refresh();
@@ -88,11 +88,11 @@ export function InvitationFormShell({
 
   const primaryLabel = isPending
     ? isEdit
-      ? "Saving..."
-      : "Creating..."
+      ? "در حال ذخیره…"
+      : "در حال ایجاد…"
     : isEdit
-      ? "Save"
-      : "Create";
+      ? "ذخیره"
+      : "ایجاد";
 
   return (
     <ResponsiveFormOverlay
@@ -106,7 +106,7 @@ export function InvitationFormShell({
       footer={
         <ResponsiveFormOverlayFooterActions
           cancel={{
-            label: "Cancel",
+            label: "انصراف",
             onClick: onClose,
             disabled: isPending,
           }}

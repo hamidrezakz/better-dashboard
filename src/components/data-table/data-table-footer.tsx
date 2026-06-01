@@ -56,7 +56,7 @@ export function DataTableFooter({
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
-                text="Previous"
+                text="قبلی"
                 onClick={() => onPageChange(Math.max(1, page - 1))}
                 aria-disabled={atFirst}
                 className={atFirst ? "pointer-events-none opacity-50" : ""}
@@ -82,7 +82,7 @@ export function DataTableFooter({
 
             <PaginationItem>
               <PaginationNext
-                text="Next"
+                text="بعدی"
                 onClick={() => onPageChange(Math.min(totalPages, page + 1))}
                 aria-disabled={atLast}
                 className={atLast ? "pointer-events-none opacity-50" : ""}

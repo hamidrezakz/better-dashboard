@@ -32,12 +32,12 @@ export async function updateUserPlatformRoleAction(
   if (!(await isPlatformAdmin(actorUserId))) {
     return {
       success: false,
-      error: "You don't have permission to change platform roles.",
+      error: "مجوز تغییر نقش پلتفرم را ندارید.",
     };
   }
 
   if (!ALLOWED_ROLES.includes(input.role)) {
-    return { success: false, error: "Invalid platform role." };
+    return { success: false, error: "نقش پلتفرم معتبر نیست." };
   }
 
   const target = await prisma.user.findUnique({
@@ -46,7 +46,7 @@ export async function updateUserPlatformRoleAction(
   });
 
   if (!target) {
-    return { success: false, error: "User not found." };
+    return { success: false, error: "کاربر یافت نشد." };
   }
 
   if (target.role === input.role) {
@@ -60,7 +60,7 @@ export async function updateUserPlatformRoleAction(
   ) {
     return {
       success: false,
-      error: "You cannot remove your own platform admin role.",
+      error: "نمی‌توانید نقش مدیر پلتفرم خودتان را حذف کنید.",
     };
   }
 
@@ -72,7 +72,7 @@ export async function updateUserPlatformRoleAction(
     if (adminCount <= 1) {
       return {
         success: false,
-        error: "At least one platform admin must remain.",
+        error: "حداقل یک مدیر پلتفرم باید باقی بماند.",
       };
     }
   }
@@ -88,7 +88,7 @@ export async function updateUserPlatformRoleAction(
   } catch {
     return {
       success: false,
-      error: "Could not update the user's platform role.",
+      error: "به‌روزرسانی نقش پلتفرم کاربر ممکن نشد.",
     };
   }
 

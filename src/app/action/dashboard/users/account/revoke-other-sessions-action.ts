@@ -22,7 +22,7 @@ export async function revokeOtherSessionsAction(): Promise<RevokeOtherSessionsRe
       success: false,
       error: getAccountActionErrorMessage({
         error,
-        fallback: "We couldn't sign out your other sessions. Please try again.",
+        fallback: "خروج از سایر نشست‌ها ممکن نشد. لطفاً دوباره امتحان کنید.",
       }),
     };
   }

@@ -115,12 +115,12 @@ export function AdminUsersTable({
       const result = await banUserAction({ userId: banTarget.id });
 
       if (!result.success) {
-        toast.error(result.error ?? "Could not ban the user.");
+        toast.error(result.error ?? "مسدود کردن کاربر ممکن نشد.");
         return;
       }
 
       setBanTarget(null);
-      toast.success("User banned.");
+      toast.success("کاربر مسدود شد.");
       router.refresh();
     });
   };
@@ -130,11 +130,11 @@ export function AdminUsersTable({
       const result = await unbanUserAction({ userId: user.id });
 
       if (!result.success) {
-        toast.error(result.error ?? "Could not unban the user.");
+        toast.error(result.error ?? "رفع مسدودیت کاربر ممکن نشد.");
         return;
       }
 
-      toast.success("User unbanned.");
+      toast.success("مسدودیت کاربر برداشته شد.");
       router.refresh();
     });
   };
@@ -146,7 +146,7 @@ export function AdminUsersTable({
         <CardAction className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
           <DataTableSearchField
             query={q}
-            placeholder="Search by name or email…"
+            placeholder="جستجو بر اساس نام یا ایمیل…"
             buildPath={buildSearchPath}
           />
           <DataTableSegmentFilter
@@ -168,27 +168,27 @@ export function AdminUsersTable({
           onPageSizeChange={(nextPageSize) =>
             navigate({ page: 1, pageSize: nextPageSize })
           }
-          countLabel="user"
+          countLabel="کاربر"
         >
           <DataTableViewport>
             <Table className="table-fixed">
               <TableHeader>
                 <TableRow>
                   <TableHead className="min-w-0 whitespace-normal">
-                    Name
+                    نام
                   </TableHead>
                   <TableHead className="hidden min-w-0 whitespace-normal sm:table-cell">
-                    Email
+                    ایمیل
                   </TableHead>
-                  <TableHead className="w-32 whitespace-normal">Role</TableHead>
+                  <TableHead className="w-32 whitespace-normal">نقش</TableHead>
                   <TableHead className="w-24 whitespace-normal">
-                    Status
+                    وضعیت
                   </TableHead>
                   <TableHead className="hidden whitespace-normal lg:table-cell">
-                    Joined
+                    ثبت‌نام
                   </TableHead>
                   <TableHead className="w-12 whitespace-normal">
-                    <span className="sr-only">Actions</span>
+                    <span className="sr-only">عملیات</span>
                   </TableHead>
                 </TableRow>
               </TableHeader>
@@ -238,7 +238,7 @@ export function AdminUsersTable({
                       colSpan={6}
                       className="py-6 text-center text-muted-foreground"
                     >
-                      No users found.
+                      کاربری یافت نشد.
                     </TableCell>
                   </TableRow>
                 )}
@@ -268,7 +268,7 @@ export function AdminUsersTable({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isPending}>انصراف</AlertDialogCancel>
             <AlertDialogAction
               variant="destructive"
               disabled={isPending}

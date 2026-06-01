@@ -11,5 +11,5 @@ export function formatDate(
   value: string,
   options: Intl.DateTimeFormatOptions = dateOnlyOptions,
 ) {
-  return new Intl.DateTimeFormat("en-US", options).format(new Date(value));
+  return new Intl.DateTimeFormat("fa-IR", options).format(new Date(value));
 }

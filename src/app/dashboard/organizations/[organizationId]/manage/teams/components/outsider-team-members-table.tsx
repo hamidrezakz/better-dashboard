@@ -23,15 +23,15 @@ export function OutsiderTeamMembersTable({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Team members without organization membership</CardTitle>
+        <CardTitle>اعضای تیم بدون عضویت سازمان</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Team</TableHead>
+              <TableHead>نام</TableHead>
+              <TableHead>ایمیل</TableHead>
+              <TableHead>تیم</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

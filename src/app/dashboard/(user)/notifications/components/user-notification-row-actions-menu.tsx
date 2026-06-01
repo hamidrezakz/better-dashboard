@@ -8,7 +8,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
 type UserNotificationRowActionsMenuProps = {
   notificationTitle: string;
   onView: () => void;
@@ -22,7 +21,7 @@ export function UserNotificationRowActionsMenu({
     <DropdownMenu>
       <DropdownMenuTrigger
         render={<Button size="icon-sm" variant="ghost" />}
-        aria-label={`Actions for ${notificationTitle}`}
+        aria-label={`عملیات ${notificationTitle}`}
         onClick={(event) => event.stopPropagation()}
       >
         <MoreHorizontalIcon />
@@ -35,7 +34,7 @@ export function UserNotificationRowActionsMenu({
           }}
         >
           <EyeIcon />
-          View
+          مشاهده
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -35,8 +35,7 @@ export async function setOrganizationMemberTeamsAction(
   if (!canManage) {
     return {
       success: false,
-      error:
-        "You don't have permission to manage members for this organization.",
+      error: "مجوز مدیریت اعضای این سازمان را ندارید.",
     };
   }
 
@@ -46,7 +45,7 @@ export async function setOrganizationMemberTeamsAction(
   });
 
   if (!member) {
-    return { success: false, error: "Member not found." };
+    return { success: false, error: "عضو یافت نشد." };
   }
 
   const uniqueTeamIds = [...new Set(input.teamIds.filter(Boolean))];

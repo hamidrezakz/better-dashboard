@@ -55,11 +55,11 @@ export function UserPlatformRoleFormShell({
       });
 
       if (!result.success) {
-        toast.error(result.error ?? "Could not update the platform role.");
+        toast.error(result.error ?? "به‌روزرسانی نقش پلتفرم ممکن نشد.");
         return;
       }
 
-      toast.success("Platform role updated.");
+      toast.success("نقش پلتفرم به‌روزرسانی شد.");
       onClose();
       router.refresh();
     });
@@ -78,7 +78,7 @@ export function UserPlatformRoleFormShell({
       footer={
         <ResponsiveFormOverlayFooterActions
           cancel={{
-            label: "Cancel",
+            label: "انصراف",
             onClick: onClose,
             disabled: isPending,
           }}
@@ -93,7 +93,7 @@ export function UserPlatformRoleFormShell({
       {user ? (
         <div className="space-y-2">
           <FormLabel htmlFor={`${fieldId}-role`} required>
-            Platform role
+            نقش پلتفرم
           </FormLabel>
           <Select
             value={role}

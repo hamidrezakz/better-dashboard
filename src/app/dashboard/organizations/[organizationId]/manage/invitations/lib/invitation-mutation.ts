@@ -61,7 +61,7 @@ export function resolveInvitationPersistence(input: {
     input.joinScope !== "team" &&
     input.joinScope !== "organization_and_team"
   ) {
-    return { ok: false, error: "The selected invitation type is not valid." };
+    return { ok: false, error: "نوع دعوت‌نامه انتخاب‌شده معتبر نیست." };
   }
 
   const teamId = normalizeOptionalText(input.teamId);
@@ -71,7 +71,7 @@ export function resolveInvitationPersistence(input: {
       input.joinScope === "organization_and_team") &&
     !teamId
   ) {
-    return { ok: false, error: "A team is required for this invitation type." };
+    return { ok: false, error: "برای این نوع دعوت‌نامه انتخاب تیم الزامی است." };
   }
 
   const includesOrganization =

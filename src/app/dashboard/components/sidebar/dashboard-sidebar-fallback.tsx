@@ -29,7 +29,7 @@ function SidebarMenuButtonLgSkeleton() {
 
 export function DashboardSidebarFallback() {
   return (
-    <Sidebar side="left">
+    <Sidebar side="right">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>

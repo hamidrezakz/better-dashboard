@@ -27,7 +27,7 @@ export async function unbanUserAction(
   if (!(await isPlatformAdmin(actorUserId))) {
     return {
       success: false,
-      error: "You don't have permission to unban users.",
+      error: "مجوز رفع مسدودیت کاربران را ندارید.",
     };
   }
 
@@ -39,7 +39,7 @@ export async function unbanUserAction(
       },
     });
   } catch {
-    return { success: false, error: "Could not unban the user." };
+    return { success: false, error: "رفع مسدودیت کاربر ممکن نشد." };
   }
 
   invalidateAdminUsersPageCache();

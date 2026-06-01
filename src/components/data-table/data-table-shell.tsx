@@ -5,7 +5,8 @@ import { DataTableFooter } from "@/components/data-table/data-table-footer";
 import { DataTablePageSizeSelect } from "@/components/data-table/data-table-page-size-select";
 import { DATA_TABLE_PAGE_SIZES } from "@/lib/data-table/page-size";
 import {
-  formatDataTableNumber,
+  formatDataTableRangeAriaLabel,
+  formatDataTableRangeSummary,
   getDataTableItemRange,
 } from "@/lib/data-table/pagination";
 import { cn } from "@/lib/utils";
@@ -30,7 +31,7 @@ export function DataTableShell({
   onPageChange,
   onPageSizeChange,
   pageSizeOptions = DATA_TABLE_PAGE_SIZES,
-  countLabel = "item",
+  countLabel = "مورد",
   children,
   className,
 }: DataTableShellProps) {
@@ -44,10 +45,14 @@ export function DataTableShell({
 
   const summary = (
     <span
-      aria-label={`${formatDataTableNumber(start)} to ${formatDataTableNumber(end)} of ${formatDataTableNumber(totalCount)} ${countLabel}${totalCount === 1 ? "" : "s"}`}
+      aria-label={formatDataTableRangeAriaLabel(
+        start,
+        end,
+        totalCount,
+        countLabel,
+      )}
     >
-      {formatDataTableNumber(start)}–{formatDataTableNumber(end)} of{" "}
-      {formatDataTableNumber(totalCount)}
+      {formatDataTableRangeSummary(start, end, totalCount)}
     </span>
   );
 

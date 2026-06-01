@@ -28,7 +28,7 @@ export function getAccountActionErrorMessage({
     message.includes("rate limit") ||
     message.includes("429")
   ) {
-    return "Too many attempts. Please wait a minute and try again.";
+    return "تلاش‌های زیاد. یک دقیقه صبر کنید و دوباره امتحان کنید.";
   }
 
   if (
@@ -36,7 +36,7 @@ export function getAccountActionErrorMessage({
     message.includes("incorrect") ||
     message.includes("password")
   ) {
-    return "The current password you entered is incorrect.";
+    return "رمز عبور فعلی اشتباه است.";
   }
 
   return fallback;

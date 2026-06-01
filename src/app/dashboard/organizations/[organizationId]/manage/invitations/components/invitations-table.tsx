@@ -100,12 +100,12 @@ export function InvitationsTable({
       });
 
       if (!result.success) {
-        toast.error(result.error ?? "Could not delete the invitation.");
+        toast.error(result.error ?? "حذف دعوت‌نامه ممکن نشد.");
         return;
       }
 
       setDeleteTarget(null);
-      toast.success("Invitation deleted.");
+      toast.success("دعوت‌نامه حذف شد.");
       router.refresh();
     });
   };
@@ -113,10 +113,10 @@ export function InvitationsTable({
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0">
-        <CardTitle>Invitations</CardTitle>
+        <CardTitle>دعوت‌نامه‌ها</CardTitle>
         <Button size="sm" onClick={onCreate}>
           <PlusIcon data-icon="inline-start" />
-          Create invitation
+          ایجاد دعوت‌نامه
         </Button>
       </CardHeader>
       <CardContent>
@@ -141,26 +141,26 @@ export function InvitationsTable({
                 }),
               )
             }
-            countLabel="invitation"
+            countLabel="دعوت‌نامه"
           >
             <DataTableViewport>
               <Table className="table-fixed">
                 <TableHeader>
                   <TableRow>
                     <TableHead className="min-w-0 whitespace-normal">
-                      Invitation
+                      دعوت‌نامه
                     </TableHead>
                     <TableHead className="hidden min-w-0 whitespace-normal lg:table-cell">
-                      Destination
+                      مقصد
                     </TableHead>
                     <TableHead className="hidden min-w-0 whitespace-normal lg:table-cell">
-                      Status
+                      وضعیت
                     </TableHead>
                     <TableHead className="hidden whitespace-normal lg:table-cell">
-                      Expires
+                      انقضا
                     </TableHead>
                     <TableHead className="w-12 whitespace-normal">
-                      <span className="sr-only">Actions</span>
+                      <span className="sr-only">عملیات</span>
                     </TableHead>
                   </TableRow>
                 </TableHeader>
@@ -238,7 +238,7 @@ export function InvitationsTable({
           </DataTableShell>
         ) : (
           <p className="py-8 text-center text-xs text-muted-foreground">
-            No invitations yet.
+            هنوز دعوت‌نامه‌ای نیست.
           </p>
         )}
       </CardContent>
@@ -261,7 +261,7 @@ export function InvitationsTable({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={isPending}>انصراف</AlertDialogCancel>
             <AlertDialogAction
               variant="destructive"
               disabled={isPending}

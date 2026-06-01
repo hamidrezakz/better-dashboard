@@ -22,7 +22,7 @@ export function AccountPasswordFormFields({
     <FieldGroup>
       <Field data-invalid={Boolean(state.fieldErrors?.currentPassword)}>
         <FieldLabel htmlFor={`${formId}-currentPassword`}>
-          Current password
+          رمز عبور فعلی
         </FieldLabel>
         <PasswordInput
           id={`${formId}-currentPassword`}
@@ -36,7 +36,7 @@ export function AccountPasswordFormFields({
         />
       </Field>
       <Field data-invalid={Boolean(state.fieldErrors?.newPassword)}>
-        <FieldLabel htmlFor={`${formId}-newPassword`}>New password</FieldLabel>
+        <FieldLabel htmlFor={`${formId}-newPassword`}>رمز عبور جدید</FieldLabel>
         <PasswordInput
           id={`${formId}-newPassword`}
           name="newPassword"
@@ -48,7 +48,7 @@ export function AccountPasswordFormFields({
       </Field>
       <Field data-invalid={Boolean(state.fieldErrors?.confirmPassword)}>
         <FieldLabel htmlFor={`${formId}-confirmPassword`}>
-          Confirm new password
+          تأیید رمز عبور جدید
         </FieldLabel>
         <PasswordInput
           id={`${formId}-confirmPassword`}

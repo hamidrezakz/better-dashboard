@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import type { OrganizationMemberItem } from "@/app/dashboard/organizations/[organizationId]/manage/members/lib/get-organization-members-page";
 import { MembershipRole } from "@/generated/prisma/enums";
 import { FormLabel } from "@/components/form/form-label";
+import { badgeLabels } from "@/lib/badge/badge-labels";
 import {
   Select,
   SelectContent,
@@ -72,11 +73,11 @@ export function MemberRoleFormShell({
       });
 
       if (!result.success) {
-        toast.error(result.error ?? "Could not update the member role.");
+        toast.error(result.error ?? "به‌روزرسانی نقش عضو ممکن نشد.");
         return;
       }
 
-      toast.success("Member role updated.");
+      toast.success("نقش عضو به‌روزرسانی شد.");
       onClose();
       router.refresh();
     });
@@ -94,12 +95,12 @@ export function MemberRoleFormShell({
       footer={
         <ResponsiveFormOverlayFooterActions
           cancel={{
-            label: "Cancel",
+            label: "انصراف",
             onClick: onClose,
             disabled: isPending,
           }}
           primary={{
-            label: "Save role",
+            label: "ذخیره نقش",
             onClick: handleSubmit,
             disabled: isPending || !canSubmit,
           }}
@@ -109,7 +110,7 @@ export function MemberRoleFormShell({
       {member ? (
         <div className="space-y-2">
           <FormLabel htmlFor={`${fieldId}-role`} required>
-            Role
+            نقش
           </FormLabel>
           <Select
             value={role}
@@ -122,7 +123,7 @@ export function MemberRoleFormShell({
             <SelectContent>
               {options.map((option) => (
                 <SelectItem key={option} value={option}>
-                  {option}
+                  {badgeLabels.membershipRole[option]}
                 </SelectItem>
               ))}
             </SelectContent>
