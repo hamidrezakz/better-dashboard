@@ -151,6 +151,20 @@ export const requireOrganizationManageAccess = cache(
  * Viewer may view a team profile (team member, org member, or platform admin).
  * **Layout only:** `organizations/[organizationId]/teams/[teamId]/layout.tsx`.
  */
+/**
+ * Viewer is a platform admin (Better Auth `user.role`).
+ * **Layout only:** `dashboard/admin/layout.tsx`.
+ */
+export const requirePlatformAdmin = cache(async () => {
+  const session = await requireAuthSession();
+
+  if (!(await isPlatformAdmin(session.user.id))) {
+    redirect(dashboardRoutes.home());
+  }
+
+  return session;
+});
+
 export const requireOrganizationTeamViewAccess = cache(
   async (organizationId: string, teamId: string) => {
     if (!organizationId || !teamId) {

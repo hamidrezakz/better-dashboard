@@ -9,6 +9,17 @@ export const dashboardNavLabels = {
     notifications: "Notifications",
     organizationManagement: "Organization management",
     groupOrganization: "Organization",
+    groupPlatform: "Platform",
+    adminUsers: "Users",
+    adminOrganizations: "Organizations",
+  },
+  adminTabs: {
+    users: "Users",
+    organizations: "Organizations",
+  },
+  adminPage: {
+    title: "Platform administration",
+    description: "Manage users and organizations across the platform.",
   },
   accountSettings: {
     profile: "Profile",
@@ -69,8 +80,17 @@ export const dashboardNavLabels = {
       "This invitation link will stop working immediately. This cannot be undone.",
     deleteConfirm: "Delete invitation",
   },
+  adminUserManage: {
+    changeRole: "Change platform role",
+    banUser: "Ban user",
+    unbanUser: "Unban user",
+    banTitle: "Ban user",
+    banDescription: "This user will be unable to sign in until unbanned.",
+    banConfirm: "Ban user",
+  },
   breadcrumbSegments: {
     dashboard: "Dashboard",
+    admin: "Admin",
     users: "Users",
     organizations: "Organizations",
     account: "Account",

@@ -5,7 +5,8 @@ export type SidebarIconName =
   | "user"
   | "settings"
   | "folder"
-  | "bell";
+  | "bell"
+  | "building-2";
 
 export type SidebarNavigationItem = {
   title: string;
@@ -17,7 +18,11 @@ export type SidebarNavigationItem = {
   }[];
 };
 
-export type SidebarNavigationGroupId = "home" | "organization" | "personal";
+export type SidebarNavigationGroupId =
+  | "home"
+  | "organization"
+  | "platform"
+  | "personal";
 
 export type SidebarNavigationGroup = {
   id: SidebarNavigationGroupId;

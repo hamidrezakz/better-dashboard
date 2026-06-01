@@ -2,6 +2,7 @@ const DASHBOARD_BASE_PATH = "/dashboard";
 
 /** Path segment literals — keep in sync with `src/app/dashboard/` route tree. */
 export const dashboardRouteSegments = {
+  admin: "admin",
   organizations: "organizations",
   notifications: "notifications",
   account: "account",
@@ -9,6 +10,7 @@ export const dashboardRouteSegments = {
   members: "members",
   teams: "teams",
   invitations: "invitations",
+  users: "users",
 } as const;
 
 function encodeRouteSegment(value: string) {
@@ -30,8 +32,16 @@ export function organizationManageTabPathSuffix(
   return `/${dashboardRouteSegments.manage}/${dashboardRouteSegments[tab]}`;
 }
 
+function adminPath(...rest: string[]) {
+  const tail = rest.length ? `/${rest.join("/")}` : "";
+  return `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.admin}${tail}`;
+}
+
 export const dashboardRoutes = {
   home: () => DASHBOARD_BASE_PATH,
+  adminRoot: () => adminPath(),
+  adminUsers: () => adminPath(dashboardRouteSegments.users),
+  adminOrganizations: () => adminPath(dashboardRouteSegments.organizations),
   organizations: () =>
     `${DASHBOARD_BASE_PATH}/${dashboardRouteSegments.organizations}`,
   userNotifications: () =>

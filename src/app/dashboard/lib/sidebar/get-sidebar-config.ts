@@ -10,6 +10,7 @@ type DashboardSidebarConfigInput = {
   userEmail: string;
   userAvatar: string | null;
   activeOrganizationId: string | null;
+  isPlatformAdmin: boolean;
 };
 
 export async function getDashboardSidebarConfig(
@@ -44,6 +45,7 @@ export async function getDashboardSidebarConfig(
     userId: input.userId,
     activeOrganizationId,
     activeOrganizationRole: activeMembership?.role ?? null,
+    isPlatformAdmin: input.isPlatformAdmin,
   });
 
   return {

@@ -7,6 +7,7 @@ export type DataTableSearchParamsInput = {
   page?: number;
   pageSize?: number;
   filter?: string;
+  q?: string;
 };
 
 export type BuildDataTableSearchParamsOptions = {
@@ -66,6 +67,13 @@ export function parseDataTableFilter(
   return raw || undefined;
 }
 
+export function parseDataTableQuery(
+  searchParams: Record<string, string | string[] | undefined>,
+): string | undefined {
+  const raw = firstSearchParamValue(searchParams.q)?.trim();
+  return raw || undefined;
+}
+
 export function clampDataTablePage(
   page: number,
   totalCount: number,
@@ -96,6 +104,11 @@ export function buildDataTableSearchParams(
   const filter = input.filter?.trim();
   if (filter) {
     params.set("filter", filter);
+  }
+
+  const q = input.q?.trim();
+  if (q) {
+    params.set("q", q);
   }
 
   const serialized = params.toString();

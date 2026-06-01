@@ -12,6 +12,7 @@ type DashboardNavigationContext = {
   userId: string;
   activeOrganizationId: string | null;
   activeOrganizationRole: MembershipRole | null;
+  isPlatformAdmin: boolean;
 };
 
 export function getActiveOrganizationLandingPath(input: {
@@ -61,7 +62,7 @@ export function getDashboardSidebarItems(
       },
     ];
 
-    if (state === "manager") {
+    if (state === "manager" || context.isPlatformAdmin) {
       organizationItems.push({
         title: dashboardNavLabels.sidebar.organizationManagement,
         url: dashboardRoutes.organizationMembers(organizationId),
@@ -72,6 +73,24 @@ export function getDashboardSidebarItems(
     navGroups.push({
       id: "organization",
       items: organizationItems,
+    });
+  }
+
+  if (context.isPlatformAdmin) {
+    navGroups.push({
+      id: "platform",
+      items: [
+        {
+          title: dashboardNavLabels.sidebar.adminUsers,
+          url: dashboardRoutes.adminUsers(),
+          icon: "users",
+        },
+        {
+          title: dashboardNavLabels.sidebar.adminOrganizations,
+          url: dashboardRoutes.adminOrganizations(),
+          icon: "building-2",
+        },
+      ],
     });
   }
 

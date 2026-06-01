@@ -3,6 +3,7 @@ import type {
   MembershipRole,
   NotificationAudience,
   NotificationType,
+  UserRole,
 } from "@/generated/prisma/enums";
 
 const invitationDisplayStatusLabels = {
@@ -24,6 +25,16 @@ const membershipRoleLabels: Record<MembershipRole, string> = {
   MEMBER: "Member",
 };
 
+const platformRoleLabels: Record<UserRole, string> = {
+  user: "User",
+  admin: "Platform admin",
+};
+
+export const userAccountStatusLabels = {
+  active: "Active",
+  banned: "Banned",
+} as const;
+
 const notificationTypeLabels: Record<NotificationType, string> = {
   SYSTEM: "System",
   ORGANIZATION: "Organization",
@@ -44,6 +55,8 @@ export const badgeLabels = {
   invitationDisplayStatus: invitationDisplayStatusLabels,
   invitationJoinScope: invitationJoinScopeLabels,
   membershipRole: membershipRoleLabels,
+  platformRole: platformRoleLabels,
+  userAccountStatus: userAccountStatusLabels,
   notificationType: notificationTypeLabels,
   notificationAudience: notificationAudienceLabels,
 } as const;

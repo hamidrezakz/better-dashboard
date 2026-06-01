@@ -8,6 +8,7 @@ import {
 } from "@/app/dashboard/dashboard-layout-fallback";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { requireAuthSession } from "@/lib/auth/session";
+import { isPlatformAdmin } from "@/lib/auth/user-role";
 import { getDashboardSidebarConfig } from "@/app/dashboard/lib/sidebar/get-sidebar-config";
 
 type DashboardLayoutProps = {
@@ -25,12 +26,15 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 async function DashboardLayoutContent({ children }: DashboardLayoutProps) {
   const session = await requireAuthSession();
 
+  const viewerIsPlatformAdmin = await isPlatformAdmin(session.user.id);
+
   const sidebarConfig = await getDashboardSidebarConfig({
     userId: session.user.id,
     userName: session.user.name,
     userEmail: session.user.email,
     userAvatar: session.user.image ?? null,
     activeOrganizationId: session.session.activeOrganizationId ?? null,
+    isPlatformAdmin: viewerIsPlatformAdmin,
   });
 
   return (

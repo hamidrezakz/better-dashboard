@@ -20,6 +20,7 @@ import type {
   MembershipRole,
   NotificationAudience,
   NotificationType,
+  UserRole,
 } from "@/generated/prisma/enums";
 import {
   type LabeledBadgeConfig,
@@ -80,6 +81,35 @@ const invitationJoinScopeConfig: Record<
     badgeLabels.invitationJoinScope.unknown,
     "outline",
     <Link2Icon data-icon="inline-start" />,
+  ),
+};
+
+const platformRoleConfig: Record<UserRole, LabeledBadgeConfig> = {
+  user: item(
+    badgeLabels.platformRole.user,
+    "outline",
+    <UserIcon data-icon="inline-start" />,
+  ),
+  admin: item(
+    badgeLabels.platformRole.admin,
+    "default",
+    <ShieldIcon data-icon="inline-start" />,
+  ),
+};
+
+const userAccountStatusConfig: Record<
+  keyof typeof badgeLabels.userAccountStatus,
+  LabeledBadgeConfig
+> = {
+  active: item(
+    badgeLabels.userAccountStatus.active,
+    "outline",
+    <UserIcon data-icon="inline-start" />,
+  ),
+  banned: item(
+    badgeLabels.userAccountStatus.banned,
+    "destructive",
+    <ShieldAlertIcon data-icon="inline-start" />,
   ),
 };
 
@@ -205,6 +235,20 @@ export function getRoleBadgeConfig(role: string) {
     membershipRoleConfig,
     <UserIcon data-icon="inline-start" />,
   );
+}
+
+export function getPlatformRoleBadgeConfig(role: string) {
+  return resolveConfig(
+    role,
+    platformRoleConfig,
+    <UserIcon data-icon="inline-start" />,
+  );
+}
+
+export function getUserAccountStatusBadgeConfig(
+  status: keyof typeof badgeLabels.userAccountStatus,
+) {
+  return userAccountStatusConfig[status];
 }
 
 export function getVisibilityBadgeConfig(visibility: string) {

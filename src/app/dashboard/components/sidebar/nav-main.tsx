@@ -35,6 +35,8 @@ function getGroupLabel(id: SidebarNavigationGroupId): string | undefined {
       return undefined;
     case "organization":
       return dashboardNavLabels.sidebar.groupOrganization;
+    case "platform":
+      return dashboardNavLabels.sidebar.groupPlatform;
     case "personal":
       return undefined;
     default:

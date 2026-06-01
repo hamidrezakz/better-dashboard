@@ -1,4 +1,6 @@
 export const dashboardCacheTags = {
+  adminUsersPage: () => "dashboard:admin:users",
+  adminOrganizationsPage: () => "dashboard:admin:organizations",
   sidebarConfigByUser: (userId: string) => `dashboard:sidebar:user:${userId}`,
   userProfileById: (userId: string) => `dashboard:user-profile:${userId}`,
   organizationSummaryById: (organizationId: string) =>
